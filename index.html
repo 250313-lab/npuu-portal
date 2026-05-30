@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SMART NPUU Portal</title>
+    <title>NPUU SMART BOT</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght=400;600;700;800&family=DM+Sans:wght=300;400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -130,10 +130,10 @@
         <div style="padding: 0 20px;">
             <div class="section-title" id="lbl-main">Asosiy Bo'limlar</div>
             <div class="grid grid-2">
-                <div class="card blue-line" onclick="go('academic')">
+                <div class="card blue-line" onclick="go('handbook')">
                     <span class="card-icon">📚</span>
                     <div class="card-label" id="lbl-study">Academic Resources</div>
-                    <div class="card-sub" id="lbl-study-sub">Syllabus & Handbook</div>
+                    <div class="card-sub" id="lbl-study-sub">Handbook & Tracks</div>
                 </div>
                 <div class="card cyan-line" onclick="go('timetable-frame')">
                     <span class="card-icon">📅</span>
@@ -142,7 +142,7 @@
                 </div>
                 <div class="card blue2-line" onclick="go('exam')">
                     <span class="card-icon">🔥</span>
-                    <div class="card-label" id="lbl-exam">Final Exam</div>
+                    <div class="card-label" id="lbl-exam">Resit Exam</div>
                     <div class="card-sub" id="lbl-exam-sub">Imtihon nazorati</div>
                 </div>
                 <div class="card cyan-line" onclick="openHeroStudy()">
@@ -178,45 +178,9 @@
         </div>
     </div>
 
-    <div id="screen-academic" class="screen">
-        <div class="header">
-            <div class="back-btn" onclick="go('home')">←</div>
-            <div class="page-title" id="title-academic">📚 Academic Resources</div>
-        </div>
-        <div style="padding: 16px 20px;">
-            <div class="card blue-line" onclick="go('handbook')" style="margin-bottom: 20px;">
-                <span class="card-icon">📘</span>
-                <div class="card-label" id="lbl-handbook-title" style="font-size: 16px;">Student Handbook</div>
-                <div class="card-sub" id="lbl-handbook-sub">Universitet nizomi va qoidalari</div>
-            </div>
-
-            <div class="section-title" id="lbl-syllabus-section">Yo'nalishlar Sillasbuslari</div>
-            <div class="list-item" onclick="openSyllabusTrack('ai')">
-                <div class="list-icon bg-npuu-blue">🤖</div>
-                <div class="list-info"><div class="list-title" id="track-ai-title">Sun'iy Intellekt (AI)</div><div class="list-desc" id="track-ai-desc">1-bosqich fanlar rejalari</div></div>
-                <span>›</span>
-            </div>
-            <div class="list-item" onclick="openSyllabusTrack('it')">
-                <div class="list-icon bg-npuu-cyan">💻</div>
-                <div class="list-info"><div class="list-title" id="track-it-title">Axborot Texnologiyalari (IT)</div><div class="list-desc" id="track-it-desc">Dasturlash va tarmoq fanlari</div></div>
-                <span>›</span>
-            </div>
-            <div class="list-item" onclick="openSyllabusTrack('math')">
-                <div class="list-icon bg-npuu-blue">📐</div>
-                <div class="list-info"><div class="list-title" id="track-math-title">Matematika (Mathematics)</div><div class="list-desc" id="track-math-desc">Aniq fanlar kafedrasi rejalari</div></div>
-                <span>›</span>
-            </div>
-        </div>
-    </div>
-
     <div id="screen-handbook" class="screen">
-        <div class="header"><div class="back-btn" onclick="go('academic')">←</div><div class="page-title" id="title-handbook-page">📘 Student Handbook</div></div>
+        <div class="header"><div class="back-btn" onclick="go('home')">←</div><div class="page-title" id="title-handbook-page">📘 Student Handbook</div></div>
         <div style="padding: 16px 20px;" id="handbook-content"></div>
-    </div>
-
-    <div id="screen-syllabus" class="screen">
-        <div class="header"><div class="back-btn" onclick="go('academic')">←</div><div class="page-title" id="syllabus-track-title">Syllabus</div></div>
-        <div style="padding: 16px 20px;" id="syllabus-list"></div>
     </div>
 
     <div id="screen-gpa" class="screen">
@@ -275,7 +239,7 @@
     </div>
 
     <div id="screen-exam" class="screen">
-        <div class="header"><div class="back-btn" onclick="go('home')">←</div><div class="page-title" id="title-exam-page">🔥 Final Exam</div></div>
+        <div class="header"><div class="back-btn" onclick="go('home')">←</div><div class="page-title" id="title-exam-page">🔥 Resit Exam</div></div>
         <div style="padding: 16px 20px;">
             <div class="warn-box"><span>⚠️</span><span id="exam-warn-text">Tizim test rejimida ishlamoqda. Ma'lumotlarni rasmiy manbalardan aniqlashtiring.</span></div>
             <input type="text" id="search-name" class="input-field" placeholder="Ism yoki familiya...">
@@ -312,87 +276,74 @@ const tg = window.Telegram.WebApp;
 if(tg) { tg.expand(); tg.setHeaderColor('#070f1e'); tg.setBackgroundColor('#070f1e'); }
 
 let currentLang = localStorage.getItem('appLang') || 'uz';
+let EXAM_DATA = []; // Google Sheets ma'lumotlari shu yerga yuklanadi
+let filterFailOnly = false;
 
 const LANG_DATA = {
     uz: {
         homeSub: "Talabalar uchun raqamli platforma", lblMain: "Asosiy Bo'limlar", lblStudy: "Academic Resources",
-        lblStudySub: "Syllabus & Handbook", lblTimetable: "Dars Jadvali", lblTimetableSub: "EduPage Platformasi",
-        lblExam: "Final Exam", lblExamSub: "Imtihon nazorati", lblHero: "Hero Study", lblHeroSub: "Tizimga kirish",
+        lblStudySub: "Handbook & Tracks", lblTimetable: "Dars Jadvali", lblTimetableSub: "EduPage Platformasi",
+        lblExam: "Resit Exam", lblExamSub: "Imtihon nazorati", lblHero: "Hero Study", lblHeroSub: "Tizimga kirish",
         lblTools: "Yordamchi Vositalar", lblGpa: "GPA Kalkulyator", lblGpaSub: "Kredit tizimi bo'yicha",
         lblProfs: "Professorlar", lblProfsSub: "Aloqa va kafedralar", lblSystem: "Tizim",
-        lblLangTitle: "Tilni o'zgartirish / Language", titleAcademic: "📚 Academic Resources",
-        lblHandbookTitle: "Student Handbook (Qo'llanma)", lblHandbookSub: "Universitet ichki tartib-qoidalari va kredit tizimi nizomi",
-        lblSyllabusSection: "Yo'nalishlar Syllabuslari", trackAiTitle: "Sun'iy Intellekt (AI)", trackAiDesc: "1-bosqich fanlar rejalari",
-        trackItTitle: "Axborot Texnologiyalari (IT)", trackItDesc: "Dasturlash va tarmoq fanlari",
-        trackMathTitle: "Matematika (Mathematics)", trackMathDesc: "Aniq fanlar kafedrasi rejalari",
-        titleHandbookPage: "📘 Student Handbook", titleGpaPage: "🧮 GPA Calculator",
+        lblLangTitle: "Tilni o'zgartirish / Language", titleHandbookPage: "📘 Student Handbook", titleGpaPage: "🧮 GPA Calculator",
         gpaWarnText: "Fanlaringiz bo'yicha olgan bahongiz (0-100) va fanning kreditini kiriting.",
         btnAddSubject: "+ Fan qo'shish", btnCalcGpa: "Hisoblash", gpaResTitle: "Sizning GPA Ko'rsatkichingiz:",
         gpaStatusInit: "Baholarni kiriting va tugmani bosing", titleTimetablePage: "📅 Guruhni tanlang",
         titleProfsPage: "👨‍🏫 Professorlar", searchProfPlaceholder: "Professor ismini qidirish...",
-        titleExamPage: "🔥 Final Exam", examWarnText: "Tizim test rejimida ishlamoqda. Ma'lumotlarni rasmiy manbalardan aniqlashtiring.",
+        titleExamPage: "🔥 Resit Exam", examWarnText: "Tizim test rejimida ishlamoqda. Ma'lumotlarni rasmiy manbalardan aniqlashtiring.",
         searchNamePlaceholder: "Ism yoki familiya...", optAllGroups: "Barcha guruhlar", optAllRooms: "Barcha xonalar",
         optAllSubjects: "Barcha fanlar", btnFailToggle: "🚫 Faqat ruxsat berilmaganlar", examLoader: "Ma'lumotlar yuklanmoqda...",
         titleLangPage: "🌐 Tilni tanlang", toastChanged: "Muvaffaqiyatli o'zgartirildi ✓",
         gpaStatusGood: "Yaxshi ko'rsatkich! 👍", gpaStatusExcel: "A'lo darajada! 🌟", gpaStatusLow: "Ko'proq o'qish kerak 📚",
-        gpaInputError: "Iltimos, ma'lumotlarni to'g'ri kiriting!", syllabusTrackSuffix: " Yo'nalishi Syllabuslari",
-        handbook1: '<div class="card" style="margin-bottom:12px;"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">1. Kredit-modul tizimi (HEMIS)</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Har bir fan o\'z kredit hajmiga ega. Talaba semestr yakunida fandan o\'tishi uchun barcha oraliq va yakuniy nazoratlardan minimal ball to\'plashi shart.</p></div>',
-        handbook2: '<div class="card" style="margin-bottom:12px;"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">2. Davomat va intizom</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Dars qoldirish miqdori belgilangan foizdan oshib ketgan taqdirda, talaba yakuniy imtihonlarga ("Final Exam") kiritilmasligi mumkin.</p></div>',
-        handbook3: '<div class="card"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">3. Baholash mezonlari</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Baholar 100 ballik tizim yoki xalqaro GPA (4.0) shkalasi asosida hisoblanadi. Imtihondan o\'ta olmaganlar uchun qayta topshirish haftalari tashkil etiladi.</p></div>',
+        gpaInputError: "Iltimos, ma'lumotlarni to'g'ri kiriting!",
+        handbook1: '<div class="card" style="margin-bottom:12px;" onclick="window.open(\'https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link\', \'_blank\')"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">📂 Artificial Intelligence</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Yo\'nalishga oid o\'quv qo\'llanmalari, nizomlar va resurslarni ko\'rish uchun bosing.</p></div>',
+        handbook2: '<div class="card" style="margin-bottom:12px;" onclick="window.open(\'https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link\', \'_blank\')"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">📂 Information Systems and Technologies</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Tizim va texnologiyalar yo\'nalishi uchun tasdiqlangan talabalar qo\'llanmasi.</p></div>',
+        handbook3: '<div class="card" onclick="window.open(\'https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link\', \'_blank\')"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">📂 Mathematics</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Matematika yo\'nalishi talabalari uchun akademik nizom va tartiblar.</p></div>',
         gpaPlaceholderName: "Fan nomi", gpaPlaceholderCredit: "Kredit", gpaPlaceholderGrade: "Ball"
     },
     ru: {
         homeSub: "Цифровая платформа для студентов", lblMain: "Основные Разделы", lblStudy: "Академические Ресурсы",
-        lblStudySub: "Силлабус и Руководство", lblTimetable: "Расписание Занятий", lblTimetableSub: "Платформа EduPage",
-        lblExam: "Финальный Экзамен", lblExamSub: "Контроль экзаменов", lblHero: "Hero Study", lblHeroSub: "Вход в систему",
+        lblStudySub: "Handbook & Tracks", lblTimetable: "Расписание Занятий", lblTimetableSub: "Платформа EduPage",
+        lblExam: "Resit Exam", lblExamSub: "Контроль экзаменов", lblHero: "Hero Study", lblHeroSub: "Вход в систему",
         lblTools: "Вспомогательные Инструменты", lblGpa: "Калькулятор GPA", lblGpaSub: "По кредитной системе",
         lblProfs: "Профессора", lblProfsSub: "Контакты и кафедры", lblSystem: "Система",
-        lblLangTitle: "Изменить язык / Language", titleAcademic: "📚 Академические Ресурсы",
-        lblHandbookTitle: "Student Handbook (Справочник)", lblHandbookSub: "Внутренние правила университета и устав кредитной системы",
-        lblSyllabusSection: "Силлабусы Направлений", trackAiTitle: "Искусственный Интеллект (AI)", trackAiDesc: "Планы предметов 1-го курса",
-        trackItTitle: "Информационные Технологии (IT)", trackItDesc: "Предметы программирования и сетей",
-        trackMathTitle: "Математика (Mathematics)", trackMathDesc: "Планы кафедры точных наук",
-        titleHandbookPage: "📘 Справочник Студента", titleGpaPage: "🧮 Калькулятор GPA",
+        lblLangTitle: "Изменить язык / Language", titleHandbookPage: "📘 Справочник Студента", titleGpaPage: "🧮 Калькулятор GPA",
         gpaWarnText: "Введите полученную оценку (0-100) и количество кредитов за предмет.",
         btnAddSubject: "+ Добавить предмет", btnCalcGpa: "Рассчитать", gpaResTitle: "Ваш показатель GPA:",
         gpaStatusInit: "Введите оценки и нажмите кнопку", titleTimetablePage: "📅 Выберите группу",
         titleProfsPage: "👨‍🏫 Профессора", searchProfPlaceholder: "Поиск профессора по имени...",
-        titleExamPage: "🔥 Финальный Экзамен", examWarnText: "Система работает в тестовом режиме. Уточняйте данные из официальных источников.",
+        titleExamPage: "🔥 Resit Exam", examWarnText: "Система работает в тестовом режиме. Уточняйте данные из официальных источников.",
         searchNamePlaceholder: "Имя или фамилия...", optAllGroups: "Все группы", optAllRooms: "Все аудитории",
         optAllSubjects: "Все предметы", btnFailToggle: "🚫 Только не допущенные", examLoader: "Загрузка данных...",
         titleLangPage: "🌐 Выберите язык", toastChanged: "Язык успешно изменен ✓",
         gpaStatusGood: "Хороший результат! 👍", gpaStatusExcel: "Отличный результат! 🌟", gpaStatusLow: "Нужно больше учиться 📚",
-        gpaInputError: "Пожалуйста, введите данные корректно!", syllabusTrackSuffix: " Силлабусы Направления",
-        handbook1: '<div class="card" style="margin-bottom:12px;"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">1. Кредитно-модульная система (HEMIS)</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Каждый предмет имеет свой объем кредитов. Чтобы сдать предмет в конце семестра, студент должен набрать минимальный балл по всем промежуточным и итоговым контролям.</p></div>',
-        handbook2: '<div class="card" style="margin-bottom:12px;"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">2. Посещаемость и дисциплина</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Если количество пропущенных занятий превысит установленный процент, студент может быть не допущен к финальному экзамену ("Final Exam").</p></div>',
-        handbook3: '<div class="card"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">3. Критерии оценивания</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Оценки рассчитываются по 100-балльной системе или международной шкале GPA (4.0). Для неуспевающих организуются недели пересдач.</p></div>',
+        gpaInputError: "Пожалуйста, введите данные корректно!",
+        handbook1: '<div class="card" style="margin-bottom:12px;" onclick="window.open(\'https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link\', \'_blank\')"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">📂 Artificial Intelligence</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Нажмите, чтобы просмотреть учебные пособия, уставы и ресурсы по направлению.</p></div>',
+        handbook2: '<div class="card" style="margin-bottom:12px;" onclick="window.open(\'https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link\', \'_blank\')"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">📂 Information Systems and Technologies</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Руководство студента, утвержденное для направления информационных систем.</p></div>',
+        handbook3: '<div class="card" onclick="window.open(\'https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link\', \'_blank\')"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">📂 Mathematics</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Академический устав и правила для студентов направления математики.</p></div>',
         gpaPlaceholderName: "Предмет", gpaPlaceholderCredit: "Кредит", gpaPlaceholderGrade: "Балл"
     },
     en: {
         homeSub: "Digital platform for students", lblMain: "Main Sections", lblStudy: "Academic Resources",
-        lblStudySub: "Syllabus & Handbook", lblTimetable: "Timetable", lblTimetableSub: "EduPage Platform",
-        lblExam: "Final Exam", lblExamSub: "Exam Control", lblHero: "Hero Study", lblHeroSub: "System Login",
+        lblStudySub: "Handbook & Tracks", lblTimetable: "Timetable", lblTimetableSub: "EduPage Platform",
+        lblExam: "Resit Exam", lblExamSub: "Exam Control", lblHero: "Hero Study", lblHeroSub: "System Login",
         lblTools: "Helper Tools", lblGpa: "GPA Calculator", lblGpaSub: "By Credit System",
         lblProfs: "Professors", lblProfsSub: "Contacts & Departments", lblSystem: "System",
-        lblLangTitle: "Change Language / Tilni o'zgartirish", titleAcademic: "📚 Academic Resources",
-        lblHandbookTitle: "Student Handbook", lblHandbookSub: "University regulations and credit system statute",
-        lblSyllabusSection: "Track Syllabuses", trackAiTitle: "Artificial Intelligence (AI)", trackAiDesc: "1st year curriculum plans",
-        trackItTitle: "Information Technologies (IT)", trackItDesc: "Programming and networking courses",
-        trackMathTitle: "Mathematics", trackMathDesc: "Department of exact sciences plans",
-        titleHandbookPage: "📘 Student Handbook", titleGpaPage: "🧮 GPA Calculator",
+        lblLangTitle: "Change Language / Tilni o'zgartirish", titleHandbookPage: "📘 Student Handbook", titleGpaPage: "🧮 GPA Calculator",
         gpaWarnText: "Enter your grade (0-100) and the credit score of the subject.",
         btnAddSubject: "+ Add Subject", btnCalcGpa: "Calculate", gpaResTitle: "Your GPA Score:",
         gpaStatusInit: "Enter grades and press the button", titleTimetablePage: "📅 Select Group",
         titleProfsPage: "👨‍🏫 Professors", searchProfPlaceholder: "Search professor by name...",
-        titleExamPage: "🔥 Final Exam", examWarnText: "The system is running in test mode. Verify data from official sources.",
+        titleExamPage: "🔥 Resit Exam", examWarnText: "The system is running in test mode. Verify data from official sources.",
         searchNamePlaceholder: "First name or last name...", optAllGroups: "All groups", optAllRooms: "All rooms",
         optAllSubjects: "All subjects", btnFailToggle: "🚫 Only Not Allowed", examLoader: "Loading data...",
         titleLangPage: "🌐 Select Language", toastChanged: "Language changed successfully ✓",
         gpaStatusGood: "Good job! 👍", gpaStatusExcel: "Excellent! 🌟", gpaStatusLow: "Need to study more 📚",
-        gpaInputError: "Please enter the data correctly!", syllabusTrackSuffix: " Track Syllabuses",
-        handbook1: '<div class="card" style="margin-bottom:12px;"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">1. Credit-module system (HEMIS)</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Each subject has its own credit size. In order to pass a subject at the end of the semester, a student must collect a minimum score from all midterm and final exams.</p></div>',
-        handbook2: '<div class="card" style="margin-bottom:12px;"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">2. Attendance and discipline</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">If the amount of missed classes exceeds the specified percentage, the student may not be admitted to the final exams ("Final Exam").</p></div>',
-        handbook3: '<div class="card"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">3. Evaluation criteria</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Grades are calculated based on a 100-point system or the international GPA (4.0) scale. Retake weeks are organized for those who fail.</p></div>',
+        gpaInputError: "Please enter the data correctly!",
+        handbook1: '<div class="card" style="margin-bottom:12px;" onclick="window.open(\'https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link\', \'_blank\')"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">📂 Artificial Intelligence</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Click to view curriculum, regulations, and resources for AI track.</p></div>',
+        handbook2: '<div class="card" style="margin-bottom:12px;" onclick="window.open(\'https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link\', \'_blank\')"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">📂 Information Systems and Technologies</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Approved student handbook for Information Systems and Technologies track.</p></div>',
+        handbook3: '<div class="card" onclick="window.open(\'https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link\', \'_blank\')"><div style="font-weight:700; color:var(--accent3); margin-bottom:6px;">📂 Mathematics</div><p style="font-size:13px; color:var(--muted); line-height:1.4;">Academic regulations and procedures for mathematics department students.</p></div>',
         gpaPlaceholderName: "Subject", gpaPlaceholderCredit: "Credit", gpaPlaceholderGrade: "Grade"
     }
 };
@@ -417,17 +368,6 @@ function updateLanguageDOM() {
     document.getElementById('lbl-profs-sub').textContent = lang.lblProfsSub;
     document.getElementById('lbl-system').textContent = lang.lblSystem;
     document.getElementById('lbl-lang-title').textContent = lang.lblLangTitle;
-
-    document.getElementById('title-academic').textContent = lang.titleAcademic;
-    document.getElementById('lbl-handbook-title').textContent = lang.lblHandbookTitle;
-    document.getElementById('lbl-handbook-sub').textContent = lang.lblHandbookSub;
-    document.getElementById('lbl-syllabus-section').textContent = lang.lblSyllabusSection;
-    document.getElementById('track-ai-title').textContent = lang.trackAiTitle;
-    document.getElementById('track-ai-desc').textContent = lang.trackAiDesc;
-    document.getElementById('track-it-title').textContent = lang.trackItTitle;
-    document.getElementById('track-it-desc').textContent = lang.trackItDesc;
-    document.getElementById('track-math-title').textContent = lang.trackMathTitle;
-    document.getElementById('track-math-desc').textContent = lang.trackMathDesc;
 
     document.getElementById('title-handbook-page').textContent = lang.titleHandbookPage;
     document.getElementById('handbook-content').innerHTML = lang.handbook1 + lang.handbook2 + lang.handbook3;
@@ -551,38 +491,6 @@ function openHeroStudy() {
     }
 }
 
-const SYLLABUS_DATA = {
-    ai: [
-        { name: "Sun'iy intellekt asoslari (Intro to AI)", code: "AI-101", topic: "Matritsalar bilan ishlash, Neyron tarmoqlar muqaddimasi" },
-        { name: "Python bilan botlar yaratish (aiogram)", code: "AI-102", topic: "Asinxron dasturlash, Telegram API hamda ma'lumotlar bazasi integratsiyasi" },
-        { name: "Diskret matematika va mantiq", code: "MATH-104", topic: "To'plamlar nazorati, graf nazoratlari" }
-    ],
-    it: [
-        { name: "C++ tilida dasturlash (OOP)", code: "IT-102", topic: "Obyektga yo'naltirilgan dasturlash va algoritmlar" },
-        { name: "Ma'lumotlar bazasi tizimlari (SQL)", code: "IT-202", topic: "Relatsion bazalar, so'rovlar optimizatsiyasi" }
-    ],
-    math: [
-        { name: "Matematik analiz I (Calculus)", code: "MATH-101", topic: "Integrallar, hosilalar va ketma-ketliklar limitlari" },
-        { name: "Chiziqli algebra", code: "MATH-102", topic: "Matritsalar va determinantlar echimi, chiziqli tenglamalar" }
-    ]
-};
-
-function openSyllabusTrack(track) {
-    const list = document.getElementById('syllabus-list');
-    const title = document.getElementById('syllabus-track-title');
-    title.textContent = track.toUpperCase() + LANG_DATA[currentLang].syllabusTrackSuffix;
-
-    const subjects = SYLLABUS_DATA[track] || [];
-    list.innerHTML = subjects.map(s => `
-        <div class="card" style="margin-bottom:10px; border-left: 3px solid var(--accent3);">
-            <div style="font-size:11px; font-weight:bold; color:var(--accent3);">${s.code}</div>
-            <div class="card-label" style="font-size:15px; margin:4px 0;">${s.name}</div>
-            <div class="card-sub" style="color:var(--text); opacity:0.8;">📄 ${currentLang === 'uz' ? 'Mavzular' : (currentLang === 'ru' ? 'Темы' : 'Topics')}: ${s.topic}</div>
-        </div>
-    `).join('');
-    go('syllabus');
-}
-
 function addGpaRow() {
     const container = document.getElementById('gpa-inputs');
     const row = document.createElement('div');
@@ -634,7 +542,6 @@ function calculateGpa() {
     }
 }
 
-// ========== JADVAL ASOSIDA TIKLANGAN TO'LIQ PROFESSORLAR RO'YXATI ==========
 const PROFS = [
     {n: "Marks Ruziboev", e: "m.ruziboev@npuu.uz", d: "Mathematics"},
     {n: "Azamat Xolboyev", e: "a.xolboyev@npuu.uz", d: "Mathematics"},
@@ -678,16 +585,106 @@ document.getElementById('search-prof').addEventListener('input', (e) => {
     renderProfs(PROFS.filter(p => p.n.toLowerCase().includes(t) || p.d.toLowerCase().includes(t)));
 });
 
-const API_URL = "https://script.google.com/macros/s/AKfycbwo2j58xOCcVHRbgifOZijiQl906VvM0GdeSg1ES_1mTfd8eTuUavbd8QD5cUjyZUDF8w/exec";
+// ========== GOOGLE SHEETS JADVAL INTEGRATSIYASI (RESIT EXAM) ==========
+// Google Sheets id: 19-Nigcb3FNC1xYoj-hsTPHF7hrQSc0xu-pY6TwNQqS0
+// Ushbu URL orqali ma'lumotlar ochiq tahrirda JSON formatida parse qilinadi.
+const SHEET_ID = '19-Nigcb3FNC1xYoj-hsTPHF7hrQSc0xu-pY6TwNQqS0';
+const API_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
 async function initExams() {
     try {
         const res = await fetch(API_URL);
-        const data = await res.json();
+        const text = await res.text();
+        // Google gviz API qaytargan keraksiz wrapper qismlarni kesib toza JSON olamiz
+        const dataJson = JSON.parse(text.substr(47).slice(0, -2));
+        
+        const rows = dataJson.table.rows;
+        EXAM_DATA = rows.map(row => {
+            return {
+                name: row.c[0] ? row.c[0].v : '',
+                group: row.c[1] ? row.c[1].v : '',
+                subject: row.c[2] ? row.c[2].v : '',
+                room: row.c[3] ? row.c[3].v : '',
+                allowed: row.c[4] ? (row.c[4].v.toString().toLowerCase() === 'true' || row.c[4].v.toString().toLowerCase() === 'ruxsat') : true
+            };
+        }).filter(item => item.name); // Bo'sh bo'lmagan qatorlarni saralash
+
+        populateFilters();
+        renderExams();
         document.getElementById('exam-loader').style.display = 'none';
     } catch(e) {
-        document.getElementById('exam-loader').textContent = currentLang === 'uz' ? "Xatolik yuz berdi." : (currentLang === 'ru' ? "Произошла ошибка." : "An error occurred.");
+        document.getElementById('exam-loader').textContent = currentLang === 'uz' ? "Ma'lumot yuklashda xatolik yuz berdi." : (currentLang === 'ru' ? "Ошибка загрузки данных." : "An error occurred while loading data.");
     }
 }
+
+function populateFilters() {
+    const rooms = [...new Set(EXAM_DATA.map(item => item.room))].filter(Boolean);
+    const subjects = [...new Set(EXAM_DATA.map(item => item.subject))].filter(Boolean);
+    
+    const roomSelect = document.getElementById('search-room');
+    const subjectSelect = document.getElementById('search-subject');
+    
+    rooms.forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = r; opt.textContent = r;
+        roomSelect.appendChild(opt);
+    });
+    
+    subjects.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s; opt.textContent = s;
+        subjectSelect.appendChild(opt);
+    });
+}
+
+function renderExams() {
+    const nameQuery = document.getElementById('search-name').value.toLowerCase();
+    const groupQuery = document.getElementById('search-group').value;
+    const roomQuery = document.getElementById('search-room').value;
+    const subjectQuery = document.getElementById('search-subject').value;
+    
+    const filtered = EXAM_DATA.filter(item => {
+        const matchesName = item.name.toLowerCase().includes(nameQuery);
+        const matchesGroup = groupQuery === "" || item.group.includes(groupQuery);
+        const matchesRoom = roomQuery === "" || item.room === roomQuery;
+        const matchesSubject = subjectQuery === "" || item.subject === subjectQuery;
+        const matchesFail = !filterFailOnly || !item.allowed;
+        
+        return matchesName && matchesGroup && matchesRoom && matchesSubject && matchesFail;
+    });
+
+    const div = document.getElementById('exam-list');
+    if(filtered.length === 0) {
+        div.innerHTML = `<div style="text-align:center; color:var(--muted); padding:20px;">Hech narsa topilmadi</div>`;
+        return;
+    }
+
+    div.innerHTML = filtered.map(item => `
+        <div class="card" style="margin-bottom:8px; border-left: 4px solid ${item.allowed ? 'var(--accent2)' : '#ff4d4d'};">
+            <div style="display:flex; justify-content:between; align-items:center; width:100%;">
+                <div style="flex:1;">
+                    <div style="font-size:15px; font-weight:600;">${item.name}</div>
+                    <div style="font-size:12px; color:var(--muted); margin-top:2px;">
+                        <span>🏫 Guruh: ${item.group}</span> | <span>🔑 Xona: ${item.room}</span>
+                    </div>
+                    <div style="font-size:13px; color:var(--accent3); margin-top:4px;">📚 ${item.subject}</div>
+                </div>
+                <div style="font-size:20px;">${item.allowed ? '✅' : '🚫'}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+document.getElementById('search-name').addEventListener('input', renderExams);
+document.getElementById('search-group').addEventListener('change', renderExams);
+document.getElementById('search-room').addEventListener('change', renderExams);
+document.getElementById('search-subject').addEventListener('change', renderExams);
+
+document.getElementById('btn-fail-toggle').addEventListener('click', function() {
+    filterFailOnly = !filterFailOnly;
+    this.classList.toggle('active', filterFailOnly);
+    renderExams();
+});
 
 updateLanguageDOM();
 initTimetableGroups();
