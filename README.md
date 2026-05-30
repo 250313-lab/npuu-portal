@@ -1,2 +1,0 @@
-# npuu-portal
-Npuu-portal
