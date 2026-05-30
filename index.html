@@ -30,12 +30,33 @@
             padding-bottom: 90px;
         }
 
+        .lang-switcher {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 1000;
+        }
+
+        .lang-switcher select {
+            background: rgba(13, 27, 51, 0.8);
+            color: #fff;
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 13px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+
         .header {
-            padding: 24px 16px;
+            padding: 30px 16px 24px;
             text-align: center;
             background: linear-gradient(to bottom, rgba(13,27,51,0.8), transparent);
             border-bottom: 1px solid var(--border);
             margin-bottom: 20px;
+            position: relative;
         }
 
         .logo-img {
@@ -82,7 +103,7 @@
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -129,11 +150,7 @@
             font-family: inherit;
         }
 
-        .search-box select option {
-            background: var(--surface2);
-            color: var(--text);
-        }
-
+        .search-box select option { background: var(--surface2); color: var(--text); }
         .search-box input:last-child, .search-box select:last-child { margin-bottom: 0; }
 
         .btn {
@@ -151,6 +168,7 @@
             justify-content: center;
             gap: 8px;
             margin-top: 8px;
+            text-decoration: none;
         }
 
         .toggle-btn {
@@ -179,14 +197,17 @@
         .nav-bar {
             position: fixed;
             bottom: 0; left: 0; right: 0;
-            background: rgba(13, 27, 51, 0.9);
+            background: rgba(13, 27, 51, 0.95);
             backdrop-filter: blur(12px);
             border-top: 1px solid var(--border);
             display: flex;
-            justify-content: space-around;
-            padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
+            padding: 10px 8px calc(10px + env(safe-area-inset-bottom));
             z-index: 100;
+            overflow-x: auto;
+            white-space: nowrap;
         }
+
+        .nav-bar::-webkit-scrollbar { display: none; }
 
         .nav-item {
             display: flex;
@@ -195,18 +216,18 @@
             color: var(--muted);
             font-size: 11px;
             font-weight: 500;
-            text-decoration: none;
             cursor: pointer;
             background: none;
             border: none;
             gap: 4px;
-            flex: 1;
+            min-width: 65px;
+            flex: 1 0 auto;
         }
 
         .nav-item.active { color: var(--accent3); font-weight: 700; }
         .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
 
-        .handbook-btn {
+        .handbook-btn, .tt-btn {
             background: var(--surface2);
             border: 1px solid var(--border);
             border-radius: 12px;
@@ -219,57 +240,72 @@
             margin-bottom: 10px;
             font-weight: 600;
             transition: background 0.2s;
+            cursor: pointer;
         }
-        .handbook-btn:hover {
-            background: rgba(58, 134, 255, 0.1);
-            border-color: var(--accent);
+
+        .handbook-btn:hover, .tt-btn:hover { background: rgba(58, 134, 255, 0.1); border-color: var(--accent); }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .tt-btn {
+            padding: 12px;
+            justify-content: center;
+            margin-bottom: 0;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
+    <div class="lang-switcher">
+        <select id="lang-select" onchange="setLanguage(this.value)">
+            <option value="uz">UZ</option>
+            <option value="ru">RU</option>
+            <option value="en">EN</option>
+        </select>
+    </div>
+
     <div class="header">
         <img src="https://raw.githubusercontent.com/250313-lab/image/main/photo_2026-05-30_19-09-13.jpg" class="logo-img" alt="NPUU Logo" onerror="this.src='https://raw.githubusercontent.com/250313-lab/image/master/photo_2026-05-30_19-09-13.jpg'">
-        <h1>NPUU SMART BOT</h1>
-        <p>Talabalar uchun raqamli boshqaruv muhiti</p>
+        <h1 data-i18n="title">NPUU SMART BOT</h1>
+        <p data-i18n="subtitle">Talabalar uchun raqamli boshqaruv muhiti</p>
     </div>
 
     <div class="tabs">
-        <button class="tab-btn active" onclick="switchView('resit')">🚫 Resit Exam</button>
-        <button class="tab-btn" onclick="switchView('gpa')">🧮 GPA Calc</button>
-        <button class="tab-btn" onclick="switchView('profs')">👥 Professors</button>
-        <button class="tab-btn" onclick="switchView('handbook')">📘 Handbook</button>
+        <button class="tab-btn active" onclick="switchView('resit')" id="t-resit">🚫 Resit</button>
+        <button class="tab-btn" onclick="switchView('gpa')" id="t-gpa">🧮 GPA</button>
+        <button class="tab-btn" onclick="switchView('profs')" id="t-profs">👥 Profs</button>
+        <button class="tab-btn" onclick="switchView('handbook')" id="t-handbook">📘 Handbook</button>
+        <button class="tab-btn" onclick="switchView('timetable')" id="t-timetable">📅 Timetable</button>
+        <button class="tab-btn" onclick="switchView('hero')" id="t-hero">🎓 Hero Study</button>
     </div>
 
     <div id="view-resit" class="view-section active">
         <div class="search-box">
-            <input type="text" id="search-name" placeholder="🔍 Ism bo'yicha qidirish...">
-            <select id="search-group">
-                <option value="">🏫 Guruhni tanlang</option>
-            </select>
-            <select id="search-room">
-                <option value="">🔑 Xonani tanlang</option>
-            </select>
-            <select id="search-subject">
-                <option value="">📚 Fanni tanlang</option>
-            </select>
+            <input type="text" id="search-name" data-i18n-ph="search_name" placeholder="🔍 Ism bo'yicha qidirish...">
+            <select id="search-room"><option value="" data-i18n="search_room">🔑 Xonani tanlang</option></select>
+            <select id="search-subject"><option value="" data-i18n="search_subject">📚 Fanni tanlang</option></select>
         </div>
-        <button id="btn-fail-toggle" class="toggle-btn">🚫 Faqat ruxsat berilmaganlar</button>
+        <button id="btn-fail-toggle" class="toggle-btn"><span data-i18n="fail_only">🚫 Faqat ruxsat berilmaganlar</span></button>
         <div id="exam-list"></div>
     </div>
 
     <div id="view-gpa" class="view-section">
         <div class="card" style="margin-bottom:16px;">
-            <div style="font-size:13px; color:var(--muted); margin-bottom:4px;">Sizning umumiy natijangiz:</div>
+            <div style="font-size:13px; color:var(--muted); margin-bottom:4px;" data-i18n="gpa_overall">Sizning umumiy natijangiz:</div>
             <div id="gpa-result" style="font-family:'Syne',sans-serif; font-size:36px; font-weight:800; color:var(--accent2);">0.00</div>
         </div>
         <div id="gpa-rows"></div>
-        <button class="btn" style="background:var(--surface2); color:#fff; border:1px solid var(--border);" onclick="addGpaRow()">➕ Fan qo'shish</button>
+        <button class="btn" style="background:var(--surface2); color:#fff; border:1px solid var(--border);" onclick="addGpaRow()"><span data-i18n="add_subject">➕ Fan qo'shish</span></button>
     </div>
 
     <div id="view-profs" class="view-section">
         <div class="search-box" style="margin-bottom:16px;">
-            <input type="text" id="search-prof" placeholder="🔍 Professor ismi yoki kafedra...">
+            <input type="text" id="search-prof" data-i18n-ph="prof_search" placeholder="🔍 Professor ismi yoki kafedra...">
         </div>
         <div id="prof-list"></div>
     </div>
@@ -277,41 +313,62 @@
     <div id="view-handbook" class="view-section">
         <div class="card" style="border-left:4px solid var(--accent2); margin-bottom: 16px;">
             <div style="font-size:16px; font-weight:700; margin-bottom:6px;">Student Handbooks</div>
-            <p style="font-size:13px; color:var(--muted); line-height:1.4;">Yo'nalishingizga mos keluvchi Handbook fayllarini onlayn ko'rish uchun quyidagi tugmalardan birini tanlang.</p>
+            <p style="font-size:13px; color:var(--muted); line-height:1.4;" data-i18n="handbook_desc">Yo'nalishingizga mos keluvchi Handbook fayllarini onlayn ko'rish uchun quyidagi tugmalardan birini tanlang.</p>
         </div>
-
         <a href="https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link" target="_blank" class="handbook-btn">
-            <span>🤖 Artificial Intelligence</span>
-            <span>➔</span>
+            <span>🤖 Artificial Intelligence</span><span>➔</span>
         </a>
-
         <a href="https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link" target="_blank" class="handbook-btn">
-            <span>💻 Information Systems and Technologies</span>
-            <span>➔</span>
+            <span>💻 Information Systems & Technologies</span><span>➔</span>
         </a>
-
         <a href="https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link" target="_blank" class="handbook-btn">
-            <span>📐 Mathematics</span>
-            <span>➔</span>
+            <span>📐 Mathematics</span><span>➔</span>
         </a>
+    </div>
+
+    <div id="view-timetable" class="view-section">
+        <div class="card" style="border-left:4px solid #4cc9f0; margin-bottom: 16px;">
+            <div style="font-size:16px; font-weight:700; margin-bottom:6px;" data-i18n="tab_timetable">📅 Dars Jadvali</div>
+            <p style="font-size:13px; color:var(--muted); line-height:1.4;" data-i18n="timetable_desc">Dars jadvalini ko'rish uchun guruhingizni tanlang:</p>
+        </div>
+        <div id="tt-grid" class="grid-container"></div>
+    </div>
+
+    <div id="view-hero" class="view-section">
+        <div class="card" style="text-align:center; padding: 30px 16px;">
+            <div style="font-size:50px; margin-bottom:10px;">🎓</div>
+            <h2 style="font-family:'Syne',sans-serif; margin-bottom:10px;">NPUU Hero Study</h2>
+            <p style="color:var(--muted); font-size:14px; margin-bottom:24px;" data-i18n="hero_desc">NPUU Hero Study platformasiga o'tish tugmasini bosing:</p>
+            <a href="https://npuu.hero.study/" target="_blank" class="btn" style="background:var(--accent); color:#fff; font-size:16px;">
+                <span data-i18n="go_to_hero">🚀 Hero Study'ga o'tish</span>
+            </a>
+        </div>
     </div>
 
     <div class="nav-bar">
         <button class="nav-item active" onclick="switchView('resit')" id="nav-resit">
             <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-            Resit
+            <span data-i18n="tab_resit">Resit</span>
         </button>
         <button class="nav-item" onclick="switchView('gpa')" id="nav-gpa">
             <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-            GPA
+            <span data-i18n="tab_gpa">GPA</span>
         </button>
         <button class="nav-item" onclick="switchView('profs')" id="nav-profs">
             <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 1.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-            Profs
+            <span data-i18n="tab_profs">Profs</span>
+        </button>
+        <button class="nav-item" onclick="switchView('timetable')" id="nav-timetable">
+            <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+            <span data-i18n="tab_timetable">Timetable</span>
         </button>
         <button class="nav-item" onclick="switchView('handbook')" id="nav-handbook">
             <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
-            Handbook
+            <span data-i18n="tab_handbook">Handbook</span>
+        </button>
+        <button class="nav-item" onclick="switchView('hero')" id="nav-hero">
+            <svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+            <span data-i18n="tab_hero">Hero</span>
         </button>
     </div>
 
@@ -319,6 +376,56 @@
         const tg = window.Telegram?.WebApp;
         if (tg) { tg.ready(); tg.expand(); }
 
+        // --- I18N SYSTEM ---
+        const translations = {
+            uz: {
+                title: "NPUU SMART BOT", subtitle: "Talabalar uchun raqamli boshqaruv muhiti",
+                tab_resit: "🚫 Resit", tab_gpa: "🧮 GPA", tab_profs: "👥 Profs", tab_handbook: "📘 Handbook", tab_timetable: "📅 Jadval", tab_hero: "🎓 Hero",
+                search_name: "🔍 Ism bo'yicha qidirish...", search_room: "🔑 Xonani tanlang", search_subject: "📚 Fanni tanlang",
+                fail_only: "🚫 Faqat ruxsat berilmaganlar", loading: "Ma'lumot yuklanmoqda...", error: "Ma'lumotni yuklashda xatolik yuz berdi.", no_data: "Mos ma'lumot topilmadi.",
+                add_subject: "➕ Fan qo'shish", gpa_overall: "Sizning umumiy natijangiz:", prof_search: "🔍 Professor ismi yoki kafedra...",
+                handbook_desc: "Yo'nalishingizga mos keluvchi Handbook fayllarini onlayn ko'rish uchun quyidagi tugmalardan birini tanlang.",
+                timetable_desc: "Dars jadvalini ko'rish uchun guruhingizni tanlang:", hero_desc: "NPUU Hero Study platformasiga o'tish tugmasini bosing:",
+                go_to_hero: "🚀 Hero Study'ga o'tish", exam_status_fail: "Ruxsat etilmagan", exam_status_ok: "Ruxsat etilgan"
+            },
+            ru: {
+                title: "NPUU SMART BOT", subtitle: "Цифровая среда управления",
+                tab_resit: "🚫 Пересдача", tab_gpa: "🧮 GPA", tab_profs: "👥 Преподы", tab_handbook: "📘 Справочник", tab_timetable: "📅 Расписание", tab_hero: "🎓 Hero",
+                search_name: "🔍 Поиск по имени...", search_room: "🔑 Аудитория", search_subject: "📚 Предмет",
+                fail_only: "🚫 Только недопущенные", loading: "Загрузка данных...", error: "Ошибка при загрузке данных.", no_data: "Данные не найдены.",
+                add_subject: "➕ Добавить предмет", gpa_overall: "Ваш общий балл:", prof_search: "🔍 Имя или кафедра...",
+                handbook_desc: "Выберите одну из кнопок ниже для просмотра справочника по вашему направлению.",
+                timetable_desc: "Выберите свою группу для просмотра расписания:", hero_desc: "Нажмите кнопку, чтобы перейти на платформу Hero Study:",
+                go_to_hero: "🚀 Перейти в Hero", exam_status_fail: "Не допущен", exam_status_ok: "Допущен"
+            },
+            en: {
+                title: "NPUU SMART BOT", subtitle: "Digital management environment",
+                tab_resit: "🚫 Resit", tab_gpa: "🧮 GPA", tab_profs: "👥 Profs", tab_handbook: "📘 Handbook", tab_timetable: "📅 Timetable", tab_hero: "🎓 Hero",
+                search_name: "🔍 Search by name...", search_room: "🔑 Select Room", search_subject: "📚 Select Subject",
+                fail_only: "🚫 Not allowed only", loading: "Loading data...", error: "Error loading data.", no_data: "No matching data found.",
+                add_subject: "➕ Add subject", gpa_overall: "Your overall GPA:", prof_search: "🔍 Professor name or department...",
+                handbook_desc: "Choose one of the buttons below to view the Handbook for your major.",
+                timetable_desc: "Select your group to view the timetable:", hero_desc: "Click the button to access the Hero Study platform:",
+                go_to_hero: "🚀 Go to Hero Study", exam_status_fail: "Not Allowed", exam_status_ok: "Allowed"
+            }
+        };
+
+        let currentLang = 'uz';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.getAttribute('data-i18n-ph');
+                if (translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+            if(allExams.length > 0) renderExams(); // Re-render to update statuses
+        }
+
+        // --- NAVIGATION ---
         function switchView(viewId) {
             document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -327,50 +434,82 @@
             const targetSection = document.getElementById(`view-${viewId}`);
             if (targetSection) targetSection.classList.add('active');
 
-            const activeTab = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(viewId));
+            const activeTab = document.getElementById(`t-${viewId}`);
             if (activeTab) activeTab.classList.add('active');
 
             const activeNavItem = document.getElementById(`nav-${viewId}`);
             if (activeNavItem) activeNavItem.classList.add('active');
         }
 
-        // RESIT EXAMS LOGIC
-        const API_URL = "https://script.google.com/macros/s/AKfycbwo2j58xCCcVHRbgifOZijiQl906VvM0GdeSg1ES_1mTfd8eTuUavbd8QD5cUjyZUDF8w/exec";
+        // --- RESIT EXAMS LOGIC (Directly parsing provided format) ---
+        const SPREADSHEET_ID = "19-Nigcb3FNC1xYoj-hsTPHF7hrQSc0xu-pY6TwNQqS0";
+        const SHEET_NAMES = [
+            "Discrete Math", "Analysis 2", "Analytical Geometry", "Calculus 2", 
+            "General English 2", "Computer Programming 1", "Introduction to Teaching and Learning"
+        ];
         let allExams = [];
         let filterFailOnly = false;
 
         async function initExams() {
             const div = document.getElementById('exam-list');
-            div.innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px;">Ma\'lumot yuklanmoqda...</div>';
+            div.innerHTML = `<div style="text-align:center;color:var(--muted);padding:20px;">${translations[currentLang].loading}</div>`;
+            allExams = [];
+
             try {
-                const res = await fetch(API_URL);
-                const rawData = await res.json();
-                const rows = rawData.slice(1);
+                // Fetch all 7 sheets parallel
+                const promises = SHEET_NAMES.map(sheetName => 
+                    fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`)
+                    .then(res => res.text())
+                    .then(text => {
+                        const jsonStr = text.match(/google\.visualization\.Query\.setResponse\(([\s\S\w]+)\);/)[1];
+                        return JSON.parse(jsonStr);
+                    })
+                    .catch(e => { console.error("Sheet error:", sheetName, e); return null; })
+                );
 
-                allExams = rows.map(r => ({
-                    name: r[0] ? r[0].toString().trim() : 'Noma\'lum',
-                    group: r[1] ? r[1].toString().trim() : '',
-                    room: r[2] ? r[2].toString().trim() : '',
-                    subject: r[3] ? r[3].toString().trim() : '',
-                    allowed: r[4] === true || r[4] === 'true' || r[4] === 'ALLOWED' || r[4] === 'Allowed'
-                }));
+                const results = await Promise.all(promises);
 
-                const groups = [...new Set(allExams.map(i => i.group).filter(Boolean))].sort();
+                results.forEach(data => {
+                    if(!data || !data.table || !data.table.rows) return;
+                    const rows = data.table.rows;
+                    for (let i = 1; i < rows.length; i++) { // Skip header
+                        const r = rows[i].c;
+                        if (!r || !r[0]) continue;
+                        
+                        let surname = r[1] && r[1].v ? r[1].v.toString() : '';
+                        let name = r[2] && r[2].v ? r[2].v.toString() : '';
+                        let room = r[3] && r[3].v ? r[3].v.toString() : '';
+                        let exam = r[4] && r[4].v ? r[4].v.toString() : '';
+                        let time = r[5] && r[5].v ? r[5].v.toString() : '';
+                        let date = r[6] && r[6].v ? r[6].v.toString() : '';
+                        let status = r[7] && r[7].v ? r[7].v.toString() : '';
+
+                        let isAllowed = true;
+                        if (status.toLowerCase().includes('fail')) isAllowed = false;
+
+                        allExams.push({
+                            name: `${surname} ${name}`.trim() || "Noma'lum",
+                            room: room,
+                            subject: exam,
+                            time: time,
+                            date: date,
+                            allowed: isAllowed
+                        });
+                    }
+                });
+
                 const rooms = [...new Set(allExams.map(i => i.room).filter(Boolean))].sort();
                 const subjects = [...new Set(allExams.map(i => i.subject).filter(Boolean))].sort();
 
-                document.getElementById('search-group').innerHTML = '<option value="">🏫 Guruhni tanlang</option>' + 
-                    groups.map(g => `<option value="${g}">${g}</option>`).join('');
-
-                document.getElementById('search-room').innerHTML = '<option value="">🔑 Xonani tanlang</option>' + 
+                document.getElementById('search-room').innerHTML = `<option value="">🔑 Select Room / Xona</option>` + 
                     rooms.map(r => `<option value="${r}">${r}</option>`).join('');
 
-                document.getElementById('search-subject').innerHTML = '<option value="">📚 Fanni tanlang</option>' + 
+                document.getElementById('search-subject').innerHTML = `<option value="">📚 Select Subject / Fan</option>` + 
                     subjects.map(s => `<option value="${s}">${s}</option>`).join('');
 
                 renderExams();
             } catch(e) {
-                div.innerHTML = '<div style="text-align:center;color:#ff4d4d;padding:20px;">Ma\'lumotni yuklashda xatolik yuz berdi.</div>';
+                div.innerHTML = `<div style="text-align:center;color:#ff4d4d;padding:20px;">${translations[currentLang].error}</div>`;
                 console.error(e);
             }
         }
@@ -378,22 +517,20 @@
         function renderExams() {
             const div = document.getElementById('exam-list');
             const nameQ = document.getElementById('search-name').value.toLowerCase().trim();
-            const groupQ = document.getElementById('search-group').value;
             const roomQ = document.getElementById('search-room').value;
             const subjectQ = document.getElementById('search-subject').value.toLowerCase().trim();
 
             const filtered = allExams.filter(item => {
                 const matchesName = item.name.toLowerCase().includes(nameQ);
-                const matchesGroup = !groupQ || item.group === groupQ;
                 const matchesRoom = !roomQ || item.room === roomQ;
                 const matchesSubject = !subjectQ || item.subject.toLowerCase().trim().includes(subjectQ);
                 const matchesFail = !filterFailOnly || !item.allowed;
 
-                return matchesName && matchesGroup && matchesRoom && matchesSubject && matchesFail;
+                return matchesName && matchesRoom && matchesSubject && matchesFail;
             });
 
             if (filtered.length === 0) {
-                div.innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px;">Mos ma\'lumot topilmadi.</div>';
+                div.innerHTML = `<div style="text-align:center;color:var(--muted);padding:20px;">${translations[currentLang].no_data}</div>`;
                 return;
             }
 
@@ -402,19 +539,20 @@
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <div style="flex:1;">
                             <div style="font-size:15px; font-weight:600;">${item.name}</div>
-                            <div style="font-size:12px; color:var(--muted); margin-top:2px;">
-                                <span>🏫 Guruh: ${item.group}</span> | <span>🔑 Xona: ${item.room}</span>
+                            <div style="font-size:12px; color:var(--muted); margin-top:4px;">
+                                <span>🔑 ${item.room}</span> | <span>🕒 ${item.time} (${item.date})</span>
                             </div>
                             <div style="font-size:13px; color:var(--accent3); margin-top:4px;">📚 ${item.subject}</div>
                         </div>
-                        <div style="font-size:20px; margin-left:8px;">${item.allowed ? '✅' : '🚫'}</div>
+                        <div style="font-size:24px; margin-left:8px;" title="${item.allowed ? translations[currentLang].exam_status_ok : translations[currentLang].exam_status_fail}">
+                            ${item.allowed ? '✅' : '🚫'}
+                        </div>
                     </div>
                 </div>
             `).join('');
         }
 
         document.getElementById('search-name').addEventListener('input', renderExams);
-        document.getElementById('search-group').addEventListener('change', renderExams);
         document.getElementById('search-room').addEventListener('change', renderExams);
         document.getElementById('search-subject').addEventListener('change', renderExams);
         document.getElementById('btn-fail-toggle').addEventListener('click', function() {
@@ -423,7 +561,27 @@
             renderExams();
         });
 
-        // GPA CALCULATOR LOGIC
+        // --- TIMETABLE LOGIC ---
+        const GROUPS_LINKS = {
+            "FM1": "-1", "FM2": "-2", "FM3": "-3", "FM4": "-4", "FM5": "-5", "FM6": "-6", "FM7": "*7",
+            "FIT1": "-7", "FIT2": "-8", "FIT3": "-9", "FIT4": "-10", "FIT5": "-11", "FIT6": "-12",
+            "FAR1": "-13", "FAR2": "-14", "FAR3": "-15"
+        };
+
+        function initTimetable() {
+            const grid = document.getElementById('tt-grid');
+            grid.innerHTML = Object.entries(GROUPS_LINKS).map(([gname, gid]) => `
+                <button class="tt-btn" onclick="openTimetable('${gid}')">${gname}</button>
+            `).join('');
+        }
+
+        function openTimetable(gid) {
+            const url = `https://npuu.edupage.org/timetable/view.php?num=6&class=${gid}`;
+            if(tg && tg.openLink) tg.openLink(url);
+            else window.open(url, '_blank');
+        }
+
+        // --- GPA CALCULATOR LOGIC ---
         const DEFAULT_SUBJECTS = ["Introduction to T.L", "Programming 1", "Discrete Math", "General English 2", "Math Analysis 2", "Analytical Geometry", "Calculus 2"];
         
         function initGpa() {
@@ -444,7 +602,7 @@
             row.style.marginBottom = '8px';
 
             row.innerHTML = `
-                <input type="text" value="${name}" placeholder="Fan nomi" style="flex:2; background:var(--surface2); border:1px solid var(--border); color:#fff; padding:8px; border-radius:8px; font-size:13px; min-width:0;">
+                <input type="text" value="${name}" placeholder="Subject / Fan" style="flex:2; background:var(--surface2); border:1px solid var(--border); color:#fff; padding:8px; border-radius:8px; font-size:13px; min-width:0;">
                 <input type="number" class="credit-input" placeholder="Cr" min="1" max="10" value="3" style="width:50px; background:var(--surface2); border:1px solid var(--border); color:#fff; padding:8px; border-radius:8px; text-align:center; font-size:13px;">
                 <select class="grade-select" style="flex:1; background:var(--surface2); border:1px solid var(--border); color:#fff; padding:8px; border-radius:8px; font-size:13px; min-width:0;">
                     <option value="4.5">A+</option><option value="4.0">A</option>
@@ -472,20 +630,41 @@
             document.getElementById('gpa-result').innerText = gpa;
         }
 
-        // PROFESSORS LIST
+        // --- PROFESSORS LIST ---
         const PROFS = [
-            {n: "Dr. Alisher Toshmatov", e: "a.toshmatov@npuu.uz", d: "Informatika"},
-            {n: "Prof. Elena Ivanova", e: "e.ivanova@npuu.uz", d: "Xorijiy tillar"},
+            {n: "Marks Ruziboev", e: "m.ruziboev@npuu.uz", d: "Mathematics"},
+            {n: "Azamat Xolboyev", e: "a.xolboyev@npuu.uz", d: "Mathematics"},
+            {n: "Allambergen Qudaybergenov", e: "a.qudaybergenov@npuu.uz", d: "Mathematics"},
+            {n: "Bakhtinur Juraev", e: "b.juraev@npuu.uz", d: "Mathematics"},
+            {n: "Farhod Muxamadiyev", e: "f.muxamadiyev@npuu.uz", d: "Mathematics"},
+            {n: "Sa'dullayev Anvar", e: "a.sa'dullayev@npuu.uz", d: "Mathematics"},
+            {n: "Shakhzod Suvanov", e: "sh.suvanov@npuu.uz", d: "Mathematics"},
+            {n: "Zarif Ibragimov", e: "z.ibragimov@npuu.uz", d: "Mathematics"},
+            
+            {n: "Azamat Akhmedjanov", e: "a.akhmedjanov@npuu.uz", d: "General English"},
+            {n: "Azizabonu Ziyodullaeva", e: "a.ziyodullaeva@npuu.uz", d: "General English"},
+            {n: "Dilnoza Boymirzayeva", e: "d.boymirzayeva@npuu.uz", d: "General English"},
+            {n: "Mirjon Khidoyatov", e: "m.khidoyatov@npuu.uz", d: "General English"},
+            {n: "Mirsaid Abdurakhmonov", e: "m.abdurakhmonov@npuu.uz", d: "General English"},
+            {n: "Rano Khikmatova", e: "r.khikmatova@npuu.uz", d: "General English"},
+            {n: "Zukhra Khakimova", e: "z.khakimova@npuu.uz", d: "General English"},
+            
+            {n: "Asadulla Ashurov", e: "a.ashurov@npuu.uz", d: "IT"},
+            {n: "Bakhromjon Tulkinov", e: "b.tulkinov@npuu.uz", d: "IT"},
+            {n: "Mirrakhmon Khaydarov", e: "m.khaydarov@npuu.uz", d: "IT"},
+            {n: "Ulugbek Tursunaliev", e: "u.tursunaliev@npuu.uz", d: "IT"},
+            
+            {n: "Nilufar Tillayeva", e: "n.tillayeva@npuu.uz", d: "Education"},
             {n: "Ozodakhon Shukurillaeva", e: "o.shukurillaeva@npuu.uz", d: "Education"},
             {n: "Albina Suleymanova", e: "a.suleymanova@npuu.uz", d: "Education"}
         ];
 
         function renderProfs(data) {
             document.getElementById('prof-list').innerHTML = data.map(p => `
-                <div class="card" style="margin-bottom:8px;">
+                <div class="card" style="margin-bottom:8px; border-left:4px solid var(--accent);">
                     <div style="font-size:11px; color:var(--accent3); font-weight:700;">${p.d}</div>
                     <div style="font-size:15px; font-weight:600; margin:2px 0;">${p.n}</div>
-                    <div style="font-size:12px; color:var(--muted);">✉️ ${p.e}</div>
+                    <div style="font-size:12px; color:var(--muted);">✉️ <a href="mailto:${p.e}" style="color:var(--accent2); text-decoration:none;">${p.e}</a></div>
                 </div>
             `).join('');
         }
@@ -495,9 +674,12 @@
             renderProfs(PROFS.filter(p => p.n.toLowerCase().includes(t) || p.d.toLowerCase().includes(t)));
         });
 
+        // --- INITIALIZATION ---
         window.onload = () => {
+            setLanguage(currentLang);
             initExams();
             initGpa();
+            initTimetable();
             renderProfs(PROFS);
         };
     </script>
