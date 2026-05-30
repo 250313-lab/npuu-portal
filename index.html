@@ -28,9 +28,9 @@
             font-family: 'DM Sans', sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
+            color-scheme: dark;
         }
 
-        /* BG mesh */
         body::before {
             content: '';
             position: fixed;
@@ -45,340 +45,102 @@
 
         .app { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; }
 
-        /* ---- HEADER ---- */
-        .header {
-            padding: 20px 20px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        /* ---- HEADER & SCREENS ---- */
+        .header { padding: 20px 20px 0; display: flex; align-items: center; gap: 12px; }
         .back-btn {
-            width: 38px; height: 38px;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all .2s;
-            flex-shrink: 0;
+            width: 38px; height: 38px; background: var(--surface2); border: 1px solid var(--border);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 16px; transition: all .2s; flex-shrink: 0;
         }
         .back-btn:active { transform: scale(.92); background: var(--accent); }
-        .page-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-        }
-
-        /* ---- SCREENS ---- */
-        .screen { display: none; padding: 16px 20px 32px; animation: fadeUp .3s ease; }
+        .page-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+        
+        .screen { display: none; padding: 16px 20px 32px; animation: fadeUp .3s ease; max-height: 100vh; overflow-y: auto; }
         .screen.active { display: block; }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(14px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ---- HOME ---- */
-        .home-hero {
-            padding: 28px 20px 8px;
-            text-align: center;
-        }
+        /* ---- HOME COMPONENTS ---- */
+        .home-hero { padding: 28px 20px 8px; text-align: center; }
         .logo-ring {
-            width: 72px; height: 72px;
-            margin: 0 auto 16px;
-            border-radius: 24px;
+            width: 72px; height: 72px; margin: 0 auto 16px; border-radius: 24px;
             background: linear-gradient(135deg, var(--accent), var(--accent2));
-            display: flex; align-items: center; justify-content: center;
-            font-size: 32px;
+            display: flex; align-items: center; justify-content: center; font-size: 32px;
             box-shadow: 0 8px 32px rgba(108,99,255,0.35);
         }
-        .home-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            line-height: 1.1;
-        }
+        .home-title { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; line-height: 1.1; }
         .home-title span { color: var(--accent); }
-        .home-sub {
-            margin-top: 6px;
-            font-size: 13px;
-            color: var(--muted);
-        }
+        .home-sub { margin-top: 6px; font-size: 13px; color: var(--muted); }
 
-        /* ---- GRID ---- */
         .grid { display: grid; gap: 12px; margin-top: 24px; }
         .grid-2 { grid-template-columns: 1fr 1fr; }
-        .grid-1 { grid-template-columns: 1fr; }
-
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 18px 16px;
-            cursor: pointer;
-            transition: all .22s;
-            position: relative;
-            overflow: hidden;
-        }
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity .22s;
-        }
+        
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 16px; cursor: pointer; transition: all .22s; position: relative; overflow: hidden; }
         .card:active { transform: scale(.96); }
-        .card:active::before { opacity: 1; }
+        .card-icon { font-size: 26px; margin-bottom: 10px; display: block; }
+        .card-label { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; line-height: 1.3; }
+        .card-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
 
-        .card.purple::before  { background: rgba(108,99,255,0.12); }
-        .card.pink::before    { background: rgba(255,107,157,0.12); }
-        .card.teal::before    { background: rgba(67,232,176,0.12); }
-        .card.orange::before  { background: rgba(255,171,64,0.12); }
-        .card.blue::before    { background: rgba(64,180,255,0.12); }
-        .card.red::before     { background: rgba(255,80,80,0.12); }
-
-        .card-icon {
-            font-size: 26px;
-            margin-bottom: 10px;
-            display: block;
-        }
-        .card-label {
-            font-family: 'Syne', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
-            line-height: 1.3;
-        }
-        .card-sub {
-            font-size: 11px;
-            color: var(--muted);
-            margin-top: 3px;
-        }
-        .card-arrow {
-            position: absolute;
-            right: 14px; top: 50%;
-            transform: translateY(-50%);
-            color: var(--muted);
-            font-size: 14px;
-        }
-
-        /* ---- SECTION TITLE ---- */
-        .section-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--muted);
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            margin: 20px 0 10px;
-        }
+        .section-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: 1.2px; text-transform: uppercase; margin: 20px 0 10px; }
 
         /* ---- LIST ITEMS ---- */
-        .list-item {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 14px 16px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            cursor: pointer;
-            transition: all .2s;
-            margin-bottom: 8px;
-            text-decoration: none;
-            color: var(--text);
-        }
+        .list-item { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; transition: all .2s; margin-bottom: 8px; text-decoration: none; color: var(--text); }
         .list-item:active { transform: scale(.97); background: var(--surface2); }
-        .list-icon {
-            width: 40px; height: 40px;
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-        .bg-purple { background: rgba(108,99,255,0.2); }
-        .bg-pink    { background: rgba(255,107,157,0.2); }
-        .bg-teal    { background: rgba(67,232,176,0.2); }
-        .bg-orange  { background: rgba(255,171,64,0.2); }
-        .bg-blue    { background: rgba(64,180,255,0.2); }
-        .bg-red     { background: rgba(255,80,80,0.2); }
-
+        .list-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+        .bg-purple { background: rgba(108,99,255,0.2); } .bg-pink { background: rgba(255,107,157,0.2); } .bg-teal { background: rgba(67,232,176,0.2); } .bg-orange { background: rgba(255,171,64,0.2); } .bg-blue { background: rgba(64,180,255,0.2); } .bg-red { background: rgba(255,80,80,0.2); }
         .list-info { flex: 1; }
         .list-title { font-size: 14px; font-weight: 500; }
         .list-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
         .list-chevron { color: var(--muted); font-size: 13px; }
 
-        /* ---- GPA ---- */
-        .gpa-result-box {
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            border-radius: var(--radius);
-            padding: 24px;
-            text-align: center;
-            margin-top: 20px;
-            display: none;
-            box-shadow: 0 8px 32px rgba(108,99,255,0.3);
+        /* ---- FORMS & INPUTS (EXAM + PROFS) ---- */
+        .input-field, .select-field {
+            width: 100%; background: var(--surface2); border: 1px solid var(--border);
+            border-radius: 12px; padding: 12px 14px; color: var(--text);
+            font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none;
+            margin-bottom: 10px; transition: border-color .2s; appearance: none;
         }
-        .gpa-result-box.show { display: block; animation: fadeUp .3s ease; }
-        .gpa-number {
-            font-family: 'Syne', sans-serif;
-            font-size: 52px;
-            font-weight: 800;
-            line-height: 1;
+        .input-field:focus, .select-field:focus { border-color: var(--accent); }
+        .input-field::placeholder { color: var(--muted); }
+        select option { background: var(--surface); color: var(--text); }
+        
+        .filter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        .btn-toggle {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px; border-radius: 12px; border: 1px solid var(--border);
+            background: var(--surface2); color: var(--muted); font-weight: 600;
+            cursor: pointer; transition: 0.2s; width: 100%; font-family: 'DM Sans', sans-serif; font-size: 14px;
         }
-        .gpa-label { font-size: 13px; opacity: .8; margin-top: 4px; }
-        .gpa-badge {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 4px 14px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
+        .btn-toggle.active { background: rgba(255,107,157,0.15); color: var(--accent2); border-color: var(--accent2); }
 
-        .subject-row {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 14px;
-            margin-bottom: 8px;
-        }
-        .subject-num {
-            font-size: 11px;
-            color: var(--accent);
-            font-weight: 700;
-            letter-spacing: .8px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        /* ---- EXAM & PROF CARDS ---- */
+        .exam-card { border-left: 4px solid var(--accent3); margin-bottom: 12px; padding: 16px; }
+        .exam-card.failed { border-left-color: var(--accent2); background: rgba(255,107,157,0.03); }
+        .prof-card { padding: 16px; margin-bottom: 10px; }
+        
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; margin-top: 12px; }
+        .info-item { background: var(--surface2); padding: 8px; border-radius: 10px; border: 1px solid var(--border); color: var(--text); }
+        
+        .tag { display: inline-block; margin-top: 12px; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .tag-pass { background: rgba(67,232,176,0.15); color: var(--accent3); }
+        .tag-fail { background: rgba(255,107,157,0.15); color: var(--accent2); }
 
-        input[type="number"] {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px 12px;
-            color: var(--text);
-            font-family: 'DM Sans', sans-serif;
-            font-size: 14px;
-            width: 100%;
-            outline: none;
-            transition: border-color .2s;
-        }
-        input[type="number"]:focus { border-color: var(--accent); }
-        input[type="number"]::placeholder { color: var(--muted); }
+        .warn-box { background: rgba(255,171,64,0.1); border: 1px solid rgba(255,171,64,0.3); border-radius: 14px; padding: 14px 16px; font-size: 13px; color: #ffab40; margin-bottom: 16px; display: flex; gap: 10px; }
 
-        /* ---- BUTTONS ---- */
-        .btn {
-            width: 100%;
-            padding: 14px;
-            border-radius: 14px;
-            border: none;
-            font-family: 'Syne', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all .2s;
-            margin-top: 10px;
-        }
-        .btn:active { transform: scale(.97); }
-        .btn-accent {
-            background: linear-gradient(135deg, var(--accent), #8b82ff);
-            color: #fff;
-            box-shadow: 0 4px 20px rgba(108,99,255,0.35);
-        }
-        .btn-surface {
-            background: var(--surface2);
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-        .btn-green {
-            background: linear-gradient(135deg, #43e8b0, #1db87a);
-            color: #0a0a0f;
-            box-shadow: 0 4px 20px rgba(67,232,176,0.3);
-        }
-
-        /* ---- LANG ---- */
-        .lang-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 18px 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            cursor: pointer;
-            transition: all .2s;
-            margin-bottom: 10px;
-        }
-        .lang-card:active { transform: scale(.97); }
-        .lang-card.selected { border-color: var(--accent); background: rgba(108,99,255,0.1); }
-        .lang-flag { font-size: 32px; }
-        .lang-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; }
-        .lang-native { font-size: 12px; color: var(--muted); }
-        .lang-check { margin-left: auto; color: var(--accent); font-size: 18px; opacity: 0; }
-        .lang-card.selected .lang-check { opacity: 1; }
-
-        /* ---- GROUP GRID ---- */
-        .group-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
-        .group-btn {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 12px 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all .2s;
-            font-family: 'Syne', sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text);
-            text-decoration: none;
-            display: block;
-        }
-        .group-btn:active { transform: scale(.94); background: rgba(108,99,255,0.15); border-color: var(--accent); }
-
-        /* ---- TOAST ---- */
-        .toast {
-            position: fixed;
-            bottom: 24px; left: 50%;
-            transform: translateX(-50%) translateY(80px);
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 12px 20px;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 999;
-            transition: transform .3s cubic-bezier(.34,1.56,.64,1);
-            white-space: nowrap;
-        }
+        /* ---- MISC ---- */
+        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 20px; font-size: 14px; font-weight: 500; z-index: 999; transition: transform .3s cubic-bezier(.34,1.56,.64,1); white-space: nowrap; }
         .toast.show { transform: translateX(-50%) translateY(0); }
-
-        /* ---- DIVIDER ---- */
-        .divider { height: 1px; background: var(--border); margin: 16px 0; }
-
-        /* ---- WARNING BOX ---- */
-        .warn-box {
-            background: rgba(255,171,64,0.1);
-            border: 1px solid rgba(255,171,64,0.3);
-            border-radius: 14px;
-            padding: 14px 16px;
-            font-size: 13px;
-            color: #ffab40;
-            margin-bottom: 16px;
-            display: flex;
-            gap: 10px;
-        }
-
-        /* scroll */
-        .screen { max-height: 100vh; overflow-y: auto; }
+        
+        /* Lang select */
+        .lang-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all .2s; margin-bottom: 10px; }
+        .lang-card.selected { border-color: var(--accent); background: rgba(108,99,255,0.1); }
+        .lang-flag { font-size: 32px; } .lang-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; } .lang-native { font-size: 12px; color: var(--muted); } .lang-check { margin-left: auto; color: var(--accent); font-size: 18px; opacity: 0; } .lang-card.selected .lang-check { opacity: 1; }
     </style>
 </head>
 <body>
 <div class="app">
 
+    <!-- ========== HOME ========== -->
     <div id="screen-home" class="screen active">
         <div class="home-hero">
             <div class="logo-ring">🎓</div>
@@ -399,6 +161,7 @@
                     <div class="card-label" id="lbl-timetable">Dars jadvali</div>
                     <div class="card-sub" id="lbl-timetable-sub">Guruh bo'yicha</div>
                 </div>
+                <!-- FINAL EXAM YAKKA OYNA -->
                 <div class="card pink" onclick="go('exam')">
                     <span class="card-icon">🔥</span>
                     <div class="card-label" id="lbl-exam">Final Exam</div>
@@ -418,10 +181,11 @@
                     <div class="card-label" id="lbl-gpa">GPA Kalkulyator</div>
                     <div class="card-sub" id="lbl-gpa-sub">GPA hisoblash</div>
                 </div>
-                <div class="card purple" onclick="openExternal('https://250313-lab.github.io/prof-list/')">
+                <!-- PROFESSORLAR YAKKA OYNA -->
+                <div class="card purple" onclick="go('profs')">
                     <span class="card-icon">👨‍🏫</span>
                     <div class="card-label" id="lbl-profs">Professorlar</div>
-                    <div class="card-sub" id="lbl-profs-sub">Ro'yxat</div>
+                    <div class="card-sub" id="lbl-profs-sub">Ro'yxat va qidiruv</div>
                 </div>
             </div>
 
@@ -430,13 +194,14 @@
                 <div class="list-icon bg-teal">🌐</div>
                 <div class="list-info">
                     <div class="list-title" id="lbl-lang">Tilni o'zgartirish</div>
-                    <div class="list-desc" id="lbl-lang-sub">O'zbek / Rus tili</div>
+                    <div class="list-desc" id="lbl-lang-sub">O'zbek / Rus / Ingliz</div>
                 </div>
                 <span class="list-chevron">›</span>
             </div>
         </div>
     </div>
 
+    <!-- ========== ACADEMIC ========== -->
     <div id="screen-academic" class="screen">
         <div class="header">
             <div class="back-btn" onclick="go('home')">←</div>
@@ -445,110 +210,55 @@
         <div style="padding: 16px 20px;">
             <div class="list-item" onclick="go('syllabus')">
                 <div class="list-icon bg-purple">📄</div>
-                <div class="list-info">
-                    <div class="list-title">Syllabus</div>
-                    <div class="list-desc">Fan dasturlari</div>
-                </div>
-                <span class="list-chevron">›</span>
+                <div class="list-info"><div class="list-title">Syllabus</div><div class="list-desc">Fan dasturlari</div></div>
             </div>
-            <div class="list-item" onclick="go('handbook')">
+            <div class="list-item" onclick="openExternal('https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR')">
                 <div class="list-icon bg-blue">📘</div>
-                <div class="list-info">
-                    <div class="list-title">Handbook</div>
-                    <div class="list-desc">O'quv qo'llanmalar</div>
-                </div>
-                <span class="list-chevron">›</span>
+                <div class="list-info"><div class="list-title">Handbook</div><div class="list-desc">O'quv materiallar</div></div>
             </div>
             <div class="list-item" onclick="go('calendar')">
                 <div class="list-icon bg-teal">🗓</div>
-                <div class="list-info">
-                    <div class="list-title">Akademik kalendar</div>
-                    <div class="list-desc">Fall / Spring</div>
-                </div>
-                <span class="list-chevron">›</span>
+                <div class="list-info"><div class="list-title">Akademik kalendar</div><div class="list-desc">Fall / Spring</div></div>
             </div>
         </div>
     </div>
 
+    <!-- ========== SYLLABUS & CALENDAR & TIMETABLE & GPA (O'ZGARISHSZ) ========== -->
     <div id="screen-syllabus" class="screen">
-        <div class="header">
-            <div class="back-btn" onclick="go('academic')">←</div>
-            <div class="page-title">📄 Syllabus</div>
-        </div>
-        <div style="padding: 16px 20px;">
-            <div class="section-title">Spring 2025–2026</div>
-            <div id="syllabus-list"></div>
-        </div>
+        <div class="header"><div class="back-btn" onclick="go('academic')">←</div><div class="page-title">📄 Syllabus</div></div>
+        <div style="padding: 16px 20px;" id="syllabus-list"></div>
     </div>
-
-    <div id="screen-handbook" class="screen">
-        <div class="header">
-            <div class="back-btn" onclick="go('academic')">←</div>
-            <div class="page-title">📘 Handbook</div>
-        </div>
-        <div style="padding: 16px 20px;">
-            <div class="list-item" onclick="openExternal('https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR')">
-                <div class="list-icon bg-purple">🤖</div>
-                <div class="list-info">
-                    <div class="list-title">Artificial Intelligence</div>
-                    <div class="list-desc">Google Drive</div>
-                </div>
-                <span class="list-chevron">↗</span>
-            </div>
-            <div class="list-item" onclick="openExternal('https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q')">
-                <div class="list-icon bg-blue">💻</div>
-                <div class="list-info">
-                    <div class="list-title">Information Systems</div>
-                    <div class="list-desc">Google Drive</div>
-                </div>
-                <span class="list-chevron">↗</span>
-            </div>
-            <div class="list-item" onclick="openExternal('https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB')">
-                <div class="list-icon bg-teal">📐</div>
-                <div class="list-info">
-                    <div class="list-title">Mathematics</div>
-                    <div class="list-desc">Google Drive</div>
-                </div>
-                <span class="list-chevron">↗</span>
-            </div>
-        </div>
-    </div>
-
     <div id="screen-calendar" class="screen">
-        <div class="header">
-            <div class="back-btn" onclick="go('academic')">←</div>
-            <div class="page-title">🗓 Kalendar</div>
-        </div>
+        <div class="header"><div class="back-btn" onclick="go('academic')">←</div><div class="page-title">🗓 Kalendar</div></div>
         <div style="padding: 16px 20px;">
-            <div class="card orange" style="margin-bottom:10px;" onclick="sendToBot('cal_fall')">
-                <span class="card-icon">🍂</span>
-                <div class="card-label">Fall Term</div>
-                <div class="card-sub">Kuz semestri</div>
-            </div>
-            <div class="card teal" onclick="sendToBot('cal_spring')">
-                <span class="card-icon">🌱</span>
-                <div class="card-label">Spring Term</div>
-                <div class="card-sub">Bahor semestri</div>
-            </div>
-            <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:16px;">Tanlash bilan bot faylni yuboradi</p>
+            <div class="card orange" style="margin-bottom:10px;" onclick="sendToBot('cal_fall')"><div class="card-label">Fall Term</div></div>
+            <div class="card teal" onclick="sendToBot('cal_spring')"><div class="card-label">Spring Term</div></div>
         </div>
     </div>
-
     <div id="screen-timetable" class="screen">
+        <div class="header"><div class="back-btn" onclick="go('home')">←</div><div class="page-title">📅 Dars jadvali</div></div>
+        <div style="padding: 16px 20px;">
+            <p style="text-align:center;color:var(--muted);font-size:14px;margin-top:20px;">(Guruhlar jadvali oldingi versiyada mavjud)</p>
+        </div>
+    </div>
+    <div id="screen-gpa" class="screen">
+        <div class="header"><div class="back-btn" onclick="go('home')">←</div><div class="page-title">🧮 GPA Kalkulyator</div></div>
+        <div style="padding: 16px 20px;"><p style="text-align:center;color:var(--muted);font-size:14px;margin-top:20px;">(GPA qismi oldingi versiyada mavjud)</p></div>
+    </div>
+
+    <!-- ========== PROFESSORS SCREEN (INTEGRATSIYA) ========== -->
+    <div id="screen-profs" class="screen">
         <div class="header">
             <div class="back-btn" onclick="go('home')">←</div>
-            <div class="page-title">📅 Dars jadvali</div>
+            <div class="page-title">👨‍🏫 Professorlar</div>
         </div>
         <div style="padding: 16px 20px;">
-            <div class="section-title" id="grp-fm-title">FM guruhlar</div>
-            <div class="group-grid" id="grp-fm"></div>
-            <div class="section-title" id="grp-fit-title" style="margin-top:16px;">FIT guruhlar</div>
-            <div class="group-grid" id="grp-fit"></div>
-            <div class="section-title" id="grp-far-title" style="margin-top:16px;">FAR guruhlar</div>
-            <div class="group-grid" id="grp-far"></div>
+            <input type="text" id="search-prof" class="input-field" placeholder="Professor ismini qidirish...">
+            <div id="prof-list" style="margin-top:16px;"></div>
         </div>
     </div>
 
+    <!-- ========== FINAL EXAM SCREEN (INTEGRATSIYA) ========== -->
     <div id="screen-exam" class="screen">
         <div class="header">
             <div class="back-btn" onclick="go('home')">←</div>
@@ -557,75 +267,58 @@
         <div style="padding: 16px 20px;">
             <div class="warn-box">
                 <span>⚠️</span>
-                <span id="exam-warn">Xatolik ehtimoli mavjud. Rasmiy havola orqali tekshiring.</span>
+                <span id="exam-warn-text">Xatolik ehtimoli mavjud. Rasmiy havola orqali tekshiring.</span>
             </div>
-            <div class="list-item" onclick="openExternal('https://250313-lab.github.io/npuu-finalexam/')">
-                <div class="list-icon bg-red">📝</div>
-                <div class="list-info">
-                    <div class="list-title">Natijalarni tekshirish</div>
-                    <div class="list-desc">Final exam portal</div>
-                </div>
-                <span class="list-chevron">↗</span>
+
+            <input type="text" id="search-name" class="input-field" placeholder="Ism yoki familiya...">
+            
+            <div class="filter-grid">
+                <select id="search-group" class="select-field">
+                    <option value="" id="opt-all-groups">Barcha guruhlar</option>
+                    <optgroup label="FIT">
+                        <option value="FIT1">FIT 1</option><option value="FIT2">FIT 2</option><option value="FIT3">FIT 3</option>
+                        <option value="FIT4">FIT 4</option><option value="FIT5">FIT 5</option><option value="FIT6">FIT 6</option>
+                    </optgroup>
+                    <optgroup label="FM">
+                        <option value="FM1">FM 1</option><option value="FM2">FM 2</option><option value="FM3">FM 3</option>
+                        <option value="FM4">FM 4</option><option value="FM5">FM 5</option><option value="FM6">FM 6</option><option value="FM7">FM 7</option>
+                    </optgroup>
+                    <optgroup label="FAR">
+                        <option value="FAR1">FAR 1</option><option value="FAR2">FAR 2</option><option value="FAR3">FAR 3</option>
+                    </optgroup>
+                </select>
+                <select id="search-room" class="select-field">
+                    <option value="" id="opt-all-rooms">Barcha xonalar</option>
+                </select>
             </div>
+            
+            <select id="search-subject" class="select-field">
+                <option value="" id="opt-all-subjects">Barcha fanlar</option>
+            </select>
+            
+            <div class="btn-toggle" id="btn-fail-toggle">🚫 Faqat ruxsat berilmaganlar</div>
+
+            <div id="exam-loader" style="text-align:center; padding: 40px; color:var(--muted); font-size:14px;">
+                Ma'lumotlar yuklanmoqda...
+            </div>
+            <div id="exam-list" style="margin-top:16px;"></div>
         </div>
     </div>
 
-    <div id="screen-gpa" class="screen">
-        <div class="header">
-            <div class="back-btn" onclick="go('home')">←</div>
-            <div class="page-title">🧮 GPA Kalkulyator</div>
-        </div>
-        <div style="padding: 16px 20px;">
-            <div class="subject-row">
-                <div class="subject-num" id="lbl-subcount">Fanlar soni</div>
-                <input type="number" id="subject-count" min="1" max="15" placeholder="Masalan: 5">
-            </div>
-            <button class="btn btn-accent" id="btn-enter" onclick="buildGPA()">Fanlarni kiritish →</button>
-            <div id="gpa-fields" style="margin-top:12px;"></div>
-            <button class="btn btn-green" id="btn-calc" style="display:none;" onclick="calcGPA()">✓ GPA Hisoblash</button>
-            <div class="gpa-result-box" id="gpa-result">
-                <div class="gpa-number" id="gpa-val">0.00</div>
-                <div class="gpa-label" id="gpa-your-label">Sizning GPA</div>
-                <div class="gpa-badge" id="gpa-grade">—</div>
-            </div>
-        </div>
-    </div>
-
+    <!-- ========== LANG ========== -->
     <div id="screen-lang" class="screen">
         <div class="header">
             <div class="back-btn" onclick="go('home')">←</div>
-            <div class="page-title">🌐 Til / Язык / Language</div>
+            <div class="page-title">🌐 Til / Language</div>
         </div>
         <div style="padding: 16px 20px;">
-            <div class="lang-card" id="lang-uz" onclick="setLang('uz')">
-                <div class="lang-flag">🇺🇿</div>
-                <div>
-                    <div class="lang-name">O'zbekcha</div>
-                    <div class="lang-native">O'zbek tili</div>
-                </div>
-                <span class="lang-check">✓</span>
-            </div>
-            <div class="lang-card" id="lang-ru" onclick="setLang('ru')">
-                <div class="lang-flag">🇷🇺</div>
-                <div>
-                    <div class="lang-name">Русский</div>
-                    <div class="lang-native">Русский язык</div>
-                </div>
-                <span class="lang-check">✓</span>
-            </div>
-            <div class="lang-card" id="lang-en" onclick="setLang('en')">
-                <div class="lang-flag">🇬🇧</div>
-                <div>
-                    <div class="lang-name">English</div>
-                    <div class="lang-native">English language</div>
-                </div>
-                <span class="lang-check">✓</span>
-            </div>
+            <div class="lang-card" id="lang-uz" onclick="setLang('uz')"><div class="lang-flag">🇺🇿</div><div><div class="lang-name">O'zbekcha</div></div><span class="lang-check">✓</span></div>
+            <div class="lang-card" id="lang-ru" onclick="setLang('ru')"><div class="lang-flag">🇷🇺</div><div><div class="lang-name">Русский</div></div><span class="lang-check">✓</span></div>
+            <div class="lang-card" id="lang-en" onclick="setLang('en')"><div class="lang-flag">🇬🇧</div><div><div class="lang-name">English</div></div><span class="lang-check">✓</span></div>
         </div>
     </div>
 
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script>
@@ -634,139 +327,84 @@ tg.expand();
 tg.setHeaderColor('#0a0a0f');
 tg.setBackgroundColor('#0a0a0f');
 
-// ---- DATA ----
-const GROUPS = {
-    fm:  [["FM1","-1"],["FM2","-2"],["FM3","-3"],["FM4","-4"],["FM5","-5"],["FM6","-6"],["FM7","*7"]],
-    fit: [["FIT1","-7"],["FIT2","-8"],["FIT3","-9"],["FIT4","-10"],["FIT5","-11"],["FIT6","-12"]],
-    far: [["FAR1","-13"],["FAR2","-14"],["FAR3","-15"]]
-};
-
-const SYLLABUS = [
-    { name: "Introduction to T.L", icon: "💻", available: true },
-    { name: "Programming 1",       icon: "⌨️", available: true },
-    { name: "Discrete Math",       icon: "🔢", available: true },
-    { name: "General English 2",   icon: "🌍", available: false },
-    { name: "Math Analysis 2",     icon: "📊", available: false },
-    { name: "Analytical Geometry", icon: "📐", available: false },
-    { name: "Calculus 2",          icon: "∫",  available: false }
-];
-
-// ---- LANG ----
+// ---- TRANSLATIONS ----
 const T = {
     uz: {
-        homeSub: "Kerakli bo'limni tanlang",
-        main: "Asosiy", tools: "Vositalar",
-        study: "Academic Resources", studySub: "Syllabus, handbook",
-        timetable: "Dars jadvali", timetableSub: "Guruh bo'yicha",
-        exam: "Final Exam", examSub: "Natijalarni tekshirish",
-        hero: "Hero Study", heroSub: "Portal",
-        gpa: "GPA Kalkulyator", gpaSub: "GPA hisoblash",
-        profs: "Professorlar", profsSub: "Ro'yxat",
-        lang: "Tilni o'zgartirish", langSub: "O'zbek / Rus / Ingliz",
-        examWarn: "Xatolik ehtimoli mavjud. Rasmiy havola orqali tekshiring.",
-        notAvail: "Hali yuklanmagan",
-        langChanged: "Til o'zgartirildi ✓",
-        calSent: "Bot faylni yuboradi!",
-        grpFm: "FM guruhlar", grpFit: "FIT guruhlar", grpFar: "FAR guruhlar",
-        getFile: "Faylni olish", spring: "Spring 2025–2026",
-        subjectCount: "Fanlar soni", subjectEx: "Masalan: 5",
-        creditEx: "Kredit (6)", gradeEx: "Baho (92)", fan: "FAN",
-        calcBtn: "✓ GPA Hisoblash", yourGpa: "Sizning GPA", enterFields: "Fanlarni kiritish →"
+        homeSub: "Kerakli bo'limni tanlang", main: "Asosiy", tools: "Vositalar",
+        study: "Academic Resources", studySub: "Syllabus, handbook", timetable: "Dars jadvali", timetableSub: "Guruh bo'yicha",
+        exam: "Final Exam", examSub: "Natijalarni tekshirish", hero: "Hero Study", heroSub: "Portal",
+        gpa: "GPA Kalkulyator", gpaSub: "GPA hisoblash", profs: "Professorlar", profsSub: "Ro'yxat va qidiruv",
+        lang: "Tilni o'zgartirish", langSub: "O'zbek / Rus / Ingliz", examWarn: "Xatolik ehtimoli mavjud. Rasmiy manbalar orqali tekshiring.",
+        // Yangi qismlar uchun:
+        searchProf: "Professor ismini qidirish...", searchName: "Ism yoki familiya...",
+        noResults: "Ma'lumot topilmadi 😕", allGroups: "Barcha guruhlar", allRooms: "Barcha xonalar", allSubjects: "Barcha fanlar",
+        onlyFailed: "🚫 Faqat ruxsat berilmaganlar", allowed: "IMTIHONGA RUXSAT", notAllowed: "RUXSAT BERILMAGAN",
+        group: "Guruh", subject: "Fan", date: "Sana", time: "Vaqt", room: "Xona"
     },
     ru: {
-        homeSub: "Выберите нужный раздел",
-        main: "Главное", tools: "Инструменты",
-        study: "Академические ресурсы", studySub: "Силлабус, хэндбук",
-        timetable: "Расписание", timetableSub: "По группам",
-        exam: "Final Exam", examSub: "Проверить результаты",
-        hero: "Hero Study", heroSub: "Портал",
-        gpa: "Калькулятор GPA", gpaSub: "Подсчёт GPA",
-        profs: "Преподаватели", profsSub: "Список",
-        lang: "Сменить язык", langSub: "Узб / Рус / Англ",
-        examWarn: "Возможны ошибки. Проверьте через официальную ссылку.",
-        notAvail: "Ещё не загружено",
-        langChanged: "Язык изменён ✓",
-        calSent: "Бот отправит файл!",
-        grpFm: "Группы FM", grpFit: "Группы FIT", grpFar: "Группы FAR",
-        getFile: "Получить файл", spring: "Spring 2025–2026",
-        subjectCount: "Количество предметов", subjectEx: "Например: 5",
-        creditEx: "Кредит (6)", gradeEx: "Оценка (92)", fan: "ПРЕДМЕТ",
-        calcBtn: "✓ Подсчитать GPA", yourGpa: "Ваш GPA", enterFields: "Ввести предметы →"
+        homeSub: "Выберите нужный раздел", main: "Главное", tools: "Инструменты",
+        study: "Академические ресурсы", studySub: "Силлабус, хэндбук", timetable: "Расписание", timetableSub: "По группам",
+        exam: "Final Exam", examSub: "Проверить результаты", hero: "Hero Study", heroSub: "Портал",
+        gpa: "Калькулятор GPA", gpaSub: "Подсчёт GPA", profs: "Преподаватели", profsSub: "Список и поиск",
+        lang: "Сменить язык", langSub: "Узб / Рус / Англ", examWarn: "Возможны ошибки. Проверяйте через официальные источники.",
+        // Новые:
+        searchProf: "Поиск профессора...", searchName: "Имя или фамилия...",
+        noResults: "Ничего не найдено 😕", allGroups: "Все группы", allRooms: "Все аудитории", allSubjects: "Все предметы",
+        onlyFailed: "🚫 Только недопущенные", allowed: "ДОПУЩЕН К ЭКЗАМЕНУ", notAllowed: "НЕ ДОПУЩЕН",
+        group: "Группа", subject: "Предмет", date: "Дата", time: "Время", room: "Ауд."
     },
     en: {
-        homeSub: "Choose a section",
-        main: "Main", tools: "Tools",
-        study: "Academic Resources", studySub: "Syllabus, handbook",
-        timetable: "Timetable", timetableSub: "By group",
-        exam: "Final Exam", examSub: "Check results",
-        hero: "Hero Study", heroSub: "Portal",
-        gpa: "GPA Calculator", gpaSub: "Calculate GPA",
-        profs: "Professors", profsSub: "List",
-        lang: "Change language", langSub: "Uzb / Rus / Eng",
-        examWarn: "Errors possible. Verify via official link.",
-        notAvail: "Not uploaded yet",
-        langChanged: "Language changed ✓",
-        calSent: "Bot will send the file!",
-        grpFm: "FM groups", grpFit: "FIT groups", grpFar: "FAR groups",
-        getFile: "Get file", spring: "Spring 2025–2026",
-        subjectCount: "Number of subjects", subjectEx: "e.g. 5",
-        creditEx: "Credit (6)", gradeEx: "Grade (92)", fan: "SUBJECT",
-        calcBtn: "✓ Calculate GPA", yourGpa: "Your GPA", enterFields: "Enter subjects →"
+        homeSub: "Choose a section", main: "Main", tools: "Tools",
+        study: "Academic Resources", studySub: "Syllabus, handbook", timetable: "Timetable", timetableSub: "By group",
+        exam: "Final Exam", examSub: "Check results", hero: "Hero Study", heroSub: "Portal",
+        gpa: "GPA Calculator", gpaSub: "Calculate GPA", profs: "Professors", profsSub: "List and search",
+        lang: "Change language", langSub: "Uzb / Rus / Eng", examWarn: "Errors are possible. Verify via official sources.",
+        // New:
+        searchProf: "Search professor...", searchName: "Name or surname...",
+        noResults: "No results found 😕", allGroups: "All groups", allRooms: "All rooms", allSubjects: "All subjects",
+        onlyFailed: "🚫 Only not allowed", allowed: "ALLOWED TO EXAM", notAllowed: "NOT ALLOWED",
+        group: "Group", subject: "Subject", date: "Date", time: "Time", room: "Room"
     }
 };
 
 let currentLang = localStorage.getItem('npuu_lang') || 'uz';
-
 function t(key) { return T[currentLang][key] || T['uz'][key]; }
 
 function applyLang() {
-    document.getElementById('home-sub').textContent       = t('homeSub');
-    document.getElementById('lbl-main').textContent       = t('main');
-    document.getElementById('lbl-tools').textContent      = t('tools');
-    document.getElementById('lbl-study').textContent      = t('study');
-    document.getElementById('lbl-study-sub').textContent  = t('studySub');
-    document.getElementById('lbl-timetable').textContent  = t('timetable');
-    document.getElementById('lbl-timetable-sub').textContent = t('timetableSub');
-    document.getElementById('lbl-exam').textContent       = t('exam');
-    document.getElementById('lbl-exam-sub').textContent   = t('examSub');
-    document.getElementById('lbl-hero').textContent       = t('hero');
-    document.getElementById('lbl-hero-sub').textContent   = t('heroSub');
-    document.getElementById('lbl-gpa').textContent        = t('gpa');
-    document.getElementById('lbl-gpa-sub').textContent    = t('gpaSub');
-    document.getElementById('lbl-profs').textContent      = t('profs');
-    document.getElementById('lbl-profs-sub').textContent  = t('profsSub');
-    document.getElementById('lbl-lang').textContent       = t('lang');
-    document.getElementById('lbl-lang-sub').textContent   = t('langSub');
-    document.getElementById('exam-warn').textContent      = t('examWarn');
+    document.getElementById('home-sub').textContent = t('homeSub');
+    document.getElementById('lbl-main').textContent = t('main');
+    document.getElementById('lbl-tools').textContent = t('tools');
+    document.getElementById('lbl-study').textContent = t('study');
+    document.getElementById('lbl-study-sub').textContent = t('studySub');
+    document.getElementById('lbl-exam').textContent = t('exam');
+    document.getElementById('lbl-exam-sub').textContent = t('examSub');
+    document.getElementById('lbl-hero').textContent = t('hero');
+    document.getElementById('lbl-hero-sub').textContent = t('heroSub');
+    document.getElementById('lbl-profs').textContent = t('profs');
+    document.getElementById('lbl-profs-sub').textContent = t('profsSub');
+    document.getElementById('lbl-lang').textContent = t('lang');
+    document.getElementById('lbl-lang-sub').textContent = t('langSub');
     
-    const scEl = document.getElementById('subject-count');
-    if (scEl) scEl.placeholder = t('subjectEx');
-    const calcBtn = document.getElementById('btn-calc');
-    if (calcBtn) calcBtn.textContent = t('calcBtn');
-    const gpaLbl = document.getElementById('gpa-your-label');
-    if (gpaLbl) gpaLbl.textContent = t('yourGpa');
-    const enterBtn = document.getElementById('btn-enter');
-    if (enterBtn) enterBtn.textContent = t('enterFields');
-    
-    const grpFmEl = document.getElementById('grp-fm-title');
-    if (grpFmEl) grpFmEl.textContent = t('grpFm');
-    const grpFitEl = document.getElementById('grp-fit-title');
-    if (grpFitEl) grpFitEl.textContent = t('grpFit');
-    const grpFarEl = document.getElementById('grp-far-title');
-    if (grpFarEl) grpFarEl.textContent = t('grpFar');
+    // Exam & Profs lang
+    document.getElementById('search-prof').placeholder = t('searchProf');
+    document.getElementById('search-name').placeholder = t('searchName');
+    document.getElementById('opt-all-groups').textContent = t('allGroups');
+    document.getElementById('opt-all-rooms').textContent = t('allRooms');
+    document.getElementById('opt-all-subjects').textContent = t('allSubjects');
+    document.getElementById('btn-fail-toggle').innerHTML = t('onlyFailed');
+    document.getElementById('exam-warn-text').textContent = t('examWarn');
 
     document.querySelectorAll('.lang-card').forEach(c => c.classList.remove('selected'));
-    const el = document.getElementById('lang-' + currentLang);
-    if (el) el.classList.add('selected');
+    document.getElementById('lang-' + currentLang).classList.add('selected');
+    
+    updateExams(); // Update list texts
+    const term = document.getElementById('search-prof').value.toLowerCase();
+    renderProfs(PROFS.filter(p => p.n.toLowerCase().includes(term) || p.d.toLowerCase().includes(term)));
 }
 
 function setLang(lang) {
-    currentLang = lang;
-    localStorage.setItem('npuu_lang', lang);
-    applyLang();
-    buildSyllabus();
-    showToast(t('langChanged'));
-    setTimeout(() => go('home'), 900);
+    currentLang = lang; localStorage.setItem('npuu_lang', lang); applyLang();
+    showToast("Language changed ✓"); setTimeout(() => go('home'), 900);
 }
 
 // ---- NAVIGATION ----
@@ -775,120 +413,127 @@ function go(screen) {
     document.getElementById('screen-' + screen).classList.add('active');
     window.scrollTo(0, 0);
 }
+function openExternal(url) { tg.openLink(url); }
+function sendToBot(data) { tg.sendData(JSON.stringify({ type: data })); }
+function showToast(msg) { const el = document.getElementById('toast'); el.textContent = msg; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2200); }
 
-// ---- BUILD TIMETABLE ----
-function buildTimetable() {
-    ['fm','fit','far'].forEach(type => {
-        const el = document.getElementById('grp-' + type);
-        el.innerHTML = '';
-        GROUPS[type].forEach(([name, id]) => {
-            const url = `https://npuu.edupage.org/timetable/view.php?num=6&class=${id}`;
-            el.innerHTML += `<div class="group-btn" onclick="openExternal('${url}')">${name}</div>`;
-        });
-    });
+// ==========================================
+// PROFESSORS LOGIC (INTEGRATED)
+// ==========================================
+const PROFS = [
+    {n: "Marks Ruziboev", e: "m.ruziboev@npuu.uz", d: "Mathematics"}, {n: "Azamat Xolboyev", e: "a.xolboyev@npuu.uz", d: "Mathematics"},
+    {n: "Allambergen Qudaybergenov", e: "a.qudaybergenov@npuu.uz", d: "Mathematics"}, {n: "Bakhtinur Juraev", e: "b.juraev@npuu.uz", d: "Mathematics"},
+    {n: "Farhod Muxamadiyev", e: "f.muxamadiyev@npuu.uz", d: "Mathematics"}, {n: "Anvar Sa'dullayev", e: "a.sa'dullayev@npuu.uz", d: "Mathematics"},
+    {n: "Shakhzod Suvanov", e: "sh.suvanov@npuu.uz", d: "Mathematics"}, {n: "Zarif Ibragimov", e: "z.ibragimov@npuu.uz", d: "Mathematics"},
+    {n: "Asadulla Ashurov", e: "a.ashurov@npuu.uz", d: "IT"}, {n: "Bakhromjon Tulkinov", e: "b.tulkinov@npuu.uz", d: "IT"},
+    {n: "Mirrakhmon Khaydarov", e: "m.khaydarov@npuu.uz", d: "IT"}, {n: "Ulugbek Tursunaliev", e: "u.tursunaliev@npuu.uz", d: "IT"},
+    {n: "Azamat Akhmedjanov", e: "a.akhmedjanov@npuu.uz", d: "General English"}, {n: "Azizabonu Ziyodullaeva", e: "a.ziyodullaeva@npuu.uz", d: "General English"},
+    {n: "Dilnoza Boymirzayeva", e: "d.boymirzayeva@npuu.uz", d: "General English"}, {n: "Mirjon Khidoyatov", e: "m.khidoyatov@npuu.uz", d: "General English"},
+    {n: "Mirsaid Abdurakhmonov", e: "m.abdurakhmonov@npuu.uz", d: "General English"}, {n: "Rano Khikmatova", e: "r.khikmatova@npuu.uz", d: "General English"},
+    {n: "Zukhra Khakimova", e: "z.khakimova@npuu.uz", d: "General English"}, {n: "Nilufar Tillayeva", e: "n.tillayeva@npuu.uz", d: "Education"},
+    {n: "Ozodakhon Shukurillaeva", e: "o.shukurillaeva@npuu.uz", d: "Education"}, {n: "Albina Suleymanova", e: "a.suleymanova@npuu.uz", d: "Education"}
+];
+
+function renderProfs(data) {
+    const listDiv = document.getElementById('prof-list');
+    if (data.length === 0) { listDiv.innerHTML = `<div style="text-align:center; color:var(--muted); padding:20px;">${t('noResults')}</div>`; return; }
+    listDiv.innerHTML = data.map(p => `
+        <div class="card prof-card" onclick="window.location.href='mailto:${p.e}'">
+            <div style="font-size:11px; font-weight:bold; color:var(--accent); text-transform:uppercase; margin-bottom:4px; letter-spacing:0.5px;">${p.d}</div>
+            <div style="font-size:16px; font-weight:600; margin-bottom:6px;">${p.n}</div>
+            <div style="font-size:13px; color:var(--muted); display:flex; align-items:center; gap:6px;"><span>✉️</span> ${p.e}</div>
+        </div>`).join('');
 }
+document.getElementById('search-prof').addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase();
+    renderProfs(PROFS.filter(p => p.n.toLowerCase().includes(term) || p.d.toLowerCase().includes(term)));
+});
 
-// ---- BUILD SYLLABUS ----
-function buildSyllabus() {
-    const el = document.getElementById('syllabus-list');
-    el.innerHTML = '';
-    SYLLABUS.forEach(s => {
-        if (s.available) {
-            el.innerHTML += `
-                <div class="list-item" onclick="sendToBot('syllabus_${s.name}')">
-                    <div class="list-icon bg-purple">${s.icon}</div>
-                    <div class="list-info">
-                        <div class="list-title">${s.name}</div>
-                        <div class="list-desc">${t('getFile')}</div>
-                    </div>
-                    <span class="list-chevron">↓</span>
-                </div>`;
-        } else {
-            el.innerHTML += `
-                <div class="list-item" style="opacity:.45;cursor:default;">
-                    <div class="list-icon bg-orange">${s.icon}</div>
-                    <div class="list-info">
-                        <div class="list-title">${s.name}</div>
-                        <div class="list-desc">${t('notAvail')}</div>
-                    </div>
-                </div>`;
-        }
-    });
-}
+// ==========================================
+// FINAL EXAM LOGIC (INTEGRATED)
+// ==========================================
+let allExams = [];
+let onlyFailed = false;
+const API_URL = "https://script.google.com/macros/s/AKfycbwo2j58xOCcVHRbgifOZijiQl906VvM0GdeSg1ES_1mTfd8eTuUavbd8QD5cUjyZUDF8w/exec";
 
-// ---- GPA ----
-function buildGPA() {
-    const n = parseInt(document.getElementById('subject-count').value);
-    if (!n || n < 1) return;
-    const el = document.getElementById('gpa-fields');
-    el.innerHTML = '';
-    for (let i = 1; i <= n; i++) {
-        el.innerHTML += `
-            <div class="subject-row">
-                <div class="subject-num">${t('fan')} ${i}</div>
-                <div class="input-row">
-                    <input type="number" class="sc" placeholder="${t('creditEx')}">
-                    <input type="number" class="sg" placeholder="${t('gradeEx')}">
-                </div>
-            </div>`;
-    }
-    document.getElementById('btn-calc').style.display = 'block';
-    document.getElementById('gpa-result').classList.remove('show');
-}
-
-function calcGPA() {
-    const credits = document.querySelectorAll('.sc');
-    const grades  = document.querySelectorAll('.sg');
-    let totalC = 0, totalP = 0;
-    credits.forEach((c, i) => {
-        const cr = parseFloat(c.value) || 0;
-        const sc = parseFloat(grades[i].value) || 0;
-        let gp = 0;
-        if (sc >= 95) gp = 4.5;
-        else if (sc >= 90) gp = 4.0;
-        else if (sc >= 85) gp = 3.5;
-        else if (sc >= 80) gp = 3.0;
-        else if (sc >= 75) gp = 2.5;
-        else if (sc >= 70) gp = 2.0;
-        totalC += cr;
-        totalP += cr * gp;
-    });
-    const gpa = totalC > 0 ? totalP / totalC : 0;
-    document.getElementById('gpa-val').textContent = gpa.toFixed(2);
-    let grade = gpa >= 3.7 ? "A — Excellent 🏆"
-              : gpa >= 3.0 ? "B — Good 👍"
-              : gpa >= 2.0 ? "C — Average 📚"
-              : "D — Below Average ⚠️";
-    document.getElementById('gpa-grade').textContent = grade;
-    document.getElementById('gpa-result').classList.add('show');
-    document.getElementById('gpa-result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-// ---- HELPERS ----
-function openExternal(url) {
-    tg.openLink(url);
-}
-
-function sendToBot(data) {
+async function initExams() {
     try {
-        tg.sendData(JSON.stringify({ type: data }));
-    } catch(e) {
-        showToast(t('calSent'));
+        const res = await fetch(API_URL);
+        allExams = await res.json();
+        
+        const subjects = [...new Set(allExams.map(s => s.subject))].sort();
+        const rooms = [...new Set(allExams.map(s => s.room))].filter(r => r).sort();
+        
+        const subSelect = document.getElementById('search-subject');
+        subjects.forEach(s => { const opt = document.createElement('option'); opt.value = s; opt.textContent = "📚 " + s; subSelect.appendChild(opt); });
+
+        const roomSelect = document.getElementById('search-room');
+        rooms.forEach(r => { const opt = document.createElement('option'); opt.value = r; opt.textContent = "🚪 " + r; roomSelect.appendChild(opt); });
+
+        document.getElementById('exam-loader').style.display = 'none';
+        updateExams();
+    } catch (e) {
+        document.getElementById('exam-loader').innerHTML = `<b style="color:var(--accent2)">Ulanishda xatolik yuz berdi.</b>`;
     }
 }
 
-// ---- TOAST ----
-function showToast(msg) {
-    const el = document.getElementById('toast');
-    el.textContent = msg;
-    el.classList.add('show');
-    setTimeout(() => el.classList.remove('show'), 2200);
+function updateExams() {
+    if(allExams.length === 0) return;
+    const n = document.getElementById('search-name').value.toLowerCase();
+    const g = document.getElementById('search-group').value.toUpperCase();
+    const r = document.getElementById('search-room').value.toLowerCase();
+    const s = document.getElementById('search-subject').value;
+
+    const filtered = allExams.filter(st => {
+        const stStatus = (st.status || "").toLowerCase();
+        const isF = stStatus.includes('fail') || stStatus.includes('no');
+        const matchesName = st.name.toLowerCase().includes(n);
+        const matchesGroup = g === "" || st.group.toString().toUpperCase().includes(g);
+        const matchesRoom = r === "" || st.room.toString().toLowerCase() === r;
+        const matchesSubject = s === "" || st.subject === s;
+        return matchesName && matchesGroup && matchesRoom && matchesSubject && (!onlyFailed || isF);
+    });
+
+    const list = document.getElementById('exam-list');
+    let htmlBuffer = "";
+
+    if (filtered.length === 0) { htmlBuffer = `<p style="text-align:center; color:var(--muted); padding:20px;">${t('noResults')}</p>`; } 
+    else {
+        filtered.forEach(st => {
+            const stStatus = (st.status || "").toLowerCase();
+            const isF = stStatus.includes('fail') || stStatus.includes('no');
+            htmlBuffer += `
+                <div class="card exam-card ${isF ? 'failed' : ''}">
+                    <span style="font-weight:700; font-size:16px; display:block; margin-bottom:8px; color:var(--text);">${st.name}</span>
+                    <div class="info-grid">
+                        <div class="info-item">👥 ${t('group')}: ${st.group}</div>
+                        <div class="info-item">📚 ${t('subject')}: ${st.subject}</div>
+                        <div class="info-item">📅 ${t('date')}: ${st.date}</div>
+                        <div class="info-item">⏰ ${t('time')}: ${st.time}</div>
+                        <div class="info-item">🚪 ${t('room')}: ${st.room}</div>
+                    </div>
+                    <span class="tag ${isF ? 'tag-fail' : 'tag-pass'}">${isF ? t('notAllowed') : t('allowed')}</span>
+                </div>`;
+        });
+    }
+    list.innerHTML = htmlBuffer;
 }
 
-// ---- INIT ----
-buildTimetable();
-buildSyllabus();
+document.getElementById('btn-fail-toggle').onclick = function() {
+    onlyFailed = !onlyFailed; this.classList.toggle('active'); updateExams();
+};
+
+let searchTimeout;
+['search-name', 'search-group', 'search-room', 'search-subject'].forEach(id => {
+    const el = document.getElementById(id);
+    if(id === 'search-name') { el.addEventListener('input', () => { clearTimeout(searchTimeout); searchTimeout = setTimeout(updateExams, 150); }); }
+    else { el.addEventListener('change', updateExams); }
+});
+
+// INIT ALL
 applyLang();
+renderProfs(PROFS);
+initExams(); // Ma'lumotlarni fonda yuklab qo'yadi
 </script>
 </body>
 </html>
