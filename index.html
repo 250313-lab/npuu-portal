@@ -59,14 +59,19 @@
             position: relative;
         }
 
-        .logo-img {
+        /* O'zgartirilgan Logo dizayni */
+        .logo-icon {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            object-fit: cover;
             border: 2px solid var(--accent);
             box-shadow: 0 0 15px rgba(58, 134, 255, 0.4);
-            margin-bottom: 12px;
+            margin: 0 auto 12px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            background: var(--surface2);
         }
 
         .header h1 {
@@ -257,6 +262,13 @@
             margin-bottom: 0;
             font-size: 14px;
         }
+        
+        /* GPA score input yashirin spin-buttonlarni olib tashlash */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
     </style>
 </head>
 <body>
@@ -270,7 +282,7 @@
     </div>
 
     <div class="header">
-        <img src="https://raw.githubusercontent.com/250313-lab/image/main/photo_2026-05-30_19-09-13.jpg" class="logo-img" alt="NPUU Logo" onerror="this.src='https://raw.githubusercontent.com/250313-lab/image/master/photo_2026-05-30_19-09-13.jpg'">
+        <div class="logo-icon">🎓</div>
         <h1 data-i18n="title">NPUU SMART BOT</h1>
         <p data-i18n="subtitle">Talabalar uchun raqamli boshqaruv muhiti</p>
     </div>
@@ -285,6 +297,13 @@
     </div>
 
     <div id="view-resit" class="view-section active">
+        <div class="card" style="background: rgba(255, 193, 7, 0.1); border-color: rgba(255, 193, 7, 0.3); border-left: 4px solid #ffc107; padding: 12px;">
+            <div style="font-size:13px; color:#ffcd39; font-weight:600; line-height: 1.4; display:flex; gap:8px;">
+                <span style="font-size:16px;">⚠️</span>
+                <span data-i18n="resit_warning">Ushbu bo'lim sinov rejimida ishlamoqda, ma'lumotlarni rasmiy manbalardan qayta tekshiring!</span>
+            </div>
+        </div>
+
         <div class="search-box">
             <input type="text" id="search-name" data-i18n-ph="search_name" placeholder="🔍 Ism bo'yicha qidirish...">
             <select id="search-room"><option value="" data-i18n="search_room">🔑 Xonani tanlang</option></select>
@@ -298,6 +317,13 @@
         <div class="card" style="margin-bottom:16px;">
             <div style="font-size:13px; color:var(--muted); margin-bottom:4px;" data-i18n="gpa_overall">Sizning umumiy natijangiz:</div>
             <div id="gpa-result" style="font-family:'Syne',sans-serif; font-size:36px; font-weight:800; color:var(--accent2);">0.00</div>
+        </div>
+        <div style="display:flex; gap:8px; padding: 0 14px 8px; font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase;">
+            <div style="flex:2;">Fan nomi</div>
+            <div style="width:40px; text-align:center;" data-i18n="gpa_cr">Kredit</div>
+            <div style="width:55px; text-align:center;" data-i18n="gpa_score">Baho(100)</div>
+            <div style="width:35px; text-align:center;">Harf</div>
+            <div style="width:24px;"></div>
         </div>
         <div id="gpa-rows"></div>
         <button class="btn" style="background:var(--surface2); color:#fff; border:1px solid var(--border);" onclick="addGpaRow()"><span data-i18n="add_subject">➕ Fan qo'shish</span></button>
@@ -386,7 +412,9 @@
                 add_subject: "➕ Fan qo'shish", gpa_overall: "Sizning umumiy natijangiz:", prof_search: "🔍 Professor ismi yoki kafedra...",
                 handbook_desc: "Yo'nalishingizga mos keluvchi Handbook fayllarini onlayn ko'rish uchun quyidagi tugmalardan birini tanlang.",
                 timetable_desc: "Dars jadvalini ko'rish uchun guruhingizni tanlang:", hero_desc: "NPUU Hero Study platformasiga o'tish tugmasini bosing:",
-                go_to_hero: "🚀 Hero Study'ga o'tish", exam_status_fail: "Ruxsat etilmagan", exam_status_ok: "Ruxsat etilgan"
+                go_to_hero: "🚀 Hero Study'ga o'tish", exam_status_fail: "Ruxsat etilmagan", exam_status_ok: "Ruxsat etilgan",
+                resit_warning: "Ushbu bo'lim sinov rejimida ishlamoqda, ma'lumotlarni rasmiy manbalardan qayta tekshiring!",
+                gpa_cr: "Kredit", gpa_score: "Baho(100)"
             },
             ru: {
                 title: "NPUU SMART BOT", subtitle: "Цифровая среда управления",
@@ -396,7 +424,9 @@
                 add_subject: "➕ Добавить предмет", gpa_overall: "Ваш общий балл:", prof_search: "🔍 Имя или кафедра...",
                 handbook_desc: "Выберите одну из кнопок ниже для просмотра справочника по вашему направлению.",
                 timetable_desc: "Выберите свою группу для просмотра расписания:", hero_desc: "Нажмите кнопку, чтобы перейти на платформу Hero Study:",
-                go_to_hero: "🚀 Перейти в Hero", exam_status_fail: "Не допущен", exam_status_ok: "Допущен"
+                go_to_hero: "🚀 Перейти в Hero", exam_status_fail: "Не допущен", exam_status_ok: "Допущен",
+                resit_warning: "Этот раздел работает в тестовом режиме, пожалуйста, перепроверьте данные в официальных источниках!",
+                gpa_cr: "Кредит", gpa_score: "Балл(100)"
             },
             en: {
                 title: "NPUU SMART BOT", subtitle: "Digital management environment",
@@ -406,7 +436,9 @@
                 add_subject: "➕ Add subject", gpa_overall: "Your overall GPA:", prof_search: "🔍 Professor name or department...",
                 handbook_desc: "Choose one of the buttons below to view the Handbook for your major.",
                 timetable_desc: "Select your group to view the timetable:", hero_desc: "Click the button to access the Hero Study platform:",
-                go_to_hero: "🚀 Go to Hero Study", exam_status_fail: "Not Allowed", exam_status_ok: "Allowed"
+                go_to_hero: "🚀 Go to Hero Study", exam_status_fail: "Not Allowed", exam_status_ok: "Allowed",
+                resit_warning: "This section is in test mode, please double-check with official sources!",
+                gpa_cr: "Credit", gpa_score: "Score(100)"
             }
         };
 
@@ -441,7 +473,7 @@
             if (activeNavItem) activeNavItem.classList.add('active');
         }
 
-        // --- RESIT EXAMS LOGIC (Directly parsing provided format) ---
+        // --- RESIT EXAMS LOGIC ---
         const SPREADSHEET_ID = "19-Nigcb3FNC1xYoj-hsTPHF7hrQSc0xu-pY6TwNQqS0";
         const SHEET_NAMES = [
             "Discrete Math", "Analysis 2", "Analytical Geometry", "Calculus 2", 
@@ -456,7 +488,6 @@
             allExams = [];
 
             try {
-                // Fetch all 7 sheets parallel
                 const promises = SHEET_NAMES.map(sheetName => 
                     fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`)
                     .then(res => res.text())
@@ -472,7 +503,7 @@
                 results.forEach(data => {
                     if(!data || !data.table || !data.table.rows) return;
                     const rows = data.table.rows;
-                    for (let i = 1; i < rows.length; i++) { // Skip header
+                    for (let i = 1; i < rows.length; i++) {
                         const r = rows[i].c;
                         if (!r || !r[0]) continue;
                         
@@ -581,7 +612,7 @@
             else window.open(url, '_blank');
         }
 
-        // --- GPA CALCULATOR LOGIC ---
+        // --- YANILANGAN GPA CALCULATOR LOGIC (0-100 Shkalasi) ---
         const DEFAULT_SUBJECTS = ["Introduction to T.L", "Programming 1", "Discrete Math", "General English 2", "Math Analysis 2", "Analytical Geometry", "Calculus 2"];
         
         function initGpa() {
@@ -595,7 +626,7 @@
             const container = document.getElementById('gpa-rows');
             const row = document.createElement('div');
             row.className = 'card';
-            row.style.padding = '10px';
+            row.style.padding = '8px 10px';
             row.style.display = 'flex';
             row.style.gap = '8px';
             row.style.alignItems = 'center';
@@ -603,28 +634,48 @@
 
             row.innerHTML = `
                 <input type="text" value="${name}" placeholder="Subject / Fan" style="flex:2; background:var(--surface2); border:1px solid var(--border); color:#fff; padding:8px; border-radius:8px; font-size:13px; min-width:0;">
-                <input type="number" class="credit-input" placeholder="Cr" min="1" max="10" value="3" style="width:50px; background:var(--surface2); border:1px solid var(--border); color:#fff; padding:8px; border-radius:8px; text-align:center; font-size:13px;">
-                <select class="grade-select" style="flex:1; background:var(--surface2); border:1px solid var(--border); color:#fff; padding:8px; border-radius:8px; font-size:13px; min-width:0;">
-                    <option value="4.5">A+</option><option value="4.0">A</option>
-                    <option value="3.5">B+</option><option value="3.0">B</option>
-                    <option value="2.5">C+</option><option value="2.0">C</option>
-                    <option value="1.5">D+</option><option value="1.0">D</option>
-                    <option value="0.0" selected>F</option>
-                </select>
+                <input type="number" class="credit-input" placeholder="Cr" min="1" max="10" value="3" style="width:40px; background:var(--surface2); border:1px solid var(--border); color:#fff; padding:8px; border-radius:8px; text-align:center; font-size:13px;">
+                <input type="number" class="score-input" placeholder="0-100" min="0" max="100" value="" style="width:55px; background:var(--surface2); border:1px solid var(--border); color:#fff; padding:8px; border-radius:8px; text-align:center; font-size:13px;">
+                <div class="grade-display" style="width: 35px; text-align: center; font-weight: 700; font-size: 14px; color: var(--muted);">-</div>
                 <button onclick="this.parentElement.remove(); calculateGpa();" style="background:none; border:none; color:#ff4d4d; font-size:16px; cursor:pointer; padding:0 4px;">✕</button>
             `;
             container.appendChild(row);
             row.querySelector('.credit-input').addEventListener('input', calculateGpa);
-            row.querySelector('.grade-select').addEventListener('change', calculateGpa);
+            row.querySelector('.score-input').addEventListener('input', calculateGpa);
         }
 
         function calculateGpa() {
             let totalCredits = 0, totalPoints = 0;
             document.querySelectorAll('#gpa-rows .card').forEach(row => {
                 const credit = parseFloat(row.querySelector('.credit-input').value) || 0;
-                const grade = parseFloat(row.querySelector('.grade-select').value) || 0;
-                totalCredits += credit;
-                totalPoints += (credit * grade);
+                const scoreValue = row.querySelector('.score-input').value;
+                const score = parseFloat(scoreValue);
+                const gradeDisplay = row.querySelector('.grade-display');
+                
+                let gradePoint = 0.0;
+                let letter = '-';
+
+                // Kiritilgan ball bo'yicha GPA ni baholash (Standard: 90-100 = 4.5)
+                if (!isNaN(score) && scoreValue !== '') {
+                    if(score >= 90) { gradePoint = 4.5; letter = 'A+'; }
+                    else if(score >= 85) { gradePoint = 4.0; letter = 'A'; }
+                    else if(score >= 80) { gradePoint = 3.5; letter = 'B+'; }
+                    else if(score >= 75) { gradePoint = 3.0; letter = 'B'; }
+                    else if(score >= 70) { gradePoint = 2.5; letter = 'C+'; }
+                    else if(score >= 65) { gradePoint = 2.0; letter = 'C'; }
+                    else if(score >= 60) { gradePoint = 1.5; letter = 'D+'; }
+                    else if(score >= 50) { gradePoint = 1.0; letter = 'D'; }
+                    else { gradePoint = 0.0; letter = 'F'; }
+                    
+                    gradeDisplay.innerText = letter;
+                    gradeDisplay.style.color = gradePoint > 0 ? 'var(--accent3)' : '#ff4d4d';
+                    
+                    totalCredits += credit;
+                    totalPoints += (credit * gradePoint);
+                } else {
+                    gradeDisplay.innerText = '-';
+                    gradeDisplay.style.color = 'var(--muted)';
+                }
             });
             const gpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : "0.00";
             document.getElementById('gpa-result').innerText = gpa;
