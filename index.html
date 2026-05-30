@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Portal</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #222222);
+        }
+        .btn-primary {
+            background-color: var(--tg-theme-button-color, #2481cc);
+            color: var(--tg-theme-button-text-color, #ffffff);
+        }
+    </style>
+</head>
+<body class="p-4 font-sans select-none">
+
+    <div id="main-menu" class="space-y-4">
+        <div class="text-center my-4">
+            <h1 class="text-xl font-bold" id="title-welcome">Kerakli bo'limni tanlang:</h1>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+            <button onclick="switchTab('academic')" class="btn-primary p-4 rounded-xl font-medium shadow flex flex-col items-center justify-center gap-2">
+                <span>📚</span> <span id="btn-study">Academic Resources</span>
+            </button>
+            <button onclick="switchTab('gpa')" class="btn-primary p-4 rounded-xl font-medium shadow flex flex-col items-center justify-center gap-2">
+                <span>🧮</span> <span id="btn-gpa">GPA Kalkulyator</span>
+            </button>
+            <button onclick="tg.showAlert('Tez orada qo\'shiladi!')" class="btn-primary p-4 rounded-xl font-medium shadow flex flex-col items-center justify-center gap-2">
+                <span>📅</span> <span id="btn-timetable">Dars jadvali</span>
+            </button>
+            <button onclick="switchTab('settings')" class="btn-primary p-4 rounded-xl font-medium shadow flex flex-col items-center justify-center gap-2">
+                <span>🌐</span> <span id="btn-lang">Tilni o'zgartirish</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="academic-tab" class="hidden space-y-4">
+        <button onclick="switchTab('main')" class="text-sm font-semibold text-blue-500">⬅️ Orqaga</button>
+        <h2 class="text-lg font-bold my-2">Guruhni tanlang:</h2>
+        <div class="grid grid-cols-3 gap-2">
+            <button onclick="selectGroup('FM1')" class="bg-gray-100 p-2 rounded text-center text-gray-800 font-medium">FM1</button>
+            <button onclick="selectGroup('FM2')" class="bg-gray-100 p-2 rounded text-center text-gray-800 font-medium">FM2</button>
+            <button onclick="selectGroup('FIT1')" class="bg-gray-100 p-2 rounded text-center text-gray-800 font-medium">FIT1</button>
+            <button onclick="selectGroup('FAR1')" class="bg-gray-100 p-2 rounded text-center text-gray-800 font-medium">FAR1</button>
+        </div>
+    </div>
+
+    <div id="gpa-tab" class="hidden space-y-4">
+        <button onclick="switchTab('main')" class="text-sm font-semibold text-blue-500">⬅️ Orqaga</button>
+        <h2 class="text-lg font-bold">🧮 GPA Kalkulyator</h2>
+        <div class="space-y-2">
+            <label class="block text-sm">Fanlar sonini kiriting:</label>
+            <input type="number" id="subject-count" min="1" max="10" class="w-full p-2 border rounded border-gray-300 bg-white text-black" placeholder="Masalan: 4">
+            <button onclick="generateGPALevels()" class="btn-primary w-full p-2 rounded font-medium">Fanlarni kiritish</button>
+        </div>
+        <div id="gpa-inputs" class="space-y-2 mt-4"></div>
+        <button onclick="calculateGPA()" id="btn-calc" class="hidden w-full bg-green-600 text-white p-3 rounded-xl font-bold mt-2">Hisoblash</button>
+        <div id="gpa-result" class="text-xl font-bold text-center text-blue-600 mt-4"></div>
+    </div>
+
+    <div id="settings-tab" class="hidden space-y-4">
+        <button onclick="switchTab('main')" class="text-sm font-semibold text-blue-500">⬅️ Orqaga</button>
+        <h2 class="text-lg font-bold text-center">🌐 Tilni tanlang / Выберите язык</h2>
+        <div class="space-y-2">
+            <button onclick="changeLanguage('uz')" class="w-full p-3 bg-gray-100 text-black rounded-xl font-medium text-left">🇺🇿 O'zbekcha</button>
+            <button onclick="changeLanguage('ru')" class="w-full p-3 bg-gray-100 text-black rounded-xl font-medium text-left">🇷🇺 Русский</button>
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function switchTab(tab) {
+            document.getElementById('main-menu').classList.add('hidden');
+            document.getElementById('academic-tab').classList.add('hidden');
+            document.getElementById('gpa-tab').classList.add('hidden');
+            document.getElementById('settings-tab').classList.add('hidden');
+            if (tab === 'main') document.getElementById('main-menu').classList.remove('hidden');
+            if (tab === 'academic') document.getElementById('academic-tab').classList.remove('hidden');
+            if (tab === 'gpa') document.getElementById('gpa-tab').classList.remove('hidden');
+            if (tab === 'settings') document.getElementById('settings-tab').classList.remove('hidden');
+        }
+
+        function generateGPALevels() {
+            const count = document.getElementById('subject-count').value;
+            const container = document.getElementById('gpa-inputs');
+            container.innerHTML = '';
+            if (count < 1) return;
+            for (let i = 1; i <= count; i++) {
+                container.innerHTML += `
+                    <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 text-black space-y-2">
+                        <span class="font-bold text-sm text-gray-700">${i}-fan</span>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="number" placeholder="Kredit (Masalan: 6)" class="p-2 border rounded bg-white w-full subject-credit">
+                            <input type="number" placeholder="Baho (Masalan: 92)" class="p-2 border rounded bg-white w-full subject-grade">
+                        </div>
+                    </div>
+                `;
+            }
+            document.getElementById('btn-calc').classList.remove('hidden');
+        }
+
+        function calculateGPA() {
+            const credits = document.querySelectorAll('.subject-credit');
+            const grades = document.querySelectorAll('.subject-grade');
+            let totalCredits = 0;
+            let totalPoints = 0;
+            for (let i = 0; i < credits.length; i++) {
+                let credit = parseFloat(credits[i].value) || 0;
+                let grade = parseFloat(grades[i].value) || 0;
+                let gpa4 = 0;
+                if (grade >= 95) gpa4 = 4.5;
+                else if (grade >= 90) gpa4 = 4.0;
+                else if (grade >= 85) gpa4 = 3.5;
+                else if (grade >= 80) gpa4 = 3.0;
+                else if (grade >= 75) gpa4 = 2.5;
+                else if (grade >= 70) gpa4 = 2.0;
+                else gpa4 = 0;
+                totalCredits += credit;
+                totalPoints += (gpa4 * credit);
+            }
+            let finalGPA = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
+            document.getElementById('gpa-result').innerText = `Sizning GPA: ${finalGPA}`;
+        }
+
+        // Guruh tanlanganda — faqat yopish (sendData emas)
+        function selectGroup(group) {
+            tg.showAlert(`${group} tanlandi!`);
+        }
+
+        const langTexts = {
+            uz: { welcome: "Kerakli bo'limni tanlang:", study: "Academic Resources", gpa: "GPA Kalkulyator", timetable: "Dars jadvali", lang: "Tilni o'zgartirish" },
+            ru: { welcome: "Выберите нужный раздел:", study: "Академические ресурсы", gpa: "Калькулятор GPA", timetable: "Расписание", lang: "Сменить язык" }
+        };
+
+        function changeLanguage(lang) {
+            document.getElementById('title-welcome').innerText = langTexts[lang].welcome;
+            document.getElementById('btn-study').innerText = langTexts[lang].study;
+            document.getElementById('btn-gpa').innerText = langTexts[lang].gpa;
+            document.getElementById('btn-timetable').innerText = langTexts[lang].timetable;
+            document.getElementById('btn-lang').innerText = langTexts[lang].lang;
+            switchTab('main');
+            tg.showAlert("Til o'zgartirildi / Язык изменен");
+        }
+    </script>
+</body>
+</html>
