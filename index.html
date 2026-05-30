@@ -2,152 +2,902 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NPUU Smart Portal</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #13131a;
+            --surface2: #1c1c28;
+            --border: rgba(255,255,255,0.07);
+            --accent: #6c63ff;
+            --accent2: #ff6b9d;
+            --accent3: #43e8b0;
+            --text: #f0f0f8;
+            --muted: rgba(240,240,248,0.45);
+            --radius: 18px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
         body {
-            background-color: var(--tg-theme-bg-color, #ffffff);
-            color: var(--tg-theme-text-color, #222222);
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-        .btn-primary {
-            background-color: var(--tg-theme-button-color, #2481cc);
-            color: var(--tg-theme-button-text-color, #ffffff);
+
+        /* BG mesh */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 40% at 20% 10%, rgba(108,99,255,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 35% at 80% 80%, rgba(67,232,176,0.12) 0%, transparent 55%),
+                radial-gradient(ellipse 40% 30% at 60% 30%, rgba(255,107,157,0.10) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
+
+        .app { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; }
+
+        /* ---- HEADER ---- */
+        .header {
+            padding: 20px 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .back-btn {
+            width: 38px; height: 38px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all .2s;
+            flex-shrink: 0;
+        }
+        .back-btn:active { transform: scale(.92); background: var(--accent); }
+        .page-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        /* ---- SCREENS ---- */
+        .screen { display: none; padding: 16px 20px 32px; animation: fadeUp .3s ease; }
+        .screen.active { display: block; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---- HOME ---- */
+        .home-hero {
+            padding: 28px 20px 8px;
+            text-align: center;
+        }
+        .logo-ring {
+            width: 72px; height: 72px;
+            margin: 0 auto 16px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 8px 32px rgba(108,99,255,0.35);
+        }
+        .home-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+        .home-title span { color: var(--accent); }
+        .home-sub {
+            margin-top: 6px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        /* ---- GRID ---- */
+        .grid { display: grid; gap: 12px; margin-top: 24px; }
+        .grid-2 { grid-template-columns: 1fr 1fr; }
+        .grid-1 { grid-template-columns: 1fr; }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 16px;
+            cursor: pointer;
+            transition: all .22s;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity .22s;
+        }
+        .card:active { transform: scale(.96); }
+        .card:active::before { opacity: 1; }
+
+        .card.purple::before  { background: rgba(108,99,255,0.12); }
+        .card.pink::before    { background: rgba(255,107,157,0.12); }
+        .card.teal::before    { background: rgba(67,232,176,0.12); }
+        .card.orange::before  { background: rgba(255,171,64,0.12); }
+        .card.blue::before    { background: rgba(64,180,255,0.12); }
+        .card.red::before     { background: rgba(255,80,80,0.12); }
+
+        .card-icon {
+            font-size: 26px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .card-label {
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        .card-sub {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+        .card-arrow {
+            position: absolute;
+            right: 14px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* ---- SECTION TITLE ---- */
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--muted);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin: 20px 0 10px;
+        }
+
+        /* ---- LIST ITEMS ---- */
+        .list-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: all .2s;
+            margin-bottom: 8px;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .list-item:active { transform: scale(.97); background: var(--surface2); }
+        .list-icon {
+            width: 40px; height: 40px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .bg-purple { background: rgba(108,99,255,0.2); }
+        .bg-pink    { background: rgba(255,107,157,0.2); }
+        .bg-teal    { background: rgba(67,232,176,0.2); }
+        .bg-orange  { background: rgba(255,171,64,0.2); }
+        .bg-blue    { background: rgba(64,180,255,0.2); }
+        .bg-red     { background: rgba(255,80,80,0.2); }
+
+        .list-info { flex: 1; }
+        .list-title { font-size: 14px; font-weight: 500; }
+        .list-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+        .list-chevron { color: var(--muted); font-size: 13px; }
+
+        /* ---- GPA ---- */
+        .gpa-result-box {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+            box-shadow: 0 8px 32px rgba(108,99,255,0.3);
+        }
+        .gpa-result-box.show { display: block; animation: fadeUp .3s ease; }
+        .gpa-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .gpa-label { font-size: 13px; opacity: .8; margin-top: 4px; }
+        .gpa-badge {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 4px 14px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .subject-row {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 8px;
+        }
+        .subject-num {
+            font-size: 11px;
+            color: var(--accent);
+            font-weight: 700;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+        input[type="number"] {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 12px;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            width: 100%;
+            outline: none;
+            transition: border-color .2s;
+        }
+        input[type="number"]:focus { border-color: var(--accent); }
+        input[type="number"]::placeholder { color: var(--muted); }
+
+        /* ---- BUTTONS ---- */
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            font-family: 'Syne', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s;
+            margin-top: 10px;
+        }
+        .btn:active { transform: scale(.97); }
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent), #8b82ff);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(108,99,255,0.35);
+        }
+        .btn-surface {
+            background: var(--surface2);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-green {
+            background: linear-gradient(135deg, #43e8b0, #1db87a);
+            color: #0a0a0f;
+            box-shadow: 0 4px 20px rgba(67,232,176,0.3);
+        }
+
+        /* ---- LANG ---- */
+        .lang-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all .2s;
+            margin-bottom: 10px;
+        }
+        .lang-card:active { transform: scale(.97); }
+        .lang-card.selected { border-color: var(--accent); background: rgba(108,99,255,0.1); }
+        .lang-flag { font-size: 32px; }
+        .lang-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; }
+        .lang-native { font-size: 12px; color: var(--muted); }
+        .lang-check { margin-left: auto; color: var(--accent); font-size: 18px; opacity: 0; }
+        .lang-card.selected .lang-check { opacity: 1; }
+
+        /* ---- GROUP GRID ---- */
+        .group-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+        .group-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .2s;
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            display: block;
+        }
+        .group-btn:active { transform: scale(.94); background: rgba(108,99,255,0.15); border-color: var(--accent); }
+
+        /* ---- TOAST ---- */
+        .toast {
+            position: fixed;
+            bottom: 24px; left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 999;
+            transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+            white-space: nowrap;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* ---- DIVIDER ---- */
+        .divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+        /* ---- WARNING BOX ---- */
+        .warn-box {
+            background: rgba(255,171,64,0.1);
+            border: 1px solid rgba(255,171,64,0.3);
+            border-radius: 14px;
+            padding: 14px 16px;
+            font-size: 13px;
+            color: #ffab40;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* scroll */
+        .screen { max-height: 100vh; overflow-y: auto; }
     </style>
 </head>
-<body class="p-4 font-sans select-none">
+<body>
+<div class="app">
 
-    <div id="main-menu" class="space-y-4">
-        <div class="text-center my-4">
-            <h1 class="text-xl font-bold" id="title-welcome">Kerakli bo'limni tanlang:</h1>
+    <!-- ========== HOME ========== -->
+    <div id="screen-home" class="screen active">
+        <div class="home-hero">
+            <div class="logo-ring">🎓</div>
+            <div class="home-title">NPUU <span>Smart</span><br>Portal</div>
+            <div class="home-sub" id="home-sub">Kerakli bo'limni tanlang</div>
         </div>
-        <div class="grid grid-cols-2 gap-3">
-            <button onclick="switchTab('academic')" class="btn-primary p-4 rounded-xl font-medium shadow flex flex-col items-center justify-center gap-2">
-                <span>📚</span> <span id="btn-study">Academic Resources</span>
-            </button>
-            <button onclick="switchTab('gpa')" class="btn-primary p-4 rounded-xl font-medium shadow flex flex-col items-center justify-center gap-2">
-                <span>🧮</span> <span id="btn-gpa">GPA Kalkulyator</span>
-            </button>
-            <button onclick="tg.showAlert('Tez orada qo\'shiladi!')" class="btn-primary p-4 rounded-xl font-medium shadow flex flex-col items-center justify-center gap-2">
-                <span>📅</span> <span id="btn-timetable">Dars jadvali</span>
-            </button>
-            <button onclick="switchTab('settings')" class="btn-primary p-4 rounded-xl font-medium shadow flex flex-col items-center justify-center gap-2">
-                <span>🌐</span> <span id="btn-lang">Tilni o'zgartirish</span>
-            </button>
+
+        <div style="padding: 0 20px;">
+            <div class="section-title" id="lbl-main">Asosiy</div>
+            <div class="grid grid-2">
+                <div class="card purple" onclick="go('academic')">
+                    <span class="card-icon">📚</span>
+                    <div class="card-label" id="lbl-study">Academic Resources</div>
+                    <div class="card-sub" id="lbl-study-sub">Syllabus, handbook</div>
+                </div>
+                <div class="card teal" onclick="go('timetable')">
+                    <span class="card-icon">📅</span>
+                    <div class="card-label" id="lbl-timetable">Dars jadvali</div>
+                    <div class="card-sub" id="lbl-timetable-sub">Guruh bo'yicha</div>
+                </div>
+                <div class="card pink" onclick="go('exam')">
+                    <span class="card-icon">🔥</span>
+                    <div class="card-label" id="lbl-exam">Final Exam</div>
+                    <div class="card-sub" id="lbl-exam-sub">Natijalarni tekshirish</div>
+                </div>
+                <div class="card orange" onclick="openExternal('https://npuu.hero.study/login')">
+                    <span class="card-icon">💎</span>
+                    <div class="card-label" id="lbl-hero">Hero Study</div>
+                    <div class="card-sub" id="lbl-hero-sub">Portal</div>
+                </div>
+            </div>
+
+            <div class="section-title" id="lbl-tools" style="margin-top:20px;">Vositalar</div>
+            <div class="grid grid-2">
+                <div class="card blue" onclick="go('gpa')">
+                    <span class="card-icon">🧮</span>
+                    <div class="card-label" id="lbl-gpa">GPA Kalkulyator</div>
+                    <div class="card-sub" id="lbl-gpa-sub">GPA hisoblash</div>
+                </div>
+                <div class="card purple" onclick="openExternal('https://250313-lab.github.io/prof-list/')">
+                    <span class="card-icon">👨‍🏫</span>
+                    <div class="card-label" id="lbl-profs">Professorlar</div>
+                    <div class="card-sub" id="lbl-profs-sub">Ro'yxat</div>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top:20px;">Boshqa</div>
+            <div class="list-item" onclick="go('lang')">
+                <div class="list-icon bg-teal">🌐</div>
+                <div class="list-info">
+                    <div class="list-title" id="lbl-lang">Tilni o'zgartirish</div>
+                    <div class="list-desc" id="lbl-lang-sub">O'zbek / Rus tili</div>
+                </div>
+                <span class="list-chevron">›</span>
+            </div>
         </div>
     </div>
 
-    <div id="academic-tab" class="hidden space-y-4">
-        <button onclick="switchTab('main')" class="text-sm font-semibold text-blue-500">⬅️ Orqaga</button>
-        <h2 class="text-lg font-bold my-2">Guruhni tanlang:</h2>
-        <div class="grid grid-cols-3 gap-2">
-            <button onclick="selectGroup('FM1')" class="bg-gray-100 p-2 rounded text-center text-gray-800 font-medium">FM1</button>
-            <button onclick="selectGroup('FM2')" class="bg-gray-100 p-2 rounded text-center text-gray-800 font-medium">FM2</button>
-            <button onclick="selectGroup('FIT1')" class="bg-gray-100 p-2 rounded text-center text-gray-800 font-medium">FIT1</button>
-            <button onclick="selectGroup('FAR1')" class="bg-gray-100 p-2 rounded text-center text-gray-800 font-medium">FAR1</button>
+    <!-- ========== ACADEMIC ========== -->
+    <div id="screen-academic" class="screen">
+        <div class="header">
+            <div class="back-btn" onclick="go('home')">←</div>
+            <div class="page-title">📚 Academic</div>
+        </div>
+        <div style="padding: 16px 20px;">
+            <div class="list-item" onclick="go('syllabus')">
+                <div class="list-icon bg-purple">📄</div>
+                <div class="list-info">
+                    <div class="list-title">Syllabus</div>
+                    <div class="list-desc">Fan dasturlari</div>
+                </div>
+                <span class="list-chevron">›</span>
+            </div>
+            <div class="list-item" onclick="go('handbook')">
+                <div class="list-icon bg-blue">📘</div>
+                <div class="list-info">
+                    <div class="list-title">Handbook</div>
+                    <div class="list-desc">O'quv qo'llanmalar</div>
+                </div>
+                <span class="list-chevron">›</span>
+            </div>
+            <div class="list-item" onclick="go('calendar')">
+                <div class="list-icon bg-teal">🗓</div>
+                <div class="list-info">
+                    <div class="list-title">Akademik kalendar</div>
+                    <div class="list-desc">Fall / Spring</div>
+                </div>
+                <span class="list-chevron">›</span>
+            </div>
         </div>
     </div>
 
-    <div id="gpa-tab" class="hidden space-y-4">
-        <button onclick="switchTab('main')" class="text-sm font-semibold text-blue-500">⬅️ Orqaga</button>
-        <h2 class="text-lg font-bold">🧮 GPA Kalkulyator</h2>
-        <div class="space-y-2">
-            <label class="block text-sm">Fanlar sonini kiriting:</label>
-            <input type="number" id="subject-count" min="1" max="10" class="w-full p-2 border rounded border-gray-300 bg-white text-black" placeholder="Masalan: 4">
-            <button onclick="generateGPALevels()" class="btn-primary w-full p-2 rounded font-medium">Fanlarni kiritish</button>
+    <!-- ========== SYLLABUS ========== -->
+    <div id="screen-syllabus" class="screen">
+        <div class="header">
+            <div class="back-btn" onclick="go('academic')">←</div>
+            <div class="page-title">📄 Syllabus</div>
         </div>
-        <div id="gpa-inputs" class="space-y-2 mt-4"></div>
-        <button onclick="calculateGPA()" id="btn-calc" class="hidden w-full bg-green-600 text-white p-3 rounded-xl font-bold mt-2">Hisoblash</button>
-        <div id="gpa-result" class="text-xl font-bold text-center text-blue-600 mt-4"></div>
-    </div>
-
-    <div id="settings-tab" class="hidden space-y-4">
-        <button onclick="switchTab('main')" class="text-sm font-semibold text-blue-500">⬅️ Orqaga</button>
-        <h2 class="text-lg font-bold text-center">🌐 Tilni tanlang / Выберите язык</h2>
-        <div class="space-y-2">
-            <button onclick="changeLanguage('uz')" class="w-full p-3 bg-gray-100 text-black rounded-xl font-medium text-left">🇺🇿 O'zbekcha</button>
-            <button onclick="changeLanguage('ru')" class="w-full p-3 bg-gray-100 text-black rounded-xl font-medium text-left">🇷🇺 Русский</button>
+        <div style="padding: 16px 20px;">
+            <div class="section-title">Spring 2025–2026</div>
+            <div id="syllabus-list"></div>
         </div>
     </div>
 
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
+    <!-- ========== HANDBOOK ========== -->
+    <div id="screen-handbook" class="screen">
+        <div class="header">
+            <div class="back-btn" onclick="go('academic')">←</div>
+            <div class="page-title">📘 Handbook</div>
+        </div>
+        <div style="padding: 16px 20px;">
+            <a class="list-item" href="https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR" target="_blank">
+                <div class="list-icon bg-purple">🤖</div>
+                <div class="list-info">
+                    <div class="list-title">Artificial Intelligence</div>
+                    <div class="list-desc">Google Drive</div>
+                </div>
+                <span class="list-chevron">↗</span>
+            </a>
+            <a class="list-item" href="https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q" target="_blank">
+                <div class="list-icon bg-blue">💻</div>
+                <div class="list-info">
+                    <div class="list-title">Information Systems</div>
+                    <div class="list-desc">Google Drive</div>
+                </div>
+                <span class="list-chevron">↗</span>
+            </a>
+            <a class="list-item" href="https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB" target="_blank">
+                <div class="list-icon bg-teal">📐</div>
+                <div class="list-info">
+                    <div class="list-title">Mathematics</div>
+                    <div class="list-desc">Google Drive</div>
+                </div>
+                <span class="list-chevron">↗</span>
+            </a>
+        </div>
+    </div>
 
-        function switchTab(tab) {
-            document.getElementById('main-menu').classList.add('hidden');
-            document.getElementById('academic-tab').classList.add('hidden');
-            document.getElementById('gpa-tab').classList.add('hidden');
-            document.getElementById('settings-tab').classList.add('hidden');
-            if (tab === 'main') document.getElementById('main-menu').classList.remove('hidden');
-            if (tab === 'academic') document.getElementById('academic-tab').classList.remove('hidden');
-            if (tab === 'gpa') document.getElementById('gpa-tab').classList.remove('hidden');
-            if (tab === 'settings') document.getElementById('settings-tab').classList.remove('hidden');
-        }
+    <!-- ========== CALENDAR ========== -->
+    <div id="screen-calendar" class="screen">
+        <div class="header">
+            <div class="back-btn" onclick="go('academic')">←</div>
+            <div class="page-title">🗓 Kalendar</div>
+        </div>
+        <div style="padding: 16px 20px;">
+            <div class="card orange" style="margin-bottom:10px;" onclick="sendToBot('cal_fall')">
+                <span class="card-icon">🍂</span>
+                <div class="card-label">Fall Term</div>
+                <div class="card-sub">Kuz semestri</div>
+            </div>
+            <div class="card teal" onclick="sendToBot('cal_spring')">
+                <span class="card-icon">🌱</span>
+                <div class="card-label">Spring Term</div>
+                <div class="card-sub">Bahor semestri</div>
+            </div>
+            <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:16px;">Tanlash bilан bot faylni yuboradi</p>
+        </div>
+    </div>
 
-        function generateGPALevels() {
-            const count = document.getElementById('subject-count').value;
-            const container = document.getElementById('gpa-inputs');
-            container.innerHTML = '';
-            if (count < 1) return;
-            for (let i = 1; i <= count; i++) {
-                container.innerHTML += `
-                    <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 text-black space-y-2">
-                        <span class="font-bold text-sm text-gray-700">${i}-fan</span>
-                        <div class="grid grid-cols-2 gap-2">
-                            <input type="number" placeholder="Kredit (Masalan: 6)" class="p-2 border rounded bg-white w-full subject-credit">
-                            <input type="number" placeholder="Baho (Masalan: 92)" class="p-2 border rounded bg-white w-full subject-grade">
-                        </div>
+    <!-- ========== TIMETABLE ========== -->
+    <div id="screen-timetable" class="screen">
+        <div class="header">
+            <div class="back-btn" onclick="go('home')">←</div>
+            <div class="page-title">📅 Dars jadvali</div>
+        </div>
+        <div style="padding: 16px 20px;">
+            <div class="section-title" id="grp-fm-title">FM guruhlar</div>
+            <div class="group-grid" id="grp-fm"></div>
+            <div class="section-title" id="grp-fit-title" style="margin-top:16px;">FIT guruhlar</div>
+            <div class="group-grid" id="grp-fit"></div>
+            <div class="section-title" id="grp-far-title" style="margin-top:16px;">FAR guruhlar</div>
+            <div class="group-grid" id="grp-far"></div>
+        </div>
+    </div>
+
+    <!-- ========== EXAM ========== -->
+    <div id="screen-exam" class="screen">
+        <div class="header">
+            <div class="back-btn" onclick="go('home')">←</div>
+            <div class="page-title">🔥 Final Exam</div>
+        </div>
+        <div style="padding: 16px 20px;">
+            <div class="warn-box">
+                <span>⚠️</span>
+                <span id="exam-warn">Xatolik ehtimoli mavjud. Rasmiy havola orqali tekshiring.</span>
+            </div>
+            <a class="list-item" href="https://250313-lab.github.io/npuu-finalexam/" target="_blank">
+                <div class="list-icon bg-red">📝</div>
+                <div class="list-info">
+                    <div class="list-title">Natijalarni tekshirish</div>
+                    <div class="list-desc">Final exam portal</div>
+                </div>
+                <span class="list-chevron">↗</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- ========== GPA ========== -->
+    <div id="screen-gpa" class="screen">
+        <div class="header">
+            <div class="back-btn" onclick="go('home')">←</div>
+            <div class="page-title">🧮 GPA Kalkulyator</div>
+        </div>
+        <div style="padding: 16px 20px;">
+            <div class="subject-row">
+                <div class="subject-num" id="lbl-subcount">Fanlar soni</div>
+                <input type="number" id="subject-count" min="1" max="15" placeholder="Masalan: 5">
+            </div>
+            <button class="btn btn-accent" id="btn-enter" onclick="buildGPA()">Fanlarni kiritish →</button>
+            <div id="gpa-fields" style="margin-top:12px;"></div>
+            <button class="btn btn-green" id="btn-calc" style="display:none;" onclick="calcGPA()">✓ GPA Hisoblash</button>
+            <div class="gpa-result-box" id="gpa-result">
+                <div class="gpa-number" id="gpa-val">0.00</div>
+                <div class="gpa-label" id="gpa-your-label">Sizning GPA</div>
+                <div class="gpa-badge" id="gpa-grade">—</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== LANG ========== -->
+    <div id="screen-lang" class="screen">
+        <div class="header">
+            <div class="back-btn" onclick="go('home')">←</div>
+            <div class="page-title">🌐 Til / Язык / Language</div>
+        </div>
+        <div style="padding: 16px 20px;">
+            <div class="lang-card" id="lang-uz" onclick="setLang('uz')">
+                <div class="lang-flag">🇺🇿</div>
+                <div>
+                    <div class="lang-name">O'zbekcha</div>
+                    <div class="lang-native">O'zbek tili</div>
+                </div>
+                <span class="lang-check">✓</span>
+            </div>
+            <div class="lang-card" id="lang-ru" onclick="setLang('ru')">
+                <div class="lang-flag">🇷🇺</div>
+                <div>
+                    <div class="lang-name">Русский</div>
+                    <div class="lang-native">Русский язык</div>
+                </div>
+                <span class="lang-check">✓</span>
+            </div>
+            <div class="lang-card" id="lang-en" onclick="setLang('en')">
+                <div class="lang-flag">🇬🇧</div>
+                <div>
+                    <div class="lang-name">English</div>
+                    <div class="lang-native">English language</div>
+                </div>
+                <span class="lang-check">✓</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const tg = window.Telegram.WebApp;
+tg.expand();
+tg.setHeaderColor('#0a0a0f');
+tg.setBackgroundColor('#0a0a0f');
+
+// ---- DATA ----
+const GROUPS = {
+    fm:  [["FM1","-1"],["FM2","-2"],["FM3","-3"],["FM4","-4"],["FM5","-5"],["FM6","-6"],["FM7","*7"]],
+    fit: [["FIT1","-7"],["FIT2","-8"],["FIT3","-9"],["FIT4","-10"],["FIT5","-11"],["FIT6","-12"]],
+    far: [["FAR1","-13"],["FAR2","-14"],["FAR3","-15"]]
+};
+
+const SYLLABUS = [
+    { name: "Introduction to T.L", icon: "💻", available: true },
+    { name: "Programming 1",       icon: "⌨️", available: true },
+    { name: "Discrete Math",       icon: "🔢", available: true },
+    { name: "General English 2",   icon: "🌍", available: false },
+    { name: "Math Analysis 2",     icon: "📊", available: false },
+    { name: "Analytical Geometry", icon: "📐", available: false },
+    { name: "Calculus 2",          icon: "∫",  available: false }
+];
+
+// ---- LANG ----
+const T = {
+    uz: {
+        homeSub: "Kerakli bo'limni tanlang",
+        main: "Asosiy", tools: "Vositalar",
+        study: "Academic Resources", studySub: "Syllabus, handbook",
+        timetable: "Dars jadvali", timetableSub: "Guruh bo'yicha",
+        exam: "Final Exam", examSub: "Natijalarni tekshirish",
+        hero: "Hero Study", heroSub: "Portal",
+        gpa: "GPA Kalkulyator", gpaSub: "GPA hisoblash",
+        profs: "Professorlar", profsSub: "Ro'yxat",
+        lang: "Tilni o'zgartirish", langSub: "O'zbek / Rus / Ingliz",
+        examWarn: "Xatolik ehtimoli mavjud. Rasmiy havola orqali tekshiring.",
+        notAvail: "Hali yuklanmagan",
+        langChanged: "Til o'zgartirildi ✓",
+        calSent: "Bot faylni yuboradi!",
+        grpFm: "FM guruhlar", grpFit: "FIT guruhlar", grpFar: "FAR guruhlar",
+        getFile: "Faylni olish", spring: "Spring 2025–2026",
+        subjectCount: "Fanlar soni", subjectEx: "Masalan: 5",
+        creditEx: "Kredit (6)", gradeEx: "Baho (92)", fan: "FAN",
+        calcBtn: "✓ GPA Hisoblash", yourGpa: "Sizning GPA", enterFields: "Fanlarni kiritish →"
+    },
+    ru: {
+        homeSub: "Выберите нужный раздел",
+        main: "Главное", tools: "Инструменты",
+        study: "Академические ресурсы", studySub: "Силлабус, хэндбук",
+        timetable: "Расписание", timetableSub: "По группам",
+        exam: "Final Exam", examSub: "Проверить результаты",
+        hero: "Hero Study", heroSub: "Портал",
+        gpa: "Калькулятор GPA", gpaSub: "Подсчёт GPA",
+        profs: "Преподаватели", profsSub: "Список",
+        lang: "Сменить язык", langSub: "Узб / Рус / Англ",
+        examWarn: "Возможны ошибки. Проверьте через официальную ссылку.",
+        notAvail: "Ещё не загружено",
+        langChanged: "Язык изменён ✓",
+        calSent: "Бот отправит файл!",
+        grpFm: "Группы FM", grpFit: "Группы FIT", grpFar: "Группы FAR",
+        getFile: "Получить файл", spring: "Spring 2025–2026",
+        subjectCount: "Количество предметов", subjectEx: "Например: 5",
+        creditEx: "Кредит (6)", gradeEx: "Оценка (92)", fan: "ПРЕДМЕТ",
+        calcBtn: "✓ Подсчитать GPA", yourGpa: "Ваш GPA", enterFields: "Ввести предметы →"
+    },
+    en: {
+        homeSub: "Choose a section",
+        main: "Main", tools: "Tools",
+        study: "Academic Resources", studySub: "Syllabus, handbook",
+        timetable: "Timetable", timetableSub: "By group",
+        exam: "Final Exam", examSub: "Check results",
+        hero: "Hero Study", heroSub: "Portal",
+        gpa: "GPA Calculator", gpaSub: "Calculate GPA",
+        profs: "Professors", profsSub: "List",
+        lang: "Change language", langSub: "Uzb / Rus / Eng",
+        examWarn: "Errors possible. Verify via official link.",
+        notAvail: "Not uploaded yet",
+        langChanged: "Language changed ✓",
+        calSent: "Bot will send the file!",
+        grpFm: "FM groups", grpFit: "FIT groups", grpFar: "FAR groups",
+        getFile: "Get file", spring: "Spring 2025–2026",
+        subjectCount: "Number of subjects", subjectEx: "e.g. 5",
+        creditEx: "Credit (6)", gradeEx: "Grade (92)", fan: "SUBJECT",
+        calcBtn: "✓ Calculate GPA", yourGpa: "Your GPA", enterFields: "Enter subjects →"
+    }
+};
+
+let currentLang = localStorage.getItem('npuu_lang') || 'uz';
+
+function t(key) { return T[currentLang][key] || T['uz'][key]; }
+
+function applyLang() {
+    document.getElementById('home-sub').textContent       = t('homeSub');
+    document.getElementById('lbl-main').textContent       = t('main');
+    document.getElementById('lbl-tools').textContent      = t('tools');
+    document.getElementById('lbl-study').textContent      = t('study');
+    document.getElementById('lbl-study-sub').textContent  = t('studySub');
+    document.getElementById('lbl-timetable').textContent  = t('timetable');
+    document.getElementById('lbl-timetable-sub').textContent = t('timetableSub');
+    document.getElementById('lbl-exam').textContent       = t('exam');
+    document.getElementById('lbl-exam-sub').textContent   = t('examSub');
+    document.getElementById('lbl-hero').textContent       = t('hero');
+    document.getElementById('lbl-hero-sub').textContent   = t('heroSub');
+    document.getElementById('lbl-gpa').textContent        = t('gpa');
+    document.getElementById('lbl-gpa-sub').textContent    = t('gpaSub');
+    document.getElementById('lbl-profs').textContent      = t('profs');
+    document.getElementById('lbl-profs-sub').textContent  = t('profsSub');
+    document.getElementById('lbl-lang').textContent       = t('lang');
+    document.getElementById('lbl-lang-sub').textContent   = t('langSub');
+    document.getElementById('exam-warn').textContent      = t('examWarn');
+    // GPA dynamic labels
+    const scEl = document.getElementById('subject-count');
+    if (scEl) scEl.placeholder = t('subjectEx');
+    const calcBtn = document.getElementById('btn-calc');
+    if (calcBtn) calcBtn.textContent = t('calcBtn');
+    const gpaLbl = document.getElementById('gpa-your-label');
+    if (gpaLbl) gpaLbl.textContent = t('yourGpa');
+    const enterBtn = document.getElementById('btn-enter');
+    if (enterBtn) enterBtn.textContent = t('enterFields');
+    // Timetable section titles
+    const grpFmEl = document.getElementById('grp-fm-title');
+    if (grpFmEl) grpFmEl.textContent = t('grpFm');
+    const grpFitEl = document.getElementById('grp-fit-title');
+    if (grpFitEl) grpFitEl.textContent = t('grpFit');
+    const grpFarEl = document.getElementById('grp-far-title');
+    if (grpFarEl) grpFarEl.textContent = t('grpFar');
+
+    document.querySelectorAll('.lang-card').forEach(c => c.classList.remove('selected'));
+    const el = document.getElementById('lang-' + currentLang);
+    if (el) el.classList.add('selected');
+}
+
+function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('npuu_lang', lang);
+    applyLang();
+    buildSyllabus();
+    showToast(t('langChanged'));
+    setTimeout(() => go('home'), 900);
+}
+
+// ---- NAVIGATION ----
+function go(screen) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-' + screen).classList.add('active');
+    window.scrollTo(0, 0);
+}
+
+// ---- BUILD TIMETABLE ----
+function buildTimetable() {
+    ['fm','fit','far'].forEach(type => {
+        const el = document.getElementById('grp-' + type);
+        el.innerHTML = '';
+        GROUPS[type].forEach(([name, id]) => {
+            const url = `https://npuu.edupage.org/timetable/view.php?num=6&class=${id}`;
+            el.innerHTML += `<a class="group-btn" href="${url}" target="_blank">${name}</a>`;
+        });
+    });
+}
+
+// ---- BUILD SYLLABUS ----
+function buildSyllabus() {
+    const el = document.getElementById('syllabus-list');
+    el.innerHTML = '';
+    SYLLABUS.forEach(s => {
+        if (s.available) {
+            el.innerHTML += `
+                <div class="list-item" onclick="sendToBot('syllabus_${s.name}')">
+                    <div class="list-icon bg-purple">${s.icon}</div>
+                    <div class="list-info">
+                        <div class="list-title">${s.name}</div>
+                        <div class="list-desc">${t('getFile')}</div>
                     </div>
-                `;
-            }
-            document.getElementById('btn-calc').classList.remove('hidden');
+                    <span class="list-chevron">↓</span>
+                </div>`;
+        } else {
+            el.innerHTML += `
+                <div class="list-item" style="opacity:.45;cursor:default;">
+                    <div class="list-icon bg-orange">${s.icon}</div>
+                    <div class="list-info">
+                        <div class="list-title">${s.name}</div>
+                        <div class="list-desc">${t('notAvail')}</div>
+                    </div>
+                </div>`;
         }
+    });
+}
 
-        function calculateGPA() {
-            const credits = document.querySelectorAll('.subject-credit');
-            const grades = document.querySelectorAll('.subject-grade');
-            let totalCredits = 0;
-            let totalPoints = 0;
-            for (let i = 0; i < credits.length; i++) {
-                let credit = parseFloat(credits[i].value) || 0;
-                let grade = parseFloat(grades[i].value) || 0;
-                let gpa4 = 0;
-                if (grade >= 95) gpa4 = 4.5;
-                else if (grade >= 90) gpa4 = 4.0;
-                else if (grade >= 85) gpa4 = 3.5;
-                else if (grade >= 80) gpa4 = 3.0;
-                else if (grade >= 75) gpa4 = 2.5;
-                else if (grade >= 70) gpa4 = 2.0;
-                else gpa4 = 0;
-                totalCredits += credit;
-                totalPoints += (gpa4 * credit);
-            }
-            let finalGPA = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
-            document.getElementById('gpa-result').innerText = `Sizning GPA: ${finalGPA}`;
-        }
+// ---- GPA ----
+function buildGPA() {
+    const n = parseInt(document.getElementById('subject-count').value);
+    if (!n || n < 1) return;
+    const el = document.getElementById('gpa-fields');
+    el.innerHTML = '';
+    for (let i = 1; i <= n; i++) {
+        el.innerHTML += `
+            <div class="subject-row">
+                <div class="subject-num">${t('fan')} ${i}</div>
+                <div class="input-row">
+                    <input type="number" class="sc" placeholder="${t('creditEx')}">
+                    <input type="number" class="sg" placeholder="${t('gradeEx')}">
+                </div>
+            </div>`;
+    }
+    document.getElementById('btn-calc').style.display = 'block';
+    document.getElementById('gpa-result').classList.remove('show');
+}
 
-        // Guruh tanlanganda — faqat yopish (sendData emas)
-        function selectGroup(group) {
-            tg.showAlert(`${group} tanlandi!`);
-        }
+function calcGPA() {
+    const credits = document.querySelectorAll('.sc');
+    const grades  = document.querySelectorAll('.sg');
+    let totalC = 0, totalP = 0;
+    credits.forEach((c, i) => {
+        const cr = parseFloat(c.value) || 0;
+        const sc = parseFloat(grades[i].value) || 0;
+        let gp = 0;
+        if (sc >= 95) gp = 4.5;
+        else if (sc >= 90) gp = 4.0;
+        else if (sc >= 85) gp = 3.5;
+        else if (sc >= 80) gp = 3.0;
+        else if (sc >= 75) gp = 2.5;
+        else if (sc >= 70) gp = 2.0;
+        totalC += cr;
+        totalP += cr * gp;
+    });
+    const gpa = totalC > 0 ? totalP / totalC : 0;
+    document.getElementById('gpa-val').textContent = gpa.toFixed(2);
+    let grade = gpa >= 3.7 ? "A — Excellent 🏆"
+              : gpa >= 3.0 ? "B — Good 👍"
+              : gpa >= 2.0 ? "C — Average 📚"
+              : "D — Below Average ⚠️";
+    document.getElementById('gpa-grade').textContent = grade;
+    document.getElementById('gpa-result').classList.add('show');
+    document.getElementById('gpa-result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
 
-        const langTexts = {
-            uz: { welcome: "Kerakli bo'limni tanlang:", study: "Academic Resources", gpa: "GPA Kalkulyator", timetable: "Dars jadvali", lang: "Tilni o'zgartirish" },
-            ru: { welcome: "Выберите нужный раздел:", study: "Академические ресурсы", gpa: "Калькулятор GPA", timetable: "Расписание", lang: "Сменить язык" }
-        };
+// ---- HELPERS ----
+function openExternal(url) {
+    tg.openLink(url);
+}
 
-        function changeLanguage(lang) {
-            document.getElementById('title-welcome').innerText = langTexts[lang].welcome;
-            document.getElementById('btn-study').innerText = langTexts[lang].study;
-            document.getElementById('btn-gpa').innerText = langTexts[lang].gpa;
-            document.getElementById('btn-timetable').innerText = langTexts[lang].timetable;
-            document.getElementById('btn-lang').innerText = langTexts[lang].lang;
-            switchTab('main');
-            tg.showAlert("Til o'zgartirildi / Язык изменен");
-        }
-    </script>
+function sendToBot(data) {
+    try {
+        tg.sendData(JSON.stringify({ type: data }));
+    } catch(e) {
+        showToast(t('calSent'));
+    }
+}
+
+function showToast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+// ---- INIT ----
+buildTimetable();
+buildSyllabus();
+applyLang();
+</script>
 </body>
 </html>
