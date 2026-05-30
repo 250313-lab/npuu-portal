@@ -92,7 +92,7 @@
         .list-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
         .list-chevron { color: var(--muted); font-size: 13px; }
 
-        /* ---- FORMS & INPUTS (EXAM + PROFS) ---- */
+        /* ---- FORMS & INPUTS ---- */
         .input-field, .select-field {
             width: 100%; background: var(--surface2); border: 1px solid var(--border);
             border-radius: 12px; padding: 12px 14px; color: var(--text);
@@ -127,14 +127,20 @@
 
         .warn-box { background: rgba(255,171,64,0.1); border: 1px solid rgba(255,171,64,0.3); border-radius: 14px; padding: 14px 16px; font-size: 13px; color: #ffab40; margin-bottom: 16px; display: flex; gap: 10px; }
 
-        /* ---- MISC ---- */
+        /* ---- TIMETABLE & CALENDAR LOOKS ---- */
+        .day-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--accent); margin: 14px 0 6px; text-transform: uppercase; }
+        .schedule-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .schedule-time { font-size: 12px; color: var(--muted); font-weight: 500; }
+        .schedule-subject { font-size: 14px; font-weight: 600; }
+        .schedule-room { font-size: 11px; background: var(--surface2); padding: 3px 8px; border-radius: 6px; color: var(--accent3); border: 1px solid var(--border); }
+
+        /* ---- TOAST & LANG ---- */
         .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 20px; font-size: 14px; font-weight: 500; z-index: 999; transition: transform .3s cubic-bezier(.34,1.56,.64,1); white-space: nowrap; }
         .toast.show { transform: translateX(-50%) translateY(0); }
         
-        /* Lang select */
         .lang-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all .2s; margin-bottom: 10px; }
         .lang-card.selected { border-color: var(--accent); background: rgba(108,99,255,0.1); }
-        .lang-flag { font-size: 32px; } .lang-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; } .lang-native { font-size: 12px; color: var(--muted); } .lang-check { margin-left: auto; color: var(--accent); font-size: 18px; opacity: 0; } .lang-card.selected .lang-check { opacity: 1; }
+        .lang-flag { font-size: 32px; } .lang-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; } .lang-check { margin-left: auto; color: var(--accent); font-size: 18px; opacity: 0; } .lang-card.selected .lang-check { opacity: 1; }
     </style>
 </head>
 <body>
@@ -161,16 +167,16 @@
                     <div class="card-label" id="lbl-timetable">Dars jadvali</div>
                     <div class="card-sub" id="lbl-timetable-sub">Guruh bo'yicha</div>
                 </div>
-                <!-- FINAL EXAM YAKKA OYNA -->
                 <div class="card pink" onclick="go('exam')">
                     <span class="card-icon">🔥</span>
                     <div class="card-label" id="lbl-exam">Final Exam</div>
                     <div class="card-sub" id="lbl-exam-sub">Natijalarni tekshirish</div>
                 </div>
-                <div class="card orange" onclick="openExternal('https://npuu.hero.study/login')">
+                <!-- HERO STUDY IN-APP INTERNAL LOADING -->
+                <div class="card orange" onclick="go('hero-frame')">
                     <span class="card-icon">💎</span>
                     <div class="card-label" id="lbl-hero">Hero Study</div>
-                    <div class="card-sub" id="lbl-hero-sub">Portal</div>
+                    <div class="card-sub" id="lbl-hero-sub">Portal (In-App)</div>
                 </div>
             </div>
 
@@ -181,7 +187,6 @@
                     <div class="card-label" id="lbl-gpa">GPA Kalkulyator</div>
                     <div class="card-sub" id="lbl-gpa-sub">GPA hisoblash</div>
                 </div>
-                <!-- PROFESSORLAR YAKKA OYNA -->
                 <div class="card purple" onclick="go('profs')">
                     <span class="card-icon">👨‍🏫</span>
                     <div class="card-label" id="lbl-profs">Professorlar</div>
@@ -201,77 +206,108 @@
         </div>
     </div>
 
-    <!-- ========== ACADEMIC ========== -->
+    <!-- ========== ACADEMIC DIRECTIONS CHOICE ========== -->
     <div id="screen-academic" class="screen">
         <div class="header">
             <div class="back-btn" onclick="go('home')">←</div>
-            <div class="page-title">📚 Academic</div>
+            <div class="page-title" id="title-academic">📚 Academic Resources</div>
         </div>
         <div style="padding: 16px 20px;">
-            <div class="list-item" onclick="go('syllabus')">
-                <div class="list-icon bg-purple">📄</div>
-                <div class="list-info"><div class="list-title">Syllabus</div><div class="list-desc">Fan dasturlari</div></div>
+            <div class="list-item" onclick="openSyllabusTrack('ai')">
+                <div class="list-icon bg-purple">🤖</div>
+                <div class="list-info"><div class="list-title">Sun'iy Intellekt (AI)</div><div class="list-desc">Artificial Intelligence Syllabus</div></div>
+                <span class="list-chevron">›</span>
             </div>
-            <div class="list-item" onclick="openExternal('https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR')">
-                <div class="list-icon bg-blue">📘</div>
-                <div class="list-info"><div class="list-title">Handbook</div><div class="list-desc">O'quv materiallar</div></div>
+            <div class="list-item" onclick="openSyllabusTrack('it')">
+                <div class="list-icon bg-blue">💻</div>
+                <div class="list-info"><div class="list-title">Axborot Texnologiyalari (IT)</div><div class="list-desc">Information Technology Syllabus</div></div>
+                <span class="list-chevron">›</span>
             </div>
-            <div class="list-item" onclick="go('calendar')">
-                <div class="list-icon bg-teal">🗓</div>
-                <div class="list-info"><div class="list-title">Akademik kalendar</div><div class="list-desc">Fall / Spring</div></div>
+            <div class="list-item" onclick="openSyllabusTrack('math')">
+                <div class="list-icon bg-teal">📐</div>
+                <div class="list-info"><div class="list-title">Matematika (Mathematics)</div><div class="list-desc">Aniq Fanlar Syllabus</div></div>
+                <span class="list-chevron">›</span>
+            </div>
+            <div class="list-item" onclick="go('calendar')" style="margin-top:20px;">
+                <div class="list-icon bg-orange">🗓</div>
+                <div class="list-info"><div class="list-title" id="lbl-cal-btn">Akademik Kalendar</div><div class="list-desc">Fall / Spring semester dates</div></div>
+                <span class="list-chevron">›</span>
             </div>
         </div>
     </div>
 
-    <!-- ========== SYLLABUS & CALENDAR & TIMETABLE & GPA (O'ZGARISHSZ) ========== -->
+    <!-- ========== SYLLABUS TRACK LISTS ========== -->
     <div id="screen-syllabus" class="screen">
-        <div class="header"><div class="back-btn" onclick="go('academic')">←</div><div class="page-title">📄 Syllabus</div></div>
+        <div class="header"><div class="back-btn" onclick="go('academic')">←</div><div class="page-title" id="syllabus-track-title">📄 Syllabus</div></div>
         <div style="padding: 16px 20px;" id="syllabus-list"></div>
     </div>
+
+    <!-- ========== ACADEMIC CALENDAR ========== -->
     <div id="screen-calendar" class="screen">
-        <div class="header"><div class="back-btn" onclick="go('academic')">←</div><div class="page-title">🗓 Kalendar</div></div>
+        <div class="header"><div class="back-btn" onclick="go('academic')">←</div><div class="page-title" id="title-calendar">🗓 Akademik Kalendar</div></div>
         <div style="padding: 16px 20px;">
-            <div class="card orange" style="margin-bottom:10px;" onclick="sendToBot('cal_fall')"><div class="card-label">Fall Term</div></div>
-            <div class="card teal" onclick="sendToBot('cal_spring')"><div class="card-label">Spring Term</div></div>
+            <div class="filter-grid" style="margin-bottom: 20px;">
+                <div class="btn-toggle active" id="btn-fall" onclick="switchCalendar('fall')">Fall Term</div>
+                <div class="btn-toggle" id="btn-spring" onclick="switchCalendar('spring')">Spring Term</div>
+            </div>
+            <div id="calendar-content"></div>
         </div>
-    </div>
-    <div id="screen-timetable" class="screen">
-        <div class="header"><div class="back-btn" onclick="go('home')">←</div><div class="page-title">📅 Dars jadvali</div></div>
-        <div style="padding: 16px 20px;">
-            <p style="text-align:center;color:var(--muted);font-size:14px;margin-top:20px;">(Guruhlar jadvali oldingi versiyada mavjud)</p>
-        </div>
-    </div>
-    <div id="screen-gpa" class="screen">
-        <div class="header"><div class="back-btn" onclick="go('home')">←</div><div class="page-title">🧮 GPA Kalkulyator</div></div>
-        <div style="padding: 16px 20px;"><p style="text-align:center;color:var(--muted);font-size:14px;margin-top:20px;">(GPA qismi oldingi versiyada mavjud)</p></div>
     </div>
 
-    <!-- ========== PROFESSORS SCREEN (INTEGRATSIYA) ========== -->
-    <div id="screen-profs" class="screen">
-        <div class="header">
-            <div class="back-btn" onclick="go('home')">←</div>
-            <div class="page-title">👨‍🏫 Professorlar</div>
+    <!-- ========== TIMETABLE (DARS JADVALI) ========== -->
+    <div id="screen-timetable" class="screen">
+        <div class="header"><div class="back-btn" onclick="go('home')">←</div><div class="page-title" id="title-timetable">📅 Dars Jadvali</div></div>
+        <div style="padding: 16px 20px;">
+            <select id="timetable-group" class="select-field" onchange="renderTimetable()">
+                <option value="">-- Guruhni tanlang / Select Group --</option>
+                <optgroup label="FIT">
+                    <option value="FIT1">FIT 1</option><option value="FIT2">FIT 2</option><option value="FIT3">FIT 3</option>
+                    <option value="FIT4">FIT 4</option><option value="FIT5">FIT 5</option><option value="FIT6">FIT 6</option>
+                </optgroup>
+                <optgroup label="FM">
+                    <option value="FM1">FM 1</option><option value="FM2">FM 2</option><option value="FM3">FM 3</option>
+                    <option value="FM4">FM 4</option><option value="FM5">FM 5</option><option value="FM6">FM 6</option><option value="FM7">FM 7</option>
+                </optgroup>
+                <optgroup label="FAR">
+                    <option value="FAR1">FAR 1</option><option value="FAR2">FAR 2</option><option value="FAR3">FAR 3</option>
+                </optgroup>
+            </select>
+            <div id="timetable-container" style="margin-top:10px;"></div>
         </div>
+    </div>
+
+    <!-- ========== HERO STUDY INTERNAL WEBVIEW FRAME ========== -->
+    <div id="screen-hero-frame" class="screen" style="padding:0;">
+        <div class="header" style="padding: 15px 20px 10px;">
+            <div class="back-btn" onclick="go('home')">←</div>
+            <div class="page-title">💎 Hero Study Portal</div>
+        </div>
+        <iframe src="https://npuu.hero.study/login" style="width:100%; height: calc(100vh - 75px); border:none; background:#fff;"></iframe>
+    </div>
+
+    <!-- ========== GPA KALKULYATOR ========== -->
+    <div id="screen-gpa" class="screen">
+        <div class="header"><div class="back-btn" onclick="go('home')">←</div><div class="page-title">🧮 GPA Calculator</div></div>
+        <div style="padding: 16px 20px;">
+            <div class="warn-box"><span>📊</span><span>Tez orada bu bo'limda to'liq fanlar bo'yicha GPA hisoblash moduli ishga tushadi!</span></div>
+        </div>
+    </div>
+
+    <!-- ========== PROFESSORS SCREEN ========== -->
+    <div id="screen-profs" class="screen">
+        <div class="header"><div class="back-btn" onclick="go('home')">←</div><div class="page-title">👨‍🏫 Professorlar</div></div>
         <div style="padding: 16px 20px;">
             <input type="text" id="search-prof" class="input-field" placeholder="Professor ismini qidirish...">
             <div id="prof-list" style="margin-top:16px;"></div>
         </div>
     </div>
 
-    <!-- ========== FINAL EXAM SCREEN (INTEGRATSIYA) ========== -->
+    <!-- ========== FINAL EXAM SCREEN ========== -->
     <div id="screen-exam" class="screen">
-        <div class="header">
-            <div class="back-btn" onclick="go('home')">←</div>
-            <div class="page-title">🔥 Final Exam</div>
-        </div>
+        <div class="header"><div class="back-btn" onclick="go('home')">←</div><div class="page-title">🔥 Final Exam</div></div>
         <div style="padding: 16px 20px;">
-            <div class="warn-box">
-                <span>⚠️</span>
-                <span id="exam-warn-text">Xatolik ehtimoli mavjud. Rasmiy havola orqali tekshiring.</span>
-            </div>
-
+            <div class="warn-box"><span>⚠️</span><span id="exam-warn-text">Xatolik ehtimoli mavjud. Rasmiy manbalar orqali tekshiring.</span></div>
             <input type="text" id="search-name" class="input-field" placeholder="Ism yoki familiya...">
-            
             <div class="filter-grid">
                 <select id="search-group" class="select-field">
                     <option value="" id="opt-all-groups">Barcha guruhlar</option>
@@ -287,30 +323,18 @@
                         <option value="FAR1">FAR 1</option><option value="FAR2">FAR 2</option><option value="FAR3">FAR 3</option>
                     </optgroup>
                 </select>
-                <select id="search-room" class="select-field">
-                    <option value="" id="opt-all-rooms">Barcha xonalar</option>
-                </select>
+                <select id="search-room" class="select-field"><option value="" id="opt-all-rooms">Barcha xonalar</option></select>
             </div>
-            
-            <select id="search-subject" class="select-field">
-                <option value="" id="opt-all-subjects">Barcha fanlar</option>
-            </select>
-            
+            <select id="search-subject" class="select-field"><option value="" id="opt-all-subjects">Barcha fanlar</option></select>
             <div class="btn-toggle" id="btn-fail-toggle">🚫 Faqat ruxsat berilmaganlar</div>
-
-            <div id="exam-loader" style="text-align:center; padding: 40px; color:var(--muted); font-size:14px;">
-                Ma'lumotlar yuklanmoqda...
-            </div>
+            <div id="exam-loader" style="text-align:center; padding: 40px; color:var(--muted); font-size:14px;">Ma'lumotlar yuklanmoqda...</div>
             <div id="exam-list" style="margin-top:16px;"></div>
         </div>
     </div>
 
     <!-- ========== LANG ========== -->
     <div id="screen-lang" class="screen">
-        <div class="header">
-            <div class="back-btn" onclick="go('home')">←</div>
-            <div class="page-title">🌐 Til / Language</div>
-        </div>
+        <div class="header"><div class="back-btn" onclick="go('home')">←</div><div class="page-title">🌐 Til / Language</div></div>
         <div style="padding: 16px 20px;">
             <div class="lang-card" id="lang-uz" onclick="setLang('uz')"><div class="lang-flag">🇺🇿</div><div><div class="lang-name">O'zbekcha</div></div><span class="lang-check">✓</span></div>
             <div class="lang-card" id="lang-ru" onclick="setLang('ru')"><div class="lang-flag">🇷🇺</div><div><div class="lang-name">Русский</div></div><span class="lang-check">✓</span></div>
@@ -332,38 +356,38 @@ const T = {
     uz: {
         homeSub: "Kerakli bo'limni tanlang", main: "Asosiy", tools: "Vositalar",
         study: "Academic Resources", studySub: "Syllabus, handbook", timetable: "Dars jadvali", timetableSub: "Guruh bo'yicha",
-        exam: "Final Exam", examSub: "Natijalarni tekshirish", hero: "Hero Study", heroSub: "Portal",
+        exam: "Final Exam", examSub: "Natijalarni tekshirish", hero: "Hero Study", heroSub: "Portal (In-App)",
         gpa: "GPA Kalkulyator", gpaSub: "GPA hisoblash", profs: "Professorlar", profsSub: "Ro'yxat va qidiruv",
         lang: "Tilni o'zgartirish", langSub: "O'zbek / Rus / Ingliz", examWarn: "Xatolik ehtimoli mavjud. Rasmiy manbalar orqali tekshiring.",
-        // Yangi qismlar uchun:
         searchProf: "Professor ismini qidirish...", searchName: "Ism yoki familiya...",
         noResults: "Ma'lumot topilmadi 😕", allGroups: "Barcha guruhlar", allRooms: "Barcha xonalar", allSubjects: "Barcha fanlar",
         onlyFailed: "🚫 Faqat ruxsat berilmaganlar", allowed: "IMTIHONGA RUXSAT", notAllowed: "RUXSAT BERILMAGAN",
-        group: "Guruh", subject: "Fan", date: "Sana", time: "Vaqt", room: "Xona"
+        group: "Guruh", subject: "Fan", date: "Sana", time: "Vaqt", room: "Xona",
+        selectGroupAlert: "Iltimos, dars jadvalini ko'rish uchun guruhni tanlang!"
     },
     ru: {
         homeSub: "Выберите нужный раздел", main: "Главное", tools: "Инструменты",
         study: "Академические ресурсы", studySub: "Силлабус, хэндбук", timetable: "Расписание", timetableSub: "По группам",
-        exam: "Final Exam", examSub: "Проверить результаты", hero: "Hero Study", heroSub: "Портал",
+        exam: "Final Exam", examSub: "Проверить результаты", hero: "Hero Study", heroSub: "Портал (В приложении)",
         gpa: "Калькулятор GPA", gpaSub: "Подсчёт GPA", profs: "Преподаватели", profsSub: "Список и поиск",
         lang: "Сменить язык", langSub: "Узб / Рус / Англ", examWarn: "Возможны ошибки. Проверяйте через официальные источники.",
-        // Новые:
         searchProf: "Поиск профессора...", searchName: "Имя или фамилия...",
         noResults: "Ничего не найдено 😕", allGroups: "Все группы", allRooms: "Все аудитории", allSubjects: "Все предметы",
         onlyFailed: "🚫 Только недопущенные", allowed: "ДОПУЩЕН К ЭКЗАМЕНУ", notAllowed: "НЕ ДОПУЩЕН",
-        group: "Группа", subject: "Предмет", date: "Дата", time: "Время", room: "Ауд."
+        group: "Группа", subject: "Предмет", date: "Дата", time: "Время", room: "Ауд.",
+        selectGroupAlert: "Пожалуйста, выберите группу для просмотра расписания!"
     },
     en: {
         homeSub: "Choose a section", main: "Main", tools: "Tools",
         study: "Academic Resources", studySub: "Syllabus, handbook", timetable: "Timetable", timetableSub: "By group",
-        exam: "Final Exam", examSub: "Check results", hero: "Hero Study", heroSub: "Portal",
+        exam: "Final Exam", examSub: "Check results", hero: "Hero Study", heroSub: "Portal (In-App)",
         gpa: "GPA Calculator", gpaSub: "Calculate GPA", profs: "Professors", profsSub: "List and search",
         lang: "Change language", langSub: "Uzb / Rus / Eng", examWarn: "Errors are possible. Verify via official sources.",
-        // New:
         searchProf: "Search professor...", searchName: "Name or surname...",
         noResults: "No results found 😕", allGroups: "All groups", allRooms: "All rooms", allSubjects: "All subjects",
         onlyFailed: "🚫 Only not allowed", allowed: "ALLOWED TO EXAM", notAllowed: "NOT ALLOWED",
-        group: "Group", subject: "Subject", date: "Date", time: "Time", room: "Room"
+        group: "Group", subject: "Subject", date: "Date", time: "Time", room: "Room",
+        selectGroupAlert: "Please select a group to view the timetable!"
     }
 };
 
@@ -376,6 +400,8 @@ function applyLang() {
     document.getElementById('lbl-tools').textContent = t('tools');
     document.getElementById('lbl-study').textContent = t('study');
     document.getElementById('lbl-study-sub').textContent = t('studySub');
+    document.getElementById('lbl-timetable').textContent = t('timetable');
+    document.getElementById('lbl-timetable-sub').textContent = t('timetableSub');
     document.getElementById('lbl-exam').textContent = t('exam');
     document.getElementById('lbl-exam-sub').textContent = t('examSub');
     document.getElementById('lbl-hero').textContent = t('hero');
@@ -385,7 +411,6 @@ function applyLang() {
     document.getElementById('lbl-lang').textContent = t('lang');
     document.getElementById('lbl-lang-sub').textContent = t('langSub');
     
-    // Exam & Profs lang
     document.getElementById('search-prof').placeholder = t('searchProf');
     document.getElementById('search-name').placeholder = t('searchName');
     document.getElementById('opt-all-groups').textContent = t('allGroups');
@@ -397,7 +422,7 @@ function applyLang() {
     document.querySelectorAll('.lang-card').forEach(c => c.classList.remove('selected'));
     document.getElementById('lang-' + currentLang).classList.add('selected');
     
-    updateExams(); // Update list texts
+    updateExams();
     const term = document.getElementById('search-prof').value.toLowerCase();
     renderProfs(PROFS.filter(p => p.n.toLowerCase().includes(term) || p.d.toLowerCase().includes(term)));
 }
@@ -407,18 +432,160 @@ function setLang(lang) {
     showToast("Language changed ✓"); setTimeout(() => go('home'), 900);
 }
 
-// ---- NAVIGATION ----
 function go(screen) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById('screen-' + screen).classList.add('active');
     window.scrollTo(0, 0);
 }
-function openExternal(url) { tg.openLink(url); }
-function sendToBot(data) { tg.sendData(JSON.stringify({ type: data })); }
 function showToast(msg) { const el = document.getElementById('toast'); el.textContent = msg; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2200); }
 
 // ==========================================
-// PROFESSORS LOGIC (INTEGRATED)
+// SYLLABUS DATA & TRACKS LOGIC
+// ==========================================
+const SYLLABUS_DATA = {
+    ai: [
+        { name: "Introduction to Artificial Intelligence", code: "AI-101", year: "Year 1" },
+        { name: "Python Programming for Data Science", code: "AI-102", year: "Year 1" },
+        { name: "Discrete Mathematics & Logic", code: "MATH-104", year: "Year 1" },
+        { name: "Probability & Statistics", code: "MATH-201", year: "Year 2" }
+    ],
+    it: [
+        { name: "Computer Networks & Architecture", code: "IT-105", year: "Year 1" },
+        { name: "Database Management Systems (SQL)", code: "IT-202", year: "Year 2" },
+        { name: "Object-Oriented Programming (C++)", code: "IT-102", year: "Year 1" },
+        { name: "Web Development Frameworks", code: "IT-301", year: "Year 2" }
+    ],
+    math: [
+        { name: "Mathematical Analysis I (Calculus)", code: "MATH-101", year: "Year 1" },
+        { name: "Linear Algebra & Analytic Geometry", code: "MATH-102", year: "Year 1" },
+        { name: "Differential Equations", code: "MATH-205", year: "Year 2" },
+        { name: "Numerical Methods", code: "MATH-302", year: "Year 2" }
+    ]
+};
+
+function openSyllabusTrack(track) {
+    const list = document.getElementById('syllabus-list');
+    const title = document.getElementById('syllabus-track-title');
+    
+    if(track === 'ai') title.textContent = "🤖 Sun'iy Intellekt Syllabus";
+    if(track === 'it') title.textContent = "💻 Axborot Texnologiyalari Syllabus";
+    if(track === 'math') title.textContent = "📐 Matematika Syllabus";
+
+    const subjects = SYLLABUS_DATA[track] || [];
+    list.innerHTML = subjects.map(s => `
+        <div class="card" style="margin-bottom:10px;">
+            <div style="font-size:11px; font-weight:bold; color:var(--accent3); text-transform:uppercase; margin-bottom:4px;">${s.code} • ${s.year}</div>
+            <div class="card-label" style="font-size:15px;">${s.name}</div>
+            <div class="card-sub">Nizamiy Tashkent State Pedagogical University</div>
+        </div>
+    `).join('');
+    go('syllabus');
+}
+
+// ==========================================
+// ACADEMIC CALENDAR LOGIC
+// ==========================================
+const CALENDAR_DATA = {
+    fall: [
+        { stage: "O'quv semestri boshi / Start of Term", date: "Sentyabr 2, 2025" },
+        { stage: "Oraliq nazorat haftasi / Midterm Week", date: "Oktyabr 20 - 25, 2025" },
+        { stage: "Yakuniy imtihonlar / Final Exams", date: "Dekabr 15 - 27, 2025" },
+        { stage: "Qishki ta'til / Winter Holidays", date: "Dekabr 29 - Yanvar 10, 2026" }
+    ],
+    spring: [
+        { stage: "Bahorgi semestr boshi / Start of Term", date: "Yanvar 26, 2026" },
+        { stage: "Oraliq nazorat / Midterm Exams", date: "Mart 23 - 28, 2026" },
+        { stage: "Yakuniy nazoratlar / Final Exams", date: "May 25 - Iyun 6, 2026" },
+        { stage: "Yozgi ta'til / Summer Vacation", date: "Iyun 8 - Avgust 29, 2026" }
+    ]
+};
+
+function switchCalendar(term) {
+    document.getElementById('btn-fall').classList.remove('active');
+    document.getElementById('btn-spring').classList.remove('active');
+    document.getElementById('btn-' + term).classList.add('active');
+
+    const content = document.getElementById('calendar-content');
+    const stages = CALENDAR_DATA[term];
+    content.innerHTML = stages.map(c => `
+        <div class="card" style="margin-bottom:8px; border-left: 4px solid var(--accent);">
+            <div style="font-size:14px; font-weight:600;">${c.stage}</div>
+            <div style="font-size:12px; color:var(--accent3); margin-top:4px;">📅 ${c.date}</div>
+        </div>
+    `).join('');
+}
+switchCalendar('fall'); // Default initial calendar view
+
+// ==========================================
+// TIMETABLE (DARS JADVALI) LOGIC
+// ==========================================
+const MOCK_TIMETABLE = {
+    "FIT": [
+        { day: "Dushanba / Monday", subjects: [{time: "09:00 - 10:20", name: "Artificial Intelligence", room: "302-A"}, {time: "10:30 - 11:50", name: "Discrete Math", room: "214"}] },
+        { day: "Seshanba / Tuesday", subjects: [{time: "09:00 - 10:20", name: "Python Data Science", room: "Lab 4"}] },
+        { day: "Chorshanba / Wednesday", subjects: [{time: "10:30 - 11:50", name: "Calculus I", room: "101"}, {time: "12:00 - 13:20", name: "General English", room: "405"}] },
+        { day: "Payshanba / Thursday", subjects: [{time: "09:00 - 10:20", name: "Database Systems", room: "Lab 2"}] },
+        { day: "Juma / Friday", subjects: [{time: "10:30 - 11:50", name: "Education & Pedagogy", room: "310"}] },
+        { day: "Shanba / Saturday", subjects: [] }
+    ],
+    "FM": [
+        { day: "Dushanba / Monday", subjects: [{time: "09:00 - 10:20", name: "Linear Algebra", room: "108"}, {time: "10:30 - 11:50", name: "Mathematical Analysis", room: "108"}] },
+        { day: "Seshanba / Tuesday", subjects: [{time: "12:00 - 13:20", name: "General English", room: "402"}] },
+        { day: "Chorshanba / Wednesday", subjects: [{time: "09:00 - 10:20", name: "Discrete Mathematics", room: "204"}] },
+        { day: "Payshanba / Thursday", subjects: [{time: "10:30 - 11:50", name: "Object Oriented Prog", room: "Lab 1"}] },
+        { day: "Juma / Friday", subjects: [{time: "09:00 - 10:20", name: "Analytical Geometry", room: "108"}] },
+        { day: "Shanba / Saturday", subjects: [] }
+    ],
+    "FAR": [
+        { day: "Dushanba / Monday", subjects: [{time: "10:30 - 11:50", name: "General English Intensive", room: "411"}] },
+        { day: "Seshanba / Tuesday", subjects: [{time: "09:00 - 10:20", name: "Introduction to IT", room: "301"}] },
+        { day: "Chorshanba / Wednesday", subjects: [{time: "12:00 - 13:20", name: "Academic Writing", room: "409"}] },
+        { day: "Payshanba / Thursday", subjects: [{time: "09:00 - 10:20", name: "Calculus Foundations", room: "202"}] },
+        { day: "Juma / Friday", subjects: [{time: "10:30 - 11:50", name: "History of Uzbekistan", room: "102"}] },
+        { day: "Shanba / Saturday", subjects: [] }
+    ]
+};
+
+function renderTimetable() {
+    const selector = document.getElementById('timetable-group');
+    const container = document.getElementById('timetable-container');
+    const groupVal = selector.value;
+
+    if(!groupVal) {
+        container.innerHTML = `<p style="text-align:center; color:var(--muted); font-size:13px; padding:30px;">${t('selectGroupAlert')}</p>`;
+        return;
+    }
+
+    // Guruh turini aniqlash (Masalan FIT1 -> FIT, FM3 -> FM)
+    let type = "FIT";
+    if(groupVal.startsWith("FM")) type = "FM";
+    if(groupVal.startsWith("FAR")) type = "FAR";
+
+    const days = MOCK_TIMETABLE[type];
+    let html = "";
+
+    days.forEach(d => {
+        html += `<div class="day-title">${d.day}</div>`;
+        if(d.subjects.length === 0) {
+            html += `<div style="font-size:12px; color:var(--muted); padding-left:4px; margin-bottom:10px;">Darslar mavjud emas / No classes</div>`;
+        } else {
+            d.subjects.forEach(s => {
+                html += `
+                    <div class="schedule-card">
+                        <div>
+                            <div class="schedule-subject">${s.name}</div>
+                            <div class="schedule-time">⏰ ${s.time}</div>
+                        </div>
+                        <div class="schedule-room">${s.room}</div>
+                    </div>`;
+            });
+        }
+    });
+    container.innerHTML = html;
+}
+
+// ==========================================
+// PROFESSORS LOGIC
 // ==========================================
 const PROFS = [
     {n: "Marks Ruziboev", e: "m.ruziboev@npuu.uz", d: "Mathematics"}, {n: "Azamat Xolboyev", e: "a.xolboyev@npuu.uz", d: "Mathematics"},
@@ -450,7 +617,7 @@ document.getElementById('search-prof').addEventListener('input', (e) => {
 });
 
 // ==========================================
-// FINAL EXAM LOGIC (INTEGRATED)
+// FINAL EXAM LOGIC
 // ==========================================
 let allExams = [];
 let onlyFailed = false;
@@ -530,10 +697,11 @@ let searchTimeout;
     else { el.addEventListener('change', updateExams); }
 });
 
-// INIT ALL
+// INIT ALL SETTINGS
 applyLang();
 renderProfs(PROFS);
-initExams(); // Ma'lumotlarni fonda yuklab qo'yadi
+renderTimetable();
+initExams();
 </script>
 </body>
 </html>
