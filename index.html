@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NPUU Smart Portal</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght=400;600;700;800&family=DM+Sans:wght=300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0a0a0f;
@@ -379,7 +379,6 @@
 <body>
 <div class="app">
 
-    <!-- ========== HOME ========== -->
     <div id="screen-home" class="screen active">
         <div class="home-hero">
             <div class="logo-ring">🎓</div>
@@ -438,7 +437,6 @@
         </div>
     </div>
 
-    <!-- ========== ACADEMIC ========== -->
     <div id="screen-academic" class="screen">
         <div class="header">
             <div class="back-btn" onclick="go('home')">←</div>
@@ -472,7 +470,6 @@
         </div>
     </div>
 
-    <!-- ========== SYLLABUS ========== -->
     <div id="screen-syllabus" class="screen">
         <div class="header">
             <div class="back-btn" onclick="go('academic')">←</div>
@@ -484,41 +481,39 @@
         </div>
     </div>
 
-    <!-- ========== HANDBOOK ========== -->
     <div id="screen-handbook" class="screen">
         <div class="header">
             <div class="back-btn" onclick="go('academic')">←</div>
             <div class="page-title">📘 Handbook</div>
         </div>
         <div style="padding: 16px 20px;">
-            <a class="list-item" href="https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR" target="_blank">
+            <div class="list-item" onclick="openExternal('https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR')">
                 <div class="list-icon bg-purple">🤖</div>
                 <div class="list-info">
                     <div class="list-title">Artificial Intelligence</div>
                     <div class="list-desc">Google Drive</div>
                 </div>
                 <span class="list-chevron">↗</span>
-            </a>
-            <a class="list-item" href="https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q" target="_blank">
+            </div>
+            <div class="list-item" onclick="openExternal('https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q')">
                 <div class="list-icon bg-blue">💻</div>
                 <div class="list-info">
                     <div class="list-title">Information Systems</div>
                     <div class="list-desc">Google Drive</div>
                 </div>
                 <span class="list-chevron">↗</span>
-            </a>
-            <a class="list-item" href="https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB" target="_blank">
+            </div>
+            <div class="list-item" onclick="openExternal('https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB')">
                 <div class="list-icon bg-teal">📐</div>
                 <div class="list-info">
                     <div class="list-title">Mathematics</div>
                     <div class="list-desc">Google Drive</div>
                 </div>
                 <span class="list-chevron">↗</span>
-            </a>
+            </div>
         </div>
     </div>
 
-    <!-- ========== CALENDAR ========== -->
     <div id="screen-calendar" class="screen">
         <div class="header">
             <div class="back-btn" onclick="go('academic')">←</div>
@@ -535,11 +530,10 @@
                 <div class="card-label">Spring Term</div>
                 <div class="card-sub">Bahor semestri</div>
             </div>
-            <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:16px;">Tanlash bilан bot faylni yuboradi</p>
+            <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:16px;">Tanlash bilan bot faylni yuboradi</p>
         </div>
     </div>
 
-    <!-- ========== TIMETABLE ========== -->
     <div id="screen-timetable" class="screen">
         <div class="header">
             <div class="back-btn" onclick="go('home')">←</div>
@@ -555,7 +549,6 @@
         </div>
     </div>
 
-    <!-- ========== EXAM ========== -->
     <div id="screen-exam" class="screen">
         <div class="header">
             <div class="back-btn" onclick="go('home')">←</div>
@@ -566,18 +559,17 @@
                 <span>⚠️</span>
                 <span id="exam-warn">Xatolik ehtimoli mavjud. Rasmiy havola orqali tekshiring.</span>
             </div>
-            <a class="list-item" href="https://250313-lab.github.io/npuu-finalexam/" target="_blank">
+            <div class="list-item" onclick="openExternal('https://250313-lab.github.io/npuu-finalexam/')">
                 <div class="list-icon bg-red">📝</div>
                 <div class="list-info">
                     <div class="list-title">Natijalarni tekshirish</div>
                     <div class="list-desc">Final exam portal</div>
                 </div>
                 <span class="list-chevron">↗</span>
-            </a>
+            </div>
         </div>
     </div>
 
-    <!-- ========== GPA ========== -->
     <div id="screen-gpa" class="screen">
         <div class="header">
             <div class="back-btn" onclick="go('home')">←</div>
@@ -599,7 +591,6 @@
         </div>
     </div>
 
-    <!-- ========== LANG ========== -->
     <div id="screen-lang" class="screen">
         <div class="header">
             <div class="back-btn" onclick="go('home')">←</div>
@@ -635,7 +626,6 @@
 
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
@@ -748,7 +738,7 @@ function applyLang() {
     document.getElementById('lbl-lang').textContent       = t('lang');
     document.getElementById('lbl-lang-sub').textContent   = t('langSub');
     document.getElementById('exam-warn').textContent      = t('examWarn');
-    // GPA dynamic labels
+    
     const scEl = document.getElementById('subject-count');
     if (scEl) scEl.placeholder = t('subjectEx');
     const calcBtn = document.getElementById('btn-calc');
@@ -757,7 +747,7 @@ function applyLang() {
     if (gpaLbl) gpaLbl.textContent = t('yourGpa');
     const enterBtn = document.getElementById('btn-enter');
     if (enterBtn) enterBtn.textContent = t('enterFields');
-    // Timetable section titles
+    
     const grpFmEl = document.getElementById('grp-fm-title');
     if (grpFmEl) grpFmEl.textContent = t('grpFm');
     const grpFitEl = document.getElementById('grp-fit-title');
@@ -793,7 +783,7 @@ function buildTimetable() {
         el.innerHTML = '';
         GROUPS[type].forEach(([name, id]) => {
             const url = `https://npuu.edupage.org/timetable/view.php?num=6&class=${id}`;
-            el.innerHTML += `<a class="group-btn" href="${url}" target="_blank">${name}</a>`;
+            el.innerHTML += `<div class="group-btn" onclick="openExternal('${url}')">${name}</div>`;
         });
     });
 }
@@ -887,6 +877,7 @@ function sendToBot(data) {
     }
 }
 
+// ---- TOAST ----
 function showToast(msg) {
     const el = document.getElementById('toast');
     el.textContent = msg;
