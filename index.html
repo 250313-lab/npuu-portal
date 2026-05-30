@@ -200,10 +200,30 @@
             background: none;
             border: none;
             gap: 4px;
+            flex: 1;
         }
 
         .nav-item.active { color: var(--accent3); font-weight: 700; }
         .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
+
+        .handbook-btn {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .handbook-btn:hover {
+            background: rgba(58, 134, 255, 0.1);
+            border-color: var(--accent);
+        }
     </style>
 </head>
 <body>
@@ -217,8 +237,8 @@
     <div class="tabs">
         <button class="tab-btn active" onclick="switchView('resit')">🚫 Resit Exam</button>
         <button class="tab-btn" onclick="switchView('gpa')">🧮 GPA Calc</button>
-        <button class="tab-btn" onclick="switchView('syllabus')">📄 Syllabus</button>
         <button class="tab-btn" onclick="switchView('profs')">👥 Professors</button>
+        <button class="tab-btn" onclick="switchView('handbook')">📘 Handbook</button>
     </div>
 
     <div id="view-resit" class="view-section active">
@@ -247,19 +267,33 @@
         <button class="btn" style="background:var(--surface2); color:#fff; border:1px solid var(--border);" onclick="addGpaRow()">➕ Fan qo'shish</button>
     </div>
 
-    <div id="view-syllabus" class="view-section">
-        <div class="card" style="border-left:4px solid var(--accent);">
-            <div style="font-size:15px; font-weight:600; margin-bottom:10px;">Academic Syllabus</div>
-            <p style="font-size:13px; color:var(--muted); line-height:1.5;">Kerakli fanning tugmasini bosing. Fayl bot orqali sizga PDF formatida yuboriladi.</p>
-        </div>
-        <div id="syllabus-list"></div>
-    </div>
-
     <div id="view-profs" class="view-section">
         <div class="search-box" style="margin-bottom:16px;">
             <input type="text" id="search-prof" placeholder="🔍 Professor ismi yoki kafedra...">
         </div>
         <div id="prof-list"></div>
+    </div>
+
+    <div id="view-handbook" class="view-section">
+        <div class="card" style="border-left:4px solid var(--accent2); margin-bottom: 16px;">
+            <div style="font-size:16px; font-weight:700; margin-bottom:6px;">Student Handbooks</div>
+            <p style="font-size:13px; color:var(--muted); line-height:1.4;">Yo'nalishingizga mos keluvchi Handbook fayllarini onlayn ko'rish uchun quyidagi tugmalardan birini tanlang.</p>
+        </div>
+
+        <a href="https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link" target="_blank" class="handbook-btn">
+            <span>🤖 Artificial Intelligence</span>
+            <span>➔</span>
+        </a>
+
+        <a href="https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link" target="_blank" class="handbook-btn">
+            <span>💻 Information Systems and Technologies</span>
+            <span>➔</span>
+        </a>
+
+        <a href="https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link" target="_blank" class="handbook-btn">
+            <span>📐 Mathematics</span>
+            <span>➔</span>
+        </a>
     </div>
 
     <div class="nav-bar">
@@ -271,13 +305,13 @@
             <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
             GPA
         </button>
-        <button class="nav-item" onclick="switchView('syllabus')" id="nav-syllabus">
-            <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-            Syllabus
-        </button>
         <button class="nav-item" onclick="switchView('profs')" id="nav-profs">
             <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 1.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
             Profs
+        </button>
+        <button class="nav-item" onclick="switchView('handbook')" id="nav-handbook">
+            <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+            Handbook
         </button>
     </div>
 
@@ -285,7 +319,6 @@
         const tg = window.Telegram?.WebApp;
         if (tg) { tg.ready(); tg.expand(); }
 
-        // 1. VIEW SWITCHER
         function switchView(viewId) {
             document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -301,7 +334,7 @@
             if (activeNavItem) activeNavItem.classList.add('active');
         }
 
-        // 2. RESIT EXAMS LOGIC (BARQAROR VA STRUKTURAVIY TO'G'RILANGAN)
+        // RESIT EXAMS LOGIC
         const API_URL = "https://script.google.com/macros/s/AKfycbwo2j58xCCcVHRbgifOZijiQl906VvM0GdeSg1ES_1mTfd8eTuUavbd8QD5cUjyZUDF8w/exec";
         let allExams = [];
         let filterFailOnly = false;
@@ -312,9 +345,8 @@
             try {
                 const res = await fetch(API_URL);
                 const rawData = await res.json();
-                const rows = rawData.slice(1); // Google Sheets sarlavha qatorini olib tashlaydi
+                const rows = rawData.slice(1);
 
-                // Ustunlar o'rni struktura bo'yicha to'g'rilandi: r[1]=Guruh, r[2]=Xona, r[3]=Fan nomi, r[4]=Ruxsat holati
                 allExams = rows.map(r => ({
                     name: r[0] ? r[0].toString().trim() : 'Noma\'lum',
                     group: r[1] ? r[1].toString().trim() : '',
@@ -323,7 +355,6 @@
                     allowed: r[4] === true || r[4] === 'true' || r[4] === 'ALLOWED' || r[4] === 'Allowed'
                 }));
 
-                // Dropdown qidiruv filtrlarini unikal qiymatlar bilan to'ldirish
                 const groups = [...new Set(allExams.map(i => i.group).filter(Boolean))].sort();
                 const rooms = [...new Set(allExams.map(i => i.room).filter(Boolean))].sort();
                 const subjects = [...new Set(allExams.map(i => i.subject).filter(Boolean))].sort();
@@ -392,7 +423,7 @@
             renderExams();
         });
 
-        // 3. GPA CALCULATOR LOGIC
+        // GPA CALCULATOR LOGIC
         const DEFAULT_SUBJECTS = ["Introduction to T.L", "Programming 1", "Discrete Math", "General English 2", "Math Analysis 2", "Analytical Geometry", "Calculus 2"];
         
         function initGpa() {
@@ -441,27 +472,7 @@
             document.getElementById('gpa-result').innerText = gpa;
         }
 
-        // 4. SYLLABUS LOGIC
-        function initSyllabus() {
-            const container = document.getElementById('syllabus-list');
-            container.innerHTML = DEFAULT_SUBJECTS.map(sub => `
-                <div class="card" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <span style="font-size:14px; font-weight:500;">${sub}</span>
-                    <button class="tab-btn active" style="padding:6px 12px; font-size:12px; border-radius:8px;" onclick="sendSyllabus('${sub}')">📥 Yuklash</button>
-                </div>
-            `).join('');
-        }
-
-        function sendSyllabus(subjectName) {
-            if (tg) {
-                tg.sendData(JSON.stringify({ type: `syllabus_${subjectName}` }));
-                tg.close();
-            } else {
-                alert(`Bot orqali yuborilmoqda: ${subjectName}`);
-            }
-        }
-
-        // 5. PROFESSORS LOGIC
+        // PROFESSORS LIST
         const PROFS = [
             {n: "Dr. Alisher Toshmatov", e: "a.toshmatov@npuu.uz", d: "Informatika"},
             {n: "Prof. Elena Ivanova", e: "e.ivanova@npuu.uz", d: "Xorijiy tillar"},
@@ -484,11 +495,9 @@
             renderProfs(PROFS.filter(p => p.n.toLowerCase().includes(t) || p.d.toLowerCase().includes(t)));
         });
 
-        // OYNANI BOSHLANG'ICH YUKLASH
         window.onload = () => {
             initExams();
             initGpa();
-            initSyllabus();
             renderProfs(PROFS);
         };
     </script>
