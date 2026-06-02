@@ -477,7 +477,7 @@
         const SPREADSHEET_ID = "19-Nigcb3FNC1xYoj-hsTPHF7hrQSc0xu-pY6TwNQqS0";
         const SHEET_NAMES = [
             "Discrete Math", "Analysis 2", "Analytical Geometry", "Calculus 2", 
-            "General English 2", "Computer Programming 1", "Introduction to Teaching and Learning"
+            "General English 2","General English 2 Speaking", "Computer Programming 1", "Introduction to Teaching and Learning"
         ];
         let allExams = [];
         let filterFailOnly = false;
@@ -514,6 +514,7 @@
                         let time = r[5] && r[5].v ? r[5].v.toString() : '';
                         let date = r[6] && r[6].v ? r[6].v.toString() : '';
                         let status = r[7] && r[7].v ? r[7].v.toString() : '';
+                        let status = r[8] && r[8].v ? r[8].v.toString() : '';
 
                         let isAllowed = true;
                         if (status.toLowerCase().includes('fail')) isAllowed = false;
