@@ -1,1495 +1,1197 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NPUU SMART BOT</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* ===== DARK THEME (default) ===== */
-        :root {
-            --bg: #070f1e;
-            --surface: #0d1b33;
-            --surface2: #14284b;
-            --border: rgba(58, 134, 255, 0.18);
-            --accent: #3a86ff;
-            --accent2: #00bbf9;
-            --accent3: #4cc9f0;
-            --text: #f0f5ff;
-            --muted: rgba(240, 245, 255, 0.45);
-            --radius: 18px;
-            --nav-bg: rgba(7, 15, 30, 0.97);
-            --header-grad: linear-gradient(135deg, #070f1e 0%, #0d1b33 100%);
-            --card-shadow: 0 4px 24px rgba(0,0,0,0.35);
-            --shine: rgba(255,255,255,0.04);
-            --green: #00e676;
-            --orange: #ff9800;
-            --red: #ff4d4d;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>NPUU SMART BOT</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#070f1e; --surface:#0d1b33; --surface2:#14284b;
+  --border:rgba(58,134,255,0.18); --accent:#3a86ff; --accent2:#00bbf9; --accent3:#4cc9f0;
+  --text:#f0f5ff; --muted:rgba(240,245,255,0.45); --radius:18px;
+  --nav-bg:rgba(7,15,30,0.97); --header-grad:linear-gradient(135deg,#070f1e 0%,#0d1b33 100%);
+  --card-shadow:0 4px 24px rgba(0,0,0,0.35); --green:#00e676; --orange:#ff9800; --red:#ff4d4d;
+}
+body.light {
+  --bg:#f0f4ff; --surface:#ffffff; --surface2:#e8eeff;
+  --border:rgba(58,134,255,0.2); --accent:#2563eb; --accent2:#0284c7; --accent3:#0ea5e9;
+  --text:#0f172a; --muted:rgba(15,23,42,0.5); --nav-bg:rgba(240,244,255,0.97);
+  --header-grad:linear-gradient(135deg,#dbeafe 0%,#eff6ff 100%);
+  --card-shadow:0 4px 24px rgba(37,99,235,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;padding-bottom:90px;transition:background .35s,color .35s}
 
-        /* ===== LIGHT THEME ===== */
-        body.light {
-            --bg: #f0f4ff;
-            --surface: #ffffff;
-            --surface2: #e8eeff;
-            --border: rgba(58, 134, 255, 0.2);
-            --accent: #2563eb;
-            --accent2: #0284c7;
-            --accent3: #0ea5e9;
-            --text: #0f172a;
-            --muted: rgba(15, 23, 42, 0.5);
-            --nav-bg: rgba(240, 244, 255, 0.97);
-            --header-grad: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
-            --card-shadow: 0 4px 24px rgba(37,99,235,0.08);
-            --shine: rgba(255,255,255,0.7);
-        }
+/* ===== ONBOARDING ===== */
+#onboarding-overlay{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:32px 20px 24px;overflow-y:auto}
+.onboard-logo{width:80px;height:80px;border-radius:50%;border:2.5px solid var(--accent);box-shadow:0 0 32px rgba(58,134,255,0.5);display:flex;align-items:center;justify-content:center;font-size:38px;background:var(--surface2);margin-bottom:14px;animation:logoPulse 3s ease-in-out infinite;flex-shrink:0}
+.onboard-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text);margin-bottom:4px;text-align:center}
+.onboard-sub{font-size:12.5px;color:var(--muted);text-align:center;margin-bottom:20px;line-height:1.5}
+.onboard-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:18px;width:100%;max-width:380px;box-shadow:var(--card-shadow)}
+.onboard-label{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent3);margin-bottom:6px;margin-top:12px}
+.onboard-label:first-child{margin-top:0}
+.onboard-input,.onboard-select{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:11px 14px;border-radius:12px;font-size:14px;outline:none;font-family:inherit;transition:border .2s;appearance:none}
+.onboard-input:focus,.onboard-select:focus{border-color:var(--accent)}
+.onboard-select option{background:var(--surface2);color:var(--text)}
+.onboard-btn{background:var(--accent);color:#fff;font-weight:700;border:none;padding:13px;border-radius:14px;width:100%;cursor:pointer;font-size:15px;font-family:inherit;margin-top:16px;transition:transform .15s,opacity .15s}
+.onboard-btn:active{transform:scale(.97);opacity:.9}
+.step{display:none}
+.step.active{display:block;animation:sectionIn .3s ease both}
+.onboard-steps-dots{display:flex;gap:6px;margin-bottom:16px}
+.step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background .3s,width .3s}
+.step-dot.active{background:var(--accent);width:24px;border-radius:4px}
+.step-dot.done{background:var(--accent2)}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+/* ===== TOP BAR ===== */
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:500}
+.top-bar-left{display:flex;gap:6px;align-items:center}
+.top-bar-right{display:flex;gap:6px;align-items:center}
+.ctrl-btn{background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:9px;padding:6px 10px;font-size:13px;font-weight:700;outline:none;cursor:pointer;font-family:inherit;line-height:1;transition:all .2s}
+.ctrl-btn:active{transform:scale(.94)}
+#theme-btn{font-size:15px;padding:6px 9px}
+.edit-profile-btn{background:var(--surface2);border:1px solid var(--accent);color:var(--accent);border-radius:9px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;display:flex;align-items:center;gap:4px}
+.edit-profile-btn:active{transform:scale(.94)}
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'DM Sans', sans-serif;
-            overflow-x: hidden;
-            padding-bottom: 90px;
-            transition: background 0.35s, color 0.35s;
-        }
+/* ===== PROFILE HEADER ===== */
+.profile-header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--header-grad);border-bottom:1px solid var(--border)}
+.profile-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:#fff;flex-shrink:0;box-shadow:0 0 14px rgba(58,134,255,.4)}
+.profile-info{flex:1;min-width:0}
+.profile-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profile-meta{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4}
+.semester-badge{background:rgba(58,134,255,.2);border:1px solid var(--accent);color:var(--accent2);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;margin-top:3px}
 
-        /* ===== ONBOARDING OVERLAY ===== */
-        #onboarding-overlay {
-            position: fixed;
-            inset: 0;
-            background: var(--bg);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            overflow-y: auto;
-        }
+/* ===== TODAY WIDGET ===== */
+.today-widget{background:linear-gradient(135deg,rgba(58,134,255,.12),rgba(0,187,249,.06));border:1px solid rgba(58,134,255,.25);border-radius:var(--radius);padding:12px 14px;margin:10px 16px}
+.today-widget-title{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--accent3);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.today-day-badge{background:var(--accent);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:auto}
+.today-schedule-btn{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 12px;cursor:pointer;font-family:inherit;color:var(--text);width:100%;transition:all .2s;text-decoration:none}
+.today-schedule-btn:active{transform:scale(.98)}
 
-        .onboard-logo {
-            width: 90px; height: 90px;
-            border-radius: 50%;
-            border: 2.5px solid var(--accent);
-            box-shadow: 0 0 32px rgba(58,134,255,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 44px;
-            background: var(--surface2);
-            margin-bottom: 20px;
-            animation: logoPulse 3s ease-in-out infinite;
-        }
+/* ===== TABS ===== */
+.tabs{display:flex;gap:7px;padding:10px 16px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;border-bottom:1px solid var(--border)}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:50px;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .22s cubic-bezier(.4,0,.2,1);font-family:inherit;white-space:nowrap}
+.tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 14px rgba(58,134,255,.35);transform:translateY(-1px)}
 
-        .onboard-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 26px;
-            font-weight: 800;
-            color: var(--text);
-            margin-bottom: 6px;
-            text-align: center;
-        }
+/* ===== SECTIONS ===== */
+.view-section{display:none;padding:12px 16px}
+.view-section.active{display:block;animation:sectionIn .3s cubic-bezier(.4,0,.2,1)}
+@keyframes sectionIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes logoPulse{0%,100%{box-shadow:0 0 18px rgba(58,134,255,.4)}50%{box-shadow:0 0 32px rgba(58,134,255,.7)}}
+@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.card-anim{animation:cardIn .35s ease both}
 
-        .onboard-sub {
-            font-size: 13px;
-            color: var(--muted);
-            text-align: center;
-            margin-bottom: 32px;
-            line-height: 1.5;
-        }
+/* ===== CARD ===== */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;box-shadow:var(--card-shadow);transition:background .3s,border .3s}
 
-        .onboard-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 20px;
-            width: 100%;
-            max-width: 380px;
-            box-shadow: var(--card-shadow);
-        }
+/* ===== GPA RING ===== */
+.gpa-ring-wrapper{display:flex;align-items:center;gap:16px;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;box-shadow:var(--card-shadow)}
+.gpa-ring-track{fill:none;stroke:var(--surface2);stroke-width:8}
+.gpa-ring-fill{fill:none;stroke:var(--accent2);stroke-width:8;stroke-linecap:round;stroke-dasharray:251.2;stroke-dashoffset:251.2;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset 1s cubic-bezier(.4,0,.2,1),stroke .5s}
+.gpa-big{font-family:'Syne',sans-serif;font-size:38px;font-weight:800;color:var(--accent2);letter-spacing:-2px;line-height:1}
+.gpa-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.6px}
+.gpa-share-btn{background:var(--surface2);border:1px solid var(--border);color:var(--accent3);border-radius:9px;padding:5px 11px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:7px;transition:all .2s;display:inline-flex;align-items:center;gap:4px}
 
-        .onboard-label {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-            color: var(--accent3);
-            margin-bottom: 7px;
-            margin-top: 14px;
-        }
-        .onboard-label:first-child { margin-top: 0; }
+/* ===== STIPEND ===== */
+.stipend-card{border-radius:12px;padding:10px 14px;margin-bottom:10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
+.stipend-ok{background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);color:#00e676}
+.stipend-warn{background:rgba(255,152,0,.1);border:1px solid rgba(255,152,0,.3);color:#ff9800}
+.stipend-fail{background:rgba(255,77,77,.1);border:1px solid rgba(255,77,77,.3);color:#ff4d4d}
 
-        .onboard-input, .onboard-select {
-            width: 100%;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 12px 14px;
-            border-radius: 12px;
-            font-size: 14px;
-            outline: none;
-            font-family: inherit;
-            transition: border 0.2s;
-            appearance: none;
-        }
-        .onboard-input:focus, .onboard-select:focus { border-color: var(--accent); }
-        .onboard-select option { background: var(--surface2); color: var(--text); }
+/* ===== SEARCH ===== */
+.search-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px;margin-bottom:14px}
+.search-box input,.search-box select{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:9px 13px;border-radius:11px;font-size:13.5px;outline:none;margin-bottom:8px;font-family:inherit;transition:border .2s}
+.search-box input:focus,.search-box select:focus{border-color:var(--accent)}
+.search-box input:last-child,.search-box select:last-child{margin-bottom:0}
 
-        .onboard-btn {
-            background: var(--accent);
-            color: #fff;
-            font-weight: 700;
-            border: none;
-            padding: 14px;
-            border-radius: 14px;
-            width: 100%;
-            cursor: pointer;
-            font-size: 15px;
-            font-family: inherit;
-            margin-top: 20px;
-            letter-spacing: 0.3px;
-            transition: transform 0.15s, opacity 0.15s;
-        }
-        .onboard-btn:active { transform: scale(0.97); opacity: 0.9; }
+/* ===== BUTTONS ===== */
+.btn{background:var(--accent2);color:#000;font-weight:700;border:none;padding:12px;border-radius:13px;width:100%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;text-decoration:none;font-family:inherit;transition:transform .15s,opacity .15s}
+.btn:active{transform:scale(.97);opacity:.9}
 
-        /* ===== STEPS ===== */
-        .step { display: none; }
-        .step.active { display: block; animation: sectionIn 0.3s ease both; }
+/* ===== HANDBOOK ===== */
+.handbook-btn{background:var(--surface2);border:1px solid var(--border);border-radius:13px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;color:var(--text);text-decoration:none;margin-bottom:10px;font-weight:600;transition:background .2s,transform .15s;cursor:pointer;font-size:13.5px}
+.handbook-btn:active{transform:scale(.98)}
+.handbook-btn.recommended{border:2px solid var(--accent);background:rgba(58,134,255,.08)}
+.rec-badge{background:var(--accent);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;margin-left:6px;vertical-align:middle}
 
-        /* ===== TOP CONTROLS ===== */
-        .top-controls {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            z-index: 1000;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
+/* ===== TIMETABLE ===== */
+.grid-container{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tt-btn{background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:13px 6px;display:flex;align-items:center;justify-content:center;color:var(--text);font-weight:700;cursor:pointer;font-size:13px;font-family:inherit;transition:all .2s;flex-direction:column;gap:2px}
+.tt-btn:active{transform:scale(.95)}
+.tt-btn.my-group{background:rgba(58,134,255,.18);border-color:var(--accent);color:var(--accent2)}
+.tt-btn .star{font-size:9px;color:var(--accent2)}
 
-        .ctrl-btn {
-            background: rgba(13, 27, 51, 0.75);
-            color: #fff;
-            border: 1px solid var(--accent);
-            border-radius: 10px;
-            padding: 7px 11px;
-            font-size: 13px;
-            font-weight: 700;
-            outline: none;
-            cursor: pointer;
-            backdrop-filter: blur(8px);
-            transition: all 0.2s;
-            font-family: inherit;
-            line-height: 1;
-        }
-        body.light .ctrl-btn { background: rgba(255,255,255,0.85); color: var(--text); }
-        .ctrl-btn:active { transform: scale(0.94); }
-        #theme-btn { font-size: 16px; padding: 7px 9px; }
+/* ===== CURRICULUM VIEW ===== */
+.curr-filter-row{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none}
+.curr-filter-row::-webkit-scrollbar{display:none}
+.curr-filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:7px 13px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .2s}
+.curr-filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.curr-subject-card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:11px 13px;margin-bottom:8px;transition:all .2s}
+.curr-subject-card.core{border-left:3px solid var(--accent2)}
+.curr-subject-card.elective{border-left:3px solid var(--orange)}
+.curr-subj-name{font-size:13.5px;font-weight:600;margin-bottom:3px}
+.curr-subj-meta{font-size:11px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap}
+.curr-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:middle}
+.badge-core{background:rgba(0,187,249,.15);color:var(--accent2)}
+.badge-elective{background:rgba(255,152,0,.15);color:var(--orange)}
 
-        /* ===== HEADER ===== */
-        .header {
-            padding: 28px 16px 18px;
-            text-align: center;
-            background: var(--header-grad);
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 14px;
-            position: relative;
-            overflow: hidden;
-        }
+/* ===== PROF DEPT COLORS ===== */
+.dept-math{border-left:4px solid #3a86ff!important}
+.dept-eng{border-left:4px solid #00e676!important}
+.dept-it{border-left:4px solid #00bbf9!important}
+.dept-edu{border-left:4px solid #ff9800!important}
+.copy-email-btn{background:var(--surface2);border:1px solid var(--border);color:var(--accent3);border-radius:7px;padding:3px 8px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;margin-left:6px;vertical-align:middle}
+.copy-email-btn:active{transform:scale(.93)}
+.copy-email-btn.copied{background:rgba(0,230,118,.15);border-color:#00e676;color:#00e676}
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -60px; left: 50%;
-            transform: translateX(-50%);
-            width: 280px; height: 280px;
-            background: radial-gradient(circle, rgba(58,134,255,0.12) 0%, transparent 70%);
-            pointer-events: none;
-        }
+/* ===== GPA TABLE ===== */
+.gpa-scale-table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:4px}
+.gpa-scale-table th{background:var(--surface2);color:var(--accent3);font-weight:700;padding:7px 5px;text-align:center;border:1px solid var(--border);font-size:10.5px}
+.gpa-scale-table td{padding:6px 5px;text-align:center;border:1px solid var(--border);color:var(--text)}
+.gpa-scale-table tr:nth-child(even) td{background:var(--surface2)}
+.grade-a-plus{color:#00e676;font-weight:700}.grade-a{color:#40c4ff;font-weight:700}
+.grade-b{color:#b2ff59;font-weight:700}.grade-c{color:#ffcc00;font-weight:700}
+.grade-d{color:#ff9800;font-weight:700}.grade-f{color:#ff4d4d;font-weight:700}
+.gpa-toggle-btn{background:var(--surface2);border:1px solid var(--border);color:var(--accent3);padding:9px 14px;border-radius:12px;width:100%;font-size:12.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px;font-family:inherit;transition:background .2s}
 
-        /* ===== PERSONALIZED HEADER ===== */
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 16px;
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 14px;
-        }
+/* ===== GPA HISTORY ===== */
+.gpa-history-item{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+.gpa-history-item:last-child{border-bottom:none}
 
-        .profile-avatar {
-            width: 46px; height: 46px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 18px;
-            color: #fff;
-            flex-shrink: 0;
-            box-shadow: 0 0 14px rgba(58,134,255,0.4);
-        }
+/* ===== NUMBER INPUT ===== */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 
-        .profile-info { flex: 1; min-width: 0; }
-        .profile-name {
-            font-family: 'Syne', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .profile-meta { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+/* ===== NAV BAR ===== */
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--nav-bg);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:100;overflow-x:auto;scrollbar-width:none;transition:background .35s}
+.nav-bar::-webkit-scrollbar{display:none}
+.nav-item{display:flex;flex-direction:column;align-items:center;color:var(--muted);font-size:10px;font-weight:500;cursor:pointer;background:none;border:none;gap:3px;min-width:55px;flex:1 0 auto;font-family:inherit;transition:color .2s,transform .2s;padding:2px 0}
+.nav-item.active{color:var(--accent3);font-weight:700;transform:translateY(-2px)}
+.nav-item svg{width:21px;height:21px;fill:currentColor}
+.nav-dot{width:4px;height:4px;border-radius:50%;background:var(--accent3);opacity:0;margin-top:-1px;transition:opacity .2s}
+.nav-item.active .nav-dot{opacity:1}
 
-        .profile-edit-btn {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            color: var(--muted);
-            border-radius: 8px;
-            padding: 6px 10px;
-            font-size: 12px;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-        .profile-edit-btn:active { transform: scale(0.95); }
+/* ===== SAVE BANNER ===== */
+.save-banner{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--accent);color:#fff;padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:200;white-space:nowrap}
+.save-banner.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-        /* ===== TODAY WIDGET ===== */
-        .today-widget {
-            background: linear-gradient(135deg, rgba(58,134,255,0.15), rgba(0,187,249,0.08));
-            border: 1px solid rgba(58,134,255,0.3);
-            border-radius: var(--radius);
-            padding: 14px;
-            margin: 0 16px 14px;
-        }
-
-        .today-widget-title {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.7px;
-            text-transform: uppercase;
-            color: var(--accent3);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .today-day-badge {
-            background: var(--accent);
-            color: #fff;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 20px;
-            margin-left: auto;
-        }
-
-        .today-schedule-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 11px 14px;
-            cursor: pointer;
-            font-family: inherit;
-            color: var(--text);
-            width: 100%;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-        .today-schedule-btn:active { transform: scale(0.98); }
-
-        /* ===== TABS ===== */
-        .tabs {
-            display: flex;
-            gap: 7px;
-            padding: 0 16px;
-            margin-bottom: 16px;
-            overflow-x: auto;
-            white-space: nowrap;
-            scrollbar-width: none;
-        }
-        .tabs::-webkit-scrollbar { display: none; }
-
-        .tab-btn {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            color: var(--muted);
-            padding: 9px 16px;
-            border-radius: 50px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.22s cubic-bezier(.4,0,.2,1);
-            font-family: inherit;
-            white-space: nowrap;
-        }
-        .tab-btn.active {
-            background: var(--accent);
-            color: #fff;
-            border-color: var(--accent);
-            box-shadow: 0 4px 14px rgba(58,134,255,0.35);
-            transform: translateY(-1px);
-        }
-
-        /* ===== SECTIONS ===== */
-        .view-section { display: none; padding: 0 16px; }
-        .view-section.active { display: block; animation: sectionIn 0.3s cubic-bezier(.4,0,.2,1); }
-
-        @keyframes sectionIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== CARD ===== */
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 14px;
-            margin-bottom: 12px;
-            box-shadow: var(--card-shadow);
-            transition: background 0.3s, border 0.3s;
-        }
-
-        /* ===== GPA RING ===== */
-        .gpa-ring-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            padding: 16px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            margin-bottom: 14px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .gpa-ring-svg { flex-shrink: 0; }
-
-        .gpa-ring-track {
-            fill: none;
-            stroke: var(--surface2);
-            stroke-width: 8;
-        }
-
-        .gpa-ring-fill {
-            fill: none;
-            stroke: var(--accent2);
-            stroke-width: 8;
-            stroke-linecap: round;
-            stroke-dasharray: 251.2;
-            stroke-dashoffset: 251.2;
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
-            transition: stroke-dashoffset 1s cubic-bezier(.4,0,.2,1), stroke 0.5s;
-        }
-
-        .gpa-ring-text-group { flex: 1; }
-        .gpa-label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-        .gpa-big { font-family: 'Syne', sans-serif; font-size: 42px; font-weight: 800; color: var(--accent2); letter-spacing: -2px; line-height: 1; }
-        .gpa-max { font-size: 11px; color: var(--muted); margin-top: 4px; }
-        .gpa-letter { font-size: 13px; font-weight: 700; margin-top: 6px; }
-
-        .gpa-share-btn {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            color: var(--accent3);
-            border-radius: 10px;
-            padding: 6px 12px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-            margin-top: 8px;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .gpa-share-btn:active { transform: scale(0.95); }
-
-        /* ===== SEARCH BOX ===== */
-        .search-box {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 12px;
-            margin-bottom: 16px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .search-box input, .search-box select {
-            width: 100%;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 14px;
-            outline: none;
-            margin-bottom: 8px;
-            font-family: inherit;
-            transition: border 0.2s, background 0.3s;
-        }
-        .search-box input:focus, .search-box select:focus { border-color: var(--accent); }
-        .search-box select option { background: var(--surface2); color: var(--text); }
-        .search-box input:last-child, .search-box select:last-child { margin-bottom: 0; }
-
-        /* ===== BUTTONS ===== */
-        .btn {
-            background: var(--accent2);
-            color: #000;
-            font-weight: 700;
-            border: none;
-            padding: 13px;
-            border-radius: 13px;
-            width: 100%;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 8px;
-            text-decoration: none;
-            font-family: inherit;
-            transition: transform 0.15s, opacity 0.15s;
-        }
-        .btn:active { transform: scale(0.97); opacity: 0.9; }
-
-        /* ===== NAV BAR ===== */
-        .nav-bar {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: var(--nav-bg);
-            backdrop-filter: blur(16px);
-            border-top: 1px solid var(--border);
-            display: flex;
-            padding: 10px 4px calc(10px + env(safe-area-inset-bottom));
-            z-index: 100;
-            overflow-x: auto;
-            scrollbar-width: none;
-            transition: background 0.35s;
-        }
-        .nav-bar::-webkit-scrollbar { display: none; }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--muted);
-            font-size: 10.5px;
-            font-weight: 500;
-            cursor: pointer;
-            background: none;
-            border: none;
-            gap: 3px;
-            min-width: 60px;
-            flex: 1 0 auto;
-            font-family: inherit;
-            transition: color 0.2s, transform 0.2s;
-            padding: 2px 0;
-        }
-        .nav-item.active { color: var(--accent3); font-weight: 700; transform: translateY(-2px); }
-        .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
-
-        .nav-dot {
-            width: 4px; height: 4px;
-            border-radius: 50%;
-            background: var(--accent3);
-            opacity: 0;
-            margin-top: -1px;
-            transition: opacity 0.2s;
-        }
-        .nav-item.active .nav-dot { opacity: 1; }
-
-        /* ===== HANDBOOK BTNS ===== */
-        .handbook-btn {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 13px;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: var(--text);
-            text-decoration: none;
-            margin-bottom: 10px;
-            font-weight: 600;
-            transition: background 0.2s, transform 0.15s;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .handbook-btn:active { transform: scale(0.98); }
-
-        /* ===== TIMETABLE ===== */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
-
-        .tt-btn {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text);
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 13px;
-            font-family: inherit;
-            transition: background 0.2s, transform 0.15s, color 0.2s, border-color 0.2s;
-        }
-        .tt-btn:active { transform: scale(0.95); }
-        .tt-btn:hover { background: rgba(58,134,255,0.12); border-color: var(--accent); color: var(--accent); }
-        .tt-btn.my-group {
-            background: rgba(58,134,255,0.18);
-            border-color: var(--accent);
-            color: var(--accent2);
-            box-shadow: 0 0 12px rgba(58,134,255,0.2);
-        }
-
-        /* ===== NUMBER INPUTS ===== */
-        input[type=number]::-webkit-inner-spin-button,
-        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-
-        /* ===== GPA TABLE ===== */
-        .gpa-scale-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            margin-top: 4px;
-        }
-        .gpa-scale-table th {
-            background: var(--surface2);
-            color: var(--accent3);
-            font-weight: 700;
-            padding: 8px 6px;
-            text-align: center;
-            border: 1px solid var(--border);
-            font-size: 11px;
-        }
-        .gpa-scale-table td {
-            padding: 7px 6px;
-            text-align: center;
-            border: 1px solid var(--border);
-            color: var(--text);
-        }
-        .gpa-scale-table tr:nth-child(even) td { background: var(--surface2); }
-        .grade-a-plus { color: #00e676; font-weight: 700; }
-        .grade-a      { color: #40c4ff; font-weight: 700; }
-        .grade-b      { color: #b2ff59; font-weight: 700; }
-        .grade-c      { color: #ffcc00; font-weight: 700; }
-        .grade-d      { color: #ff9800; font-weight: 700; }
-        .grade-f      { color: #ff4d4d; font-weight: 700; }
-
-        .gpa-toggle-btn {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            color: var(--accent3);
-            padding: 10px 14px;
-            border-radius: 12px;
-            width: 100%;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            margin-bottom: 12px;
-            font-family: inherit;
-            transition: background 0.2s;
-        }
-
-        /* ===== GPA HISTORY ===== */
-        .gpa-history-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 13px;
-        }
-        .gpa-history-item:last-child { border-bottom: none; }
-
-        /* ===== STIPEND CARD ===== */
-        .stipend-card {
-            border-radius: 12px;
-            padding: 12px 14px;
-            margin-bottom: 10px;
-            font-size: 13px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .stipend-ok { background: rgba(0,230,118,0.1); border: 1px solid rgba(0,230,118,0.3); color: #00e676; }
-        .stipend-warn { background: rgba(255,152,0,0.1); border: 1px solid rgba(255,152,0,0.3); color: #ff9800; }
-        .stipend-fail { background: rgba(255,77,77,0.1); border: 1px solid rgba(255,77,77,0.3); color: #ff4d4d; }
-
-        /* ===== PROF DEPT COLORS ===== */
-        .dept-math { border-left-color: #3a86ff !important; }
-        .dept-eng  { border-left-color: #00e676 !important; }
-        .dept-it   { border-left-color: #00bbf9 !important; }
-        .dept-edu  { border-left-color: #ff9800 !important; }
-
-        /* ===== ANIMATIONS ===== */
-        @keyframes logoPulse {
-            0%, 100% { box-shadow: 0 0 18px rgba(58,134,255,0.4), inset 0 0 10px rgba(58,134,255,0.08); }
-            50% { box-shadow: 0 0 32px rgba(58,134,255,0.7), inset 0 0 16px rgba(58,134,255,0.15); }
-        }
-
-        @keyframes fadeSlideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes cardIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .card-anim { animation: cardIn 0.35s ease both; }
-
-        /* ===== SAVE BANNER ===== */
-        .save-banner {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: var(--accent);
-            color: #fff;
-            padding: 10px 22px;
-            border-radius: 50px;
-            font-size: 13px;
-            font-weight: 600;
-            opacity: 0;
-            transition: opacity 0.3s, transform 0.3s;
-            pointer-events: none;
-            z-index: 200;
-            white-space: nowrap;
-        }
-        .save-banner.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-        /* ===== ONBOARDING PROGRESS ===== */
-        .onboard-steps-dots {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 20px;
-        }
-        .step-dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: var(--border);
-            transition: background 0.3s, width 0.3s;
-        }
-        .step-dot.active { background: var(--accent); width: 24px; border-radius: 4px; }
-        .step-dot.done { background: var(--accent2); }
-
-        /* Group option badge */
-        .my-group-badge {
-            background: var(--accent);
-            color: #fff;
-            font-size: 9px;
-            font-weight: 700;
-            padding: 1px 6px;
-            border-radius: 8px;
-            margin-left: 4px;
-        }
-    </style>
+/* ===== MISC ===== */
+.section-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.info-card{background:linear-gradient(135deg,rgba(58,134,255,.1),rgba(0,187,249,.06));border:1px solid rgba(58,134,255,.25);border-radius:var(--radius);padding:12px 14px;margin-bottom:12px}
+</style>
 </head>
 <body>
 
-    <!-- ===== SAVE BANNER ===== -->
-    <div class="save-banner" id="save-banner">✅ Saqlandi!</div>
+<div class="save-banner" id="save-banner">✅</div>
 
-    <!-- ===== ONBOARDING OVERLAY ===== -->
-    <div id="onboarding-overlay">
-        <div class="onboard-logo">🎓</div>
-        <div class="onboard-title">NPUU Smart Bot</div>
-        <div class="onboard-sub">Bir marta ma'lumot kiriting —<br>bot siz uchun moslanadi!</div>
-
-        <div class="onboard-steps-dots">
-            <div class="step-dot active" id="dot-0"></div>
-            <div class="step-dot" id="dot-1"></div>
-            <div class="step-dot" id="dot-2"></div>
-        </div>
-
-        <div class="onboard-card">
-            <!-- Step 0: Name -->
-            <div class="step active" id="step-0">
-                <div class="onboard-label">👤 Ismingiz</div>
-                <input type="text" class="onboard-input" id="ob-name" placeholder="Masalan: Alisher Karimov" autocomplete="off">
-                <button class="onboard-btn" onclick="obNext(1)">Davom etish →</button>
-            </div>
-
-            <!-- Step 1: Major + Year -->
-            <div class="step" id="step-1">
-                <div class="onboard-label">🎓 Yo'nalishingiz</div>
-                <select class="onboard-select" id="ob-major">
-                    <option value="">Tanlang...</option>
-                    <option value="AI">🤖 Artificial Intelligence</option>
-                    <option value="IST">💻 Information Systems & Technologies</option>
-                    <option value="MATH">📐 Mathematics</option>
-                </select>
-                <div class="onboard-label" style="margin-top:14px;">📅 O'qish yilingiz</div>
-                <select class="onboard-select" id="ob-year">
-                    <option value="">Tanlang...</option>
-                    <option value="1">1-yil (Freshman)</option>
-                    <option value="2">2-yil (Sophomore)</option>
-                    <option value="3">3-yil (Junior)</option>
-                    <option value="4">4-yil (Senior)</option>
-                </select>
-                <button class="onboard-btn" onclick="obNext(2)">Davom etish →</button>
-            </div>
-
-            <!-- Step 2: Group -->
-            <div class="step" id="step-2">
-                <div class="onboard-label">👥 Guruhingiz</div>
-                <select class="onboard-select" id="ob-group">
-                    <option value="">Tanlang...</option>
-                    <optgroup label="FM (Foundation Mathematics)">
-                        <option value="FM1">FM1</option><option value="FM2">FM2</option>
-                        <option value="FM3">FM3</option><option value="FM4">FM4</option>
-                        <option value="FM5">FM5</option><option value="FM6">FM6</option>
-                        <option value="FM7">FM7</option>
-                    </optgroup>
-                    <optgroup label="FIT (Foundation IT)">
-                        <option value="FIT1">FIT1</option><option value="FIT2">FIT2</option>
-                        <option value="FIT3">FIT3</option><option value="FIT4">FIT4</option>
-                        <option value="FIT5">FIT5</option><option value="FIT6">FIT6</option>
-                    </optgroup>
-                    <optgroup label="FAR">
-                        <option value="FAR1">FAR1</option><option value="FAR2">FAR2</option>
-                        <option value="FAR3">FAR3</option>
-                    </optgroup>
-                </select>
-                <button class="onboard-btn" onclick="obFinish()">🚀 Boshlash</button>
-            </div>
-        </div>
+<!-- ===== ONBOARDING ===== -->
+<div id="onboarding-overlay">
+  <div class="onboard-logo">🎓</div>
+  <div class="onboard-title">NPUU Smart Bot</div>
+  <div class="onboard-sub" id="ob-subtitle">Bir marta ma'lumot kiriting — bot siz uchun moslanadi!</div>
+  <div class="onboard-steps-dots">
+    <div class="step-dot active" id="dot-0"></div>
+    <div class="step-dot" id="dot-1"></div>
+    <div class="step-dot" id="dot-2"></div>
+    <div class="step-dot" id="dot-3"></div>
+  </div>
+  <div class="onboard-card">
+    <!-- Step 0: Name + ID -->
+    <div class="step active" id="step-0">
+      <div class="onboard-label" id="ob-l-name">👤 Ism Familiya</div>
+      <input type="text" class="onboard-input" id="ob-name" placeholder="Alisher Karimov" autocomplete="off">
+      <div class="onboard-label" id="ob-l-id">🪪 Student ID</div>
+      <input type="text" class="onboard-input" id="ob-sid" placeholder="Masalan: 230001" autocomplete="off">
+      <button class="onboard-btn" id="ob-btn-0" onclick="obNext(1)">Davom etish →</button>
     </div>
-
-    <!-- ===== TOP CONTROLS ===== -->
-    <div class="top-controls">
-        <button id="theme-btn" class="ctrl-btn" onclick="toggleTheme()" title="Mavzuni o'zgartirish">🌙</button>
-        <select id="lang-select" class="ctrl-btn" onchange="setLanguage(this.value)">
-            <option value="uz">UZ</option>
-            <option value="ru">RU</option>
-            <option value="en">EN</option>
-        </select>
+    <!-- Step 1: Major + Admission year -->
+    <div class="step" id="step-1">
+      <div class="onboard-label" id="ob-l-major">🎓 Yo'nalish</div>
+      <select class="onboard-select" id="ob-major">
+        <option value="">Tanlang...</option>
+        <option value="AI">🤖 Artificial Intelligence</option>
+        <option value="IST">💻 Information Systems & Technologies</option>
+        <option value="MATH">📐 Mathematics</option>
+      </select>
+      <div class="onboard-label" id="ob-l-year">📅 O'qishga qabul yili</div>
+      <select class="onboard-select" id="ob-admit-year">
+        <option value="">Tanlang...</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+      </select>
+      <button class="onboard-btn" id="ob-btn-1" onclick="obNext(2)">Davom etish →</button>
     </div>
-
-    <!-- ===== PROFILE HEADER ===== -->
-    <div class="profile-header" id="profile-header" style="display:none;">
-        <div class="profile-avatar" id="profile-avatar">A</div>
-        <div class="profile-info">
-            <div class="profile-name" id="profile-name">Foydalanuvchi</div>
-            <div class="profile-meta" id="profile-meta">Guruh • Yo'nalish</div>
-        </div>
-        <button class="profile-edit-btn" onclick="editProfile()">✏️ Tahrir</button>
+    <!-- Step 2: Group -->
+    <div class="step" id="step-2">
+      <div class="onboard-label" id="ob-l-group">👥 Guruh</div>
+      <select class="onboard-select" id="ob-group">
+        <option value="">Tanlang...</option>
+        <optgroup label="FM (Foundation Mathematics)">
+          <option value="FM1">FM1</option><option value="FM2">FM2</option>
+          <option value="FM3">FM3</option><option value="FM4">FM4</option>
+          <option value="FM5">FM5</option><option value="FM6">FM6</option>
+          <option value="FM7">FM7</option>
+        </optgroup>
+        <optgroup label="FIT (Foundation IT)">
+          <option value="FIT1">FIT1</option><option value="FIT2">FIT2</option>
+          <option value="FIT3">FIT3</option><option value="FIT4">FIT4</option>
+          <option value="FIT5">FIT5</option><option value="FIT6">FIT6</option>
+        </optgroup>
+        <optgroup label="FAR">
+          <option value="FAR1">FAR1</option><option value="FAR2">FAR2</option>
+          <option value="FAR3">FAR3</option>
+        </optgroup>
+      </select>
+      <button class="onboard-btn" id="ob-btn-2" onclick="obNext(3)">Davom etish →</button>
     </div>
-
-    <!-- ===== TODAY WIDGET ===== -->
-    <div class="today-widget" id="today-widget" style="display:none;">
-        <div class="today-widget-title">
-            📅 Bugungi dars jadvalim
-            <span class="today-day-badge" id="today-day-badge">Dushanba</span>
-        </div>
-        <a class="today-schedule-btn" id="today-schedule-link" href="#" target="_blank" onclick="openMyTimetable(event)">
-            <span style="font-size:22px;">🗓️</span>
-            <div>
-                <div style="font-weight:700; font-size:14px;" id="today-group-text">Guruhim: FM1</div>
-                <div style="font-size:12px; color:var(--muted); margin-top:2px;">Dars jadvalini ko'rish uchun bosing</div>
-            </div>
-            <span style="margin-left:auto; color:var(--accent2); font-size:18px;">→</span>
-        </a>
+    <!-- Step 3: Lang -->
+    <div class="step" id="step-3">
+      <div class="onboard-label" id="ob-l-lang">🌐 Til / Language / Язык</div>
+      <div style="display:flex;gap:8px;margin-top:4px;">
+        <button class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('uz')">🇺🇿 O'zbek</button>
+        <button class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('ru')">🇷🇺 Русский</button>
+        <button class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('en')">🇬🇧 English</button>
+      </div>
     </div>
+  </div>
+</div>
 
-    <!-- ===== TABS ===== -->
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchView('gpa')" id="t-gpa">🧮 GPA</button>
-        <button class="tab-btn" onclick="switchView('profs')" id="t-profs">👥 Profs</button>
-        <button class="tab-btn" onclick="switchView('handbook')" id="t-handbook">📘 Handbook</button>
-        <button class="tab-btn" onclick="switchView('timetable')" id="t-timetable">📅 Timetable</button>
-        <button class="tab-btn" onclick="switchView('hero')" id="t-hero">🎓 Hero Study</button>
+<!-- ===== TOP BAR ===== -->
+<div class="top-bar" id="main-topbar" style="display:none">
+  <div class="top-bar-left">
+    <button id="theme-btn" class="ctrl-btn" onclick="toggleTheme()">🌙</button>
+    <select id="lang-select" class="ctrl-btn" onchange="setLanguage(this.value)">
+      <option value="uz">UZ</option>
+      <option value="ru">RU</option>
+      <option value="en">EN</option>
+    </select>
+  </div>
+  <div class="top-bar-right">
+    <button class="edit-profile-btn" onclick="editProfile()">✏️ <span data-i18n="edit_profile">Tahrir</span></button>
+  </div>
+</div>
+
+<!-- ===== PROFILE HEADER ===== -->
+<div class="profile-header" id="profile-header" style="display:none">
+  <div class="profile-avatar" id="profile-avatar">A</div>
+  <div class="profile-info">
+    <div class="profile-name" id="profile-name">Foydalanuvchi</div>
+    <div class="profile-meta" id="profile-meta">—</div>
+    <div class="semester-badge" id="semester-badge">1-semester</div>
+  </div>
+</div>
+
+<!-- ===== TODAY WIDGET ===== -->
+<div class="today-widget" id="today-widget" style="display:none">
+  <div class="today-widget-title">
+    📅 <span data-i18n="today_schedule">Bugungi dars jadvalim</span>
+    <span class="today-day-badge" id="today-day-badge">Dushanba</span>
+  </div>
+  <a class="today-schedule-btn" href="#" onclick="openMyTimetable(event)">
+    <span style="font-size:20px">🗓️</span>
+    <div>
+      <div style="font-weight:700;font-size:13.5px" id="today-group-text">Guruhim: —</div>
+      <div style="font-size:11.5px;color:var(--muted);margin-top:1px" data-i18n="click_to_view">Ko'rish uchun bosing</div>
     </div>
+    <span style="margin-left:auto;color:var(--accent2);font-size:18px">→</span>
+  </a>
+</div>
 
-    <!-- ============ GPA VIEW ============ -->
-    <div id="view-gpa" class="view-section active">
+<!-- ===== TABS ===== -->
+<div class="tabs" id="main-tabs" style="display:none">
+  <button class="tab-btn active" onclick="switchView('gpa')" id="t-gpa" data-i18n="tab_gpa">🧮 GPA</button>
+  <button class="tab-btn" onclick="switchView('curriculum')" id="t-curriculum" data-i18n="tab_curr">📋 O'quv reja</button>
+  <button class="tab-btn" onclick="switchView('profs')" id="t-profs" data-i18n="tab_profs">👥 Profs</button>
+  <button class="tab-btn" onclick="switchView('handbook')" id="t-handbook" data-i18n="tab_handbook">📘 Handbook</button>
+  <button class="tab-btn" onclick="switchView('timetable')" id="t-timetable" data-i18n="tab_tt">📅 Jadval</button>
+  <button class="tab-btn" onclick="switchView('hero')" id="t-hero" data-i18n="tab_hero">🎓 Hero</button>
+</div>
 
-        <!-- GPA Ring -->
-        <div class="gpa-ring-wrapper card-anim">
-            <svg class="gpa-ring-svg" width="90" height="90" viewBox="0 0 90 90">
-                <circle class="gpa-ring-track" cx="45" cy="45" r="40"/>
-                <circle class="gpa-ring-fill" id="gpa-ring" cx="45" cy="45" r="40"/>
-                <text x="45" y="49" text-anchor="middle" font-family="Syne,sans-serif" font-size="16" font-weight="800" fill="var(--accent2)" id="gpa-ring-center">0.00</text>
-            </svg>
-            <div class="gpa-ring-text-group">
-                <div class="gpa-label">Umumiy GPA natija</div>
-                <div class="gpa-big" id="gpa-result">0.00</div>
-                <div class="gpa-max">/ 5.0 maksimal</div>
-                <div class="gpa-letter" id="gpa-letter" style="color:var(--muted);">—</div>
-                <button class="gpa-share-btn" onclick="shareGpa()">📤 Ulashish</button>
-            </div>
-        </div>
-
-        <!-- Stipend info -->
-        <div id="stipend-info"></div>
-
-        <!-- GPA History -->
-        <div id="gpa-history-block" style="display:none;">
-            <div class="card" style="margin-bottom:14px; border-left:4px solid var(--accent3); padding:12px 14px;">
-                <div style="font-size:12px; font-weight:700; color:var(--accent3); margin-bottom:8px;">📈 GPA tarixi</div>
-                <div id="gpa-history-list"></div>
-            </div>
-        </div>
-
-        <!-- GPA Scale toggle -->
-        <button class="gpa-toggle-btn" onclick="toggleGpaScale()">
-            <span>📊</span><span>Baholash shkalasini ko'rish</span><span id="gpa-arrow">▼</span>
-        </button>
-
-        <div id="gpa-scale-panel" style="display:none; margin-bottom:14px;">
-            <div class="card" style="padding:10px; border-left:4px solid var(--accent2);">
-                <div style="font-size:12px; color:var(--muted); margin-bottom:8px; font-style:italic;">GPA maksimal qiymati = 5</div>
-                <table class="gpa-scale-table">
-                    <thead>
-                        <tr>
-                            <th>Ball (%)</th><th>Harf</th><th>GPA</th><th>An'anaviy</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>100–95</td><td class="grade-a-plus">A+</td><td>5.00</td><td>A'lo</td></tr>
-                        <tr><td>94.9–90</td><td class="grade-a">A</td><td>4.50</td><td>A'lo</td></tr>
-                        <tr><td>89.9–85</td><td class="grade-b">B+</td><td>4.25</td><td>Juda yaxshi</td></tr>
-                        <tr><td>84.9–80</td><td class="grade-b">B</td><td>4.00</td><td>Juda yaxshi</td></tr>
-                        <tr><td>79.9–75</td><td class="grade-c">C+</td><td>3.75</td><td>Yaxshi</td></tr>
-                        <tr><td>74.9–70</td><td class="grade-c">C</td><td>3.50</td><td>Yaxshi</td></tr>
-                        <tr><td>69.9–65</td><td class="grade-d">D+</td><td>3.25</td><td>Qoniqarli</td></tr>
-                        <tr><td>64.9–60</td><td class="grade-d">D</td><td>3.00</td><td>Qoniqarli</td></tr>
-                        <tr><td>59.9–0</td><td class="grade-f">F</td><td>0</td><td>Qoniqarsiz</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- GPA Rows header -->
-        <div style="display:flex; gap:8px; padding:0 14px 8px; font-size:11px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">
-            <div style="flex:2;">Fan nomi</div>
-            <div style="width:40px; text-align:center;">Kredit</div>
-            <div style="width:55px; text-align:center;">Baho</div>
-            <div style="width:35px; text-align:center;">Harf</div>
-            <div style="width:24px;"></div>
-        </div>
-        <div id="gpa-rows"></div>
-        <div style="display:flex; gap:8px; margin-top:4px;">
-            <button class="btn" style="background:var(--surface2); color:var(--text); border:1px solid var(--border); flex:1;" onclick="addGpaRow()">
-                ➕ Fan qo'shish
-            </button>
-            <button class="btn" style="background:var(--accent); color:#fff; flex:1;" onclick="saveGpaData()">
-                💾 Saqlash
-            </button>
-        </div>
+<!-- ===== GPA VIEW ===== -->
+<div id="view-gpa" class="view-section active">
+  <div class="gpa-ring-wrapper card-anim">
+    <svg width="88" height="88" viewBox="0 0 90 90" style="flex-shrink:0">
+      <circle class="gpa-ring-track" cx="45" cy="45" r="40"/>
+      <circle class="gpa-ring-fill" id="gpa-ring" cx="45" cy="45" r="40"/>
+      <text x="45" y="49" text-anchor="middle" font-family="Syne,sans-serif" font-size="15" font-weight="800" fill="var(--accent2)" id="gpa-ring-center">0.00</text>
+    </svg>
+    <div>
+      <div class="gpa-label" data-i18n="gpa_overall">Umumiy GPA</div>
+      <div class="gpa-big" id="gpa-result">0.00</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:3px" data-i18n="gpa_max">/ 5.0 maksimal</div>
+      <div style="font-size:12.5px;font-weight:700;margin-top:4px;color:var(--muted)" id="gpa-letter">—</div>
+      <button class="gpa-share-btn" onclick="shareGpa()">📤 <span data-i18n="share">Ulashish</span></button>
     </div>
+  </div>
 
-    <!-- ============ PROFS VIEW ============ -->
-    <div id="view-profs" class="view-section">
-        <div class="search-box" style="margin-bottom:16px;">
-            <input type="text" id="search-prof" placeholder="🔍 Professor ismi yoki kafedra...">
-        </div>
-        <div id="prof-list"></div>
-    </div>
+  <div id="stipend-info"></div>
 
-    <!-- ============ HANDBOOK VIEW ============ -->
-    <div id="view-handbook" class="view-section">
-        <div class="card" style="border-left:4px solid var(--accent2); margin-bottom:16px;">
-            <div style="font-size:16px; font-weight:700; margin-bottom:6px;">📘 Student Handbooks</div>
-            <p id="handbook-desc-text" style="font-size:13px; color:var(--muted); line-height:1.5;">Yo'nalishingizga mos keluvchi Handbook fayllarini onlayn ko'rish uchun quyidagi tugmalardan birini tanlang.</p>
-        </div>
-        <!-- Recommended badge will be added dynamically -->
-        <div id="handbook-links">
-            <a href="https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link" target="_blank" class="handbook-btn" id="hb-ai">
-                <span>🤖 Artificial Intelligence</span><span style="color:var(--accent2);">➔</span>
-            </a>
-            <a href="https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link" target="_blank" class="handbook-btn" id="hb-ist">
-                <span>💻 Information Systems & Technologies</span><span style="color:var(--accent2);">➔</span>
-            </a>
-            <a href="https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link" target="_blank" class="handbook-btn" id="hb-math">
-                <span>📐 Mathematics</span><span style="color:var(--accent2);">➔</span>
-            </a>
-        </div>
+  <div id="gpa-history-block" style="display:none">
+    <div class="card" style="margin-bottom:12px;border-left:4px solid var(--accent3);padding:12px 14px">
+      <div style="font-size:11.5px;font-weight:700;color:var(--accent3);margin-bottom:8px">📈 <span data-i18n="gpa_history">GPA tarixi</span></div>
+      <div id="gpa-history-list"></div>
     </div>
+  </div>
 
-    <!-- ============ TIMETABLE VIEW ============ -->
-    <div id="view-timetable" class="view-section">
-        <div class="card" style="border-left:4px solid var(--accent3); margin-bottom:16px;">
-            <div style="font-size:16px; font-weight:700; margin-bottom:6px;">📅 Dars Jadvali</div>
-            <p style="font-size:13px; color:var(--muted); line-height:1.5;">Dars jadvalini ko'rish uchun guruhingizni tanlang:</p>
-        </div>
-        <div id="tt-grid" class="grid-container"></div>
+  <button class="gpa-toggle-btn" onclick="toggleGpaScale()">
+    📊 <span data-i18n="gpa_scale_btn">Baholash shkalasi</span> <span id="gpa-arrow">▼</span>
+  </button>
+  <div id="gpa-scale-panel" style="display:none;margin-bottom:12px">
+    <div class="card" style="padding:10px;border-left:4px solid var(--accent2)">
+      <div style="font-size:11.5px;color:var(--muted);margin-bottom:8px;font-style:italic" data-i18n="gpa_scale_note">GPA maksimal = 5</div>
+      <table class="gpa-scale-table">
+        <thead><tr><th data-i18n="gpa_th_score">Ball%</th><th data-i18n="gpa_th_letter">Harf</th><th>GPA</th><th data-i18n="gpa_th_trad">An'anaviy</th></tr></thead>
+        <tbody>
+          <tr><td>100–95</td><td class="grade-a-plus">A+</td><td>5.00</td><td data-i18n="grade_excellent">A'lo</td></tr>
+          <tr><td>94.9–90</td><td class="grade-a">A</td><td>4.50</td><td data-i18n="grade_excellent">A'lo</td></tr>
+          <tr><td>89.9–85</td><td class="grade-b">B+</td><td>4.25</td><td data-i18n="grade_very_good">Juda yaxshi</td></tr>
+          <tr><td>84.9–80</td><td class="grade-b">B</td><td>4.00</td><td data-i18n="grade_very_good">Juda yaxshi</td></tr>
+          <tr><td>79.9–75</td><td class="grade-c">C+</td><td>3.75</td><td data-i18n="grade_good">Yaxshi</td></tr>
+          <tr><td>74.9–70</td><td class="grade-c">C</td><td>3.50</td><td data-i18n="grade_good">Yaxshi</td></tr>
+          <tr><td>69.9–65</td><td class="grade-d">D+</td><td>3.25</td><td data-i18n="grade_satisf">Qoniqarli</td></tr>
+          <tr><td>64.9–60</td><td class="grade-d">D</td><td>3.00</td><td data-i18n="grade_satisf">Qoniqarli</td></tr>
+          <tr><td>59.9–0</td><td class="grade-f">F</td><td>0</td><td data-i18n="grade_fail">Qoniqarsiz</td></tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 
-    <!-- ============ HERO VIEW ============ -->
-    <div id="view-hero" class="view-section">
-        <div class="card" style="text-align:center; padding:32px 16px; border-left:4px solid var(--accent);">
-            <div style="font-size:56px; margin-bottom:12px; animation: logoPulse 3s ease-in-out infinite;">🎓</div>
-            <h2 style="font-family:'Syne',sans-serif; margin-bottom:10px; font-size:20px;">NPUU Hero Study</h2>
-            <p style="color:var(--muted); font-size:14px; margin-bottom:24px; line-height:1.5;">NPUU Hero Study platformasiga o'tish tugmasini bosing:</p>
-            <a href="https://npuu.hero.study/" target="_blank" class="btn" style="background:var(--accent); color:#fff; font-size:15px; padding:14px;">
-                🚀 Hero Study'ga o'tish
-            </a>
-        </div>
-    </div>
+  <div style="display:flex;gap:8px;padding:0 12px 7px;font-size:10.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px">
+    <div style="flex:2" data-i18n="gpa_col_subject">Fan nomi</div>
+    <div style="width:38px;text-align:center" data-i18n="gpa_cr">Kredit</div>
+    <div style="width:52px;text-align:center" data-i18n="gpa_score">Baho</div>
+    <div style="width:33px;text-align:center">Harf</div>
+    <div style="width:22px"></div>
+  </div>
+  <div id="gpa-rows"></div>
+  <div style="display:flex;gap:8px;margin-top:4px">
+    <button class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);flex:1" onclick="addGpaRow()">➕ <span data-i18n="add_subject">Fan qo'shish</span></button>
+    <button class="btn" style="background:var(--accent);color:#fff;flex:1" onclick="saveGpaData()">💾 <span data-i18n="gpa_save">Saqlash</span></button>
+  </div>
+</div>
 
-    <!-- ============ BOTTOM NAV ============ -->
-    <div class="nav-bar">
-        <button class="nav-item active" onclick="switchView('gpa')" id="nav-gpa">
-            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-            <span>GPA</span>
-            <div class="nav-dot"></div>
-        </button>
-        <button class="nav-item" onclick="switchView('profs')" id="nav-profs">
-            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-            <span>Profs</span>
-            <div class="nav-dot"></div>
-        </button>
-        <button class="nav-item" onclick="switchView('timetable')" id="nav-timetable">
-            <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-            <span>Jadval</span>
-            <div class="nav-dot"></div>
-        </button>
-        <button class="nav-item" onclick="switchView('handbook')" id="nav-handbook">
-            <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
-            <span>Handbook</span>
-            <div class="nav-dot"></div>
-        </button>
-        <button class="nav-item" onclick="switchView('hero')" id="nav-hero">
-            <svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
-            <span>Hero</span>
-            <div class="nav-dot"></div>
-        </button>
-    </div>
+<!-- ===== CURRICULUM VIEW ===== -->
+<div id="view-curriculum" class="view-section">
+  <div class="info-card" style="margin-bottom:10px">
+    <div style="font-size:13px;font-weight:600" id="curr-major-title">O'quv reja</div>
+    <div style="font-size:11.5px;color:var(--muted);margin-top:3px" id="curr-semester-info"></div>
+  </div>
+  <div class="curr-filter-row" id="curr-semester-btns"></div>
+  <div style="display:flex;gap:6px;margin-bottom:10px">
+    <button class="curr-filter-btn active" id="curr-all-btn" onclick="currFilter('all')">🗂 <span data-i18n="curr_all">Hammasi</span></button>
+    <button class="curr-filter-btn" id="curr-core-btn" onclick="currFilter('Core')">🔵 <span data-i18n="curr_core">Core</span></button>
+    <button class="curr-filter-btn" id="curr-elec-btn" onclick="currFilter('Elective')">🟡 <span data-i18n="curr_elective">Elective</span></button>
+  </div>
+  <div id="curr-subjects-list"></div>
+</div>
+
+<!-- ===== PROFS VIEW ===== -->
+<div id="view-profs" class="view-section">
+  <div class="search-box" style="margin-bottom:14px">
+    <input type="text" id="search-prof" data-i18n-ph="prof_search" placeholder="🔍 Professor ismi yoki kafedra...">
+  </div>
+  <div id="prof-list"></div>
+</div>
+
+<!-- ===== HANDBOOK VIEW ===== -->
+<div id="view-handbook" class="view-section">
+  <div class="card" style="border-left:4px solid var(--accent2);margin-bottom:14px">
+    <div style="font-size:15px;font-weight:700;margin-bottom:5px">📘 Student Handbooks</div>
+    <p style="font-size:12.5px;color:var(--muted);line-height:1.5" data-i18n="handbook_desc">Yo'nalishingizga mos Handbook faylini ko'ring.</p>
+  </div>
+  <a href="https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link" target="_blank" class="handbook-btn" id="hb-ai">
+    <span>🤖 Artificial Intelligence</span><span style="color:var(--accent2)">➔</span>
+  </a>
+  <a href="https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link" target="_blank" class="handbook-btn" id="hb-ist">
+    <span>💻 Information Systems & Technologies</span><span style="color:var(--accent2)">➔</span>
+  </a>
+  <a href="https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link" target="_blank" class="handbook-btn" id="hb-math">
+    <span>📐 Mathematics</span><span style="color:var(--accent2)">➔</span>
+  </a>
+</div>
+
+<!-- ===== TIMETABLE VIEW ===== -->
+<div id="view-timetable" class="view-section">
+  <div class="card" style="border-left:4px solid var(--accent3);margin-bottom:14px">
+    <div style="font-size:15px;font-weight:700;margin-bottom:5px" data-i18n="tab_tt">📅 Dars Jadvali</div>
+    <p style="font-size:12.5px;color:var(--muted);line-height:1.5" data-i18n="timetable_desc">Guruhingizni tanlang:</p>
+  </div>
+  <div id="tt-grid" class="grid-container"></div>
+</div>
+
+<!-- ===== HERO VIEW ===== -->
+<div id="view-hero" class="view-section">
+  <div class="card" style="text-align:center;padding:30px 16px;border-left:4px solid var(--accent)">
+    <div style="font-size:52px;margin-bottom:12px;animation:logoPulse 3s ease-in-out infinite">🎓</div>
+    <h2 style="font-family:'Syne',sans-serif;margin-bottom:10px;font-size:19px">NPUU Hero Study</h2>
+    <p style="color:var(--muted);font-size:13.5px;margin-bottom:22px;line-height:1.5" data-i18n="hero_desc">NPUU Hero Study platformasiga o'tish uchun:</p>
+    <a href="https://npuu.hero.study/" target="_blank" class="btn" style="background:var(--accent);color:#fff;font-size:14.5px;padding:14px">
+      🚀 <span data-i18n="go_to_hero">Hero Study'ga o'tish</span>
+    </a>
+  </div>
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<div class="nav-bar" id="main-nav" style="display:none">
+  <button class="nav-item active" onclick="switchView('gpa')" id="nav-gpa">
+    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+    <span data-i18n="tab_gpa">GPA</span><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" onclick="switchView('curriculum')" id="nav-curriculum">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 17h8v2H8zm0-4h8v2H8zm0-4h5v2H8z"/></svg>
+    <span data-i18n="tab_curr">Reja</span><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" onclick="switchView('profs')" id="nav-profs">
+    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    <span data-i18n="tab_profs">Profs</span><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" onclick="switchView('timetable')" id="nav-timetable">
+    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+    <span data-i18n="tab_tt">Jadval</span><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" onclick="switchView('handbook')" id="nav-handbook">
+    <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+    <span data-i18n="tab_handbook">Handbook</span><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" onclick="switchView('hero')" id="nav-hero">
+    <svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+    <span data-i18n="tab_hero">Hero</span><div class="nav-dot"></div>
+  </button>
+</div>
 
 <script>
-    // ===== TELEGRAM =====
-    const tg = window.Telegram?.WebApp;
-    if (tg) { tg.ready(); tg.expand(); }
+const tg = window.Telegram?.WebApp;
+if(tg){tg.ready();tg.expand();}
 
-    // ===== LOCALSTORAGE KEYS =====
-    const LS_LANG    = 'npuu_lang';
-    const LS_THEME   = 'npuu_theme';
-    const LS_GPA     = 'npuu_gpa_data';
-    const LS_PROFILE = 'npuu_profile';
-    const LS_GPA_HIST= 'npuu_gpa_history';
+// ===== KEYS =====
+const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_GPA='npuu_gpa_data',
+      LS_PROFILE='npuu_profile', LS_GPA_HIST='npuu_gpa_history';
 
-    // ===== PROFILE =====
-    let userProfile = null;
+// ===== I18N =====
+const T = {
+  uz:{
+    title:"NPUU SMART BOT", subtitle:"Bir marta ma'lumot kiriting — bot siz uchun moslanadi!",
+    edit_profile:"Tahrir", today_schedule:"Bugungi dars jadvalim", click_to_view:"Ko'rish uchun bosing",
+    tab_gpa:"GPA", tab_curr:"O'quv reja", tab_profs:"Profs", tab_handbook:"Handbook",
+    tab_tt:"Jadval", tab_hero:"Hero",
+    gpa_overall:"Umumiy GPA", gpa_max:"/ 5.0 maksimal", share:"Ulashish",
+    gpa_history:"GPA tarixi", gpa_scale_btn:"Baholash shkalasi",
+    gpa_scale_note:"GPA maksimal = 5", gpa_th_score:"Ball%", gpa_th_letter:"Harf",
+    gpa_th_trad:"An'anaviy", grade_excellent:"A'lo", grade_very_good:"Juda yaxshi",
+    grade_good:"Yaxshi", grade_satisf:"Qoniqarli", grade_fail:"Qoniqarsiz",
+    gpa_col_subject:"Fan nomi", gpa_cr:"Kredit", gpa_score:"Baho",
+    add_subject:"Fan qo'shish", gpa_save:"Saqlash",
+    curr_all:"Hammasi", curr_core:"Core", curr_elective:"Elective",
+    prof_search:"🔍 Professor ismi yoki kafedra...",
+    handbook_desc:"Yo'nalishingizga mos Handbook faylini ko'ring.",
+    timetable_desc:"Guruhingizni tanlang:", hero_desc:"NPUU Hero Study platformasiga o'tish uchun:",
+    go_to_hero:"Hero Study'ga o'tish",
+    saved_msg:"✅ Saqlandi!", copied:"📋 Nusxalandi!",
+    stipend_president:"🏆 Prezident stipendiyasiga da'vo qilasiz!",
+    stipend_ok:"✅ Stipendiya olish huquqingiz bor (GPA ≥ 3.5)",
+    stipend_warn:"⚠️ Stipendiya chegarasida!",
+    stipend_fail:"🚫 Stipendiya uchun GPA ≥ 3.5 bo'lishi kerak",
+    semester_label:"semestrsiz",
+    year_label:"o'quv yili",
+    ob_l_name:"👤 Ism Familiya", ob_l_id:"🪪 Student ID",
+    ob_l_major:"🎓 Yo'nalish", ob_l_year:"📅 O'qishga qabul yili",
+    ob_l_group:"👥 Guruh", ob_l_lang:"🌐 Til tanlang",
+    ob_next:"Davom etish →",
+    curr_lectures:"Ma'ruza", curr_seminars:"Seminar", curr_credits:"kredit",
+    curr_ects:"ECTS", welcome:"Xush kelibsiz", days:["Yakshanba","Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba"]
+  },
+  ru:{
+    title:"NPUU SMART BOT", subtitle:"Введите данные один раз — бот настроится под вас!",
+    edit_profile:"Изменить", today_schedule:"Расписание на сегодня", click_to_view:"Нажмите для просмотра",
+    tab_gpa:"GPA", tab_curr:"Учебный план", tab_profs:"Преподы", tab_handbook:"Справочник",
+    tab_tt:"Расписание", tab_hero:"Hero",
+    gpa_overall:"Общий GPA", gpa_max:"/ 5.0 максимум", share:"Поделиться",
+    gpa_history:"История GPA", gpa_scale_btn:"Шкала оценок",
+    gpa_scale_note:"Максимальный GPA = 5", gpa_th_score:"Балл%", gpa_th_letter:"Буква",
+    gpa_th_trad:"Традиц.", grade_excellent:"Отлично", grade_very_good:"Очень хорошо",
+    grade_good:"Хорошо", grade_satisf:"Удовл.", grade_fail:"Неудовл.",
+    gpa_col_subject:"Название предмета", gpa_cr:"Кредит", gpa_score:"Балл",
+    add_subject:"Добавить предмет", gpa_save:"Сохранить",
+    curr_all:"Все", curr_core:"Core", curr_elective:"Elective",
+    prof_search:"🔍 Имя преподавателя или кафедра...",
+    handbook_desc:"Выберите справочник по вашему направлению.",
+    timetable_desc:"Выберите группу:", hero_desc:"Нажмите, чтобы перейти на Hero Study:",
+    go_to_hero:"Перейти в Hero Study",
+    saved_msg:"✅ Сохранено!", copied:"📋 Скопировано!",
+    stipend_president:"🏆 Претендуете на президентскую стипендию!",
+    stipend_ok:"✅ Имеете право на стипендию (GPA ≥ 3.5)",
+    stipend_warn:"⚠️ На грани стипендии!",
+    stipend_fail:"🚫 Для стипендии нужен GPA ≥ 3.5",
+    semester_label:"-й семестр",
+    year_label:"год обучения",
+    ob_l_name:"👤 Имя Фамилия", ob_l_id:"🪪 Student ID",
+    ob_l_major:"🎓 Направление", ob_l_year:"📅 Год поступления",
+    ob_l_group:"👥 Группа", ob_l_lang:"🌐 Выберите язык",
+    ob_next:"Продолжить →",
+    curr_lectures:"Лекция", curr_seminars:"Семинар", curr_credits:"кредит",
+    curr_ects:"ECTS", welcome:"Добро пожаловать", days:["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"]
+  },
+  en:{
+    title:"NPUU SMART BOT", subtitle:"Enter data once — the bot adapts to you!",
+    edit_profile:"Edit", today_schedule:"Today's schedule", click_to_view:"Tap to view",
+    tab_gpa:"GPA", tab_curr:"Curriculum", tab_profs:"Profs", tab_handbook:"Handbook",
+    tab_tt:"Timetable", tab_hero:"Hero",
+    gpa_overall:"Overall GPA", gpa_max:"/ 5.0 max", share:"Share",
+    gpa_history:"GPA History", gpa_scale_btn:"Grading Scale",
+    gpa_scale_note:"Maximum GPA = 5", gpa_th_score:"Score%", gpa_th_letter:"Letter",
+    gpa_th_trad:"Traditional", grade_excellent:"Excellent", grade_very_good:"Very Good",
+    grade_good:"Good", grade_satisf:"Satisfactory", grade_fail:"Unsatisfactory",
+    gpa_col_subject:"Subject Name", gpa_cr:"Credit", gpa_score:"Score",
+    add_subject:"Add subject", gpa_save:"Save",
+    curr_all:"All", curr_core:"Core", curr_elective:"Elective",
+    prof_search:"🔍 Professor name or department...",
+    handbook_desc:"Choose the Handbook for your major.",
+    timetable_desc:"Select your group:", hero_desc:"Tap the button to access Hero Study:",
+    go_to_hero:"Go to Hero Study",
+    saved_msg:"✅ Saved!", copied:"📋 Copied!",
+    stipend_president:"🏆 You qualify for President's scholarship!",
+    stipend_ok:"✅ You qualify for scholarship (GPA ≥ 3.5)",
+    stipend_warn:"⚠️ On the scholarship threshold!",
+    stipend_fail:"🚫 Need GPA ≥ 3.5 for scholarship",
+    semester_label:"th semester",
+    year_label:"study year",
+    ob_l_name:"👤 Full Name", ob_l_id:"🪪 Student ID",
+    ob_l_major:"🎓 Major", ob_l_year:"📅 Admission Year",
+    ob_l_group:"👥 Group", ob_l_lang:"🌐 Choose Language",
+    ob_next:"Continue →",
+    curr_lectures:"Lecture", curr_seminars:"Seminar", curr_credits:"credits",
+    curr_ects:"ECTS", welcome:"Welcome", days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+  }
+};
 
-    function loadProfile() {
-        const saved = localStorage.getItem(LS_PROFILE);
-        if (saved) {
-            try { userProfile = JSON.parse(saved); } catch(e) { userProfile = null; }
-        }
+// ===== CURRICULUM DATA =====
+// Format: {sem, code, nameEn, nameUz, type, lec, sem_, ects}
+const CURRICULUM = {
+  AI:[
+    {sem:1,code:"ED110",nameEn:"Education, Society and Culture",nameUz:"Ta'lim, jamiyat va madaniyat",type:"Elective",lec:1,sem_:2,ects:4},
+    {sem:1,code:"HASS101",nameEn:"General English 1",nameUz:"Ingliz tili 1",type:"Core",lec:0,sem_:6,ects:8},
+    {sem:1,code:"CS100",nameEn:"Information Systems and Digital Technologies",nameUz:"Axborot tizimlari va raqamli texnologiyalar",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:1,code:"MATH111",nameEn:"Analysis 1",nameUz:"Matematik analiz 1",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:1,code:"DSG101",nameEn:"Critical-creative thinking and design",nameUz:"Tanqidiy-ijodiy fikrlash va dizayn",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:2,code:"ED111",nameEn:"Introduction to Teaching and Learning",nameUz:"O'qitish va o'rganish",type:"Elective",lec:1,sem_:2,ects:4},
+    {sem:2,code:"HASS102",nameEn:"General English 2",nameUz:"Ingliz tili 2",type:"Core",lec:0,sem_:6,ects:8},
+    {sem:2,code:"CS102",nameEn:"Computer Programming 1",nameUz:"Dasturlash 1",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:2,code:"MATH211",nameEn:"Analysis 2",nameUz:"Matematik analiz 2",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:2,code:"MATH180",nameEn:"Analytical Geometry",nameUz:"Analitik geometriya",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:3,code:"MATH201",nameEn:"Linear Algebra 1",nameUz:"Chiziqli algebra 1",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:3,code:"MATH220",nameEn:"Discrete Mathematics",nameUz:"Diskret matematika",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:3,code:"CS210",nameEn:"Computer Programming 2",nameUz:"Dasturlash 2",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:3,code:"MATH222",nameEn:"Analysis 3",nameUz:"Matematik analiz 3",type:"Core",lec:2,sem_:2,ects:4},
+    {sem:3,code:"ED260",nameEn:"Teaching Methodology",nameUz:"O'qitish metodologiyasi",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:3,code:"HASS111",nameEn:"Academic English",nameUz:"Akademik ingliz tili",type:"Core",lec:0,sem_:3,ects:4},
+    {sem:4,code:"PHYS200",nameEn:"Physics",nameUz:"Fizika",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:4,code:"MATH300",nameEn:"Ordinary Differential Equations and Numerical Methods",nameUz:"Oddiy differensial tenglamalar va sonli usullar",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:4,code:"MATH223",nameEn:"Analysis 4",nameUz:"Matematik analiz 4",type:"Core",lec:2,sem_:2,ects:4},
+    {sem:4,code:"MATH202",nameEn:"Linear Algebra 2",nameUz:"Chiziqli algebra 2",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:4,code:"HASS110",nameEn:"History of Uzbekistan",nameUz:"O'zbekistonning eng yangi tarixi",type:"Core",lec:0,sem_:3,ects:4},
+    {sem:4,code:"ED251",nameEn:"Inclusive Education and Pedagogy of care",nameUz:"Inkluiiv ta'lim, gospital pedagogika",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:5,code:"MATH350",nameEn:"Topology",nameUz:"Topologiya",type:"Elective",lec:2,sem_:2,ects:6},
+    {sem:5,code:"MATH305",nameEn:"Probability and Statistics",nameUz:"Ehtimollar nazariyasi va statistika",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:5,code:"ED201",nameEn:"Classroom Management",nameUz:"Sinf boshqaruvi",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:5,code:"HASS201",nameEn:"Uzbek(Russian) for Academic and Professional Purposes",nameUz:"Amaliy o'zbek (rus) tili",type:"Core",lec:0,sem_:3,ects:4},
+    {sem:5,code:"ED330",nameEn:"Educational Psychology",nameUz:"Ta'lim psixologiyasi",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:5,code:"ED291",nameEn:"Pedagogical Internship 1",nameUz:"Pedagogik amaliyot 1",type:"Core",lec:2,sem_:2,ects:6},
+    {sem:5,code:"MATH311",nameEn:"Partial Differential Equations",nameUz:"Xususiy hosilali differensial tenglamalar",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:6,code:"ED311",nameEn:"Assessment and Evaluation in Education",nameUz:"Ta'limda baholash",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:6,code:"HASS305",nameEn:"Philosophy",nameUz:"Falsafa",type:"Core",lec:0,sem_:3,ects:4},
+    {sem:6,code:"MATH302",nameEn:"Abstract Algebra",nameUz:"Abstrat Algebra",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:6,code:"ED370",nameEn:"Research Methodology",nameUz:"Ilmiy tadqiqot metodologiyasi",type:"Elective",lec:0,sem_:3,ects:4},
+    {sem:6,code:"ED391",nameEn:"Pedagogical Internship 2",nameUz:"Pedagogik amaliyot 2",type:"Core",lec:2,sem_:2,ects:6},
+    {sem:7,code:"MATH405",nameEn:"Complex Analysis",nameUz:"Kompleks Analiz",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:7,code:"ED461",nameEn:"Curriculum Development & instruction",nameUz:"O'quv dasturlarini ishlab chiqish metodikasi",type:"Elective",lec:1,sem_:2,ects:4},
+    {sem:7,code:"MATH430",nameEn:"Real Analysis",nameUz:"Haqiqiy funksiyalar nazariyasi",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:7,code:"MATH401",nameEn:"Introduction to Differential Geometry",nameUz:"Differensial geometriya",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:7,code:"ED490",nameEn:"Pedagogical Internship 3",nameUz:"Pedagogik amaliyot 3",type:"Core",lec:4,sem_:4,ects:10},
+    {sem:8,code:"ED491",nameEn:"Pedagogical Internship 4",nameUz:"Pedagogik amaliyot 4",type:"Core",lec:4,sem_:4,ects:10},
+    {sem:8,code:"ED441",nameEn:"Graduation Project",nameUz:"Bitiruv loyihasi",type:"Core",lec:3,sem_:4,ects:8},
+    {sem:8,code:"MATH451",nameEn:"Calculus of variations and optimization",nameUz:"Variatsiyalar hisobi va Optimaltsiyasi",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:8,code:"MATH406",nameEn:"Functional Analysis",nameUz:"Funksional analiz",type:"Core",lec:3,sem_:2,ects:6}
+  ],
+  IST:[
+    {sem:1,code:"ED110",nameEn:"Education, Society and Culture",nameUz:"Ta'lim, jamiyat va madaniyat",type:"Elective",lec:1,sem_:2,ects:4},
+    {sem:1,code:"HASS101",nameEn:"General English 1",nameUz:"Ingliz tili 1",type:"Core",lec:0,sem_:6,ects:8},
+    {sem:1,code:"CS100",nameEn:"Information Systems and Digital Technologies",nameUz:"Axborot tizimlari va raqamli texnologiyalar",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:1,code:"MATH112",nameEn:"Calculus 1",nameUz:"Hisob 1",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:1,code:"DSG101",nameEn:"Critical-creative Thinking and Design",nameUz:"Tanqidiy-ijodiy fikrlash va dizayn",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:2,code:"ED111",nameEn:"Introduction to Teaching and Learning",nameUz:"O'qitish va o'rganish",type:"Elective",lec:1,sem_:2,ects:4},
+    {sem:2,code:"HASS102",nameEn:"General English 2",nameUz:"Ingliz tili 2",type:"Core",lec:0,sem_:6,ects:8},
+    {sem:2,code:"CS102",nameEn:"Computer Programming 1",nameUz:"Dasturlash 1",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:2,code:"MATH212",nameEn:"Calculus 2",nameUz:"Hisob 2",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:2,code:"MATH220",nameEn:"Discrete Mathematics",nameUz:"Diskret matematika",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:3,code:"ED260",nameEn:"Teaching Methodology",nameUz:"O'qitish metodologiyasi",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:3,code:"HASS201",nameEn:"Uzbek(Russian) for Academic and Professional Purposes",nameUz:"Amaliy o'zbek (rus) tili",type:"Core",lec:0,sem_:3,ects:4},
+    {sem:3,code:"SE201",nameEn:"Web Technologies",nameUz:"Veb Texnologiyalar",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:3,code:"MATH201",nameEn:"Linear Algebra 1",nameUz:"Chiziqli algebra 1",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:3,code:"CS210",nameEn:"Computer Programming 2",nameUz:"Dasturlash 2",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:3,code:"HASS111",nameEn:"Academic English",nameUz:"Akademik ingliz tili",type:"Core",lec:0,sem_:3,ects:4},
+    {sem:4,code:"MATH300",nameEn:"Ordinary Differential Equations and Numerical Methods",nameUz:"Oddiy differensial tenglamalar va sonli usullar",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:4,code:"CS111",nameEn:"Algorithms & Data Structures",nameUz:"Algoritmlar va Ma'lumotlar Tuzilmalari",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:4,code:"PHYS200",nameEn:"Physics",nameUz:"Fizika",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:4,code:"HASS110",nameEn:"History of Uzbekistan",nameUz:"O'zbekistonning eng yangi tarixi",type:"Core",lec:0,sem_:3,ects:4},
+    {sem:4,code:"ED251",nameEn:"Inclusive Education and Pedagogy of care",nameUz:"Inkluiiv ta'lim, gospital pedagogika",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:4,code:"ED330",nameEn:"Educational Psychology",nameUz:"Ta'lim psixologiyasi",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:5,code:"MATH305",nameEn:"Probability and Statistics",nameUz:"Ehtimollar nazariyasi va statistika",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:5,code:"SE301",nameEn:"Data Mining & Visualization",nameUz:"Ma'lumotlarni yaratish va vizuallash",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:5,code:"ED201",nameEn:"Classroom Management",nameUz:"Sinf boshqaruvi",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:5,code:"CS301",nameEn:"Fundamentals of Databases",nameUz:"Ma'lumotlar bazasi asoslari",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:5,code:"HASS305",nameEn:"Philosophy",nameUz:"Falsafa",type:"Core",lec:0,sem_:3,ects:4},
+    {sem:5,code:"ED291",nameEn:"Pedagogical Internship 1",nameUz:"Pedagogik amaliyot 1",type:"Core",lec:2,sem_:2,ects:6},
+    {sem:5,code:"CS302",nameEn:"Operating Systems",nameUz:"Operation tizimlar",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:6,code:"ED311",nameEn:"Assessment and Evaluation in Education",nameUz:"Ta'limda baholash",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:6,code:"CS371",nameEn:"Distributed Systems",nameUz:"Taqsimlangan tizimlar",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:6,code:"CS311",nameEn:"Computer Networks",nameUz:"Kompyuter tarmoqlari",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:6,code:"ED370",nameEn:"Research Methodology",nameUz:"Ilmiy tadqiqot metodologiyasi",type:"Elective",lec:0,sem_:3,ects:4},
+    {sem:6,code:"ED391",nameEn:"Pedagogical Internship 2",nameUz:"Pedagogik amaliyot 2",type:"Core",lec:2,sem_:2,ects:6},
+    {sem:7,code:"CS363",nameEn:"Software Project Management",nameUz:"Dasturiy ta'minot loyihalarini boshqarish",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:7,code:"SE400",nameEn:"System Administration Cloud Services",nameUz:"Tizim administratsiyasi va bulutli xizmatlar",type:"Core",lec:1,sem_:4,ects:6},
+    {sem:7,code:"ED490",nameEn:"Pedagogical Internship 3",nameUz:"Pedagogik amaliyot 3",type:"Core",lec:4,sem_:4,ects:10},
+    {sem:7,code:"ED320",nameEn:"Interdisciplinary Language, Literacies and Digital Media",nameUz:"Fanlararo til, savodxonlik va raqamli media",type:"Elective",lec:1,sem_:2,ects:4},
+    {sem:7,code:"ED461",nameEn:"Curriculum Development & instruction",nameUz:"O'quv dasturlarini ishlab chiqish metodikasi",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:8,code:"ED491",nameEn:"Pedagogical Internship 4",nameUz:"Pedagogik amaliyot 4",type:"Core",lec:4,sem_:4,ects:10},
+    {sem:8,code:"ED441",nameEn:"Graduation Project",nameUz:"Bitiruv loyihasi",type:"Core",lec:3,sem_:4,ects:8},
+    {sem:8,code:"SE460",nameEn:"Cybersecurity & Digital Forensics",nameUz:"Kiberxavfsizlik va raqamli tahlillar",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:8,code:"CS420",nameEn:"Big Data",nameUz:"Katta hajmdagi ma'lumotlarni boshqarish",type:"Core",lec:3,sem_:2,ects:6}
+  ],
+  MATH:[
+    {sem:1,code:"ED110",nameEn:"Education, Society and Culture",nameUz:"Ta'lim, jamiyat va madaniyat",type:"Elective",lec:1,sem_:2,ects:4},
+    {sem:1,code:"HASS101",nameEn:"General English 1",nameUz:"Ingliz tili 1",type:"Core",lec:0,sem_:6,ects:8},
+    {sem:1,code:"CS100",nameEn:"Information Systems and Digital Technologies",nameUz:"Axborot tizimlari va raqamli texnologiyalar",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:1,code:"MATH112",nameEn:"Calculus 1",nameUz:"Hisob 1",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:1,code:"DSG101",nameEn:"Critical-creative Thinking and Design",nameUz:"Tanqidiy-ijodiy fikrlash va dizayn",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:2,code:"ED111",nameEn:"Introduction to Teaching and Learning",nameUz:"O'qitish va o'rganish",type:"Elective",lec:1,sem_:2,ects:4},
+    {sem:2,code:"HASS102",nameEn:"General English 2",nameUz:"Ingliz tili 2",type:"Core",lec:0,sem_:6,ects:8},
+    {sem:2,code:"CS102",nameEn:"Computer Programming 1",nameUz:"Dasturlash 1",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:2,code:"MATH212",nameEn:"Calculus 2",nameUz:"Hisob 2",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:2,code:"MATH220",nameEn:"Discrete Mathematics",nameUz:"Diskret matematika",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:3,code:"ED260",nameEn:"Teaching Methodology",nameUz:"O'qitish metodologiyasi",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:3,code:"HASS201",nameEn:"Uzbek(Russian) for Academic and Professional Purposes",nameUz:"Amaliy o'zbek (rus) tili",type:"Core",lec:0,sem_:3,ects:4},
+    {sem:3,code:"MATH201",nameEn:"Linear Algebra 1",nameUz:"Chiziqli algebra 1",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:3,code:"CS210",nameEn:"Computer Programming 2",nameUz:"Dasturlash 2",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:3,code:"CS204",nameEn:"Introduction to Data Science",nameUz:"Ma'lumotlar ilmi asoslari",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:3,code:"HASS111",nameEn:"Academic English",nameUz:"Akademik ingliz tili",type:"Core",lec:0,sem_:3,ects:4},
+    {sem:4,code:"MATH300",nameEn:"Ordinary Differential Equations and Numerical Methods",nameUz:"Oddiy differensial tenglamalar va sonli usullar",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:4,code:"CS111",nameEn:"Algorithms & Data Structures",nameUz:"Algoritmlar va Ma'lumotlar Tuzilmalari",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:4,code:"PHYS200",nameEn:"Physics",nameUz:"Fizika",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:4,code:"HASS110",nameEn:"History of Uzbekistan",nameUz:"O'zbekistonning eng yangi tarixi",type:"Core",lec:0,sem_:3,ects:4},
+    {sem:4,code:"ED251",nameEn:"Inclusive Education and Pedagogy of care",nameUz:"Inkluiiv ta'lim, gospital pedagogika",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:4,code:"ED330",nameEn:"Educational Psychology",nameUz:"Ta'lim psixologiyasi",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:5,code:"MATH305",nameEn:"Probability and Statistics",nameUz:"Ehtimollar nazariyasi va statistika",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:5,code:"CS205",nameEn:"Software Engineering",nameUz:"Dasturiy ta'minot muhandisligi",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:5,code:"ED201",nameEn:"Classroom Management",nameUz:"Sinf boshqaruvi",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:5,code:"CS301",nameEn:"Fundamentals of Databases",nameUz:"Ma'lumotlar bazasi asoslari",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:5,code:"HASS305",nameEn:"Philosophy",nameUz:"Falsafa",type:"Core",lec:0,sem_:3,ects:4},
+    {sem:5,code:"ED291",nameEn:"Pedagogical Internship 1",nameUz:"Pedagogik amaliyot 1",type:"Core",lec:2,sem_:2,ects:6},
+    {sem:5,code:"CS320",nameEn:"Artificial Intelligence",nameUz:"Sun'iy intellekt",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:6,code:"ED311",nameEn:"Assessment and Evaluation in Education",nameUz:"Ta'limda baholash",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:6,code:"ROB302",nameEn:"Electronic Devices and Circuits",nameUz:"Elektron qurilmalar va zanjamlar",type:"Core",lec:1,sem_:2,ects:4},
+    {sem:6,code:"CS331",nameEn:"Introduction to Machine Learning",nameUz:"Mashinali o'qitishga kirish",type:"Elective",lec:3,sem_:2,ects:6},
+    {sem:6,code:"ED370",nameEn:"Research Methodology",nameUz:"Ilmiy tadqiqot metodologiyasi",type:"Elective",lec:0,sem_:3,ects:4},
+    {sem:6,code:"ED391",nameEn:"Pedagogical Internship 2",nameUz:"Pedagogik amaliyot 2",type:"Core",lec:2,sem_:2,ects:6},
+    {sem:6,code:"ED320",nameEn:"Interdisciplinary Language, Literacies and Digital Media",nameUz:"Fanlararo til, savodxonlik va raqamli media",type:"Elective",lec:1,sem_:2,ects:4},
+    {sem:7,code:"CS413",nameEn:"Robotics",nameUz:"Robototexnika",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:7,code:"CS412",nameEn:"Deep Learning",nameUz:"Neyron tarmoqlari va chuqur o'qitish",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:7,code:"ED461",nameEn:"Curriculum Development & instruction",nameUz:"O'quv dasturlarini ishlab chiqish metodikasi",type:"Elective",lec:1,sem_:2,ects:4},
+    {sem:7,code:"ED490",nameEn:"Pedagogical Internship 3",nameUz:"Pedagogik amaliyot 3",type:"Core",lec:4,sem_:4,ects:10},
+    {sem:8,code:"ED491",nameEn:"Pedagogical Internship 4",nameUz:"Pedagogik amaliyot 4",type:"Core",lec:4,sem_:4,ects:10},
+    {sem:8,code:"ED441",nameEn:"Graduation Project",nameUz:"Bitiruv loyihasi",type:"Core",lec:3,sem_:4,ects:8},
+    {sem:8,code:"SEC402",nameEn:"Computer Networks and Security",nameUz:"Kompyuter tarmoqlari va xavfsizlik",type:"Core",lec:3,sem_:2,ects:6},
+    {sem:8,code:"CS415",nameEn:"Natural Language Processing",nameUz:"Tabiiy tilni qayta ishlash",type:"Elective",lec:3,sem_:2,ects:6}
+  ]
+};
+
+// ===== PROFS =====
+const PROFS=[
+  {n:"Marks Ruziboev",e:"m.ruziboev@npuu.uz",d:"Mathematics"},
+  {n:"Azamat Xolboyev",e:"a.xolboyev@npuu.uz",d:"Mathematics"},
+  {n:"Allambergen Qudaybergenov",e:"a.qudaybergenov@npuu.uz",d:"Mathematics"},
+  {n:"Bakhtinur Juraev",e:"b.juraev@npuu.uz",d:"Mathematics"},
+  {n:"Farhod Muxamadiyev",e:"f.muxamadiyev@npuu.uz",d:"Mathematics"},
+  {n:"Sa'dullayev Anvar",e:"a.sa'dullayev@npuu.uz",d:"Mathematics"},
+  {n:"Shakhzod Suvanov",e:"sh.suvanov@npuu.uz",d:"Mathematics"},
+  {n:"Zarif Ibragimov",e:"z.ibragimov@npuu.uz",d:"Mathematics"},
+  {n:"Azamat Akhmedjanov",e:"a.akhmedjanov@npuu.uz",d:"General English"},
+  {n:"Azizabonu Ziyodullaeva",e:"a.ziyodullaeva@npuu.uz",d:"General English"},
+  {n:"Dilnoza Boymirzayeva",e:"d.boymirzayeva@npuu.uz",d:"General English"},
+  {n:"Mirjon Khidoyatov",e:"m.khidoyatov@npuu.uz",d:"General English"},
+  {n:"Mirsaid Abdurakhmonov",e:"m.abdurakhmonov@npuu.uz",d:"General English"},
+  {n:"Rano Khikmatova",e:"r.khikmatova@npuu.uz",d:"General English"},
+  {n:"Zukhra Khakimova",e:"z.khakimova@npuu.uz",d:"General English"},
+  {n:"Asadulla Ashurov",e:"a.ashurov@npuu.uz",d:"IT"},
+  {n:"Bakhromjon Tulkinov",e:"b.tulkinov@npuu.uz",d:"IT"},
+  {n:"Mirrakhmon Khaydarov",e:"m.khaydarov@npuu.uz",d:"IT"},
+  {n:"Ulugbek Tursunaliev",e:"u.tursunaliev@npuu.uz",d:"IT"},
+  {n:"Nilufar Tillayeva",e:"n.tillayeva@npuu.uz",d:"Education"},
+  {n:"Ozodakhon Shukurillaeva",e:"o.shukurillaeva@npuu.uz",d:"Education"},
+  {n:"Albina Suleymanova",e:"a.suleymanova@npuu.uz",d:"Education"}
+];
+const DEPT_CLASS={Mathematics:"dept-math","General English":"dept-eng",IT:"dept-it",Education:"dept-edu"};
+
+// ===== TIMETABLE =====
+const GROUPS_LINKS={"FM1":"-1","FM2":"-2","FM3":"-3","FM4":"-4","FM5":"-5","FM6":"-6","FM7":"*7","FIT1":"-7","FIT2":"-8","FIT3":"-9","FIT4":"-10","FIT5":"-11","FIT6":"-12","FAR1":"-13","FAR2":"-14","FAR3":"-15"};
+
+// ===== STATE =====
+let currentLang='uz', isDark=true, userProfile=null;
+let currSelectedSem=1, currTypeFilter='all';
+const DEFAULT_SUBJECTS=["Introduction to T.L","Programming 1","Discrete Math","General English 2","Math Analysis 2","Analytical Geometry","Calculus 2"];
+
+// ===== HELPERS =====
+function t(key){return T[currentLang]?.[key]||T.uz[key]||key}
+function showBanner(msg){const b=document.getElementById('save-banner');b.textContent=msg;b.classList.add('show');setTimeout(()=>b.classList.remove('show'),2500)}
+function getInitials(name){return name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}
+
+// ===== CALC SEMESTER =====
+function calcCurrentSemester(admitYear){
+  const now=new Date();
+  const yr=now.getFullYear(), mo=now.getMonth()+1;
+  const yearsElapsed=yr-parseInt(admitYear);
+  // Aug-Jan = odd semester, Feb-Jul = even semester
+  const semInYear=(mo>=8||mo<=1)?1:2;
+  const sem=yearsElapsed*2+semInYear;
+  return Math.min(Math.max(sem,1),8);
+}
+
+// ===== LANGUAGE =====
+function setLanguage(lang){
+  currentLang=lang;
+  localStorage.setItem(LS_LANG,lang);
+  const sel=document.getElementById('lang-select');
+  if(sel)sel.value=lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(t(k))el.innerHTML=t(k);
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const k=el.getAttribute('data-i18n-ph');
+    if(t(k))el.placeholder=t(k);
+  });
+  if(userProfile)applyProfile();
+}
+
+// ===== THEME =====
+function applyTheme(dark){
+  isDark=dark;
+  document.body.classList.toggle('light',!dark);
+  const tb=document.getElementById('theme-btn');
+  if(tb)tb.textContent=dark?'🌙':'☀️';
+  localStorage.setItem(LS_THEME,dark?'dark':'light');
+  if(tg?.setHeaderColor)tg.setHeaderColor(dark?'#070f1e':'#f0f4ff');
+  if(tg?.setBackgroundColor)tg.setBackgroundColor(dark?'#070f1e':'#f0f4ff');
+}
+function toggleTheme(){applyTheme(!isDark)}
+
+// ===== PROFILE =====
+function loadProfile(){
+  try{const s=localStorage.getItem(LS_PROFILE);if(s)userProfile=JSON.parse(s);}catch(e){userProfile=null;}
+}
+function saveProfileData(p){userProfile=p;localStorage.setItem(LS_PROFILE,JSON.stringify(p));}
+
+function applyProfile(){
+  if(!userProfile)return;
+  document.getElementById('profile-header').style.display='flex';
+  document.getElementById('today-widget').style.display='block';
+  document.getElementById('main-topbar').style.display='flex';
+  document.getElementById('main-tabs').style.display='flex';
+  document.getElementById('main-nav').style.display='flex';
+
+  document.getElementById('profile-avatar').textContent=getInitials(userProfile.name||'U');
+  document.getElementById('profile-name').textContent=userProfile.name||'—';
+
+  const majorNames={AI:'AI',IST:'IST',MATH:'Math'};
+  const curSem=calcCurrentSemester(userProfile.admitYear);
+  const yr=Math.ceil(curSem/2);
+  document.getElementById('profile-meta').textContent=
+    `${userProfile.sid?'ID: '+userProfile.sid+' • ':''}${userProfile.group} • ${majorNames[userProfile.major]||userProfile.major}`;
+  document.getElementById('semester-badge').textContent=`${curSem}-${t('semester_label')} / ${yr}-${t('year_label')}`;
+
+  document.getElementById('today-group-text').textContent=`${t('tab_tt')}: ${userProfile.group}`;
+
+  const days=t('days');
+  document.getElementById('today-day-badge').textContent=days[new Date().getDay()];
+
+  initTimetable();
+  highlightHandbook();
+  initCurriculum();
+}
+
+function editProfile(){
+  if(userProfile){
+    document.getElementById('ob-name').value=userProfile.name||'';
+    document.getElementById('ob-sid').value=userProfile.sid||'';
+    document.getElementById('ob-major').value=userProfile.major||'';
+    document.getElementById('ob-admit-year').value=userProfile.admitYear||'';
+    document.getElementById('ob-group').value=userProfile.group||'';
+  }
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step-0').classList.add('active');
+  updateDots(0);
+  document.getElementById('onboarding-overlay').style.display='flex';
+}
+
+function highlightHandbook(){
+  if(!userProfile)return;
+  const map={AI:'hb-ai',IST:'hb-ist',MATH:'hb-math'};
+  document.querySelectorAll('.handbook-btn').forEach(el=>{
+    el.classList.remove('recommended');
+    el.querySelectorAll('.rec-badge').forEach(b=>b.remove());
+  });
+  const tid=map[userProfile.major];
+  if(tid){
+    const el=document.getElementById(tid);
+    if(el){
+      el.classList.add('recommended');
+      const badge=document.createElement('span');
+      badge.className='rec-badge';
+      badge.textContent='✓';
+      el.querySelector('span').appendChild(badge);
     }
+  }
+}
 
-    function saveProfile(p) {
-        userProfile = p;
-        localStorage.setItem(LS_PROFILE, JSON.stringify(p));
-    }
+// ===== ONBOARDING =====
+let obStep=0;
+function updateDots(s){
+  for(let i=0;i<4;i++){
+    const d=document.getElementById('dot-'+i);
+    if(!d)continue;
+    d.classList.remove('active','done');
+    if(i<s)d.classList.add('done');
+    else if(i===s)d.classList.add('active');
+  }
+}
+function obNext(next){
+  if(next===1){
+    const n=document.getElementById('ob-name').value.trim();
+    if(!n){alert(currentLang==='ru'?'Введите имя!':currentLang==='en'?'Enter your name!':'Ismingizni kiriting!');return;}
+  }
+  if(next===2){
+    const m=document.getElementById('ob-major').value, y=document.getElementById('ob-admit-year').value;
+    if(!m||!y){alert(currentLang==='ru'?'Заполните все поля!':currentLang==='en'?'Fill all fields!':'Barcha maydonlarni to\'ldiring!');return;}
+  }
+  if(next===3){
+    const g=document.getElementById('ob-group').value;
+    if(!g){alert(currentLang==='ru'?'Выберите группу!':currentLang==='en'?'Select your group!':'Guruhni tanlang!');return;}
+  }
+  document.getElementById('step-'+obStep).classList.remove('active');
+  obStep=next;
+  document.getElementById('step-'+obStep).classList.add('active');
+  updateDots(obStep);
+}
+function obFinish(lang){
+  setLanguage(lang);
+  const p={
+    name:document.getElementById('ob-name').value.trim(),
+    sid:document.getElementById('ob-sid').value.trim(),
+    major:document.getElementById('ob-major').value,
+    admitYear:document.getElementById('ob-admit-year').value,
+    group:document.getElementById('ob-group').value,
+    lang:lang
+  };
+  saveProfileData(p);
+  document.getElementById('onboarding-overlay').style.display='none';
+  applyProfile();
+  showBanner(`${t('welcome')}, ${p.name.split(' ')[0]}! 👋`);
+}
 
-    function getInitials(name) {
-        return name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
-    }
+// ===== NAVIGATION =====
+function switchView(viewId){
+  document.querySelectorAll('.view-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById('view-'+viewId);
+  if(sec)sec.classList.add('active');
+  const tab=document.getElementById('t-'+viewId);
+  if(tab)tab.classList.add('active');
+  const nav=document.getElementById('nav-'+viewId);
+  if(nav)nav.classList.add('active');
+}
 
-    function applyProfile() {
-        if (!userProfile) return;
-        document.getElementById('profile-header').style.display = 'flex';
-        document.getElementById('today-widget').style.display = 'block';
+// ===== TIMETABLE =====
+function initTimetable(){
+  const grid=document.getElementById('tt-grid');
+  grid.innerHTML=Object.entries(GROUPS_LINKS).map(([gname,gid])=>{
+    const isMine=userProfile?.group===gname;
+    return `<button class="tt-btn${isMine?' my-group':''}" data-group="${gname}" onclick="openTimetable('${gid}')">
+      ${gname}${isMine?'<span class="star">⭐</span>':''}
+    </button>`;
+  }).join('');
+}
+function openTimetable(gid){
+  const url=`https://npuu.edupage.org/timetable/view.php?num=6&class=${gid}`;
+  if(tg?.openLink)tg.openLink(url); else window.open(url,'_blank');
+}
+function openMyTimetable(e){
+  e.preventDefault();
+  if(!userProfile)return;
+  const gid=GROUPS_LINKS[userProfile.group];
+  if(gid)openTimetable(gid);
+}
 
-        const avatar = document.getElementById('profile-avatar');
-        avatar.textContent = getInitials(userProfile.name || 'U');
+// ===== CURRICULUM =====
+function initCurriculum(){
+  if(!userProfile)return;
+  const major=userProfile.major;
+  const subjects=CURRICULUM[major]||[];
+  const majorNames={AI:'Artificial Intelligence',IST:'Information Systems & Technologies',MATH:'Mathematics'};
+  document.getElementById('curr-major-title').textContent='📋 '+majorNames[major];
 
-        document.getElementById('profile-name').textContent = userProfile.name || 'Foydalanuvchi';
+  const curSem=calcCurrentSemester(userProfile.admitYear);
+  document.getElementById('curr-semester-info').textContent=
+    `${t('tab_curr')} • ${t('gpa_overall')}: ${curSem}-${t('semester_label')}`;
 
-        const majorNames = { AI: 'AI', IST: 'IST', MATH: 'Mathematics' };
-        document.getElementById('profile-meta').textContent =
-            `${userProfile.group} • ${majorNames[userProfile.major] || userProfile.major} • ${userProfile.year}-yil`;
+  const btnsEl=document.getElementById('curr-semester-btns');
+  btnsEl.innerHTML='';
+  for(let i=1;i<=8;i++){
+    const isActive=i===curSem;
+    const btn=document.createElement('button');
+    btn.className='curr-filter-btn'+(isActive?' active':'');
+    btn.textContent=`${i}-sem`;
+    btn.onclick=(()=>{const sem=i;return()=>selectCurrSem(sem)})();
+    btnsEl.appendChild(btn);
+  }
+  currSelectedSem=curSem;
+  currTypeFilter='all';
+  renderCurrSubjects();
+}
 
-        document.getElementById('today-group-text').textContent = `Guruhim: ${userProfile.group}`;
+function selectCurrSem(sem){
+  currSelectedSem=sem;
+  document.querySelectorAll('#curr-semester-btns .curr-filter-btn').forEach((b,i)=>{
+    b.classList.toggle('active',i+1===sem);
+  });
+  renderCurrSubjects();
+}
 
-        // Today's day
-        const days = ['Yakshanba','Dushanba','Seshanba','Chorshanba','Payshanba','Juma','Shanba'];
-        const today = new Date().getDay();
-        document.getElementById('today-day-badge').textContent = days[today];
+function currFilter(type){
+  currTypeFilter=type;
+  ['all','Core','Elective'].forEach(tp=>{
+    const id=tp==='all'?'curr-all-btn':tp==='Core'?'curr-core-btn':'curr-elec-btn';
+    document.getElementById(id).classList.toggle('active',tp===type);
+  });
+  renderCurrSubjects();
+}
 
-        // Highlight my group in timetable
-        highlightMyGroup();
+function renderCurrSubjects(){
+  if(!userProfile)return;
+  const major=userProfile.major;
+  const list=CURRICULUM[major]||[];
+  const filtered=list.filter(s=>s.sem===currSelectedSem&&(currTypeFilter==='all'||s.type===currTypeFilter));
+  const el=document.getElementById('curr-subjects-list');
+  if(filtered.length===0){el.innerHTML=`<div style="text-align:center;color:var(--muted);padding:20px">—</div>`;return;}
+  el.innerHTML=filtered.map((s,i)=>`
+    <div class="curr-subject-card ${s.type.toLowerCase()}" style="animation-delay:${i*.04}s">
+      <div class="curr-subj-name">
+        ${currentLang==='uz'?s.nameUz:s.nameEn}
+        <span class="curr-badge ${s.type==='Core'?'badge-core':'badge-elective'}">${s.type}</span>
+      </div>
+      <div style="font-size:10.5px;color:var(--muted);margin-top:2px">${s.code}</div>
+      <div class="curr-subj-meta" style="margin-top:6px">
+        <span>📖 ${t('curr_lectures')}: ${s.lec}h</span>
+        <span>✏️ ${t('curr_seminars')}: ${s.sem_}h</span>
+        <span>🎓 ${s.ects} ${t('curr_ects')}</span>
+      </div>
+    </div>
+  `).join('');
+}
 
-        // Highlight recommended handbook
-        highlightHandbook();
-    }
+// ===== GPA SCALE TOGGLE =====
+let gpaScaleVisible=false;
+function toggleGpaScale(){
+  gpaScaleVisible=!gpaScaleVisible;
+  document.getElementById('gpa-scale-panel').style.display=gpaScaleVisible?'block':'none';
+  document.getElementById('gpa-arrow').textContent=gpaScaleVisible?'▲':'▼';
+}
 
-    function highlightMyGroup() {
-        document.querySelectorAll('.tt-btn').forEach(btn => {
-            if (btn.dataset.group === userProfile?.group) {
-                btn.classList.add('my-group');
-                btn.innerHTML = btn.textContent + ' ⭐';
-            }
-        });
-    }
+// ===== GPA RING =====
+function updateGpaRing(gpa){
+  const circ=251.2;
+  const offset=circ-(gpa/5)*circ;
+  const ring=document.getElementById('gpa-ring');
+  ring.style.strokeDashoffset=offset;
+  let color='#ff4d4d';
+  if(gpa>=4.5)color='#00e676';
+  else if(gpa>=4.0)color='#40c4ff';
+  else if(gpa>=3.5)color='#b2ff59';
+  else if(gpa>=3.0)color='#ffcc00';
+  else if(gpa>0)color='#ff9800';
+  ring.style.stroke=color;
+  document.getElementById('gpa-ring-center').textContent=gpa.toFixed(2);
+  document.getElementById('gpa-ring-center').setAttribute('fill',color);
+  document.getElementById('gpa-result').textContent=gpa.toFixed(2);
+  document.getElementById('gpa-result').style.color=color;
+  let letter='—';
+  if(gpa>=4.75)letter='A+'; else if(gpa>=4.25)letter='A'; else if(gpa>=4.0)letter='B+';
+  else if(gpa>=3.75)letter='B'; else if(gpa>=3.5)letter='C+'; else if(gpa>=3.25)letter='C';
+  else if(gpa>=3.0)letter='D'; else if(gpa>0)letter='F';
+  document.getElementById('gpa-letter').textContent=gpa>0?`${t('gpa_th_letter')}: ${letter}`:'—';
+  document.getElementById('gpa-letter').style.color=color;
+  updateStipendInfo(gpa);
+}
 
-    function highlightHandbook() {
-        if (!userProfile) return;
-        const map = { AI: 'hb-ai', IST: 'hb-ist', MATH: 'hb-math' };
-        const targetId = map[userProfile.major];
-        document.querySelectorAll('.handbook-btn').forEach(el => {
-            el.style.border = '1px solid var(--border)';
-        });
-        if (targetId) {
-            const el = document.getElementById(targetId);
-            if (el) {
-                el.style.border = '2px solid var(--accent)';
-                el.style.background = 'rgba(58,134,255,0.1)';
-                // Add recommended badge
-                if (!el.querySelector('.rec-badge')) {
-                    const badge = document.createElement('span');
-                    badge.className = 'rec-badge my-group-badge';
-                    badge.textContent = '✓ Sizniki';
-                    el.querySelector('span:first-child').appendChild(badge);
-                }
-            }
-        }
-    }
+function updateStipendInfo(gpa){
+  const el=document.getElementById('stipend-info');
+  if(!gpa){el.innerHTML='';return;}
+  let html='';
+  if(gpa>=4.5) html=`<div class="stipend-card stipend-ok">${t('stipend_president')}</div>`;
+  else if(gpa>=3.5) html=`<div class="stipend-card stipend-ok">${t('stipend_ok')}</div>`;
+  else if(gpa>=3.0) html=`<div class="stipend-card stipend-warn">${t('stipend_warn')} (+${(3.5-gpa).toFixed(2)} kerak)</div>`;
+  else html=`<div class="stipend-card stipend-fail">${t('stipend_fail')}</div>`;
+  el.innerHTML=html;
+}
 
-    function editProfile() {
-        // Reset onboarding with current values
-        if (userProfile) {
-            document.getElementById('ob-name').value = userProfile.name || '';
-            document.getElementById('ob-major').value = userProfile.major || '';
-            document.getElementById('ob-year').value = userProfile.year || '';
-            document.getElementById('ob-group').value = userProfile.group || '';
-        }
-        // Show step 0
-        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-        document.getElementById('step-0').classList.add('active');
-        updateDots(0);
-        document.getElementById('onboarding-overlay').style.display = 'flex';
-    }
+// ===== GPA SHARE =====
+function shareGpa(){
+  const gpa=document.getElementById('gpa-result').textContent;
+  const name=userProfile?.name||'—';
+  const grp=userProfile?.group||'';
+  const msg=`🎓 NPUU Smart Bot\n👤 ${name} (${grp})\n📊 GPA: ${gpa} / 5.0`;
+  if(tg?.sendData)tg.sendData(JSON.stringify({type:'share_gpa',text:msg}));
+  else if(navigator.share)navigator.share({text:msg});
+  else navigator.clipboard.writeText(msg).then(()=>showBanner(t('copied')));
+}
 
-    // ===== ONBOARDING =====
-    let obStep = 0;
+// ===== GPA HISTORY =====
+function loadGpaHistory(){try{const s=localStorage.getItem(LS_GPA_HIST);return s?JSON.parse(s):[];}catch(e){return[];}}
+function addGpaHistory(gpa){
+  const hist=loadGpaHistory();
+  const d=new Date();
+  const ds=`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
+  const filtered=hist.filter(h=>h.date!==ds);
+  filtered.unshift({date:ds,gpa});
+  const lim=filtered.slice(0,10);
+  localStorage.setItem(LS_GPA_HIST,JSON.stringify(lim));
+  renderGpaHistory(lim);
+}
+function renderGpaHistory(hist){
+  if(!hist||!hist.length){document.getElementById('gpa-history-block').style.display='none';return;}
+  document.getElementById('gpa-history-block').style.display='block';
+  document.getElementById('gpa-history-list').innerHTML=hist.map(h=>`
+    <div class="gpa-history-item">
+      <span style="color:var(--muted)">${h.date}</span>
+      <span style="font-weight:700;color:var(--accent2)">${parseFloat(h.gpa).toFixed(2)}</span>
+    </div>`).join('');
+}
 
-    function updateDots(step) {
-        for (let i = 0; i < 3; i++) {
-            const dot = document.getElementById(`dot-${i}`);
-            dot.classList.remove('active', 'done');
-            if (i < step) dot.classList.add('done');
-            else if (i === step) dot.classList.add('active');
-        }
-    }
+// ===== GPA CALC =====
+function initGpa(){
+  const c=document.getElementById('gpa-rows');
+  c.innerHTML='';
+  const saved=localStorage.getItem(LS_GPA);
+  if(saved){try{JSON.parse(saved).forEach(i=>addGpaRow(i.name,i.credit,i.score));}catch(e){DEFAULT_SUBJECTS.forEach(s=>addGpaRow(s,3,''));}}
+  else DEFAULT_SUBJECTS.forEach(s=>addGpaRow(s,3,''));
+  calculateGpa();
+  renderGpaHistory(loadGpaHistory());
+}
+function addGpaRow(name='',credit=3,score=''){
+  const c=document.getElementById('gpa-rows');
+  const row=document.createElement('div');
+  row.className='card';
+  row.style.cssText='padding:7px 10px;display:flex;gap:7px;align-items:center;margin-bottom:7px';
+  row.innerHTML=`
+    <input type="text" value="${name}" placeholder="Subject"
+      style="flex:2;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 9px;border-radius:8px;font-size:12.5px;min-width:0;font-family:inherit;outline:none">
+    <input type="number" class="credit-input" placeholder="Cr" min="1" max="10" value="${credit}"
+      style="width:38px;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:8px;text-align:center;font-size:12.5px;outline:none">
+    <input type="number" class="score-input" placeholder="0-100" min="0" max="100" value="${score}"
+      style="width:52px;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:8px;text-align:center;font-size:12.5px;outline:none">
+    <div class="grade-display" style="width:33px;text-align:center;font-weight:700;font-size:13px;color:var(--muted)">-</div>
+    <button onclick="this.parentElement.remove();calculateGpa()"
+      style="background:none;border:none;color:#ff4d4d;font-size:15px;cursor:pointer;padding:0 3px">✕</button>`;
+  c.appendChild(row);
+  row.querySelector('.credit-input').addEventListener('input',calculateGpa);
+  row.querySelector('.score-input').addEventListener('input',calculateGpa);
+}
+function calculateGpa(){
+  let tc=0,tp=0;
+  document.querySelectorAll('#gpa-rows .card').forEach(row=>{
+    const cr=parseFloat(row.querySelector('.credit-input').value)||0;
+    const sv=row.querySelector('.score-input').value;
+    const sc=parseFloat(sv);
+    const gd=row.querySelector('.grade-display');
+    let gp=0,lt='-';
+    if(!isNaN(sc)&&sv!==''){
+      if(sc>=95){gp=5.00;lt='A+';}else if(sc>=90){gp=4.50;lt='A';}
+      else if(sc>=85){gp=4.25;lt='B+';}else if(sc>=80){gp=4.00;lt='B';}
+      else if(sc>=75){gp=3.75;lt='C+';}else if(sc>=70){gp=3.50;lt='C';}
+      else if(sc>=65){gp=3.25;lt='D+';}else if(sc>=60){gp=3.00;lt='D';}
+      else{gp=0;lt='F';}
+      gd.innerText=lt; gd.style.color=gp>=3?'var(--accent3)':'#ff4d4d';
+      tc+=cr; tp+=cr*gp;
+    }else{gd.innerText='-';gd.style.color='var(--muted)';}
+  });
+  updateGpaRing(tc>0?tp/tc:0);
+}
+function saveGpaData(){
+  const rows=document.querySelectorAll('#gpa-rows .card');
+  const data=[];
+  rows.forEach(row=>data.push({
+    name:row.querySelector('input[type=text]').value,
+    credit:row.querySelector('.credit-input').value,
+    score:row.querySelector('.score-input').value
+  }));
+  localStorage.setItem(LS_GPA,JSON.stringify(data));
+  const gv=parseFloat(document.getElementById('gpa-result').textContent)||0;
+  if(gv>0)addGpaHistory(gv.toFixed(2));
+  showBanner(t('saved_msg'));
+}
 
-    function obNext(nextStep) {
-        if (nextStep === 1) {
-            const name = document.getElementById('ob-name').value.trim();
-            if (!name) { alert('Iltimos, ismingizni kiriting!'); return; }
-        }
-        if (nextStep === 2) {
-            const major = document.getElementById('ob-major').value;
-            const year  = document.getElementById('ob-year').value;
-            if (!major) { alert('Iltimos, yo\'nalishingizni tanlang!'); return; }
-            if (!year)  { alert('Iltimos, o\'qish yilingizni tanlang!'); return; }
-        }
-        document.getElementById(`step-${obStep}`).classList.remove('active');
-        obStep = nextStep;
-        document.getElementById(`step-${obStep}`).classList.add('active');
-        updateDots(obStep);
-    }
+// ===== PROFS =====
+function renderProfs(data){
+  document.getElementById('prof-list').innerHTML=data.map((p,i)=>`
+    <div class="card card-anim ${DEPT_CLASS[p.d]||''}" style="margin-bottom:8px;animation-delay:${i*.03}s">
+      <div style="font-size:10.5px;color:var(--accent3);font-weight:700;letter-spacing:.4px">${p.d}</div>
+      <div style="font-size:14.5px;font-weight:600;margin:3px 0">${p.n}</div>
+      <div style="font-size:12px;color:var(--muted);display:flex;align-items:center;flex-wrap:wrap;gap:4px">
+        ✉️ <a href="mailto:${p.e}" style="color:var(--accent2);text-decoration:none">${p.e}</a>
+        <button class="copy-email-btn" onclick="copyEmail('${p.e}',this)">📋</button>
+      </div>
+    </div>`).join('');
+}
 
-    function obFinish() {
-        const group = document.getElementById('ob-group').value;
-        if (!group) { alert('Iltimos, guruhingizni tanlang!'); return; }
+function copyEmail(email,btn){
+  navigator.clipboard.writeText(email).then(()=>{
+    btn.textContent='✓';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='📋';btn.classList.remove('copied');},2000);
+  });
+}
 
-        const profile = {
-            name:  document.getElementById('ob-name').value.trim(),
-            major: document.getElementById('ob-major').value,
-            year:  document.getElementById('ob-year').value,
-            group: group
-        };
-        saveProfile(profile);
-        document.getElementById('onboarding-overlay').style.display = 'none';
-        applyProfile();
-        showBanner(`Xush kelibsiz, ${profile.name.split(' ')[0]}! 👋`);
-    }
+document.getElementById('search-prof').addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase();
+  renderProfs(PROFS.filter(p=>p.n.toLowerCase().includes(q)||p.d.toLowerCase().includes(q)));
+});
 
-    // ===== THEME =====
-    let isDark = true;
+// ===== INIT =====
+window.onload=()=>{
+  const savedTheme=localStorage.getItem(LS_THEME);
+  if(savedTheme==='light')applyTheme(false);
+  else if(tg?.colorScheme==='light')applyTheme(false);
+  else applyTheme(true);
 
-    function applyTheme(dark) {
-        isDark = dark;
-        document.body.classList.toggle('light', !dark);
-        document.getElementById('theme-btn').textContent = dark ? '🌙' : '☀️';
-        localStorage.setItem(LS_THEME, dark ? 'dark' : 'light');
-        if (tg?.setHeaderColor)     tg.setHeaderColor(dark ? '#070f1e' : '#f0f4ff');
-        if (tg?.setBackgroundColor) tg.setBackgroundColor(dark ? '#070f1e' : '#f0f4ff');
-    }
+  const savedLang=localStorage.getItem(LS_LANG)||'uz';
+  currentLang=savedLang;
 
-    function toggleTheme() { applyTheme(!isDark); }
+  loadProfile();
+  if(userProfile){
+    setLanguage(userProfile.lang||savedLang);
+    document.getElementById('onboarding-overlay').style.display='none';
+    applyProfile();
+  } else {
+    setLanguage(savedLang);
+  }
 
-    // ===== LANG =====
-    let currentLang = 'uz';
-
-    function setLanguage(lang) {
-        currentLang = lang;
-        localStorage.setItem(LS_LANG, lang);
-        document.getElementById('lang-select').value = lang;
-    }
-
-    // ===== NAVIGATION =====
-    function switchView(viewId) {
-        document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
-        const sec = document.getElementById(`view-${viewId}`);
-        if (sec) sec.classList.add('active');
-        const tab = document.getElementById(`t-${viewId}`);
-        if (tab) tab.classList.add('active');
-        const nav = document.getElementById(`nav-${viewId}`);
-        if (nav) nav.classList.add('active');
-    }
-
-    // ===== BANNER =====
-    function showBanner(msg) {
-        const banner = document.getElementById('save-banner');
-        banner.textContent = msg;
-        banner.classList.add('show');
-        setTimeout(() => banner.classList.remove('show'), 2500);
-    }
-
-    // ===== TIMETABLE =====
-    const GROUPS_LINKS = {
-        "FM1": "-1",  "FM2": "-2",  "FM3": "-3",  "FM4": "-4",
-        "FM5": "-5",  "FM6": "-6",  "FM7": "*7",
-        "FIT1": "-7", "FIT2": "-8", "FIT3": "-9", "FIT4": "-10",
-        "FIT5": "-11","FIT6": "-12",
-        "FAR1": "-13","FAR2": "-14","FAR3": "-15"
-    };
-
-    function initTimetable() {
-        const grid = document.getElementById('tt-grid');
-        grid.innerHTML = Object.entries(GROUPS_LINKS).map(([gname, gid]) => `
-            <button class="tt-btn" data-group="${gname}" onclick="openTimetable('${gid}')">${gname}</button>
-        `).join('');
-        if (userProfile) highlightMyGroup();
-    }
-
-    function openTimetable(gid) {
-        const url = `https://npuu.edupage.org/timetable/view.php?num=6&class=${gid}`;
-        if (tg?.openLink) tg.openLink(url);
-        else window.open(url, '_blank');
-    }
-
-    function openMyTimetable(e) {
-        e.preventDefault();
-        if (!userProfile) return;
-        const gid = GROUPS_LINKS[userProfile.group];
-        if (gid) openTimetable(gid);
-    }
-
-    // ===== GPA SCALE TOGGLE =====
-    let gpaScaleVisible = false;
-    function toggleGpaScale() {
-        gpaScaleVisible = !gpaScaleVisible;
-        document.getElementById('gpa-scale-panel').style.display = gpaScaleVisible ? 'block' : 'none';
-        document.getElementById('gpa-arrow').textContent = gpaScaleVisible ? '▲' : '▼';
-    }
-
-    // ===== GPA RING UPDATE =====
-    function updateGpaRing(gpa) {
-        const maxGpa = 5.0;
-        const circumference = 2 * Math.PI * 40; // 251.2
-        const offset = circumference - (gpa / maxGpa) * circumference;
-        const ring = document.getElementById('gpa-ring');
-        ring.style.strokeDashoffset = offset;
-
-        // Color based on GPA
-        let color = '#ff4d4d';
-        if (gpa >= 4.5) color = '#00e676';
-        else if (gpa >= 4.0) color = '#40c4ff';
-        else if (gpa >= 3.5) color = '#b2ff59';
-        else if (gpa >= 3.0) color = '#ffcc00';
-        else if (gpa >= 2.0) color = '#ff9800';
-        ring.style.stroke = color;
-
-        document.getElementById('gpa-ring-center').textContent = gpa.toFixed(2);
-        document.getElementById('gpa-ring-center').setAttribute('fill', color);
-        document.getElementById('gpa-result').textContent = gpa.toFixed(2);
-        document.getElementById('gpa-result').style.color = color;
-
-        // Letter grade
-        let letter = '—';
-        if      (gpa >= 4.75) letter = 'A+';
-        else if (gpa >= 4.25) letter = 'A';
-        else if (gpa >= 4.0)  letter = 'B+';
-        else if (gpa >= 3.75) letter = 'B';
-        else if (gpa >= 3.5)  letter = 'C+';
-        else if (gpa >= 3.25) letter = 'C';
-        else if (gpa >= 3.0)  letter = 'D';
-        else if (gpa > 0)     letter = 'F';
-        document.getElementById('gpa-letter').textContent = gpa > 0 ? `Harf bahosi: ${letter}` : '—';
-        document.getElementById('gpa-letter').style.color = color;
-
-        // Stipend info
-        updateStipendInfo(gpa);
-    }
-
-    function updateStipendInfo(gpa) {
-        const el = document.getElementById('stipend-info');
-        if (gpa === 0) { el.innerHTML = ''; return; }
-        let html = '';
-        if (gpa >= 4.5) {
-            html = `<div class="stipend-card stipend-ok">🏆 <span>Prezident stipendiyasiga da'vo qilasiz!</span></div>`;
-        } else if (gpa >= 3.5) {
-            html = `<div class="stipend-card stipend-ok">✅ <span>Stipendiya olish huquqingiz bor (GPA ≥ 3.5)</span></div>`;
-        } else if (gpa >= 3.0) {
-            html = `<div class="stipend-card stipend-warn">⚠️ <span>Stipendiya chegarasida! 3.5 ga yetish uchun yana ${(3.5 - gpa).toFixed(2)} kerak</span></div>`;
-        } else {
-            html = `<div class="stipend-card stipend-fail">🚫 <span>Stipendiya olish uchun GPA kamida 3.5 bo'lishi kerak</span></div>`;
-        }
-        el.innerHTML = html;
-    }
-
-    // ===== GPA SHARE =====
-    function shareGpa() {
-        const gpa = document.getElementById('gpa-result').textContent;
-        const name = userProfile?.name || 'Talaba';
-        const group = userProfile?.group || '';
-        const msg = `🎓 NPUU Smart Bot\n👤 ${name} (${group})\n📊 GPA: ${gpa} / 5.0\n\nMen ham hisoblashga harakat qil 👇`;
-        if (tg?.sendData) {
-            tg.sendData(JSON.stringify({ type: 'share_gpa', text: msg }));
-        } else if (navigator.share) {
-            navigator.share({ text: msg });
-        } else {
-            navigator.clipboard.writeText(msg).then(() => showBanner('📋 Nusxalandi!'));
-        }
-    }
-
-    // ===== GPA HISTORY =====
-    function loadGpaHistory() {
-        const saved = localStorage.getItem(LS_GPA_HIST);
-        try { return saved ? JSON.parse(saved) : []; } catch(e) { return []; }
-    }
-
-    function addGpaHistory(gpa) {
-        const hist = loadGpaHistory();
-        const now = new Date();
-        const dateStr = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()}`;
-        // Avoid duplicate same-date entries
-        const filtered = hist.filter(h => h.date !== dateStr);
-        filtered.unshift({ date: dateStr, gpa: gpa });
-        const limited = filtered.slice(0, 10);
-        localStorage.setItem(LS_GPA_HIST, JSON.stringify(limited));
-        renderGpaHistory(limited);
-    }
-
-    function renderGpaHistory(hist) {
-        if (!hist || hist.length === 0) {
-            document.getElementById('gpa-history-block').style.display = 'none';
-            return;
-        }
-        document.getElementById('gpa-history-block').style.display = 'block';
-        document.getElementById('gpa-history-list').innerHTML = hist.map(h => `
-            <div class="gpa-history-item">
-                <span style="color:var(--muted);">${h.date}</span>
-                <span style="font-weight:700; color:var(--accent2);">${parseFloat(h.gpa).toFixed(2)}</span>
-            </div>
-        `).join('');
-    }
-
-    // ===== GPA CALCULATOR =====
-    const DEFAULT_SUBJECTS = [
-        "Introduction to T.L", "Programming 1", "Discrete Math",
-        "General English 2", "Math Analysis 2", "Analytical Geometry", "Calculus 2"
-    ];
-
-    function initGpa() {
-        const container = document.getElementById('gpa-rows');
-        container.innerHTML = '';
-        const saved = localStorage.getItem(LS_GPA);
-        if (saved) {
-            try {
-                const data = JSON.parse(saved);
-                data.forEach(item => addGpaRow(item.name, item.credit, item.score));
-            } catch(e) {
-                DEFAULT_SUBJECTS.forEach(sub => addGpaRow(sub, 3, ''));
-            }
-        } else {
-            DEFAULT_SUBJECTS.forEach(sub => addGpaRow(sub, 3, ''));
-        }
-        calculateGpa();
-        renderGpaHistory(loadGpaHistory());
-    }
-
-    function addGpaRow(name='', credit=3, score='') {
-        const container = document.getElementById('gpa-rows');
-        const row = document.createElement('div');
-        row.className = 'card';
-        row.style.cssText = 'padding:8px 10px; display:flex; gap:8px; align-items:center; margin-bottom:8px;';
-        row.innerHTML = `
-            <input type="text" value="${name}" placeholder="Subject / Fan"
-                style="flex:2; background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:8px; border-radius:8px; font-size:13px; min-width:0; font-family:inherit; outline:none;">
-            <input type="number" class="credit-input" placeholder="Cr" min="1" max="10" value="${credit}"
-                style="width:40px; background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:8px; border-radius:8px; text-align:center; font-size:13px; outline:none;">
-            <input type="number" class="score-input" placeholder="0-100" min="0" max="100" value="${score}"
-                style="width:55px; background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:8px; border-radius:8px; text-align:center; font-size:13px; outline:none;">
-            <div class="grade-display" style="width:35px; text-align:center; font-weight:700; font-size:14px; color:var(--muted);">-</div>
-            <button onclick="this.parentElement.remove(); calculateGpa();"
-                style="background:none; border:none; color:#ff4d4d; font-size:16px; cursor:pointer; padding:0 4px;">✕</button>
-        `;
-        container.appendChild(row);
-        row.querySelector('.credit-input').addEventListener('input', calculateGpa);
-        row.querySelector('.score-input').addEventListener('input', calculateGpa);
-    }
-
-    function calculateGpa() {
-        let totalCredits = 0, totalPoints = 0;
-        document.querySelectorAll('#gpa-rows .card').forEach(row => {
-            const credit = parseFloat(row.querySelector('.credit-input').value) || 0;
-            const scoreValue = row.querySelector('.score-input').value;
-            const score = parseFloat(scoreValue);
-            const gradeDisplay = row.querySelector('.grade-display');
-            let gradePoint = 0.0, letter = '-';
-
-            if (!isNaN(score) && scoreValue !== '') {
-                if      (score >= 95) { gradePoint = 5.00; letter = 'A+'; }
-                else if (score >= 90) { gradePoint = 4.50; letter = 'A';  }
-                else if (score >= 85) { gradePoint = 4.25; letter = 'B+'; }
-                else if (score >= 80) { gradePoint = 4.00; letter = 'B';  }
-                else if (score >= 75) { gradePoint = 3.75; letter = 'C+'; }
-                else if (score >= 70) { gradePoint = 3.50; letter = 'C';  }
-                else if (score >= 65) { gradePoint = 3.25; letter = 'D+'; }
-                else if (score >= 60) { gradePoint = 3.00; letter = 'D';  }
-                else                  { gradePoint = 0.00; letter = 'F';  }
-
-                gradeDisplay.innerText = letter;
-                gradeDisplay.style.color = gradePoint >= 3.0 ? 'var(--accent3)' : '#ff4d4d';
-                totalCredits += credit;
-                totalPoints  += credit * gradePoint;
-            } else {
-                gradeDisplay.innerText = '-';
-                gradeDisplay.style.color = 'var(--muted)';
-            }
-        });
-
-        const gpa = totalCredits > 0 ? totalPoints / totalCredits : 0;
-        updateGpaRing(gpa);
-    }
-
-    function saveGpaData() {
-        const rows = document.querySelectorAll('#gpa-rows .card');
-        const data = [];
-        rows.forEach(row => {
-            data.push({
-                name:   row.querySelector('input[type=text]').value,
-                credit: row.querySelector('.credit-input').value,
-                score:  row.querySelector('.score-input').value
-            });
-        });
-        localStorage.setItem(LS_GPA, JSON.stringify(data));
-
-        const gpaVal = parseFloat(document.getElementById('gpa-result').textContent) || 0;
-        if (gpaVal > 0) addGpaHistory(gpaVal.toFixed(2));
-
-        showBanner('✅ Saqlandi!');
-    }
-
-    // ===== PROFESSORS =====
-    const PROFS = [
-        {n:"Marks Ruziboev",            e:"m.ruziboev@npuu.uz",        d:"Mathematics"},
-        {n:"Azamat Xolboyev",           e:"a.xolboyev@npuu.uz",        d:"Mathematics"},
-        {n:"Allambergen Qudaybergenov", e:"a.qudaybergenov@npuu.uz",   d:"Mathematics"},
-        {n:"Bakhtinur Juraev",          e:"b.juraev@npuu.uz",          d:"Mathematics"},
-        {n:"Farhod Muxamadiyev",        e:"f.muxamadiyev@npuu.uz",     d:"Mathematics"},
-        {n:"Sa'dullayev Anvar",         e:"a.sa'dullayev@npuu.uz",     d:"Mathematics"},
-        {n:"Shakhzod Suvanov",          e:"sh.suvanov@npuu.uz",        d:"Mathematics"},
-        {n:"Zarif Ibragimov",           e:"z.ibragimov@npuu.uz",       d:"Mathematics"},
-        {n:"Azamat Akhmedjanov",        e:"a.akhmedjanov@npuu.uz",     d:"General English"},
-        {n:"Azizabonu Ziyodullaeva",    e:"a.ziyodullaeva@npuu.uz",    d:"General English"},
-        {n:"Dilnoza Boymirzayeva",      e:"d.boymirzayeva@npuu.uz",    d:"General English"},
-        {n:"Mirjon Khidoyatov",         e:"m.khidoyatov@npuu.uz",      d:"General English"},
-        {n:"Mirsaid Abdurakhmonov",     e:"m.abdurakhmonov@npuu.uz",   d:"General English"},
-        {n:"Rano Khikmatova",           e:"r.khikmatova@npuu.uz",      d:"General English"},
-        {n:"Zukhra Khakimova",          e:"z.khakimova@npuu.uz",       d:"General English"},
-        {n:"Asadulla Ashurov",          e:"a.ashurov@npuu.uz",         d:"IT"},
-        {n:"Bakhromjon Tulkinov",       e:"b.tulkinov@npuu.uz",        d:"IT"},
-        {n:"Mirrakhmon Khaydarov",      e:"m.khaydarov@npuu.uz",       d:"IT"},
-        {n:"Ulugbek Tursunaliev",       e:"u.tursunaliev@npuu.uz",     d:"IT"},
-        {n:"Nilufar Tillayeva",         e:"n.tillayeva@npuu.uz",       d:"Education"},
-        {n:"Ozodakhon Shukurillaeva",   e:"o.shukurillaeva@npuu.uz",   d:"Education"},
-        {n:"Albina Suleymanova",        e:"a.suleymanova@npuu.uz",     d:"Education"}
-    ];
-
-    const DEPT_CLASS = {
-        'Mathematics': 'dept-math',
-        'General English': 'dept-eng',
-        'IT': 'dept-it',
-        'Education': 'dept-edu'
-    };
-
-    function renderProfs(data) {
-        document.getElementById('prof-list').innerHTML = data.map((p, i) => `
-            <div class="card card-anim ${DEPT_CLASS[p.d] || ''}" style="margin-bottom:8px; border-left:4px solid; animation-delay:${i * 0.04}s;">
-                <div style="font-size:11px; color:var(--accent3); font-weight:700; letter-spacing:0.5px;">${p.d}</div>
-                <div style="font-size:15px; font-weight:600; margin:3px 0;">${p.n}</div>
-                <div style="font-size:12px; color:var(--muted);">✉️ <a href="mailto:${p.e}" style="color:var(--accent2); text-decoration:none;">${p.e}</a></div>
-            </div>
-        `).join('');
-    }
-
-    document.getElementById('search-prof').addEventListener('input', (e) => {
-        const t = e.target.value.toLowerCase();
-        renderProfs(PROFS.filter(p => p.n.toLowerCase().includes(t) || p.d.toLowerCase().includes(t)));
-    });
-
-    // ===== INIT =====
-    window.onload = () => {
-        // Theme
-        const savedTheme = localStorage.getItem(LS_THEME);
-        if (savedTheme === 'light') applyTheme(false);
-        else if (tg?.colorScheme === 'light') applyTheme(false);
-        else applyTheme(true);
-
-        // Language
-        const savedLang = localStorage.getItem(LS_LANG) || 'uz';
-        setLanguage(savedLang);
-
-        // Profile
-        loadProfile();
-        if (userProfile) {
-            document.getElementById('onboarding-overlay').style.display = 'none';
-            applyProfile();
-        }
-
-        // Init modules
-        initGpa();
-        initTimetable();
-        renderProfs(PROFS);
-    };
+  initGpa();
+  renderProfs(PROFS);
+};
 </script>
 </body>
 </html>
