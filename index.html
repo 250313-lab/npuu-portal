@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NPUU SMART BOT</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght=400;600;700;800&family=DM+Sans:wght=300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #070f1e;
@@ -59,7 +59,6 @@
             position: relative;
         }
 
-        /* O'zgartirilgan Logo dizayni */
         .logo-icon {
             width: 80px;
             height: 80px;
@@ -263,11 +262,58 @@
             font-size: 14px;
         }
         
-        /* GPA score input yashirin spin-buttonlarni olib tashlash */
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { 
             -webkit-appearance: none; 
             margin: 0; 
+        }
+
+        /* GPA Table styles */
+        .gpa-scale-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        .gpa-scale-table th {
+            background: var(--surface2);
+            color: var(--accent3);
+            font-weight: 700;
+            padding: 7px 6px;
+            text-align: center;
+            border: 1px solid var(--border);
+            font-size: 11px;
+        }
+        .gpa-scale-table td {
+            padding: 6px 6px;
+            text-align: center;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+        .gpa-scale-table tr:nth-child(even) td { background: rgba(20,40,75,0.5); }
+        .gpa-scale-table tr:nth-child(odd) td { background: rgba(13,27,51,0.5); }
+        .grade-a-plus { color: #00e676; font-weight: 700; }
+        .grade-a { color: #40c4ff; font-weight: 700; }
+        .grade-b { color: #b2ff59; font-weight: 700; }
+        .grade-c { color: #ffff00; font-weight: 700; }
+        .grade-d { color: #ff9800; font-weight: 700; }
+        .grade-f { color: #ff4d4d; font-weight: 700; }
+
+        .gpa-toggle-btn {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--accent3);
+            padding: 9px 12px;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 12px;
         }
     </style>
 </head>
@@ -317,9 +363,42 @@
         <div class="card" style="margin-bottom:16px;">
             <div style="font-size:13px; color:var(--muted); margin-bottom:4px;" data-i18n="gpa_overall">Sizning umumiy natijangiz:</div>
             <div id="gpa-result" style="font-family:'Syne',sans-serif; font-size:36px; font-weight:800; color:var(--accent2);">0.00</div>
+            <div style="font-size:11px; color:var(--muted); margin-top:2px;" data-i18n="gpa_max">Maksimal GPA: 5.0</div>
         </div>
+
+        <button class="gpa-toggle-btn" onclick="toggleGpaScale()">
+            <span>📊</span><span data-i18n="gpa_scale_btn">Baholash shkalasini ko'rish</span><span id="gpa-arrow">▼</span>
+        </button>
+
+        <div id="gpa-scale-panel" style="display:none; margin-bottom:14px;">
+            <div class="card" style="padding:10px; border-left:4px solid var(--accent2);">
+                <div style="font-size:12px; color:var(--muted); margin-bottom:8px; font-style:italic;" data-i18n="gpa_scale_note">GPA maksimal qiymati = 5</div>
+                <table class="gpa-scale-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="gpa_th_score">Ball (%)</th>
+                            <th data-i18n="gpa_th_letter">Harf</th>
+                            <th data-i18n="gpa_th_gpa">GPA</th>
+                            <th data-i18n="gpa_th_trad">An'anaviy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>100–95</td><td class="grade-a-plus">A+</td><td>5.00</td><td data-i18n="grade_excellent">A'lo</td></tr>
+                        <tr><td>94.9–90</td><td class="grade-a">A</td><td>4.50</td><td data-i18n="grade_excellent">A'lo</td></tr>
+                        <tr><td>89.9–85</td><td class="grade-b">B+</td><td>4.25</td><td data-i18n="grade_very_good">Juda yaxshi</td></tr>
+                        <tr><td>84.9–80</td><td class="grade-b">B</td><td>4.00</td><td data-i18n="grade_very_good">Juda yaxshi</td></tr>
+                        <tr><td>79.9–75</td><td class="grade-c">C+</td><td>3.75</td><td data-i18n="grade_good">Yaxshi</td></tr>
+                        <tr><td>74.9–70</td><td class="grade-c">C</td><td>3.50</td><td data-i18n="grade_good">Yaxshi</td></tr>
+                        <tr><td>69.9–65</td><td class="grade-d">D+</td><td>3.25</td><td data-i18n="grade_satisf">Qoniqarli</td></tr>
+                        <tr><td>64.9–60</td><td class="grade-d">D</td><td>3.00</td><td data-i18n="grade_satisf">Qoniqarli</td></tr>
+                        <tr><td>59.9–0</td><td class="grade-f">F</td><td>0</td><td data-i18n="grade_fail">Qoniqarsiz</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div style="display:flex; gap:8px; padding: 0 14px 8px; font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase;">
-            <div style="flex:2;">Fan nomi</div>
+            <div style="flex:2;" data-i18n="gpa_col_subject">Fan nomi</div>
             <div style="width:40px; text-align:center;" data-i18n="gpa_cr">Kredit</div>
             <div style="width:55px; text-align:center;" data-i18n="gpa_score">Baho(100)</div>
             <div style="width:35px; text-align:center;">Harf</div>
@@ -381,7 +460,7 @@
             <span data-i18n="tab_gpa">GPA</span>
         </button>
         <button class="nav-item" onclick="switchView('profs')" id="nav-profs">
-            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 1.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
             <span data-i18n="tab_profs">Profs</span>
         </button>
         <button class="nav-item" onclick="switchView('timetable')" id="nav-timetable">
@@ -414,7 +493,14 @@
                 timetable_desc: "Dars jadvalini ko'rish uchun guruhingizni tanlang:", hero_desc: "NPUU Hero Study platformasiga o'tish tugmasini bosing:",
                 go_to_hero: "🚀 Hero Study'ga o'tish", exam_status_fail: "Ruxsat etilmagan", exam_status_ok: "Ruxsat etilgan",
                 resit_warning: "Ushbu bo'lim sinov rejimida ishlamoqda, ma'lumotlarni rasmiy manbalardan qayta tekshiring!",
-                gpa_cr: "Kredit", gpa_score: "Baho(100)"
+                gpa_cr: "Kredit", gpa_score: "Baho(100)",
+                gpa_max: "Maksimal GPA: 5.0",
+                gpa_scale_btn: "Baholash shkalasini ko'rish",
+                gpa_scale_note: "GPA maksimal qiymati = 5",
+                gpa_th_score: "Ball (%)", gpa_th_letter: "Harf", gpa_th_gpa: "GPA", gpa_th_trad: "An'anaviy",
+                grade_excellent: "A'lo", grade_very_good: "Juda yaxshi", grade_good: "Yaxshi",
+                grade_satisf: "Qoniqarli", grade_fail: "Qoniqarsiz",
+                gpa_col_subject: "Fan nomi"
             },
             ru: {
                 title: "NPUU SMART BOT", subtitle: "Цифровая среда управления",
@@ -426,7 +512,14 @@
                 timetable_desc: "Выберите свою группу для просмотра расписания:", hero_desc: "Нажмите кнопку, чтобы перейти на платформу Hero Study:",
                 go_to_hero: "🚀 Перейти в Hero", exam_status_fail: "Не допущен", exam_status_ok: "Допущен",
                 resit_warning: "Этот раздел работает в тестовом режиме, пожалуйста, перепроверьте данные в официальных источниках!",
-                gpa_cr: "Кредит", gpa_score: "Балл(100)"
+                gpa_cr: "Кредит", gpa_score: "Балл(100)",
+                gpa_max: "Максимальный GPA: 5.0",
+                gpa_scale_btn: "Просмотреть шкалу оценок",
+                gpa_scale_note: "Максимальное значение GPA = 5",
+                gpa_th_score: "Балл (%)", gpa_th_letter: "Буква", gpa_th_gpa: "GPA", gpa_th_trad: "Традиц.",
+                grade_excellent: "Отлично", grade_very_good: "Очень хорошо", grade_good: "Хорошо",
+                grade_satisf: "Удовлетворительно", grade_fail: "Неудовлетворительно",
+                gpa_col_subject: "Название предмета"
             },
             en: {
                 title: "NPUU SMART BOT", subtitle: "Digital management environment",
@@ -438,7 +531,14 @@
                 timetable_desc: "Select your group to view the timetable:", hero_desc: "Click the button to access the Hero Study platform:",
                 go_to_hero: "🚀 Go to Hero Study", exam_status_fail: "Not Allowed", exam_status_ok: "Allowed",
                 resit_warning: "This section is in test mode, please double-check with official sources!",
-                gpa_cr: "Credit", gpa_score: "Score(100)"
+                gpa_cr: "Credit", gpa_score: "Score(100)",
+                gpa_max: "Maximum GPA: 5.0",
+                gpa_scale_btn: "View Grading Scale",
+                gpa_scale_note: "Maximum GPA value = 5",
+                gpa_th_score: "Score (%)", gpa_th_letter: "Letter", gpa_th_gpa: "GPA", gpa_th_trad: "Traditional",
+                grade_excellent: "Excellent", grade_very_good: "Very Good", grade_good: "Good",
+                grade_satisf: "Satisfactory", grade_fail: "Unsatisfactory",
+                gpa_col_subject: "Subject Name"
             }
         };
 
@@ -454,7 +554,7 @@
                 const key = el.getAttribute('data-i18n-ph');
                 if (translations[lang][key]) el.placeholder = translations[lang][key];
             });
-            if(allExams.length > 0) renderExams(); // Re-render to update statuses
+            if(allExams.length > 0) renderExams();
         }
 
         // --- NAVIGATION ---
@@ -612,7 +712,15 @@
             else window.open(url, '_blank');
         }
 
-        // --- YANILANGAN GPA CALCULATOR LOGIC (0-100 Shkalasi) ---
+        // --- GPA SCALE TOGGLE ---
+        let gpaScaleVisible = false;
+        function toggleGpaScale() {
+            gpaScaleVisible = !gpaScaleVisible;
+            document.getElementById('gpa-scale-panel').style.display = gpaScaleVisible ? 'block' : 'none';
+            document.getElementById('gpa-arrow').textContent = gpaScaleVisible ? '▲' : '▼';
+        }
+
+        // --- GPA CALCULATOR LOGIC (0-100 shkala, max GPA=5) ---
         const DEFAULT_SUBJECTS = ["Introduction to T.L", "Programming 1", "Discrete Math", "General English 2", "Math Analysis 2", "Analytical Geometry", "Calculus 2"];
         
         function initGpa() {
@@ -655,20 +763,20 @@
                 let gradePoint = 0.0;
                 let letter = '-';
 
-                // Kiritilgan ball bo'yicha GPA ni baholash (Standard: 90-100 = 4.5)
+                // Rasmga muvofiq baholash shkalasi (max GPA = 5)
                 if (!isNaN(score) && scoreValue !== '') {
-                    if(score >= 90) { gradePoint = 4.5; letter = 'A+'; }
-                    else if(score >= 85) { gradePoint = 4.0; letter = 'A'; }
-                    else if(score >= 80) { gradePoint = 3.5; letter = 'B+'; }
-                    else if(score >= 75) { gradePoint = 3.0; letter = 'B'; }
-                    else if(score >= 70) { gradePoint = 2.5; letter = 'C+'; }
-                    else if(score >= 65) { gradePoint = 2.0; letter = 'C'; }
-                    else if(score >= 60) { gradePoint = 1.5; letter = 'D+'; }
-                    else if(score >= 50) { gradePoint = 1.0; letter = 'D'; }
-                    else { gradePoint = 0.0; letter = 'F'; }
+                    if (score >= 95)       { gradePoint = 5.00; letter = 'A+'; }
+                    else if (score >= 90)  { gradePoint = 4.50; letter = 'A';  }
+                    else if (score >= 85)  { gradePoint = 4.25; letter = 'B+'; }
+                    else if (score >= 80)  { gradePoint = 4.00; letter = 'B';  }
+                    else if (score >= 75)  { gradePoint = 3.75; letter = 'C+'; }
+                    else if (score >= 70)  { gradePoint = 3.50; letter = 'C';  }
+                    else if (score >= 65)  { gradePoint = 3.25; letter = 'D+'; }
+                    else if (score >= 60)  { gradePoint = 3.00; letter = 'D';  }
+                    else                   { gradePoint = 0.00; letter = 'F';  }
                     
                     gradeDisplay.innerText = letter;
-                    gradeDisplay.style.color = gradePoint > 0 ? 'var(--accent3)' : '#ff4d4d';
+                    gradeDisplay.style.color = gradePoint >= 3.0 ? 'var(--accent3)' : '#ff4d4d';
                     
                     totalCredits += credit;
                     totalPoints += (credit * gradePoint);
