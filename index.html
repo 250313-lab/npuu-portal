@@ -106,13 +106,9 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .search-box input:focus,.search-box select:focus{border-color:var(--accent)}
 .search-box input:last-child,.search-box select:last-child{margin-bottom:0}
 
-/* ===== BUTTONS & FILTERS ===== */
+/* ===== BUTTONS ===== */
 .btn{background:var(--accent2);color:#000;font-weight:700;border:none;padding:12px;border-radius:13px;width:100%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;text-decoration:none;font-family:inherit;transition:transform .15s,opacity .15s}
 .btn:active{transform:scale(.97);opacity:.9}
-.curr-filter-row{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none}
-.curr-filter-row::-webkit-scrollbar{display:none}
-.curr-filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:7px 13px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .2s}
-.curr-filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 
 /* ===== HANDBOOK ===== */
 .handbook-btn{background:var(--surface2);border:1px solid var(--border);border-radius:13px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;color:var(--text);text-decoration:none;margin-bottom:10px;font-weight:600;transition:background .2s,transform .15s;cursor:pointer;font-size:13.5px}
@@ -126,6 +122,20 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .tt-btn:active{transform:scale(.95)}
 .tt-btn.my-group{background:rgba(58,134,255,.18);border-color:var(--accent);color:var(--accent2)}
 .tt-btn .star{font-size:9px;color:var(--accent2)}
+
+/* ===== CURRICULUM VIEW ===== */
+.curr-filter-row{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none}
+.curr-filter-row::-webkit-scrollbar{display:none}
+.curr-filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:7px 13px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .2s}
+.curr-filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.curr-subject-card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:11px 13px;margin-bottom:8px;transition:all .2s}
+.curr-subject-card.core{border-left:3px solid var(--accent2)}
+.curr-subject-card.elective{border-left:3px solid var(--orange)}
+.curr-subj-name{font-size:13.5px;font-weight:600;margin-bottom:3px}
+.curr-subj-meta{font-size:11px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap}
+.curr-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:middle}
+.badge-core{background:rgba(0,187,249,.15);color:var(--accent2)}
+.badge-elective{background:rgba(255,152,0,.15);color:var(--orange)}
 
 /* ===== PROF DEPT COLORS ===== */
 .dept-math{border-left:4px solid #3a86ff!important}
@@ -176,6 +186,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 
 <div class="save-banner" id="save-banner">✅</div>
 
+<!-- ===== ONBOARDING ===== -->
 <div id="onboarding-overlay">
   <div class="onboard-logo">🎓</div>
   <div class="onboard-title">NPUU Smart Bot</div>
@@ -187,13 +198,15 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
     <div class="step-dot" id="dot-3"></div>
   </div>
   <div class="onboard-card">
+    <!-- Step 0: Name + ID -->
     <div class="step active" id="step-0">
       <div class="onboard-label" id="ob-l-name">👤 Ism Familiya</div>
-      <input type="text" class="onboard-input" id="ob-name" placeholder="Sodiqxon Abdullohxonov" autocomplete="off">
+      <input type="text" class="onboard-input" id="ob-name" placeholder="Abdullohxonov Sodiqxon" autocomplete="off">
       <div class="onboard-label" id="ob-l-id">🪪 Student ID</div>
-      <input type="text" class="onboard-input" id="ob-sid" placeholder="Masalan: 230001" autocomplete="off">
+      <input type="text" class="onboard-input" id="ob-sid" placeholder="Masalan: 250313" autocomplete="off">
       <button class="onboard-btn" id="ob-btn-0" onclick="obNext(1)">Davom etish →</button>
     </div>
+    <!-- Step 1: Major + Admission year -->
     <div class="step" id="step-1">
       <div class="onboard-label" id="ob-l-major">🎓 Yo'nalish</div>
       <select class="onboard-select" id="ob-major">
@@ -213,6 +226,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
       </select>
       <button class="onboard-btn" id="ob-btn-1" onclick="obNext(2)">Davom etish →</button>
     </div>
+    <!-- Step 2: Group -->
     <div class="step" id="step-2">
       <div class="onboard-label" id="ob-l-group">👥 Guruh</div>
       <select class="onboard-select" id="ob-group">
@@ -235,6 +249,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
       </select>
       <button class="onboard-btn" id="ob-btn-2" onclick="obNext(3)">Davom etish →</button>
     </div>
+    <!-- Step 3: Lang -->
     <div class="step" id="step-3">
       <div class="onboard-label" id="ob-l-lang">🌐 Til / Language / Язык</div>
       <div style="display:flex;gap:8px;margin-top:4px;">
@@ -246,6 +261,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   </div>
 </div>
 
+<!-- ===== TOP BAR ===== -->
 <div class="top-bar" id="main-topbar" style="display:none">
   <div class="top-bar-left">
     <button id="theme-btn" class="ctrl-btn" onclick="toggleTheme()">🌙</button>
@@ -260,6 +276,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   </div>
 </div>
 
+<!-- ===== PROFILE HEADER ===== -->
 <div class="profile-header" id="profile-header" style="display:none">
   <div class="profile-avatar" id="profile-avatar">A</div>
   <div class="profile-info">
@@ -269,6 +286,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   </div>
 </div>
 
+<!-- ===== TODAY WIDGET ===== -->
 <div class="today-widget" id="today-widget" style="display:none">
   <div class="today-widget-title">
     📅 <span data-i18n="today_schedule">Bugungi dars jadvalim</span>
@@ -284,6 +302,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   </a>
 </div>
 
+<!-- ===== TABS ===== -->
 <div class="tabs" id="main-tabs" style="display:none">
   <button class="tab-btn active" onclick="switchView('gpa')" id="t-gpa" data-i18n="tab_gpa">🧮 GPA</button>
   <button class="tab-btn" onclick="switchView('profs')" id="t-profs" data-i18n="tab_profs">👥 Profs</button>
@@ -292,6 +311,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   <button class="tab-btn" onclick="switchView('hero')" id="t-hero" data-i18n="tab_hero">🎓 Hero</button>
 </div>
 
+<!-- ===== GPA VIEW ===== -->
 <div id="view-gpa" class="view-section active">
   <div class="gpa-ring-wrapper card-anim">
     <svg width="88" height="88" viewBox="0 0 90 90" style="flex-shrink:0">
@@ -340,9 +360,10 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
     </div>
   </div>
 
-  <div class="card" style="padding:10px;margin-bottom:12px;border-left:4px solid var(--accent)" id="gpa-sem-container" style="display:none">
-    <div style="font-size:11.5px;font-weight:700;color:var(--muted);margin-bottom:8px" data-i18n="select_sems">Semestrlarni tanlang:</div>
-    <div class="curr-filter-row" id="gpa-sem-toggles" style="margin-bottom:0"></div>
+  <!-- ===== SEMESTER SELECTOR inside GPA ===== -->
+  <div id="gpa-sem-container" style="display:none;margin-bottom:10px">
+    <div style="font-size:10.5px;font-weight:700;color:var(--accent3);letter-spacing:.6px;text-transform:uppercase;margin-bottom:7px" data-i18n="select_sems">Semestrlarni tanlang:</div>
+    <div class="curr-filter-row" id="gpa-sem-toggles" style="flex-wrap:wrap;gap:6px;margin-bottom:0"></div>
   </div>
 
   <div style="display:flex;gap:8px;padding:0 12px 7px;font-size:10.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px">
@@ -359,6 +380,9 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   </div>
 </div>
 
+
+
+<!-- ===== PROFS VIEW ===== -->
 <div id="view-profs" class="view-section">
   <div class="search-box" style="margin-bottom:14px">
     <input type="text" id="search-prof" data-i18n-ph="prof_search" placeholder="🔍 Professor ismi yoki kafedra...">
@@ -366,6 +390,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   <div id="prof-list"></div>
 </div>
 
+<!-- ===== HANDBOOK VIEW ===== -->
 <div id="view-handbook" class="view-section">
   <div class="card" style="border-left:4px solid var(--accent2);margin-bottom:14px">
     <div style="font-size:15px;font-weight:700;margin-bottom:5px">📘 Student Handbooks</div>
@@ -382,6 +407,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   </a>
 </div>
 
+<!-- ===== TIMETABLE VIEW ===== -->
 <div id="view-timetable" class="view-section">
   <div class="card" style="border-left:4px solid var(--accent3);margin-bottom:14px">
     <div style="font-size:15px;font-weight:700;margin-bottom:5px" data-i18n="tab_tt">📅 Dars Jadvali</div>
@@ -390,6 +416,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   <div id="tt-grid" class="grid-container"></div>
 </div>
 
+<!-- ===== HERO VIEW ===== -->
 <div id="view-hero" class="view-section">
   <div class="card" style="text-align:center;padding:30px 16px;border-left:4px solid var(--accent)">
     <div style="font-size:52px;margin-bottom:12px;animation:logoPulse 3s ease-in-out infinite">🎓</div>
@@ -401,11 +428,13 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   </div>
 </div>
 
+<!-- ===== BOTTOM NAV ===== -->
 <div class="nav-bar" id="main-nav" style="display:none">
   <button class="nav-item active" onclick="switchView('gpa')" id="nav-gpa">
     <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
     <span data-i18n="tab_gpa">GPA</span><div class="nav-dot"></div>
   </button>
+
   <button class="nav-item" onclick="switchView('profs')" id="nav-profs">
     <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
     <span data-i18n="tab_profs">Profs</span><div class="nav-dot"></div>
@@ -429,7 +458,7 @@ const tg = window.Telegram?.WebApp;
 if(tg){tg.ready();tg.expand();}
 
 // ===== KEYS =====
-const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_GPA='npuu_gpa_state',
+const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_GPA='npuu_gpa_data',
       LS_PROFILE='npuu_profile', LS_GPA_HIST='npuu_gpa_history';
 
 // ===== I18N =====
@@ -437,7 +466,7 @@ const T = {
   uz:{
     title:"NPUU SMART BOT", subtitle:"Bir marta ma'lumot kiriting — bot siz uchun moslanadi!",
     edit_profile:"Tahrir", today_schedule:"Bugungi dars jadvalim", click_to_view:"Ko'rish uchun bosing",
-    tab_gpa:"GPA", tab_profs:"Profs", tab_handbook:"Handbook",
+    tab_gpa:"GPA", tab_curr:"O'quv reja", tab_profs:"Profs", tab_handbook:"Handbook",
     tab_tt:"Jadval", tab_hero:"Hero",
     gpa_overall:"Umumiy GPA", gpa_max:"/ 5.0 maksimal", share:"Ulashish",
     gpa_history:"GPA tarixi", gpa_scale_btn:"Baholash shkalasi",
@@ -445,7 +474,8 @@ const T = {
     gpa_th_trad:"An'anaviy", grade_excellent:"A'lo", grade_very_good:"Juda yaxshi",
     grade_good:"Yaxshi", grade_satisf:"Qoniqarli", grade_fail:"Qoniqarsiz",
     gpa_col_subject:"Fan nomi", gpa_cr:"Kredit", gpa_score:"Baho",
-    add_subject:"Fan qo'shish", gpa_save:"Saqlash", select_sems:"Semestrlarni tanlang:",
+    add_subject:"Fan qo'shish", gpa_save:"Saqlash",
+    curr_all:"Hammasi", curr_core:"Core", curr_elective:"Elective",
     prof_search:"🔍 Professor ismi yoki kafedra...",
     handbook_desc:"Yo'nalishingizga mos Handbook faylini ko'ring.",
     timetable_desc:"Guruhingizni tanlang:", hero_desc:"NPUU Hero Study platformasiga o'tish uchun:",
@@ -461,12 +491,13 @@ const T = {
     ob_l_major:"🎓 Yo'nalish", ob_l_year:"📅 O'qishga qabul yili",
     ob_l_group:"👥 Guruh", ob_l_lang:"🌐 Til tanlang",
     ob_next:"Davom etish →",
-    welcome:"Xush kelibsiz", days:["Yakshanba","Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba"]
+    curr_lectures:"Ma'ruza", curr_seminars:"Seminar", curr_credits:"kredit",
+    curr_ects:"ECTS", welcome:"Xush kelibsiz", days:["Yakshanba","Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba"]
   },
   ru:{
     title:"NPUU SMART BOT", subtitle:"Введите данные один раз — бот настроится под вас!",
     edit_profile:"Изменить", today_schedule:"Расписание на сегодня", click_to_view:"Нажмите для просмотра",
-    tab_gpa:"GPA", tab_profs:"Преподы", tab_handbook:"Справочник",
+    tab_gpa:"GPA", tab_curr:"Учебный план", tab_profs:"Преподы", tab_handbook:"Справочник",
     tab_tt:"Расписание", tab_hero:"Hero",
     gpa_overall:"Общий GPA", gpa_max:"/ 5.0 максимум", share:"Поделиться",
     gpa_history:"История GPA", gpa_scale_btn:"Шкала оценок",
@@ -474,7 +505,8 @@ const T = {
     gpa_th_trad:"Традиц.", grade_excellent:"Отлично", grade_very_good:"Очень хорошо",
     grade_good:"Хорошо", grade_satisf:"Удовл.", grade_fail:"Неудовл.",
     gpa_col_subject:"Название предмета", gpa_cr:"Кредит", gpa_score:"Балл",
-    add_subject:"Добавить предмет", gpa_save:"Сохранить", select_sems:"Выберите семестры:",
+    add_subject:"Добавить предмет", gpa_save:"Сохранить",
+    curr_all:"Все", curr_core:"Core", curr_elective:"Elective",
     prof_search:"🔍 Имя преподавателя или кафедра...",
     handbook_desc:"Выберите справочник по вашему направлению.",
     timetable_desc:"Выберите группу:", hero_desc:"Нажмите, чтобы перейти на Hero Study:",
@@ -490,12 +522,13 @@ const T = {
     ob_l_major:"🎓 Направление", ob_l_year:"📅 Год поступления",
     ob_l_group:"👥 Группа", ob_l_lang:"🌐 Выберите язык",
     ob_next:"Продолжить →",
-    welcome:"Добро пожаловать", days:["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"]
+    curr_lectures:"Лекция", curr_seminars:"Семинар", curr_credits:"кредит",
+    curr_ects:"ECTS", welcome:"Добро пожаловать", days:["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"]
   },
   en:{
     title:"NPUU SMART BOT", subtitle:"Enter data once — the bot adapts to you!",
     edit_profile:"Edit", today_schedule:"Today's schedule", click_to_view:"Tap to view",
-    tab_gpa:"GPA", tab_profs:"Profs", tab_handbook:"Handbook",
+    tab_gpa:"GPA", tab_curr:"Curriculum", tab_profs:"Profs", tab_handbook:"Handbook",
     tab_tt:"Timetable", tab_hero:"Hero",
     gpa_overall:"Overall GPA", gpa_max:"/ 5.0 max", share:"Share",
     gpa_history:"GPA History", gpa_scale_btn:"Grading Scale",
@@ -503,7 +536,8 @@ const T = {
     gpa_th_trad:"Traditional", grade_excellent:"Excellent", grade_very_good:"Very Good",
     grade_good:"Good", grade_satisf:"Satisfactory", grade_fail:"Unsatisfactory",
     gpa_col_subject:"Subject Name", gpa_cr:"Credit", gpa_score:"Score",
-    add_subject:"Add subject", gpa_save:"Save", select_sems:"Select semesters:",
+    add_subject:"Add subject", gpa_save:"Save",
+    curr_all:"All", curr_core:"Core", curr_elective:"Elective",
     prof_search:"🔍 Professor name or department...",
     handbook_desc:"Choose the Handbook for your major.",
     timetable_desc:"Select your group:", hero_desc:"Tap the button to access Hero Study:",
@@ -519,148 +553,68 @@ const T = {
     ob_l_major:"🎓 Major", ob_l_year:"📅 Admission Year",
     ob_l_group:"👥 Group", ob_l_lang:"🌐 Choose Language",
     ob_next:"Continue →",
-    welcome:"Welcome", days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+    curr_lectures:"Lecture", curr_seminars:"Seminar", curr_credits:"credits",
+    curr_ects:"ECTS", welcome:"Welcome", days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
   }
 };
 
-// ===== CURRICULUM DATA =====
-const CURRICULUM = {
-  AI:[
-    {sem:1,code:"ED110",nameEn:"Education, Society and Culture",nameUz:"Ta'lim, jamiyat va madaniyat",ects:4},
-    {sem:1,code:"HASS101",nameEn:"General English 1",nameUz:"Ingliz tili 1",ects:8},
-    {sem:1,code:"CS100",nameEn:"Information Systems and Digital Technologies",nameUz:"Axborot tizimlari va raqamli texnologiyalar",ects:6},
-    {sem:1,code:"MATH111",nameEn:"Analysis 1",nameUz:"Matematik analiz 1",ects:6},
-    {sem:1,code:"DSG101",nameEn:"Critical-creative thinking and design",nameUz:"Tanqidiy-ijodiy fikrlash va dizayn",ects:6},
-    {sem:2,code:"ED111",nameEn:"Introduction to Teaching and Learning",nameUz:"O'qitish va o'rganish",ects:4},
-    {sem:2,code:"HASS102",nameEn:"General English 2",nameUz:"Ingliz tili 2",ects:8},
-    {sem:2,code:"CS102",nameEn:"Computer Programming 1",nameUz:"Dasturlash 1",ects:6},
-    {sem:2,code:"MATH211",nameEn:"Analysis 2",nameUz:"Matematik analiz 2",ects:6},
-    {sem:2,code:"MATH180",nameEn:"Analytical Geometry",nameUz:"Analitik geometriya",ects:6},
-    {sem:3,code:"MATH201",nameEn:"Linear Algebra 1",nameUz:"Chiziqli algebra 1",ects:6},
-    {sem:3,code:"MATH220",nameEn:"Discrete Mathematics",nameUz:"Diskret matematika",ects:6},
-    {sem:3,code:"CS210",nameEn:"Computer Programming 2",nameUz:"Dasturlash 2",ects:6},
-    {sem:3,code:"MATH222",nameEn:"Analysis 3",nameUz:"Matematik analiz 3",ects:4},
-    {sem:3,code:"ED260",nameEn:"Teaching Methodology",nameUz:"O'qitish metodologiyasi",ects:4},
-    {sem:3,code:"HASS111",nameEn:"Academic English",nameUz:"Akademik ingliz tili",ects:4},
-    {sem:4,code:"PHYS200",nameEn:"Physics",nameUz:"Fizika",ects:6},
-    {sem:4,code:"MATH300",nameEn:"Ordinary Differential Equations and Numerical Methods",nameUz:"Oddiy differensial tenglamalar va sonli usullar",ects:6},
-    {sem:4,code:"MATH223",nameEn:"Analysis 4",nameUz:"Matematik analiz 4",ects:4},
-    {sem:4,code:"MATH202",nameEn:"Linear Algebra 2",nameUz:"Chiziqli algebra 2",ects:6},
-    {sem:4,code:"HASS110",nameEn:"History of Uzbekistan",nameUz:"O'zbekistonning eng yangi tarixi",ects:4},
-    {sem:4,code:"ED251",nameEn:"Inclusive Education and Pedagogy of care",nameUz:"Inkluiiv ta'lim, gospital pedagogika",ects:4},
-    {sem:5,code:"MATH350",nameEn:"Topology",nameUz:"Topologiya",ects:6},
-    {sem:5,code:"MATH305",nameEn:"Probability and Statistics",nameUz:"Ehtimollar nazariyasi va statistika",ects:6},
-    {sem:5,code:"ED201",nameEn:"Classroom Management",nameUz:"Sinf boshqaruvi",ects:4},
-    {sem:5,code:"HASS201",nameEn:"Uzbek(Russian) for Academic and Professional Purposes",nameUz:"Amaliy o'zbek (rus) tili",ects:4},
-    {sem:5,code:"ED330",nameEn:"Educational Psychology",nameUz:"Ta'lim psixologiyasi",ects:4},
-    {sem:5,code:"ED291",nameEn:"Pedagogical Internship 1",nameUz:"Pedagogik amaliyot 1",ects:6},
-    {sem:5,code:"MATH311",nameEn:"Partial Differential Equations",nameUz:"Xususiy hosilali differensial tenglamalar",ects:6},
-    {sem:6,code:"ED311",nameEn:"Assessment and Evaluation in Education",nameUz:"Ta'limda baholash",ects:4},
-    {sem:6,code:"HASS305",nameEn:"Philosophy",nameUz:"Falsafa",ects:4},
-    {sem:6,code:"MATH302",nameEn:"Abstract Algebra",nameUz:"Abstrat Algebra",ects:6},
-    {sem:6,code:"ED370",nameEn:"Research Methodology",nameUz:"Ilmiy tadqiqot metodologiyasi",ects:4},
-    {sem:6,code:"ED391",nameEn:"Pedagogical Internship 2",nameUz:"Pedagogik amaliyot 2",ects:6},
-    {sem:7,code:"MATH405",nameEn:"Complex Analysis",nameUz:"Kompleks Analiz",ects:6},
-    {sem:7,code:"ED461",nameEn:"Curriculum Development & instruction",nameUz:"O'quv dasturlarini ishlab chiqish metodikasi",ects:4},
-    {sem:7,code:"MATH430",nameEn:"Real Analysis",nameUz:"Haqiqiy funksiyalar nazariyasi",ects:4},
-    {sem:7,code:"MATH401",nameEn:"Introduction to Differential Geometry",nameUz:"Differensial geometriya",ects:6},
-    {sem:7,code:"ED490",nameEn:"Pedagogical Internship 3",nameUz:"Pedagogik amaliyot 3",ects:10},
-    {sem:8,code:"ED491",nameEn:"Pedagogical Internship 4",nameUz:"Pedagogik amaliyot 4",ects:10},
-    {sem:8,code:"ED441",nameEn:"Graduation Project",nameUz:"Bitiruv loyihasi",ects:8},
-    {sem:8,code:"MATH451",nameEn:"Calculus of variations and optimization",nameUz:"Variatsiyalar hisobi va Optimaltsiyasi",ects:6},
-    {sem:8,code:"MATH406",nameEn:"Functional Analysis",nameUz:"Funksional analiz",ects:6}
-  ],
-  IST:[
-    {sem:1,code:"ED110",nameEn:"Education, Society and Culture",nameUz:"Ta'lim, jamiyat va madaniyat",ects:4},
-    {sem:1,code:"HASS101",nameEn:"General English 1",nameUz:"Ingliz tili 1",ects:8},
-    {sem:1,code:"CS100",nameEn:"Information Systems and Digital Technologies",nameUz:"Axborot tizimlari va raqamli texnologiyalar",ects:6},
-    {sem:1,code:"MATH112",nameEn:"Calculus 1",nameUz:"Hisob 1",ects:6},
-    {sem:1,code:"DSG101",nameEn:"Critical-creative Thinking and Design",nameUz:"Tanqidiy-ijodiy fikrlash va dizayn",ects:6},
-    {sem:2,code:"ED111",nameEn:"Introduction to Teaching and Learning",nameUz:"O'qitish va o'rganish",ects:4},
-    {sem:2,code:"HASS102",nameEn:"General English 2",nameUz:"Ingliz tili 2",ects:8},
-    {sem:2,code:"CS102",nameEn:"Computer Programming 1",nameUz:"Dasturlash 1",ects:6},
-    {sem:2,code:"MATH212",nameEn:"Calculus 2",nameUz:"Hisob 2",ects:6},
-    {sem:2,code:"MATH220",nameEn:"Discrete Mathematics",nameUz:"Diskret matematika",ects:6},
-    {sem:3,code:"ED260",nameEn:"Teaching Methodology",nameUz:"O'qitish metodologiyasi",ects:4},
-    {sem:3,code:"HASS201",nameEn:"Uzbek(Russian) for Academic and Professional Purposes",nameUz:"Amaliy o'zbek (rus) tili",ects:4},
-    {sem:3,code:"SE201",nameEn:"Web Technologies",nameUz:"Veb Texnologiyalar",ects:6},
-    {sem:3,code:"MATH201",nameEn:"Linear Algebra 1",nameUz:"Chiziqli algebra 1",ects:6},
-    {sem:3,code:"CS210",nameEn:"Computer Programming 2",nameUz:"Dasturlash 2",ects:6},
-    {sem:3,code:"HASS111",nameEn:"Academic English",nameUz:"Akademik ingliz tili",ects:4},
-    {sem:4,code:"MATH300",nameEn:"Ordinary Differential Equations and Numerical Methods",nameUz:"Oddiy differensial tenglamalar va sonli usullar",ects:6},
-    {sem:4,code:"CS111",nameEn:"Algorithms & Data Structures",nameUz:"Algoritmlar va Ma'lumotlar Tuzilmalari",ects:6},
-    {sem:4,code:"PHYS200",nameEn:"Physics",nameUz:"Fizika",ects:6},
-    {sem:4,code:"HASS110",nameEn:"History of Uzbekistan",nameUz:"O'zbekistonning eng yangi tarixi",ects:4},
-    {sem:4,code:"ED251",nameEn:"Inclusive Education and Pedagogy of care",nameUz:"Inkluiiv ta'lim, gospital pedagogika",ects:4},
-    {sem:4,code:"ED330",nameEn:"Educational Psychology",nameUz:"Ta'lim psixologiyasi",ects:4},
-    {sem:5,code:"MATH305",nameEn:"Probability and Statistics",nameUz:"Ehtimollar nazariyasi va statistika",ects:6},
-    {sem:5,code:"SE301",nameEn:"Data Mining & Visualization",nameUz:"Ma'lumotlarni yaratish va vizuallash",ects:6},
-    {sem:5,code:"ED201",nameEn:"Classroom Management",nameUz:"Sinf boshqaruvi",ects:4},
-    {sem:5,code:"CS301",nameEn:"Fundamentals of Databases",nameUz:"Ma'lumotlar bazasi asoslari",ects:4},
-    {sem:5,code:"HASS305",nameEn:"Philosophy",nameUz:"Falsafa",ects:4},
-    {sem:5,code:"ED291",nameEn:"Pedagogical Internship 1",nameUz:"Pedagogik amaliyot 1",ects:6},
-    {sem:5,code:"CS302",nameEn:"Operating Systems",nameUz:"Operation tizimlar",ects:6},
-    {sem:6,code:"ED311",nameEn:"Assessment and Evaluation in Education",nameUz:"Ta'limda baholash",ects:4},
-    {sem:6,code:"CS371",nameEn:"Distributed Systems",nameUz:"Taqsimlangan tizimlar",ects:4},
-    {sem:6,code:"CS311",nameEn:"Computer Networks",nameUz:"Kompyuter tarmoqlari",ects:6},
-    {sem:6,code:"ED370",nameEn:"Research Methodology",nameUz:"Ilmiy tadqiqot metodologiyasi",ects:4},
-    {sem:6,code:"ED391",nameEn:"Pedagogical Internship 2",nameUz:"Pedagogik amaliyot 2",ects:6},
-    {sem:7,code:"CS363",nameEn:"Software Project Management",nameUz:"Dasturiy ta'minot loyihalarini boshqarish",ects:6},
-    {sem:7,code:"SE400",nameEn:"System Administration Cloud Services",nameUz:"Tizim administratsiyasi va bulutli xizmatlar",ects:6},
-    {sem:7,code:"ED490",nameEn:"Pedagogical Internship 3",nameUz:"Pedagogik amaliyot 3",ects:10},
-    {sem:7,code:"ED320",nameEn:"Interdisciplinary Language, Literacies and Digital Media",nameUz:"Fanlararo til, savodxonlik va raqamli media",ects:4},
-    {sem:7,code:"ED461",nameEn:"Curriculum Development & instruction",nameUz:"O'quv dasturlarini ishlab chiqish metodikasi",ects:4},
-    {sem:8,code:"ED491",nameEn:"Pedagogical Internship 4",nameUz:"Pedagogik amaliyot 4",ects:10},
-    {sem:8,code:"ED441",nameEn:"Graduation Project",nameUz:"Bitiruv loyihasi",ects:8},
-    {sem:8,code:"SE460",nameEn:"Cybersecurity & Digital Forensics",nameUz:"Kiberxavfsizlik va raqamli tahlillar",ects:6},
-    {sem:8,code:"CS420",nameEn:"Big Data",nameUz:"Katta hajmdagi ma'lumotlarni boshqarish",ects:6}
-  ],
-  MATH:[
-    {sem:1,code:"ED110",nameEn:"Education, Society and Culture",nameUz:"Ta'lim, jamiyat va madaniyat",ects:4},
-    {sem:1,code:"HASS101",nameEn:"General English 1",nameUz:"Ingliz tili 1",ects:8},
-    {sem:1,code:"CS100",nameEn:"Information Systems and Digital Technologies",nameUz:"Axborot tizimlari va raqamli texnologiyalar",ects:6},
-    {sem:1,code:"MATH112",nameEn:"Calculus 1",nameUz:"Hisob 1",ects:6},
-    {sem:1,code:"DSG101",nameEn:"Critical-creative Thinking and Design",nameUz:"Tanqidiy-ijodiy fikrlash va dizayn",ects:6},
-    {sem:2,code:"ED111",nameEn:"Introduction to Teaching and Learning",nameUz:"O'qitish va o'rganish",ects:4},
-    {sem:2,code:"HASS102",nameEn:"General English 2",nameUz:"Ingliz tili 2",ects:8},
-    {sem:2,code:"CS102",nameEn:"Computer Programming 1",nameUz:"Dasturlash 1",ects:6},
-    {sem:2,code:"MATH212",nameEn:"Calculus 2",nameUz:"Hisob 2",ects:6},
-    {sem:2,code:"MATH220",nameEn:"Discrete Mathematics",nameUz:"Diskret matematika",ects:6},
-    {sem:3,code:"ED260",nameEn:"Teaching Methodology",nameUz:"O'qitish metodologiyasi",ects:4},
-    {sem:3,code:"HASS201",nameEn:"Uzbek(Russian) for Academic and Professional Purposes",nameUz:"Amaliy o'zbek (rus) tili",ects:4},
-    {sem:3,code:"MATH201",nameEn:"Linear Algebra 1",nameUz:"Chiziqli algebra 1",ects:6},
-    {sem:3,code:"CS210",nameEn:"Computer Programming 2",nameUz:"Dasturlash 2",ects:6},
-    {sem:3,code:"CS204",nameEn:"Introduction to Data Science",nameUz:"Ma'lumotlar ilmi asoslari",ects:6},
-    {sem:3,code:"HASS111",nameEn:"Academic English",nameUz:"Akademik ingliz tili",ects:4},
-    {sem:4,code:"MATH300",nameEn:"Ordinary Differential Equations and Numerical Methods",nameUz:"Oddiy differensial tenglamalar va sonli usullar",ects:6},
-    {sem:4,code:"CS111",nameEn:"Algorithms & Data Structures",nameUz:"Algoritmlar va Ma'lumotlar Tuzilmalari",ects:6},
-    {sem:4,code:"PHYS200",nameEn:"Physics",nameUz:"Fizika",ects:6},
-    {sem:4,code:"HASS110",nameEn:"History of Uzbekistan",nameUz:"O'zbekistonning eng yangi tarixi",ects:4},
-    {sem:4,code:"ED251",nameEn:"Inclusive Education and Pedagogy of care",nameUz:"Inkluiiv ta'lim, gospital pedagogika",ects:4},
-    {sem:4,code:"ED330",nameEn:"Educational Psychology",nameUz:"Ta'lim psixologiyasi",ects:4},
-    {sem:5,code:"MATH305",nameEn:"Probability and Statistics",nameUz:"Ehtimollar nazariyasi va statistika",ects:6},
-    {sem:5,code:"CS205",nameEn:"Software Engineering",nameUz:"Dasturiy ta'minot muhandisligi",ects:6},
-    {sem:5,code:"ED201",nameEn:"Classroom Management",nameUz:"Sinf boshqaruvi",ects:4},
-    {sem:5,code:"CS301",nameEn:"Fundamentals of Databases",nameUz:"Ma'lumotlar bazasi asoslari",ects:4},
-    {sem:5,code:"HASS305",nameEn:"Philosophy",nameUz:"Falsafa",ects:4},
-    {sem:5,code:"ED291",nameEn:"Pedagogical Internship 1",nameUz:"Pedagogik amaliyot 1",ects:6},
-    {sem:5,code:"CS320",nameEn:"Artificial Intelligence",nameUz:"Sun'iy intellekt",ects:6},
-    {sem:6,code:"ED311",nameEn:"Assessment and Evaluation in Education",nameUz:"Ta'limda baholash",ects:4},
-    {sem:6,code:"ROB302",nameEn:"Electronic Devices and Circuits",nameUz:"Elektron qurilmalar va zanjamlar",ects:4},
-    {sem:6,code:"CS331",nameEn:"Introduction to Machine Learning",nameUz:"Mashinali o'qitishga kirish",ects:6},
-    {sem:6,code:"ED370",nameEn:"Research Methodology",nameUz:"Ilmiy tadqiqot metodologiyasi",ects:4},
-    {sem:6,code:"ED391",nameEn:"Pedagogical Internship 2",nameUz:"Pedagogik amaliyot 2",ects:6},
-    {sem:6,code:"ED320",nameEn:"Interdisciplinary Language, Literacies and Digital Media",nameUz:"Fanlararo til, savodxonlik va raqamli media",ects:4},
-    {sem:7,code:"CS413",nameEn:"Robotics",nameUz:"Robototexnika",ects:6},
-    {sem:7,code:"CS412",nameEn:"Deep Learning",nameUz:"Neyron tarmoqlari va chuqur o'qitish",ects:6},
-    {sem:7,code:"ED461",nameEn:"Curriculum Development & instruction",nameUz:"O'quv dasturlarini ishlab chiqish metodikasi",ects:4},
-    {sem:7,code:"ED490",nameEn:"Pedagogical Internship 3",nameUz:"Pedagogik amaliyot 3",ects:10},
-    {sem:8,code:"ED491",nameEn:"Pedagogical Internship 4",nameUz:"Pedagogik amaliyot 4",ects:10},
-    {sem:8,code:"ED441",nameEn:"Graduation Project",nameUz:"Bitiruv loyihasi",ects:8},
-    {sem:8,code:"SEC402",nameEn:"Computer Networks and Security",nameUz:"Kompyuter tarmoqlari va xavfsizlik",ects:6},
-    {sem:8,code:"CS415",nameEn:"Natural Language Processing",nameUz:"Tabiiy tilni qayta ishlash",ects:6}
-  ]
+// ===== CURRICULUM DATA (fetched from Google Sheets) =====
+// Spreadsheet: https://docs.google.com/spreadsheets/d/17Uvp8bhjn5Cf9r4d6GssDHznQPBpS0Lv
+const SHEET_ID = '17Uvp8bhjn5Cf9r4d6GssDHznQPBpS0Lv';
+const SHEET_NAMES = {
+  AI:   'Artificial Intelligence',
+  IST:  'Information Systems',
+  MATH: 'Mathematics'
 };
+
+// Runtime cache
+let CURRICULUM = { AI: null, IST: null, MATH: null };
+let currLoadingMajor = null;
+
+// Column mapping (0-indexed) based on spreadsheet columns:
+// A=Semestr, B=Kurs kodi, C=Kurs nomi (Eng), D=Fan nomi (Uzb),
+// E=Fan turi, F=Ma'ruza soati, G=S/L soati, H=ECTS Kredit
+function parseSheetRows(rows) {
+  const subjects = [];
+  if (!rows || rows.length < 2) return subjects;
+  for (let i = 1; i < rows.length; i++) {
+    const r = rows[i].c;
+    if (!r || !r[0] || !r[0].v) continue;
+    const semRaw = r[0] ? String(r[0].v).trim() : '';
+    const sem = parseInt(semRaw.replace(/[^0-9]/g, '')) || 0;
+    if (!sem || sem < 1 || sem > 8) continue;
+    const code    = r[1] ? String(r[1].v || '').trim() : '';
+    const nameEn  = r[2] ? String(r[2].v || '').trim() : '';
+    const nameUz  = r[3] ? String(r[3].v || '').trim() : '';
+    const typeRaw = r[4] ? String(r[4].v || '').trim() : 'Core';
+    const type    = (typeRaw.toLowerCase().includes('elective')) ? 'Elective' : 'Core';
+    const lec     = r[5] ? (parseFloat(r[5].v) || 0) : 0;
+    const semH    = r[6] ? (parseFloat(r[6].v) || 0) : 0;
+    const ects    = r[7] ? (parseFloat(r[7].v) || 0) : 0;
+    if (!nameEn && !nameUz) continue;
+    subjects.push({ sem, code, nameEn, nameUz, type, lec, sem_: semH, ects });
+  }
+  return subjects;
+}
+
+async function fetchCurriculum(majorKey) {
+  if (CURRICULUM[majorKey] !== null) return CURRICULUM[majorKey];
+  const sheetName = SHEET_NAMES[majorKey];
+  if (!sheetName) return [];
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
+  try {
+    const res = await fetch(url);
+    const text = await res.text();
+    const jsonStr = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]+?)\);?\s*$/)[1];
+    const data = JSON.parse(jsonStr);
+    const rows = (data && data.table && data.table.rows) ? data.table.rows : [];
+    CURRICULUM[majorKey] = parseSheetRows(rows);
+    return CURRICULUM[majorKey];
+  } catch(e) {
+    console.error('Sheets fetch error:', e);
+    return [];
+  }
+}
 
 // ===== PROFS =====
 const PROFS=[
@@ -694,10 +648,6 @@ const GROUPS_LINKS={"FM1":"-1","FM2":"-2","FM3":"-3","FM4":"-4","FM5":"-5","FM6"
 
 // ===== STATE =====
 let currentLang='uz', isDark=true, userProfile=null;
-let gpaState = {
-  selectedSems: [],
-  subjects: {} // format: { 'subject_code': { name, credit, score } }
-};
 
 // ===== HELPERS =====
 function t(key){return T[currentLang]?.[key]||T.uz[key]||key}
@@ -705,20 +655,33 @@ function showBanner(msg){const b=document.getElementById('save-banner');b.textCo
 function getInitials(name){return name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}
 
 // ===== CALC SEMESTER =====
+// O'quv yili SENTYABR (9-oy)dan boshlanadi
+// Misol: 2025 avgustda qabul => 2025-2026 o'quv yili
+//   2025 sentyabr - 2026 yanvar => 1-semester
+//   2026 fevral   - 2026 avgust  => 2-semester
 function calcCurrentSemester(admitYear) {
-  const now = new Date(); // Bot logic implicitly uses current local time 
-  const yr = now.getFullYear();
-  const mo = now.getMonth() + 1; // 1-12
-  
-  // Academic year typically starts in September (month 9)
-  let currentAcademicYear = (mo >= 9) ? yr : yr - 1;
-  let yearOfStudy = currentAcademicYear - parseInt(admitYear) + 1;
-  
-  // Fall semester: September (9) to January (1)
-  // Spring semester: February (2) to August (8)
-  let isFall = (mo >= 9 || mo === 1);
-  let sem = yearOfStudy * 2 - (isFall ? 1 : 0);
-  
+  const now = new Date();
+  const mo  = now.getMonth() + 1; // 1..12
+  const yr  = now.getFullYear();
+
+  // Joriy o'quv yilining bosh yili:
+  // sentyabr (9) va undan keyin => shu yil; boshqa holda => o'tgan yil
+  const currentAcadStart = (mo >= 9) ? yr : yr - 1;
+
+  // Qabul o'quv yilining bosh yili:
+  // Agar avgust yoki undan oldin qabul => shu yil sentyabrda boshlaydi
+  // Ya'ni admitAcadStart = admitYear (chunki avgust < sentyabr)
+  const admitAcadStart = parseInt(admitYear);
+
+  // Nechta o'quv yili tugagan (0 dan boshlanadi)
+  const acadYearsElapsed = currentAcadStart - admitAcadStart;
+
+  // Joriy semestr o'quv yili ichida:
+  // 9-yanvar => 1-semestr (fall), 2-avgust => 2-semestr (spring)
+  const isFall = (mo >= 9 || mo <= 1);
+  const semInYear = isFall ? 1 : 2;
+
+  const sem = acadYearsElapsed * 2 + semInYear;
   return Math.min(Math.max(sem, 1), 8);
 }
 
@@ -736,10 +699,7 @@ function setLanguage(lang){
     const k=el.getAttribute('data-i18n-ph');
     if(t(k))el.placeholder=t(k);
   });
-  if(userProfile) {
-    applyProfile();
-    renderGpaView(); // re-render to translate dynamically created curriculum names
-  }
+  if(userProfile){ applyProfile(); renderGpaView(); }
 }
 
 // ===== THEME =====
@@ -863,12 +823,9 @@ function obFinish(lang){
   saveProfileData(p);
   document.getElementById('onboarding-overlay').style.display='none';
   applyProfile();
-  
-  if(gpaState.selectedSems.length === 0) {
-     gpaState.selectedSems = [calcCurrentSemester(p.admitYear)];
-     renderGpaView();
-  }
-  
+  // Reset GPA selected sems to current semester
+  gpaState.selectedSems = [calcCurrentSemester(p.admitYear)];
+  initGpa(); // async, refresh GPA rows with sheets data
   showBanner(`${t('welcome')}, ${p.name.split(' ')[0]}! 👋`);
 }
 
@@ -905,6 +862,7 @@ function openMyTimetable(e){
   const gid=GROUPS_LINKS[userProfile.group];
   if(gid)openTimetable(gid);
 }
+
 
 // ===== GPA SCALE TOGGLE =====
 let gpaScaleVisible=false;
@@ -984,167 +942,209 @@ function renderGpaHistory(hist){
     </div>`).join('');
 }
 
-// ===== GPA LOGIC & CURRICULUM INTEGRATION =====
-function initGpa(){
+// ===== GPA STATE =====
+// gpaState.subjects = { 'SUBJ_CODE_or_custom_xxx': { name, credit, score } }
+// gpaState.selectedSems = [1,2,...] — which semesters to show
+let gpaState = { selectedSems: [], subjects: {} };
+
+// ===== GPA CALC =====
+async function initGpa() {
+  // Load saved state
   const saved = localStorage.getItem(LS_GPA);
-  if(saved){
-    try{
+  if (saved) {
+    try {
       const parsed = JSON.parse(saved);
-      if(Array.isArray(parsed)){
-        parsed.forEach((i, idx) => { gpaState.subjects['custom_migrated_'+idx] = i; });
+      // Migrate old array format
+      if (Array.isArray(parsed)) {
+        parsed.forEach((item, idx) => {
+          gpaState.subjects['legacy_' + idx] = item;
+        });
       } else {
         gpaState = parsed;
-        if(!gpaState.selectedSems) gpaState.selectedSems = [];
+        if (!gpaState.selectedSems) gpaState.selectedSems = [];
+        if (!gpaState.subjects) gpaState.subjects = {};
       }
-    }catch(e){}
+    } catch(e) {}
   }
-  
-  if(userProfile && gpaState.selectedSems.length === 0){
+
+  // Default selected semester = current semester
+  if (userProfile && gpaState.selectedSems.length === 0) {
     gpaState.selectedSems = [calcCurrentSemester(userProfile.admitYear)];
   }
 
-  renderGpaView();
   renderGpaHistory(loadGpaHistory());
-}
-
-function toggleGpaSem(sem) {
-  syncDOMToState();
-  if (gpaState.selectedSems.includes(sem)) {
-    gpaState.selectedSems = gpaState.selectedSems.filter(s => s !== sem);
-  } else {
-    gpaState.selectedSems.push(sem);
-  }
-  renderGpaView();
+  await renderGpaView();
 }
 
 function syncDOMToState() {
   document.querySelectorAll('#gpa-rows .gpa-row-item').forEach(row => {
     const id = row.dataset.id;
+    if (!id) return;
     gpaState.subjects[id] = {
-      name: row.querySelector('.name-input').value,
+      name:   row.querySelector('.name-input').value,
       credit: row.querySelector('.credit-input').value,
-      score: row.querySelector('.score-input').value
+      score:  row.querySelector('.score-input').value
     };
   });
 }
 
-function renderGpaView() {
+async function toggleGpaSem(sem) {
+  syncDOMToState();
+  if (gpaState.selectedSems.includes(sem)) {
+    gpaState.selectedSems = gpaState.selectedSems.filter(s => s !== sem);
+  } else {
+    gpaState.selectedSems.push(sem);
+    gpaState.selectedSems.sort((a,b) => a-b);
+  }
+  await renderGpaView();
+}
+
+async function renderGpaView() {
+  // Build semester filter buttons
   const container = document.getElementById('gpa-sem-container');
   const toggles = document.getElementById('gpa-sem-toggles');
-  
   if (userProfile) {
     container.style.display = 'block';
     toggles.innerHTML = [1,2,3,4,5,6,7,8].map(s => `
       <button class="curr-filter-btn ${gpaState.selectedSems.includes(s) ? 'active' : ''}"
-              onclick="toggleGpaSem(${s})">${s}-sem</button>
-    `).join('');
+        onclick="toggleGpaSem(${s})">${s}-sem</button>`).join('');
   } else {
     container.style.display = 'none';
   }
 
   const c = document.getElementById('gpa-rows');
   c.innerHTML = '';
-  let rowsToRender = [];
 
-  // Add selected curriculum subjects
-  if (userProfile) {
-    const majorCurriculum = CURRICULUM[userProfile.major] || [];
+  if (userProfile && gpaState.selectedSems.length > 0) {
+    // Show loading placeholder
+    c.innerHTML = `<div style="text-align:center;color:var(--muted);padding:16px 0">⏳ ${currentLang==='ru'?'Загрузка...':currentLang==='en'?'Loading...':'Yuklanmoqda...'}</div>`;
+
+    // Fetch from Sheets
+    const sheetSubjects = await fetchCurriculum(userProfile.major);
+    c.innerHTML = '';
+
     gpaState.selectedSems.forEach(sem => {
-      const semSubjects = majorCurriculum.filter(s => s.sem === sem);
-      semSubjects.forEach(s => {
-        const code = s.code;
-        const savedData = gpaState.subjects[code];
-        const defaultName = currentLang === 'uz' ? s.nameUz : s.nameEn;
-        rowsToRender.push({
-          id: code,
-          name: savedData?.name || defaultName,
-          credit: savedData?.credit || s.ects,
-          score: savedData?.score || ''
-        });
+      const semItems = sheetSubjects.filter(s => s.sem === sem);
+
+      // Semester divider
+      if (semItems.length > 0 && gpaState.selectedSems.length > 1) {
+        const divider = document.createElement('div');
+        divider.style.cssText = 'font-size:10.5px;font-weight:700;color:var(--accent3);text-transform:uppercase;letter-spacing:.6px;padding:6px 2px 4px;margin-top:4px';
+        divider.textContent = `${sem}-semester`;
+        c.appendChild(divider);
+      }
+
+      semItems.forEach(s => {
+        const saved = gpaState.subjects[s.code];
+        appendGpaRowDOM(
+          s.code,
+          saved?.name || (currentLang === 'uz' ? s.nameUz : s.nameEn),
+          saved?.credit !== undefined ? saved.credit : s.ects,
+          saved?.score || ''
+        );
       });
     });
+  } else if (!userProfile) {
+    // No profile: show empty rows
+    for (let i = 0; i < 5; i++) appendGpaRowDOM('legacy_' + i, '', 3, '');
   }
 
   // Add custom subjects
   Object.keys(gpaState.subjects).forEach(key => {
     if (key.startsWith('custom_')) {
-      rowsToRender.push({
-        id: key,
-        name: gpaState.subjects[key].name,
-        credit: gpaState.subjects[key].credit,
-        score: gpaState.subjects[key].score
-      });
+      const s = gpaState.subjects[key];
+      appendGpaRowDOM(key, s.name, s.credit, s.score);
     }
   });
 
-  rowsToRender.forEach(r => appendGpaRowDOM(r.id, r.name, r.credit, r.score));
   calculateGpa();
 }
 
-function appendGpaRowDOM(id, name, credit, score){
-  const c=document.getElementById('gpa-rows');
-  const row=document.createElement('div');
-  row.className='card gpa-row-item';
+function appendGpaRowDOM(id, name, credit, score) {
+  const c = document.getElementById('gpa-rows');
+  const row = document.createElement('div');
+  row.className = 'card gpa-row-item';
   row.dataset.id = id;
-  row.style.cssText='padding:7px 10px;display:flex;gap:7px;align-items:center;margin-bottom:7px';
-  row.innerHTML=`
-    <input type="text" class="name-input" value="${name}" placeholder="Subject"
+  row.style.cssText = 'padding:7px 10px;display:flex;gap:7px;align-items:center;margin-bottom:7px';
+  const isCustom = id.startsWith('custom_') || id.startsWith('legacy_');
+  // All rows: name & credit editable. Score always editable. Custom rows deletable.
+  row.innerHTML = `
+    <input type="text" class="name-input" value="${(name||'').replace(/"/g,'&quot;').replace(/'/g,"&#39;")}" placeholder="Subject"
       style="flex:2;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 9px;border-radius:8px;font-size:12.5px;min-width:0;font-family:inherit;outline:none">
-    <input type="number" class="credit-input" placeholder="Cr" min="1" max="100" value="${credit}"
+    <input type="number" class="credit-input" placeholder="Cr" min="1" max="100" value="${credit||3}"
       style="width:38px;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:8px;text-align:center;font-size:12.5px;outline:none">
-    <input type="number" class="score-input" placeholder="0-100" min="0" max="100" value="${score}"
+    <input type="number" class="score-input" placeholder="0-100" min="0" max="100" value="${score||''}"
       style="width:52px;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:8px;text-align:center;font-size:12.5px;outline:none">
     <div class="grade-display" style="width:33px;text-align:center;font-weight:700;font-size:13px;color:var(--muted)">-</div>
-    <button onclick="removeGpaRow(this)"
-      style="background:none;border:none;color:#ff4d4d;font-size:15px;cursor:pointer;padding:0 3px">✕</button>`;
+    <button onclick="removeGpaRow(this,'${id}')"
+      style="background:none;border:none;font-size:15px;cursor:pointer;padding:0 3px;color:${isCustom?'#ff4d4d':'var(--muted)'};"
+      title="${isCustom?'O\'chirish':'Semestr tanlovi orqali olib tashlang'}">${isCustom?'✕':'·'}</button>`;
   c.appendChild(row);
-  row.querySelector('.credit-input').addEventListener('input',calculateGpa);
-  row.querySelector('.score-input').addEventListener('input',calculateGpa);
+  row.querySelector('.credit-input').addEventListener('input', calculateGpa);
+  row.querySelector('.score-input').addEventListener('input', calculateGpa);
 }
 
-function addCustomGpaRow(){
+function removeGpaRow(btn, id) {
+  if (id.startsWith('custom_') || id.startsWith('legacy_')) {
+    delete gpaState.subjects[id];
+    btn.parentElement.remove();
+    calculateGpa();
+  }
+  // Curriculum subjects are only hidden by deselecting the semester
+}
+
+function addCustomGpaRow() {
+  syncDOMToState();
   const id = 'custom_' + Date.now();
   gpaState.subjects[id] = { name: '', credit: 3, score: '' };
   appendGpaRowDOM(id, '', 3, '');
   calculateGpa();
 }
 
-function removeGpaRow(btn) {
-  const row = btn.parentElement;
-  const id = row.dataset.id;
-  if (id.startsWith('custom_')) {
-    delete gpaState.subjects[id];
-  }
-  row.remove();
-  calculateGpa();
-}
-
-function calculateGpa(){
-  let tc=0,tp=0;
-  document.querySelectorAll('#gpa-rows .gpa-row-item').forEach(row=>{
-    const cr=parseFloat(row.querySelector('.credit-input').value)||0;
-    const sv=row.querySelector('.score-input').value;
-    const sc=parseFloat(sv);
-    const gd=row.querySelector('.grade-display');
-    let gp=0,lt='-';
-    if(!isNaN(sc)&&sv!==''){
-      if(sc>=95){gp=5.00;lt='A+';}else if(sc>=90){gp=4.50;lt='A';}
-      else if(sc>=85){gp=4.25;lt='B+';}else if(sc>=80){gp=4.00;lt='B';}
-      else if(sc>=75){gp=3.75;lt='C+';}else if(sc>=70){gp=3.50;lt='C';}
-      else if(sc>=65){gp=3.25;lt='D+';}else if(sc>=60){gp=3.00;lt='D';}
-      else{gp=0;lt='F';}
-      gd.innerText=lt; gd.style.color=gp>=3?'var(--accent3)':'#ff4d4d';
-      tc+=cr; tp+=cr*gp;
-    }else{gd.innerText='-';gd.style.color='var(--muted)';}
+function calculateGpa() {
+  let tc = 0, tp = 0;
+  document.querySelectorAll('#gpa-rows .gpa-row-item').forEach(row => {
+    const cr = parseFloat(row.querySelector('.credit-input').value) || 0;
+    const sv = row.querySelector('.score-input').value;
+    const sc = parseFloat(sv);
+    const gd = row.querySelector('.grade-display');
+    let gp = 0, lt = '-';
+    if (!isNaN(sc) && sv !== '') {
+      if      (sc >= 95) { gp = 5.00; lt = 'A+'; }
+      else if (sc >= 90) { gp = 4.50; lt = 'A';  }
+      else if (sc >= 85) { gp = 4.25; lt = 'B+'; }
+      else if (sc >= 80) { gp = 4.00; lt = 'B';  }
+      else if (sc >= 75) { gp = 3.75; lt = 'C+'; }
+      else if (sc >= 70) { gp = 3.50; lt = 'C';  }
+      else if (sc >= 65) { gp = 3.25; lt = 'D+'; }
+      else if (sc >= 60) { gp = 3.00; lt = 'D';  }
+      else               { gp = 0;    lt = 'F';  }
+      gd.innerText = lt;
+      gd.style.color = gp >= 3 ? 'var(--accent3)' : '#ff4d4d';
+      tc += cr; tp += cr * gp;
+    } else {
+      gd.innerText = '-';
+      gd.style.color = 'var(--muted)';
+    }
   });
-  updateGpaRing(tc>0?tp/tc:0);
+  updateGpaRing(tc > 0 ? tp / tc : 0);
 }
 
-function saveGpaData(){
+function saveGpaData() {
   syncDOMToState();
-  localStorage.setItem(LS_GPA,JSON.stringify(gpaState));
-  const gv=parseFloat(document.getElementById('gpa-result').textContent)||0;
-  if(gv>0)addGpaHistory(gv.toFixed(2));
+  // Also persist curriculum row scores into subjects map
+  document.querySelectorAll('#gpa-rows .gpa-row-item').forEach(row => {
+    const id = row.dataset.id;
+    if (!id) return;
+    gpaState.subjects[id] = {
+      name:   row.querySelector('.name-input').value,
+      credit: row.querySelector('.credit-input').value,
+      score:  row.querySelector('.score-input').value
+    };
+  });
+  localStorage.setItem(LS_GPA, JSON.stringify(gpaState));
+  const gv = parseFloat(document.getElementById('gpa-result').textContent) || 0;
+  if (gv > 0) addGpaHistory(gv.toFixed(2));
   showBanner(t('saved_msg'));
 }
 
@@ -1175,25 +1175,25 @@ document.getElementById('search-prof').addEventListener('input',e=>{
 });
 
 // ===== INIT =====
-window.onload=()=>{
-  const savedTheme=localStorage.getItem(LS_THEME);
-  if(savedTheme==='light')applyTheme(false);
-  else if(tg?.colorScheme==='light')applyTheme(false);
+window.onload = async () => {
+  const savedTheme = localStorage.getItem(LS_THEME);
+  if (savedTheme === 'light') applyTheme(false);
+  else if (tg?.colorScheme === 'light') applyTheme(false);
   else applyTheme(true);
 
-  const savedLang=localStorage.getItem(LS_LANG)||'uz';
-  currentLang=savedLang;
+  const savedLang = localStorage.getItem(LS_LANG) || 'uz';
+  currentLang = savedLang;
 
   loadProfile();
-  if(userProfile){
-    setLanguage(userProfile.lang||savedLang);
-    document.getElementById('onboarding-overlay').style.display='none';
+  if (userProfile) {
+    setLanguage(userProfile.lang || savedLang);
+    document.getElementById('onboarding-overlay').style.display = 'none';
     applyProfile();
   } else {
     setLanguage(savedLang);
   }
 
-  initGpa();
+  await initGpa();
   renderProfs(PROFS);
 };
 </script>
