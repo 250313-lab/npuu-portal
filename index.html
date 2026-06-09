@@ -910,7 +910,7 @@ function applyProfile(){
   document.getElementById('profile-meta').textContent=
     `${userProfile.sid?'ID: '+userProfile.sid+' • ':''}${userProfile.group} • ${majorNames[userProfile.major]||userProfile.major}`;
   document.getElementById('semester-badge').textContent=`${curSem}-${t('semester_label')} / ${yr}-${t('year_label')}`;
-  document.getElementById('today-group-text').textContent=`${t('tab_tt')||'Jadval'}: ${userProfile.group}`;
+  document.getElementById('today-group-text').textContent=`${t('Sizning jadvalingiz')||'Jadval'}: ${userProfile.group}`;
   const days=t('days');
   document.getElementById('today-day-badge').textContent=days[new Date().getDay()];
   initTimetable();
