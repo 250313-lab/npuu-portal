@@ -1567,7 +1567,7 @@ function getTelegramId(){
 }
 
 async function syncToSheets(){
-  if(SHEETS_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL')return;
+  if(SHEETS_URL==='https://script.google.com/macros/s/AKfycbyA7xz8MxAxGnvKgi5ARx1BTGaTNftvTi0k47ba8iszmzKiLrj29uitZ3hZXM6OxZYz/exec')return;
   try{
     const payload={
       profile:userProfile||null,
@@ -1580,7 +1580,7 @@ async function syncToSheets(){
 }
 
 async function loadFromSheets(){
-  if(SHEETS_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL')return false;
+  if(SHEETS_URL==='https://script.google.com/macros/s/AKfycbyA7xz8MxAxGnvKgi5ARx1BTGaTNftvTi0k47ba8iszmzKiLrj29uitZ3hZXM6OxZYz/exec')return false;
   try{
     const res=await fetch(SHEETS_URL+'?telegram_id='+getTelegramId());
     const data=await res.json();
