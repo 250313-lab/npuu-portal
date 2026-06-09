@@ -684,10 +684,10 @@ const T={
     add_subject:"Fan qo'shish",gpa_save:"Saqlash",
     handbook_desc:"Yo'nalishingizga mos Handbook faylini ko'ring.",
     saved_msg:"✅ Saqlandi!",copied:"📋 Nusxalandi!",
-    stipend_president:"🏆 Prezident stipendiyasiga da'vo qilasiz!",
-    stipend_ok:"✅ Stipendiya olish huquqingiz bor (GPA ≥ 3.5)",
-    stipend_warn:"⚠️ Stipendiya chegarasida!",
-    stipend_fail:"🚫 Stipendiya uchun GPA ≥ 3.5 bo'lishi kerak",
+    stipend_president:"🏆 Grandga da'vo qilasiz!",
+    stipend_ok:"✅ Granga ariza topshirish huquqingiz bor (GPA ≥ 3.5)",
+    stipend_warn:"⚠️ Grandga ariza topshirish chegarasida!",
+    stipend_fail:"🚫 Grandga ariza uchun GPA ≥ 3.5 bo'lishi kerak",
     semester_label:"semestrsiz",year_label:"o'quv yili",
     select_sems:"Semestrlarni tanlang:",welcome:"Xush kelibsiz",
     days:["Yakshanba","Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba"]
@@ -703,10 +703,10 @@ const T={
     add_subject:"Добавить предмет",gpa_save:"Сохранить",
     handbook_desc:"Выберите справочник по вашему направлению.",
     saved_msg:"✅ Сохранено!",copied:"📋 Скопировано!",
-    stipend_president:"🏆 Претендуете на президентскую стипендию!",
-    stipend_ok:"✅ Имеете право на стипендию (GPA ≥ 3.5)",
-    stipend_warn:"⚠️ На грани стипендии!",
-    stipend_fail:"🚫 Для стипендии нужен GPA ≥ 3.5",
+    stipend_president:"🏆 Претендуете на гранд!",
+    stipend_ok:"✅ Имеете право на гранд (GPA ≥ 3.5)",
+    stipend_warn:"⚠️ На грани гранд!",
+    stipend_fail:"🚫 Для гранд нужен GPA ≥ 3.5",
     semester_label:"-й семестр",year_label:"год обучения",
     select_sems:"Выберите семестры:",welcome:"Добро пожаловать",
     days:["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"]
@@ -722,10 +722,10 @@ const T={
     add_subject:"Add subject",gpa_save:"Save",
     handbook_desc:"Choose the Handbook for your major.",
     saved_msg:"✅ Saved!",copied:"📋 Copied!",
-    stipend_president:"🏆 You qualify for President's scholarship!",
-    stipend_ok:"✅ You qualify for scholarship (GPA ≥ 3.5)",
-    stipend_warn:"⚠️ On the scholarship threshold!",
-    stipend_fail:"🚫 Need GPA ≥ 3.5 for scholarship",
+    stipend_president:"🏆 You qualify for grand!",
+    stipend_ok:"✅ You qualify for grand (GPA ≥ 3.5)",
+    stipend_warn:"⚠️ On the grand threshold!",
+    stipend_fail:"🚫 Need GPA ≥ 3.5 for grand",
     semester_label:"th semester",year_label:"study year",
     select_sems:"Select semesters:",welcome:"Welcome",
     days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
@@ -1459,7 +1459,7 @@ let gpaState={selectedSems:[],subjects:{}};
 
 async function initGpa(){
   const saved=localStorage.getItem(LS_GPA);
-  if(saved){try{const parsed=JSON.parse(saved);if(Array.isArray(parsed)){parsed.forEach((item,idx)=>{gpaState.subjects['legacy_'+idx]=item;});}else{gpaState=parsed;if(!gpaState.selectedSems)gpaState.selectedSems=[];if(!gpaState.subjects)gpaState.subjects={};}}}catch(e){}
+  if(saved){try{const parsed=JSON.parse(saved);if(Array.isArray(parsed)){parsed.forEach((item,idx)=>{gpaState.subjects['legacy_'+idx]=item;});}else{gpaState=parsed;if(!gpaState.selectedSems)gpaState.selectedSems=[];if(!gpaState.subjects)gpaState.subjects={};}}catch(e){}}
   if(userProfile&&gpaState.selectedSems.length===0)gpaState.selectedSems=[calcCurrentSemester(userProfile.admitYear)];
   renderGpaHistory(loadGpaHistory());
   await renderGpaView();
@@ -1597,12 +1597,6 @@ document.getElementById('search-prof').addEventListener('input',e=>{
   const q=e.target.value.toLowerCase();
   renderProfs(PROFS.filter(p=>p.n.toLowerCase().includes(q)||p.d.toLowerCase().includes(q)));
 });
-
-
-}
-
-  return false;
-}
 
 // ===== INIT =====
 window.onload=async()=>{
