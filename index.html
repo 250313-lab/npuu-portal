@@ -1,3 +1,4 @@
+HTMLEOF'
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -69,12 +70,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .today-schedule-btn{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 12px;cursor:pointer;font-family:inherit;color:var(--text);width:100%;transition:all .2s;text-decoration:none}
 .today-schedule-btn:active{transform:scale(.98)}
 
-/* ===== TABS ===== */
-.tabs{display:flex;gap:7px;padding:10px 16px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;border-bottom:1px solid var(--border)}
-.tabs::-webkit-scrollbar{display:none}
-.tab-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:50px;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .22s cubic-bezier(.4,0,.2,1);font-family:inherit;white-space:nowrap}
-.tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 14px rgba(58,134,255,.35);transform:translateY(-1px)}
-
 /* ===== SECTIONS ===== */
 .view-section{display:none;padding:12px 16px}
 .view-section.active{display:block;animation:sectionIn .3s cubic-bezier(.4,0,.2,1)}
@@ -123,19 +118,11 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .tt-btn.my-group{background:rgba(58,134,255,.18);border-color:var(--accent);color:var(--accent2)}
 .tt-btn .star{font-size:9px;color:var(--accent2)}
 
-/* ===== CURRICULUM VIEW ===== */
+/* ===== CURRICULUM ===== */
 .curr-filter-row{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none}
 .curr-filter-row::-webkit-scrollbar{display:none}
 .curr-filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:7px 13px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .2s}
 .curr-filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.curr-subject-card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:11px 13px;margin-bottom:8px;transition:all .2s}
-.curr-subject-card.core{border-left:3px solid var(--accent2)}
-.curr-subject-card.elective{border-left:3px solid var(--orange)}
-.curr-subj-name{font-size:13.5px;font-weight:600;margin-bottom:3px}
-.curr-subj-meta{font-size:11px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap}
-.curr-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:middle}
-.badge-core{background:rgba(0,187,249,.15);color:var(--accent2)}
-.badge-elective{background:rgba(255,152,0,.15);color:var(--orange)}
 
 /* ===== PROF DEPT COLORS ===== */
 .dept-math{border-left:4px solid #3a86ff!important}
@@ -164,7 +151,74 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 
-/* ===== NAV BAR ===== */
+/* ===== ENGLISH MODULE ===== */
+.eng-tab-bar{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;margin-bottom:14px}
+.eng-tab-bar::-webkit-scrollbar{display:none}
+.eng-tab{background:var(--surface2);border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .22s}
+.eng-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 14px rgba(58,134,255,.35)}
+.eng-sub-view{display:none}
+.eng-sub-view.active{display:block;animation:sectionIn .3s ease both}
+
+/* Level badge */
+.level-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.level-a1{background:rgba(76,201,240,.15);color:#4cc9f0;border:1px solid rgba(76,201,240,.3)}
+.level-a2{background:rgba(0,187,249,.15);color:#00bbf9;border:1px solid rgba(0,187,249,.3)}
+.level-b1{background:rgba(0,230,118,.15);color:#00e676;border:1px solid rgba(0,230,118,.3)}
+.level-b2{background:rgba(58,134,255,.15);color:#3a86ff;border:1px solid rgba(58,134,255,.3)}
+
+/* Progress bar */
+.progress-bar-wrap{background:var(--surface2);border-radius:99px;height:8px;overflow:hidden;margin:6px 0}
+.progress-bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .6s cubic-bezier(.4,0,.2,1)}
+
+/* Quiz option buttons */
+.quiz-option{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:12px;padding:11px 14px;width:100%;text-align:left;font-size:13.5px;font-weight:500;cursor:pointer;font-family:inherit;margin-bottom:8px;transition:all .2s;display:flex;align-items:center;gap:10px}
+.quiz-option:active{transform:scale(.98)}
+.quiz-option.correct{background:rgba(0,230,118,.15);border-color:#00e676;color:#00e676}
+.quiz-option.wrong{background:rgba(255,77,77,.12);border-color:#ff4d4d;color:#ff4d4d}
+.quiz-option.show-correct{background:rgba(0,230,118,.1);border-color:rgba(0,230,118,.5)}
+.quiz-option:disabled{cursor:default}
+.option-label{width:26px;height:26px;border-radius:8px;background:var(--surface);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
+
+/* Dialog chat */
+.dialog-messages{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:12px;min-height:180px;max-height:320px;overflow-y:auto;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+.msg-bubble{max-width:82%;padding:9px 13px;border-radius:14px;font-size:13px;line-height:1.5}
+.msg-bot{background:var(--surface2);border:1px solid var(--border);border-radius:14px 14px 14px 4px;align-self:flex-start;color:var(--text)}
+.msg-user{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-radius:14px 14px 4px 14px;align-self:flex-end}
+.msg-feedback{background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.25);color:#00e676;font-size:11.5px;align-self:stretch;border-radius:10px;max-width:100%}
+.dialog-input-row{display:flex;gap:8px}
+.dialog-input{flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:12px;font-size:13.5px;outline:none;font-family:inherit}
+.dialog-input:focus{border-color:var(--accent)}
+.dialog-send-btn{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:10px 16px;font-weight:700;font-size:15px;cursor:pointer;transition:all .2s}
+.dialog-send-btn:active{transform:scale(.95)}
+.dialog-send-btn:disabled{opacity:.5;cursor:default}
+.typing-indicator{display:flex;gap:4px;align-items:center;padding:9px 13px}
+.typing-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:typingBounce 1s ease-in-out infinite}
+.typing-dot:nth-child(2){animation-delay:.15s}
+.typing-dot:nth-child(3){animation-delay:.3s}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
+/* Translation exercise */
+.trans-sentence{background:linear-gradient(135deg,rgba(58,134,255,.1),rgba(0,187,249,.06));border:1px solid rgba(58,134,255,.25);border-radius:14px;padding:14px 16px;font-size:16px;font-weight:600;text-align:center;margin-bottom:12px;line-height:1.5}
+.trans-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:11px 14px;border-radius:12px;font-size:14px;outline:none;font-family:inherit;transition:border .2s;margin-bottom:8px}
+.trans-input:focus{border-color:var(--accent)}
+.trans-result{border-radius:12px;padding:10px 14px;font-size:13px;font-weight:600;margin-bottom:8px;display:none}
+.trans-result.show{display:block}
+.trans-correct{background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);color:#00e676}
+.trans-partial{background:rgba(255,152,0,.1);border:1px solid rgba(255,152,0,.3);color:#ff9800}
+.trans-wrong{background:rgba(255,77,77,.1);border:1px solid rgba(255,77,77,.3);color:#ff4d4d}
+
+/* Placement result */
+.placement-result-card{border-radius:16px;padding:20px;text-align:center;border:2px solid var(--accent);background:linear-gradient(135deg,rgba(58,134,255,.1),rgba(0,187,249,.05));margin-bottom:12px}
+.placement-big-level{font-family:'Syne',sans-serif;font-size:52px;font-weight:800;color:var(--accent2);line-height:1;margin:8px 0}
+
+/* Progress stats */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center}
+.stat-number{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--accent2)}
+.stat-label{font-size:11px;color:var(--muted);margin-top:3px;font-weight:600}
+.weak-topic-chip{display:inline-block;background:rgba(255,77,77,.12);border:1px solid rgba(255,77,77,.3);color:#ff6b6b;border-radius:8px;padding:4px 10px;font-size:11.5px;font-weight:600;margin:3px}
+
+/* NAV BAR */
 .nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--nav-bg);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:100;overflow-x:auto;scrollbar-width:none;transition:background .35s}
 .nav-bar::-webkit-scrollbar{display:none}
 .nav-item{display:flex;flex-direction:column;align-items:center;color:var(--muted);font-size:10px;font-weight:500;cursor:pointer;background:none;border:none;gap:3px;min-width:55px;flex:1 0 auto;font-family:inherit;transition:color .2s,transform .2s;padding:2px 0}
@@ -173,11 +227,11 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 .nav-dot{width:4px;height:4px;border-radius:50%;background:var(--accent3);opacity:0;margin-top:-1px;transition:opacity .2s}
 .nav-item.active .nav-dot{opacity:1}
 
-/* ===== SAVE BANNER ===== */
+/* SAVE BANNER */
 .save-banner{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--accent);color:#fff;padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:200;white-space:nowrap}
 .save-banner.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ===== MISC ===== */
+/* MISC */
 .section-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
 .info-card{background:linear-gradient(135deg,rgba(58,134,255,.1),rgba(0,187,249,.06));border:1px solid rgba(58,134,255,.25);border-radius:var(--radius);padding:12px 14px;margin-bottom:12px}
 </style>
@@ -198,60 +252,42 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
     <div class="step-dot" id="dot-3"></div>
   </div>
   <div class="onboard-card">
-    <!-- Step 0: Name + ID -->
     <div class="step active" id="step-0">
-      <div class="onboard-label" id="ob-l-name">👤 Ism Familiya</div>
+      <div class="onboard-label">👤 Ism Familiya</div>
       <input type="text" class="onboard-input" id="ob-name" placeholder="Abdullohxonov Sodiqxon" autocomplete="off">
-      <div class="onboard-label" id="ob-l-id">🪪 Student ID</div>
+      <div class="onboard-label">🪪 Student ID</div>
       <input type="text" class="onboard-input" id="ob-sid" placeholder="Masalan: 250313" autocomplete="off">
-      <button class="onboard-btn" id="ob-btn-0" onclick="obNext(1)">Davom etish →</button>
+      <button class="onboard-btn" onclick="obNext(1)">Davom etish →</button>
     </div>
-    <!-- Step 1: Major + Admission year -->
     <div class="step" id="step-1">
-      <div class="onboard-label" id="ob-l-major">🎓 Yo'nalish</div>
+      <div class="onboard-label">🎓 Yo'nalish</div>
       <select class="onboard-select" id="ob-major">
         <option value="">Tanlang...</option>
         <option value="AI">🤖 Artificial Intelligence</option>
         <option value="IST">💻 Information Systems & Technologies</option>
         <option value="MATH">📐 Mathematics</option>
       </select>
-      <div class="onboard-label" id="ob-l-year">📅 O'qishga qabul yili</div>
+      <div class="onboard-label">📅 O'qishga qabul yili</div>
       <select class="onboard-select" id="ob-admit-year">
         <option value="">Tanlang...</option>
-        <option value="2021">2021</option>
-        <option value="2022">2022</option>
-        <option value="2023">2023</option>
-        <option value="2024">2024</option>
+        <option value="2021">2021</option><option value="2022">2022</option>
+        <option value="2023">2023</option><option value="2024">2024</option>
         <option value="2025">2025</option>
       </select>
-      <button class="onboard-btn" id="ob-btn-1" onclick="obNext(2)">Davom etish →</button>
+      <button class="onboard-btn" onclick="obNext(2)">Davom etish →</button>
     </div>
-    <!-- Step 2: Group -->
     <div class="step" id="step-2">
-      <div class="onboard-label" id="ob-l-group">👥 Guruh</div>
+      <div class="onboard-label">👥 Guruh</div>
       <select class="onboard-select" id="ob-group">
         <option value="">Tanlang...</option>
-        <optgroup label="FM (Foundation Mathematics)">
-          <option value="FM1">FM1</option><option value="FM2">FM2</option>
-          <option value="FM3">FM3</option><option value="FM4">FM4</option>
-          <option value="FM5">FM5</option><option value="FM6">FM6</option>
-          <option value="FM7">FM7</option>
-        </optgroup>
-        <optgroup label="FIT (Foundation IT)">
-          <option value="FIT1">FIT1</option><option value="FIT2">FIT2</option>
-          <option value="FIT3">FIT3</option><option value="FIT4">FIT4</option>
-          <option value="FIT5">FIT5</option><option value="FIT6">FIT6</option>
-        </optgroup>
-        <optgroup label="FAR">
-          <option value="FAR1">FAR1</option><option value="FAR2">FAR2</option>
-          <option value="FAR3">FAR3</option>
-        </optgroup>
+        <optgroup label="FM"><option value="FM1">FM1</option><option value="FM2">FM2</option><option value="FM3">FM3</option><option value="FM4">FM4</option><option value="FM5">FM5</option><option value="FM6">FM6</option><option value="FM7">FM7</option></optgroup>
+        <optgroup label="FIT"><option value="FIT1">FIT1</option><option value="FIT2">FIT2</option><option value="FIT3">FIT3</option><option value="FIT4">FIT4</option><option value="FIT5">FIT5</option><option value="FIT6">FIT6</option></optgroup>
+        <optgroup label="FAR"><option value="FAR1">FAR1</option><option value="FAR2">FAR2</option><option value="FAR3">FAR3</option></optgroup>
       </select>
-      <button class="onboard-btn" id="ob-btn-2" onclick="obNext(3)">Davom etish →</button>
+      <button class="onboard-btn" onclick="obNext(3)">Davom etish →</button>
     </div>
-    <!-- Step 3: Lang -->
     <div class="step" id="step-3">
-      <div class="onboard-label" id="ob-l-lang">🌐 Til / Language / Язык</div>
+      <div class="onboard-label">🌐 Til / Language / Язык</div>
       <div style="display:flex;gap:8px;margin-top:4px;">
         <button class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('uz')">🇺🇿 O'zbek</button>
         <button class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('ru')">🇷🇺 Русский</button>
@@ -266,9 +302,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   <div class="top-bar-left">
     <button id="theme-btn" class="ctrl-btn" onclick="toggleTheme()">🌙</button>
     <select id="lang-select" class="ctrl-btn" onchange="setLanguage(this.value)">
-      <option value="uz">UZ</option>
-      <option value="ru">RU</option>
-      <option value="en">EN</option>
+      <option value="uz">UZ</option><option value="ru">RU</option><option value="en">EN</option>
     </select>
   </div>
   <div class="top-bar-right">
@@ -302,16 +336,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   </a>
 </div>
 
-<!-- ===== TABS ===== -->
-<div class="tabs" id="main-tabs" style="display:none">
-  <button class="tab-btn active" onclick="switchView('gpa')" id="t-gpa" data-i18n="tab_gpa">🧮 GPA</button>
-  <button class="tab-btn" onclick="switchView('profs')" id="t-profs" data-i18n="tab_profs">👥 Profs</button>
-  <button class="tab-btn" onclick="switchView('handbook')" id="t-handbook" data-i18n="tab_handbook">📘 Handbook</button>
-  <button class="tab-btn" onclick="switchView('timetable')" id="t-timetable" data-i18n="tab_tt">📅 Jadval</button>
-  <button class="tab-btn" onclick="switchView('hero')" id="t-hero" data-i18n="tab_hero">🎓 Hero</button>
-</div>
-
-<!-- ===== GPA VIEW ===== -->
+<!-- ===== VIEW: GPA ===== -->
 <div id="view-gpa" class="view-section active">
   <div class="gpa-ring-wrapper card-anim">
     <svg width="88" height="88" viewBox="0 0 90 90" style="flex-shrink:0">
@@ -327,16 +352,13 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
       <button class="gpa-share-btn" onclick="shareGpa()">📤 <span data-i18n="share">Ulashish</span></button>
     </div>
   </div>
-
   <div id="stipend-info"></div>
-
   <div id="gpa-history-block" style="display:none">
     <div class="card" style="margin-bottom:12px;border-left:4px solid var(--accent3);padding:12px 14px">
       <div style="font-size:11.5px;font-weight:700;color:var(--accent3);margin-bottom:8px">📈 <span data-i18n="gpa_history">GPA tarixi</span></div>
       <div id="gpa-history-list"></div>
     </div>
   </div>
-
   <button class="gpa-toggle-btn" onclick="toggleGpaScale()">
     📊 <span data-i18n="gpa_scale_btn">Baholash shkalasi</span> <span id="gpa-arrow">▼</span>
   </button>
@@ -359,13 +381,10 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
       </table>
     </div>
   </div>
-
-  <!-- ===== SEMESTER SELECTOR inside GPA ===== -->
   <div id="gpa-sem-container" style="display:none;margin-bottom:10px">
     <div style="font-size:10.5px;font-weight:700;color:var(--accent3);letter-spacing:.6px;text-transform:uppercase;margin-bottom:7px" data-i18n="select_sems">Semestrlarni tanlang:</div>
     <div class="curr-filter-row" id="gpa-sem-toggles" style="flex-wrap:wrap;gap:6px;margin-bottom:0"></div>
   </div>
-
   <div style="display:flex;gap:8px;padding:0 12px 7px;font-size:10.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px">
     <div style="flex:2" data-i18n="gpa_col_subject">Fan nomi</div>
     <div style="width:38px;text-align:center" data-i18n="gpa_cr">Kredit</div>
@@ -380,51 +399,196 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   </div>
 </div>
 
+<!-- ===== VIEW: ENGLISH ===== -->
+<div id="view-english" class="view-section">
+  <!-- Sub-tabs -->
+  <div class="eng-tab-bar">
+    <button class="eng-tab active" onclick="switchEngTab('placement')" id="etab-placement">🎯 Daraja testi</button>
+    <button class="eng-tab" onclick="switchEngTab('quiz')" id="etab-quiz">📝 Quiz</button>
+    <button class="eng-tab" onclick="switchEngTab('dialog')" id="etab-dialog">💬 Dialog</button>
+    <button class="eng-tab" onclick="switchEngTab('translate')" id="etab-translate">🔄 Tarjima</button>
+    <button class="eng-tab" onclick="switchEngTab('progress')" id="etab-progress">📊 Progress</button>
+  </div>
 
+  <!-- ── PLACEMENT TEST ── -->
+  <div class="eng-sub-view active" id="esv-placement">
+    <div id="placement-start-screen">
+      <div class="card" style="text-align:center;padding:24px 16px;border-left:4px solid var(--accent2)">
+        <div style="font-size:44px;margin-bottom:10px">🎯</div>
+        <div style="font-family:'Syne',sans-serif;font-size:17px;font-weight:800;margin-bottom:8px">Daraja aniqlash testi</div>
+        <div style="font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:16px">20 ta savol · A1 → B2<br>Natijaga qarab darajangiz belgilanadi</div>
+        <div style="display:flex;gap:8px;justify-content:center;margin-bottom:16px">
+          <span class="level-badge level-a1">A1</span><span class="level-badge level-a2">A2</span>
+          <span class="level-badge level-b1">B1</span><span class="level-badge level-b2">B2</span>
+        </div>
+        <button class="btn" style="background:var(--accent);color:#fff" onclick="startPlacementTest()">🚀 Testni boshlash</button>
+      </div>
+    </div>
+    <div id="placement-test-screen" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-size:11px;color:var(--muted);font-weight:600" id="pt-counter">1/20</span>
+        <span class="level-badge level-a1" id="pt-level-badge">A1</span>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pt-progress" style="width:5%"></div></div>
+      <div class="card" style="margin:12px 0 8px;border-left:3px solid var(--accent2)">
+        <div style="font-size:11px;color:var(--accent3);font-weight:700;margin-bottom:5px" id="pt-topic">Topic</div>
+        <div style="font-size:15px;font-weight:600;line-height:1.5" id="pt-question">Question</div>
+      </div>
+      <div id="pt-options"></div>
+    </div>
+    <div id="placement-result-screen" style="display:none">
+      <div class="placement-result-card">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:4px">Sizning darajangiz</div>
+        <div class="placement-big-level" id="pr-level">B1</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:6px" id="pr-score">16/20 ball</div>
+      </div>
+      <div class="card" style="border-left:3px solid #ff4d4d;margin-bottom:10px" id="pr-weak-block">
+        <div style="font-size:11.5px;font-weight:700;color:#ff6b6b;margin-bottom:8px">⚠️ Kuchsiz mavzular:</div>
+        <div id="pr-weak-topics"></div>
+      </div>
+      <button class="btn" style="background:var(--accent);color:#fff" onclick="resetPlacementTest()">🔄 Qayta topshirish</button>
+    </div>
+  </div>
 
-<!-- ===== PROFS VIEW ===== -->
+  <!-- ── QUIZ ── -->
+  <div class="eng-sub-view" id="esv-quiz">
+    <div id="quiz-level-select">
+      <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:12px">📝 Daraja tanlang:</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <button class="quiz-option" style="justify-content:center;border-color:rgba(76,201,240,.4)" onclick="startQuiz('A1')"><span class="level-badge level-a1">A1</span></button>
+        <button class="quiz-option" style="justify-content:center;border-color:rgba(0,187,249,.4)" onclick="startQuiz('A2')"><span class="level-badge level-a2">A2</span></button>
+        <button class="quiz-option" style="justify-content:center;border-color:rgba(0,230,118,.4)" onclick="startQuiz('B1')"><span class="level-badge level-b1">B1</span></button>
+        <button class="quiz-option" style="justify-content:center;border-color:rgba(58,134,255,.4)" onclick="startQuiz('B2')"><span class="level-badge level-b2">B2</span></button>
+      </div>
+      <div style="margin-top:12px">
+        <div style="font-size:11.5px;color:var(--muted);font-weight:600;margin-bottom:6px">Yoki darajamga mos:</div>
+        <button class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border)" onclick="startQuizMyLevel()">✨ Mening darajamdan boshlash</button>
+      </div>
+    </div>
+    <div id="quiz-active-screen" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-size:11px;color:var(--muted);font-weight:600" id="quiz-counter">1/10</span>
+        <span id="quiz-level-badge" class="level-badge level-a1">A1</span>
+        <span style="font-size:12px;font-weight:700;color:var(--green)" id="quiz-score-live">0 ✓</span>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="quiz-progress" style="width:10%"></div></div>
+      <div class="card" style="margin:10px 0 8px;border-left:3px solid var(--accent)">
+        <div style="font-size:11px;color:var(--accent3);font-weight:700;margin-bottom:4px" id="quiz-topic">Topic</div>
+        <div style="font-size:15px;font-weight:600;line-height:1.5" id="quiz-question">Question</div>
+      </div>
+      <div id="quiz-options"></div>
+      <div id="quiz-explanation" style="display:none;background:rgba(0,187,249,.08);border:1px solid rgba(0,187,249,.25);border-radius:12px;padding:10px 13px;font-size:12.5px;color:var(--accent3);margin-bottom:10px"></div>
+      <button class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);display:none" id="quiz-next-btn" onclick="nextQuizQuestion()">Keyingisi →</button>
+    </div>
+    <div id="quiz-result-screen" style="display:none">
+      <div class="placement-result-card">
+        <div style="font-size:13px;color:var(--muted)">Quiz natijasi</div>
+        <div class="placement-big-level" id="qr-score">8/10</div>
+        <div id="qr-level-badge" style="margin-top:6px"></div>
+      </div>
+      <button class="btn" style="background:var(--accent);color:#fff;margin-bottom:8px" onclick="startQuiz(currentQuizLevel)">🔄 Qayta o'ynash</button>
+      <button class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border)" onclick="backToQuizSelect()">← Daraja tanlash</button>
+    </div>
+  </div>
+
+  <!-- ── DIALOG ── -->
+  <div class="eng-sub-view" id="esv-dialog">
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <button class="curr-filter-btn active" onclick="setDialogTopic('free',this)">💬 Free talk</button>
+      <button class="curr-filter-btn" onclick="setDialogTopic('cafe',this)">☕ At a cafe</button>
+      <button class="curr-filter-btn" onclick="setDialogTopic('interview',this)">👔 Job interview</button>
+      <button class="curr-filter-btn" onclick="setDialogTopic('travel',this)">✈️ Travel</button>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <span style="font-size:11px;color:var(--muted);font-weight:600" id="dialog-topic-label">Topic: Free talk</span>
+      <button style="background:none;border:none;color:var(--accent3);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit" onclick="clearDialog()">🗑 Tozalash</button>
+    </div>
+    <div class="dialog-messages" id="dialog-messages"></div>
+    <div class="dialog-input-row">
+      <input class="dialog-input" id="dialog-input" placeholder="Type your message..." onkeydown="if(event.key==='Enter')sendDialogMsg()">
+      <button class="dialog-send-btn" id="dialog-send-btn" onclick="sendDialogMsg()">→</button>
+    </div>
+  </div>
+
+  <!-- ── TRANSLATION ── -->
+  <div class="eng-sub-view" id="esv-translate">
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button class="curr-filter-btn active" id="trans-dir-btn-uz" onclick="setTransDir('uz2en',this)">🇺🇿→🇬🇧</button>
+      <button class="curr-filter-btn" id="trans-dir-btn-en" onclick="setTransDir('en2uz',this)">🇬🇧→🇺🇿</button>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button class="curr-filter-btn active" id="tl-a1" onclick="setTransLevel('A1',this)">A1</button>
+      <button class="curr-filter-btn" id="tl-a2" onclick="setTransLevel('A2',this)">A2</button>
+      <button class="curr-filter-btn" id="tl-b1" onclick="setTransLevel('B1',this)">B1</button>
+      <button class="curr-filter-btn" id="tl-b2" onclick="setTransLevel('B2',this)">B2</button>
+    </div>
+    <div class="trans-sentence" id="trans-sentence">Yuklanmoqda...</div>
+    <input class="trans-input" id="trans-input" placeholder="Your translation here..." onkeydown="if(event.key==='Enter')checkTranslation()">
+    <div class="trans-result" id="trans-result"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" style="background:var(--accent);color:#fff;flex:1" onclick="checkTranslation()">✓ Tekshirish</button>
+      <button class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);flex:1" onclick="nextTranslation()">→ Keyingisi</button>
+    </div>
+    <div style="margin-top:12px;font-size:11px;color:var(--muted);text-align:center" id="trans-stats">0 to'g'ri / 0 ta</div>
+  </div>
+
+  <!-- ── PROGRESS ── -->
+  <div class="eng-sub-view" id="esv-progress">
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-number" id="prog-level">—</div><div class="stat-label">Daraja</div></div>
+      <div class="stat-card"><div class="stat-number" id="prog-quiz-total">0</div><div class="stat-label">Quiz javoblar</div></div>
+      <div class="stat-card"><div class="stat-number" id="prog-quiz-correct">0</div><div class="stat-label">To'g'ri</div></div>
+      <div class="stat-card"><div class="stat-number" id="prog-trans-correct">0</div><div class="stat-label">Tarjima ✓</div></div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--accent2);margin-bottom:10px">
+      <div style="font-size:11.5px;font-weight:700;color:var(--accent3);margin-bottom:8px">📈 Umumiy natija</div>
+      <div style="font-size:12.5px;color:var(--muted);margin-bottom:5px">Quiz to'g'riligi:</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-accuracy-bar" style="width:0%"></div></div>
+      <div style="font-size:13px;font-weight:700;color:var(--accent2);margin-top:4px" id="prog-accuracy-text">0%</div>
+    </div>
+    <div class="card" style="border-left:3px solid #ff4d4d" id="prog-weak-card">
+      <div style="font-size:11.5px;font-weight:700;color:#ff6b6b;margin-bottom:8px">⚠️ Kuchsiz mavzular:</div>
+      <div id="prog-weak-chips"><span style="font-size:12px;color:var(--muted)">Hali ma'lumot yo'q</span></div>
+    </div>
+    <button class="btn" style="background:rgba(255,77,77,.15);color:#ff6b6b;border:1px solid rgba(255,77,77,.3)" onclick="resetEngProgress()">🗑 Progressni tozalash</button>
+  </div>
+</div>
+
+<!-- ===== VIEW: PROFS ===== -->
 <div id="view-profs" class="view-section">
   <div class="search-box" style="margin-bottom:14px">
-    <input type="text" id="search-prof" data-i18n-ph="prof_search" placeholder="🔍 Professor ismi yoki kafedra...">
+    <input type="text" id="search-prof" placeholder="🔍 Professor ismi yoki kafedra...">
   </div>
   <div id="prof-list"></div>
 </div>
 
-<!-- ===== HANDBOOK VIEW ===== -->
+<!-- ===== VIEW: HANDBOOK ===== -->
 <div id="view-handbook" class="view-section">
   <div class="card" style="border-left:4px solid var(--accent2);margin-bottom:14px">
     <div style="font-size:15px;font-weight:700;margin-bottom:5px">📘 Student Handbooks</div>
     <p style="font-size:12.5px;color:var(--muted);line-height:1.5" data-i18n="handbook_desc">Yo'nalishingizga mos Handbook faylini ko'ring.</p>
   </div>
-  <a href="https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link" target="_blank" class="handbook-btn" id="hb-ai">
-    <span>🤖 Artificial Intelligence</span><span style="color:var(--accent2)">➔</span>
-  </a>
-  <a href="https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link" target="_blank" class="handbook-btn" id="hb-ist">
-    <span>💻 Information Systems & Technologies</span><span style="color:var(--accent2)">➔</span>
-  </a>
-  <a href="https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link" target="_blank" class="handbook-btn" id="hb-math">
-    <span>📐 Mathematics</span><span style="color:var(--accent2)">➔</span>
-  </a>
+  <a href="https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link" target="_blank" class="handbook-btn" id="hb-ai"><span>🤖 Artificial Intelligence</span><span style="color:var(--accent2)">➔</span></a>
+  <a href="https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link" target="_blank" class="handbook-btn" id="hb-ist"><span>💻 Information Systems & Technologies</span><span style="color:var(--accent2)">➔</span></a>
+  <a href="https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link" target="_blank" class="handbook-btn" id="hb-math"><span>📐 Mathematics</span><span style="color:var(--accent2)">➔</span></a>
 </div>
 
-<!-- ===== TIMETABLE VIEW ===== -->
+<!-- ===== VIEW: TIMETABLE ===== -->
 <div id="view-timetable" class="view-section">
   <div class="card" style="border-left:4px solid var(--accent3);margin-bottom:14px">
-    <div style="font-size:15px;font-weight:700;margin-bottom:5px" data-i18n="tab_tt">📅 Dars Jadvali</div>
-    <p style="font-size:12.5px;color:var(--muted);line-height:1.5" data-i18n="timetable_desc">Guruhingizni tanlang:</p>
+    <div style="font-size:15px;font-weight:700;margin-bottom:5px">📅 Dars Jadvali</div>
+    <p style="font-size:12.5px;color:var(--muted);line-height:1.5">Guruhingizni tanlang:</p>
   </div>
   <div id="tt-grid" class="grid-container"></div>
 </div>
 
-<!-- ===== HERO VIEW ===== -->
+<!-- ===== VIEW: HERO ===== -->
 <div id="view-hero" class="view-section">
   <div class="card" style="text-align:center;padding:30px 16px;border-left:4px solid var(--accent)">
     <div style="font-size:52px;margin-bottom:12px;animation:logoPulse 3s ease-in-out infinite">🎓</div>
     <h2 style="font-family:'Syne',sans-serif;margin-bottom:10px;font-size:19px">NPUU Hero Study</h2>
-    <p style="color:var(--muted);font-size:13.5px;margin-bottom:22px;line-height:1.5" data-i18n="hero_desc">NPUU Hero Study platformasiga o'tish uchun:</p>
-    <a href="https://npuu.hero.study/" target="_blank" class="btn" style="background:var(--accent);color:#fff;font-size:14.5px;padding:14px">
-      🚀 <span data-i18n="go_to_hero">Hero Study'ga o'tish</span>
-    </a>
+    <p style="color:var(--muted);font-size:13.5px;margin-bottom:22px;line-height:1.5">NPUU Hero Study platformasiga o'tish uchun:</p>
+    <a href="https://npuu.hero.study/" target="_blank" class="btn" style="background:var(--accent);color:#fff;font-size:14.5px;padding:14px">🚀 Hero Study'ga o'tish</a>
   </div>
 </div>
 
@@ -432,24 +596,27 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 <div class="nav-bar" id="main-nav" style="display:none">
   <button class="nav-item active" onclick="switchView('gpa')" id="nav-gpa">
     <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-    <span data-i18n="tab_gpa">GPA</span><div class="nav-dot"></div>
+    <span>GPA</span><div class="nav-dot"></div>
   </button>
-
+  <button class="nav-item" onclick="switchView('english')" id="nav-english">
+    <svg viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+    <span>English</span><div class="nav-dot"></div>
+  </button>
   <button class="nav-item" onclick="switchView('profs')" id="nav-profs">
     <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-    <span data-i18n="tab_profs">Profs</span><div class="nav-dot"></div>
+    <span>Profs</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" onclick="switchView('timetable')" id="nav-timetable">
     <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-    <span data-i18n="tab_tt">Jadval</span><div class="nav-dot"></div>
+    <span>Jadval</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" onclick="switchView('handbook')" id="nav-handbook">
     <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
-    <span data-i18n="tab_handbook">Handbook</span><div class="nav-dot"></div>
+    <span>Handbook</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" onclick="switchView('hero')" id="nav-hero">
     <svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
-    <span data-i18n="tab_hero">Hero</span><div class="nav-dot"></div>
+    <span>Hero</span><div class="nav-dot"></div>
   </button>
 </div>
 
@@ -459,161 +626,883 @@ if(tg){tg.ready();tg.expand();}
 
 // ===== KEYS =====
 const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_GPA='npuu_gpa_data',
-      LS_PROFILE='npuu_profile', LS_GPA_HIST='npuu_gpa_history';
+      LS_PROFILE='npuu_profile', LS_GPA_HIST='npuu_gpa_history', LS_ENG='npuu_eng_progress';
 
 // ===== I18N =====
-const T = {
+const T={
   uz:{
-    title:"NPUU SMART BOT", subtitle:"Bir marta ma'lumot kiriting — bot siz uchun moslanadi!",
-    edit_profile:"Tahrir", today_schedule:"Bugungi dars jadvalim", click_to_view:"Ko'rish uchun bosing",
-    tab_gpa:"GPA", tab_curr:"O'quv reja", tab_profs:"Profs", tab_handbook:"Handbook",
-    tab_tt:"Jadval", tab_hero:"Hero",
-    gpa_overall:"Umumiy GPA", gpa_max:"/ 5.0 maksimal", share:"Ulashish",
-    gpa_history:"GPA tarixi", gpa_scale_btn:"Baholash shkalasi",
-    gpa_scale_note:"GPA maksimal = 5", gpa_th_score:"Ball%", gpa_th_letter:"Harf",
-    gpa_th_trad:"An'anaviy", grade_excellent:"A'lo", grade_very_good:"Juda yaxshi",
-    grade_good:"Yaxshi", grade_satisf:"Qoniqarli", grade_fail:"Qoniqarsiz",
-    gpa_col_subject:"Fan nomi", gpa_cr:"Kredit", gpa_score:"Baho",
-    add_subject:"Fan qo'shish", gpa_save:"Saqlash",
-    curr_all:"Hammasi", curr_core:"Core", curr_elective:"Elective",
-    prof_search:"🔍 Professor ismi yoki kafedra...",
+    edit_profile:"Tahrir",today_schedule:"Bugungi dars jadvalim",click_to_view:"Ko'rish uchun bosing",
+    gpa_overall:"Umumiy GPA",gpa_max:"/ 5.0 maksimal",share:"Ulashish",
+    gpa_history:"GPA tarixi",gpa_scale_btn:"Baholash shkalasi",gpa_scale_note:"GPA maksimal = 5",
+    gpa_th_score:"Ball%",gpa_th_letter:"Harf",gpa_th_trad:"An'anaviy",
+    grade_excellent:"A'lo",grade_very_good:"Juda yaxshi",grade_good:"Yaxshi",
+    grade_satisf:"Qoniqarli",grade_fail:"Qoniqarsiz",
+    gpa_col_subject:"Fan nomi",gpa_cr:"Kredit",gpa_score:"Baho",
+    add_subject:"Fan qo'shish",gpa_save:"Saqlash",
     handbook_desc:"Yo'nalishingizga mos Handbook faylini ko'ring.",
-    timetable_desc:"Guruhingizni tanlang:", hero_desc:"NPUU Hero Study platformasiga o'tish uchun:",
-    go_to_hero:"Hero Study'ga o'tish",
-    saved_msg:"✅ Saqlandi!", copied:"📋 Nusxalandi!",
+    saved_msg:"✅ Saqlandi!",copied:"📋 Nusxalandi!",
     stipend_president:"🏆 Prezident stipendiyasiga da'vo qilasiz!",
     stipend_ok:"✅ Stipendiya olish huquqingiz bor (GPA ≥ 3.5)",
     stipend_warn:"⚠️ Stipendiya chegarasida!",
     stipend_fail:"🚫 Stipendiya uchun GPA ≥ 3.5 bo'lishi kerak",
-    semester_label:"semestrsiz",
-    year_label:"o'quv yili",
-    ob_l_name:"👤 Ism Familiya", ob_l_id:"🪪 Student ID",
-    ob_l_major:"🎓 Yo'nalish", ob_l_year:"📅 O'qishga qabul yili",
-    ob_l_group:"👥 Guruh", ob_l_lang:"🌐 Til tanlang",
-    ob_next:"Davom etish →",
-    curr_lectures:"Ma'ruza", curr_seminars:"Seminar", curr_credits:"kredit",
-    curr_ects:"ECTS", welcome:"Xush kelibsiz", days:["Yakshanba","Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba"]
+    semester_label:"semestrsiz",year_label:"o'quv yili",
+    select_sems:"Semestrlarni tanlang:",welcome:"Xush kelibsiz",
+    days:["Yakshanba","Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba"]
   },
   ru:{
-    title:"NPUU SMART BOT", subtitle:"Введите данные один раз — бот настроится под вас!",
-    edit_profile:"Изменить", today_schedule:"Расписание на сегодня", click_to_view:"Нажмите для просмотра",
-    tab_gpa:"GPA", tab_curr:"Учебный план", tab_profs:"Преподы", tab_handbook:"Справочник",
-    tab_tt:"Расписание", tab_hero:"Hero",
-    gpa_overall:"Общий GPA", gpa_max:"/ 5.0 максимум", share:"Поделиться",
-    gpa_history:"История GPA", gpa_scale_btn:"Шкала оценок",
-    gpa_scale_note:"Максимальный GPA = 5", gpa_th_score:"Балл%", gpa_th_letter:"Буква",
-    gpa_th_trad:"Традиц.", grade_excellent:"Отлично", grade_very_good:"Очень хорошо",
-    grade_good:"Хорошо", grade_satisf:"Удовл.", grade_fail:"Неудовл.",
-    gpa_col_subject:"Название предмета", gpa_cr:"Кредит", gpa_score:"Балл",
-    add_subject:"Добавить предмет", gpa_save:"Сохранить",
-    curr_all:"Все", curr_core:"Core", curr_elective:"Elective",
-    prof_search:"🔍 Имя преподавателя или кафедра...",
+    edit_profile:"Изменить",today_schedule:"Расписание на сегодня",click_to_view:"Нажмите для просмотра",
+    gpa_overall:"Общий GPA",gpa_max:"/ 5.0 максимум",share:"Поделиться",
+    gpa_history:"История GPA",gpa_scale_btn:"Шкала оценок",gpa_scale_note:"Максимальный GPA = 5",
+    gpa_th_score:"Балл%",gpa_th_letter:"Буква",gpa_th_trad:"Традиц.",
+    grade_excellent:"Отлично",grade_very_good:"Очень хорошо",grade_good:"Хорошо",
+    grade_satisf:"Удовл.",grade_fail:"Неудовл.",
+    gpa_col_subject:"Название предмета",gpa_cr:"Кредит",gpa_score:"Балл",
+    add_subject:"Добавить предмет",gpa_save:"Сохранить",
     handbook_desc:"Выберите справочник по вашему направлению.",
-    timetable_desc:"Выберите группу:", hero_desc:"Нажмите, чтобы перейти на Hero Study:",
-    go_to_hero:"Перейти в Hero Study",
-    saved_msg:"✅ Сохранено!", copied:"📋 Скопировано!",
+    saved_msg:"✅ Сохранено!",copied:"📋 Скопировано!",
     stipend_president:"🏆 Претендуете на президентскую стипендию!",
     stipend_ok:"✅ Имеете право на стипендию (GPA ≥ 3.5)",
     stipend_warn:"⚠️ На грани стипендии!",
     stipend_fail:"🚫 Для стипендии нужен GPA ≥ 3.5",
-    semester_label:"-й семестр",
-    year_label:"год обучения",
-    ob_l_name:"👤 Имя Фамилия", ob_l_id:"🪪 Student ID",
-    ob_l_major:"🎓 Направление", ob_l_year:"📅 Год поступления",
-    ob_l_group:"👥 Группа", ob_l_lang:"🌐 Выберите язык",
-    ob_next:"Продолжить →",
-    curr_lectures:"Лекция", curr_seminars:"Семинар", curr_credits:"кредит",
-    curr_ects:"ECTS", welcome:"Добро пожаловать", days:["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"]
+    semester_label:"-й семестр",year_label:"год обучения",
+    select_sems:"Выберите семестры:",welcome:"Добро пожаловать",
+    days:["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"]
   },
   en:{
-    title:"NPUU SMART BOT", subtitle:"Enter data once — the bot adapts to you!",
-    edit_profile:"Edit", today_schedule:"Today's schedule", click_to_view:"Tap to view",
-    tab_gpa:"GPA", tab_curr:"Curriculum", tab_profs:"Profs", tab_handbook:"Handbook",
-    tab_tt:"Timetable", tab_hero:"Hero",
-    gpa_overall:"Overall GPA", gpa_max:"/ 5.0 max", share:"Share",
-    gpa_history:"GPA History", gpa_scale_btn:"Grading Scale",
-    gpa_scale_note:"Maximum GPA = 5", gpa_th_score:"Score%", gpa_th_letter:"Letter",
-    gpa_th_trad:"Traditional", grade_excellent:"Excellent", grade_very_good:"Very Good",
-    grade_good:"Good", grade_satisf:"Satisfactory", grade_fail:"Unsatisfactory",
-    gpa_col_subject:"Subject Name", gpa_cr:"Credit", gpa_score:"Score",
-    add_subject:"Add subject", gpa_save:"Save",
-    curr_all:"All", curr_core:"Core", curr_elective:"Elective",
-    prof_search:"🔍 Professor name or department...",
+    edit_profile:"Edit",today_schedule:"Today's schedule",click_to_view:"Tap to view",
+    gpa_overall:"Overall GPA",gpa_max:"/ 5.0 max",share:"Share",
+    gpa_history:"GPA History",gpa_scale_btn:"Grading Scale",gpa_scale_note:"Maximum GPA = 5",
+    gpa_th_score:"Score%",gpa_th_letter:"Letter",gpa_th_trad:"Traditional",
+    grade_excellent:"Excellent",grade_very_good:"Very Good",grade_good:"Good",
+    grade_satisf:"Satisfactory",grade_fail:"Unsatisfactory",
+    gpa_col_subject:"Subject Name",gpa_cr:"Credit",gpa_score:"Score",
+    add_subject:"Add subject",gpa_save:"Save",
     handbook_desc:"Choose the Handbook for your major.",
-    timetable_desc:"Select your group:", hero_desc:"Tap the button to access Hero Study:",
-    go_to_hero:"Go to Hero Study",
-    saved_msg:"✅ Saved!", copied:"📋 Copied!",
+    saved_msg:"✅ Saved!",copied:"📋 Copied!",
     stipend_president:"🏆 You qualify for President's scholarship!",
     stipend_ok:"✅ You qualify for scholarship (GPA ≥ 3.5)",
     stipend_warn:"⚠️ On the scholarship threshold!",
     stipend_fail:"🚫 Need GPA ≥ 3.5 for scholarship",
-    semester_label:"th semester",
-    year_label:"study year",
-    ob_l_name:"👤 Full Name", ob_l_id:"🪪 Student ID",
-    ob_l_major:"🎓 Major", ob_l_year:"📅 Admission Year",
-    ob_l_group:"👥 Group", ob_l_lang:"🌐 Choose Language",
-    ob_next:"Continue →",
-    curr_lectures:"Lecture", curr_seminars:"Seminar", curr_credits:"credits",
-    curr_ects:"ECTS", welcome:"Welcome", days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+    semester_label:"th semester",year_label:"study year",
+    select_sems:"Select semesters:",welcome:"Welcome",
+    days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
   }
 };
 
-// ===== CURRICULUM DATA (fetched from Google Sheets) =====
-// Spreadsheet: https://docs.google.com/spreadsheets/d/17Uvp8bhjn5Cf9r4d6GssDHznQPBpS0Lv
-const SHEET_ID = '17Uvp8bhjn5Cf9r4d6GssDHznQPBpS0Lv';
-const SHEET_NAMES = {
-  AI:   'Artificial Intelligence',
-  IST:  'Information Systems',
-  MATH: 'Mathematics'
+// ===== QUESTION BANK =====
+const ALL_QUESTIONS=[
+  // A1
+  {id:0,level:"A1",topic:"to be",text:"She ___ a teacher.",options:["am","is","are","be"],answer:1,explanation:"3rd person singular → 'is'"},
+  {id:1,level:"A1",topic:"articles",text:"I have ___ apple.",options:["a","an","the","—"],answer:1,explanation:"'apple' starts with vowel → 'an'"},
+  {id:2,level:"A1",topic:"vocabulary",text:"What is the opposite of 'big'?",options:["tall","small","fast","old"],answer:1,explanation:"big ↔ small"},
+  {id:3,level:"A1",topic:"numbers",text:"How do you say 15 in English?",options:["fifty","fifteen","five","fiveteen"],answer:1,explanation:"15 = fifteen"},
+  {id:4,level:"A1",topic:"present simple",text:"They ___ to school every day.",options:["go","goes","going","gone"],answer:0,explanation:"'they' → base form 'go'"},
+  {id:5,level:"A1",topic:"colors",text:"The sky is ___.",options:["red","blue","green","yellow"],answer:1,explanation:"The sky is blue"},
+  {id:6,level:"A1",topic:"greetings",text:"How do you say 'Salom' in English?",options:["Goodbye","Sorry","Hello","Please"],answer:2,explanation:"Salom = Hello"},
+  {id:7,level:"A1",topic:"family",text:"My father's sister is my ___.",options:["cousin","niece","aunt","uncle"],answer:2,explanation:"Father's sister = aunt"},
+  // A2
+  {id:8,level:"A2",topic:"past simple",text:"Yesterday I ___ to the market.",options:["go","goes","went","gone"],answer:2,explanation:"Yesterday → past simple 'went'"},
+  {id:9,level:"A2",topic:"comparatives",text:"My bag is ___ than yours.",options:["heavy","more heavy","heavier","heaviest"],answer:2,explanation:"1-2 syllable adj → -er"},
+  {id:10,level:"A2",topic:"can",text:"He ___ swim very well.",options:["can","cans","is can","does can"],answer:0,explanation:"Modal verb → no conjugation"},
+  {id:11,level:"A2",topic:"prepositions",text:"The book is ___ the table.",options:["in","on","at","to"],answer:1,explanation:"Surface → 'on'"},
+  {id:12,level:"A2",topic:"vocabulary",text:"Which word means 'to fix something'?",options:["break","repair","lose","find"],answer:1,explanation:"repair = fix"},
+  {id:13,level:"A2",topic:"future",text:"I ___ visit London next year.",options:["am","will","going","shall"],answer:1,explanation:"Simple future → will"},
+  {id:14,level:"A2",topic:"frequency",text:"She ___ watches TV at night.",options:["always","never","seldom","hard"],answer:0,explanation:"always = har doim"},
+  {id:15,level:"A2",topic:"plurals",text:"The plural of 'child' is ___.",options:["childs","childes","children","childre"],answer:2,explanation:"Irregular plural: child → children"},
+  // B1
+  {id:16,level:"B1",topic:"present perfect",text:"I ___ this movie before.",options:["see","saw","have seen","am seeing"],answer:2,explanation:"'before' → present perfect"},
+  {id:17,level:"B1",topic:"conditionals",text:"If it rains, we ___ stay home.",options:["will","would","can","shall"],answer:0,explanation:"1st conditional: if + present → will"},
+  {id:18,level:"B1",topic:"passive voice",text:"The letter ___ by Mary.",options:["write","wrote","was written","is write"],answer:2,explanation:"Passive: was + past participle"},
+  {id:19,level:"B1",topic:"vocabulary",text:"Choose the correct meaning of 'reluctant':",options:["excited","unwilling","confused","angry"],answer:1,explanation:"reluctant = ishlamoqchi bo'lmagan"},
+  {id:20,level:"B1",topic:"reported speech",text:'She said she ___ tired.',options:["is","was","were","has been"],answer:1,explanation:"Reported speech: is → was"},
+  {id:21,level:"B1",topic:"gerunds",text:"I enjoy ___ music.",options:["listen","to listen","listened","listening"],answer:3,explanation:"enjoy + gerund (-ing)"},
+  {id:22,level:"B1",topic:"phrasal verbs",text:"Please ___ the lights before leaving.",options:["turn off","turn on","turn up","turn in"],answer:0,explanation:"turn off = o'chirmoq"},
+  {id:23,level:"B1",topic:"modals",text:"You ___ smoke here. It's forbidden.",options:["mustn't","don't have to","shouldn't","needn't"],answer:0,explanation:"Prohibition → mustn't"},
+  // B2
+  {id:24,level:"B2",topic:"conditionals",text:"If I had known, I ___ you.",options:["would tell","would have told","will tell","told"],answer:1,explanation:"3rd conditional: would have + past participle"},
+  {id:25,level:"B2",topic:"vocabulary",text:"The word 'ambiguous' means:",options:["very clear","having two meanings","extremely rare","very long"],answer:1,explanation:"ambiguous = noaniq, ikki ma'noli"},
+  {id:26,level:"B2",topic:"modal verbs",text:"You ___ have told me earlier! I missed the meeting.",options:["should","must","might","can"],answer:0,explanation:"Criticism about past → should have"},
+  {id:27,level:"B2",topic:"collocations",text:"She ___ a decision after a long discussion.",options:["did","made","took","had"],answer:1,explanation:"make a decision (collocation)"},
+  {id:28,level:"B2",topic:"complex sentences",text:"Despite ___ hard, he failed the exam.",options:["study","to study","studied","studying"],answer:3,explanation:"despite + gerund"},
+  {id:29,level:"B2",topic:"vocabulary",text:"A 'paradigm shift' means:",options:["a small change","a fundamental change in approach","a mistake","a new word"],answer:1,explanation:"paradigm shift = fundamental o'zgarish"},
+  {id:30,level:"B2",topic:"inversion",text:"___ had I arrived when it started raining.",options:["Hardly","Hard","Scarce","Rare"],answer:0,explanation:"Formal inversion: Hardly had..."},
+  {id:31,level:"B2",topic:"discourse",text:"___ the bad weather, the event was a success.",options:["Despite","Although","However","Even"],answer:0,explanation:"Despite + noun phrase"},
+];
+
+// ===== TRANSLATION DATA =====
+const TRANS_DATA={
+  uz2en:{
+    A1:[
+      {uz:"Kitob stolda turibdi.",en:"The book is on the table.",hint:"on the table"},
+      {uz:"Men o'quvchiman.",en:"I am a student.",hint:"I am..."},
+      {uz:"U uyda.",en:"She is at home.",hint:"at home"},
+      {uz:"Biz do'stmiz.",en:"We are friends.",hint:"We are..."},
+      {uz:"Olma qizil.",en:"The apple is red.",hint:"The apple is..."},
+    ],
+    A2:[
+      {uz:"Kecha men kinoga bordim.",en:"I went to the cinema yesterday.",hint:"went + yesterday"},
+      {uz:"U ingliz tilini yaxshi biladi.",en:"She knows English well.",hint:"knows ... well"},
+      {uz:"Men kitob o'qishni yaxshi ko'raman.",en:"I like reading books.",hint:"like + -ing"},
+      {uz:"Qachon u uyga qaytdi?",en:"When did he come back home?",hint:"did + base form"},
+    ],
+    B1:[
+      {uz:"U bu filmni allaqachon ko'rgan.",en:"She has already seen this film.",hint:"has + past participle"},
+      {uz:"Agar ob-havo yaxshi bo'lsa, men sayrga chiqaman.",en:"If the weather is good, I will go for a walk.",hint:"if + present → will"},
+      {uz:"Xat Mary tomonidan yozildi.",en:"The letter was written by Mary.",hint:"was + past participle"},
+    ],
+    B2:[
+      {uz:"U kelishidan oldin, men allaqachon ketib bo'lgandim.",en:"By the time he arrived, I had already left.",hint:"Past perfect: had + PP"},
+      {uz:"Men undan ertaroq xabar berishini so'radim.",en:"I asked him to notify me earlier.",hint:"asked + to infinitive"},
+      {uz:"Shovqinga qaramay, u uxlab qoldi.",en:"Despite the noise, he fell asleep.",hint:"Despite + noun"},
+    ],
+  },
+  en2uz:{
+    A1:[
+      {en:"The cat is under the chair.",uz:"Mushuk stul ostida.",hint:"stul ostida"},
+      {en:"I have two brothers.",uz:"Mening ikki aka-ukam bor.",hint:"bor"},
+      {en:"She is happy today.",uz:"U bugun xursand.",hint:"xursand"},
+    ],
+    A2:[
+      {en:"He played football yesterday.",uz:"U kecha futbol o'ynadi.",hint:"o'ynadi"},
+      {en:"Can you help me, please?",uz:"Menga yordam bera olasizmi?",hint:"bera olasizmi"},
+    ],
+    B1:[
+      {en:"The meeting has been cancelled.",uz:"Yig'ilish bekor qilindi.",hint:"bekor qilindi (passive)"},
+      {en:"I wish I had more time.",uz:"Qaniydi vaqtim ko'proq bo'lsa.",hint:"Qaniydi... bo'lsa"},
+    ],
+    B2:[
+      {en:"He was said to be a brilliant scientist.",uz:"U ajoyib olim deb aytilgan.",hint:"deb aytilgan"},
+      {en:"Hardly had she left when it started raining.",uz:"U ketishi bilanoq yomg'ir yog'a boshladi.",hint:"bilanoq"},
+    ],
+  }
 };
 
-// Runtime cache
-let CURRICULUM = { AI: null, IST: null, MATH: null };
-let currLoadingMajor = null;
+// ===== DIALOG TOPICS =====
+const DIALOG_TOPICS={
+  free:{label:"Topic: Free talk",prompt:"You are a friendly English conversation partner for a student at level A1-B2. Chat naturally, correct grammar mistakes gently by showing the correct form in brackets like [correction], keep messages short (1-3 sentences). Start by saying hello and asking what they'd like to talk about."},
+  cafe:{label:"Topic: At a cafe ☕",prompt:"You are a barista at a coffee shop. The student is a customer. Speak naturally, correct their English mistakes gently in brackets. Keep replies short. Start by greeting them and asking for their order."},
+  interview:{label:"Topic: Job interview 👔",prompt:"You are an HR manager conducting a job interview in English. Ask typical interview questions one by one. Correct the student's grammar mistakes gently in brackets. Keep it realistic and encouraging."},
+  travel:{label:"Topic: Travel ✈️",prompt:"You are a traveler chatting with another tourist. Discuss travel experiences, places to visit, tips. Correct grammar mistakes gently in brackets. Keep messages conversational and short."},
+};
 
-// Column mapping (0-indexed) based on spreadsheet columns:
-// A=Semestr, B=Kurs kodi, C=Kurs nomi (Eng), D=Fan nomi (Uzb),
-// E=Fan turi, F=Ma'ruza soati, G=S/L soati, H=ECTS Kredit
-function parseSheetRows(rows) {
-  const subjects = [];
-  if (!rows || rows.length < 2) return subjects;
-  for (let i = 1; i < rows.length; i++) {
-    const r = rows[i].c;
-    if (!r || !r[0] || !r[0].v) continue;
-    const semRaw = r[0] ? String(r[0].v).trim() : '';
-    const sem = parseInt(semRaw.replace(/[^0-9]/g, '')) || 0;
-    if (!sem || sem < 1 || sem > 8) continue;
-    const code    = r[1] ? String(r[1].v || '').trim() : '';
-    const nameEn  = r[2] ? String(r[2].v || '').trim() : '';
-    const nameUz  = r[3] ? String(r[3].v || '').trim() : '';
-    const typeRaw = r[4] ? String(r[4].v || '').trim() : 'Core';
-    const type    = (typeRaw.toLowerCase().includes('elective')) ? 'Elective' : 'Core';
-    const lec     = r[5] ? (parseFloat(r[5].v) || 0) : 0;
-    const semH    = r[6] ? (parseFloat(r[6].v) || 0) : 0;
-    const ects    = r[7] ? (parseFloat(r[7].v) || 0) : 0;
-    if (!nameEn && !nameUz) continue;
-    subjects.push({ sem, code, nameEn, nameUz, type, lec, sem_: semH, ects });
+// ===== STATE =====
+let currentLang='uz', isDark=true, userProfile=null;
+let currentView='gpa';
+let currentEngTab='placement';
+
+// Placement test
+let ptState={active:false,qIndex:0,score:0,wrongTopics:[],questions:[]};
+
+// Quiz
+let quizState={active:false,level:'A1',qIndex:0,score:0,questions:[],answered:false};
+let currentQuizLevel='A1';
+
+// Translation
+let transState={dir:'uz2en',level:'A1',currentIdx:0,correct:0,total:0,data:[]};
+
+// Dialog
+let dialogTopic='free';
+let dialogHistory=[];
+let dialogBusy=false;
+
+// Eng progress
+let engProgress={level:null,quizTotal:0,quizCorrect:0,transCorrect:0,weakTopics:[]};
+
+// ===== HELPERS =====
+function t(key){return T[currentLang]?.[key]||T.uz[key]||key}
+function showBanner(msg){const b=document.getElementById('save-banner');b.textContent=msg;b.classList.add('show');setTimeout(()=>b.classList.remove('show'),2500)}
+function getInitials(name){return name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}
+function shuffle(arr){return [...arr].sort(()=>Math.random()-.5)}
+
+// ===== LANGUAGE =====
+function setLanguage(lang){
+  currentLang=lang;
+  localStorage.setItem(LS_LANG,lang);
+  const sel=document.getElementById('lang-select');
+  if(sel)sel.value=lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(t(k))el.innerHTML=t(k);
+  });
+  if(userProfile){applyProfile();renderGpaView();}
+}
+
+// ===== THEME =====
+function applyTheme(dark){
+  isDark=dark;
+  document.body.classList.toggle('light',!dark);
+  const tb=document.getElementById('theme-btn');
+  if(tb)tb.textContent=dark?'🌙':'☀️';
+  localStorage.setItem(LS_THEME,dark?'dark':'light');
+  if(tg?.setHeaderColor)tg.setHeaderColor(dark?'#070f1e':'#f0f4ff');
+  if(tg?.setBackgroundColor)tg.setBackgroundColor(dark?'#070f1e':'#f0f4ff');
+}
+function toggleTheme(){applyTheme(!isDark)}
+
+// ===== PROFILE =====
+function loadProfile(){try{const s=localStorage.getItem(LS_PROFILE);if(s)userProfile=JSON.parse(s);}catch(e){userProfile=null;}}
+function saveProfileData(p){userProfile=p;localStorage.setItem(LS_PROFILE,JSON.stringify(p));}
+
+function calcCurrentSemester(admitYear){
+  const now=new Date();const mo=now.getMonth()+1;const yr=now.getFullYear();
+  const currentAcadStart=(mo>=9)?yr:yr-1;
+  const admitAcadStart=parseInt(admitYear);
+  const acadYearsElapsed=currentAcadStart-admitAcadStart;
+  const isFall=(mo>=9||mo<=1);const semInYear=isFall?1:2;
+  const sem=acadYearsElapsed*2+semInYear;
+  return Math.min(Math.max(sem,1),8);
+}
+
+function applyProfile(){
+  if(!userProfile)return;
+  document.getElementById('profile-header').style.display='flex';
+  document.getElementById('today-widget').style.display='block';
+  document.getElementById('main-topbar').style.display='flex';
+  document.getElementById('main-nav').style.display='flex';
+  document.getElementById('profile-avatar').textContent=getInitials(userProfile.name||'U');
+  document.getElementById('profile-name').textContent=userProfile.name||'—';
+  const majorNames={AI:'AI',IST:'IST',MATH:'Math'};
+  const curSem=calcCurrentSemester(userProfile.admitYear);
+  const yr=Math.ceil(curSem/2);
+  document.getElementById('profile-meta').textContent=
+    `${userProfile.sid?'ID: '+userProfile.sid+' • ':''}${userProfile.group} • ${majorNames[userProfile.major]||userProfile.major}`;
+  document.getElementById('semester-badge').textContent=`${curSem}-${t('semester_label')} / ${yr}-${t('year_label')}`;
+  document.getElementById('today-group-text').textContent=`${t('tab_tt')||'Jadval'}: ${userProfile.group}`;
+  const days=t('days');
+  document.getElementById('today-day-badge').textContent=days[new Date().getDay()];
+  initTimetable();
+  highlightHandbook();
+}
+
+function editProfile(){
+  if(userProfile){
+    document.getElementById('ob-name').value=userProfile.name||'';
+    document.getElementById('ob-sid').value=userProfile.sid||'';
+    document.getElementById('ob-major').value=userProfile.major||'';
+    document.getElementById('ob-admit-year').value=userProfile.admitYear||'';
+    document.getElementById('ob-group').value=userProfile.group||'';
+  }
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step-0').classList.add('active');
+  updateDots(0);
+  document.getElementById('onboarding-overlay').style.display='flex';
+}
+
+function highlightHandbook(){
+  if(!userProfile)return;
+  const map={AI:'hb-ai',IST:'hb-ist',MATH:'hb-math'};
+  document.querySelectorAll('.handbook-btn').forEach(el=>{el.classList.remove('recommended');el.querySelectorAll('.rec-badge').forEach(b=>b.remove());});
+  const tid=map[userProfile.major];
+  if(tid){const el=document.getElementById(tid);if(el){el.classList.add('recommended');const badge=document.createElement('span');badge.className='rec-badge';badge.textContent='✓';el.querySelector('span').appendChild(badge);}}
+}
+
+// ===== ONBOARDING =====
+let obStep=0;
+function updateDots(s){for(let i=0;i<4;i++){const d=document.getElementById('dot-'+i);if(!d)continue;d.classList.remove('active','done');if(i<s)d.classList.add('done');else if(i===s)d.classList.add('active');}}
+function obNext(next){
+  if(next===1){const n=document.getElementById('ob-name').value.trim();if(!n){alert('Ismingizni kiriting!');return;}}
+  if(next===2){const m=document.getElementById('ob-major').value,y=document.getElementById('ob-admit-year').value;if(!m||!y){alert('Barcha maydonlarni to\'ldiring!');return;}}
+  if(next===3){const g=document.getElementById('ob-group').value;if(!g){alert('Guruhni tanlang!');return;}}
+  document.getElementById('step-'+obStep).classList.remove('active');
+  obStep=next;document.getElementById('step-'+obStep).classList.add('active');updateDots(obStep);
+}
+function obFinish(lang){
+  setLanguage(lang);
+  const p={name:document.getElementById('ob-name').value.trim(),sid:document.getElementById('ob-sid').value.trim(),major:document.getElementById('ob-major').value,admitYear:document.getElementById('ob-admit-year').value,group:document.getElementById('ob-group').value,lang:lang};
+  saveProfileData(p);
+  document.getElementById('onboarding-overlay').style.display='none';
+  applyProfile();
+  gpaState.selectedSems=[calcCurrentSemester(p.admitYear)];
+  initGpa();
+  showBanner(`${t('welcome')}, ${p.name.split(' ')[0]}! 👋`);
+}
+
+// ===== NAVIGATION =====
+function switchView(viewId){
+  document.querySelectorAll('.view-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const sec=document.getElementById('view-'+viewId);
+  if(sec)sec.classList.add('active');
+  const nav=document.getElementById('nav-'+viewId);
+  if(nav)nav.classList.add('active');
+  currentView=viewId;
+  if(viewId==='english')renderEngProgress();
+}
+
+// ===== ENGLISH SUB-TABS =====
+function switchEngTab(tab){
+  document.querySelectorAll('.eng-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.eng-sub-view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('etab-'+tab).classList.add('active');
+  document.getElementById('esv-'+tab).classList.add('active');
+  currentEngTab=tab;
+  if(tab==='progress')renderEngProgress();
+  if(tab==='dialog'&&dialogHistory.length===0)initDialog();
+  if(tab==='translate')loadTransSentence();
+}
+
+// ===== ENG PROGRESS =====
+function loadEngProgress(){try{const s=localStorage.getItem(LS_ENG);if(s)engProgress=JSON.parse(s);}catch(e){}}
+function saveEngProgress(){localStorage.setItem(LS_ENG,JSON.stringify(engProgress));}
+function renderEngProgress(){
+  loadEngProgress();
+  document.getElementById('prog-level').textContent=engProgress.level||'—';
+  document.getElementById('prog-quiz-total').textContent=engProgress.quizTotal||0;
+  document.getElementById('prog-quiz-correct').textContent=engProgress.quizCorrect||0;
+  document.getElementById('prog-trans-correct').textContent=engProgress.transCorrect||0;
+  const acc=engProgress.quizTotal>0?Math.round((engProgress.quizCorrect/engProgress.quizTotal)*100):0;
+  document.getElementById('prog-accuracy-bar').style.width=acc+'%';
+  document.getElementById('prog-accuracy-text').textContent=acc+'%';
+  const chips=document.getElementById('prog-weak-chips');
+  const wt=[...new Set(engProgress.weakTopics||[])].slice(0,8);
+  chips.innerHTML=wt.length?wt.map(w=>`<span class="weak-topic-chip">${w}</span>`).join(''):'<span style="font-size:12px;color:var(--muted)">Hali ma\'lumot yo\'q</span>';
+}
+function resetEngProgress(){
+  if(!confirm('Progressni tozalashni xohlaysizmi?'))return;
+  engProgress={level:null,quizTotal:0,quizCorrect:0,transCorrect:0,weakTopics:[]};
+  saveEngProgress();renderEngProgress();showBanner('🗑 Tozalandi');
+}
+
+// ===== PLACEMENT TEST =====
+function startPlacementTest(){
+  ptState={active:true,qIndex:0,score:0,wrongTopics:[],questions:ALL_QUESTIONS.slice(0,20)};
+  document.getElementById('placement-start-screen').style.display='none';
+  document.getElementById('placement-test-screen').style.display='block';
+  document.getElementById('placement-result-screen').style.display='none';
+  renderPTQuestion();
+}
+
+function renderPTQuestion(){
+  const q=ptState.questions[ptState.qIndex];
+  const total=ptState.questions.length;
+  document.getElementById('pt-counter').textContent=`${ptState.qIndex+1}/${total}`;
+  document.getElementById('pt-progress').style.width=((ptState.qIndex/total)*100)+'%';
+  document.getElementById('pt-topic').textContent=`${q.level} · ${q.topic}`;
+  document.getElementById('pt-question').textContent=q.text;
+  const lvlBadge=document.getElementById('pt-level-badge');
+  lvlBadge.className='level-badge level-'+q.level.toLowerCase();
+  lvlBadge.textContent=q.level;
+  const opts=document.getElementById('pt-options');
+  opts.innerHTML='';
+  const labels=['A','B','C','D'];
+  q.options.forEach((opt,i)=>{
+    const btn=document.createElement('button');
+    btn.className='quiz-option';
+    btn.innerHTML=`<span class="option-label">${labels[i]}</span>${opt}`;
+    btn.onclick=()=>answerPT(i);
+    opts.appendChild(btn);
+  });
+}
+
+function answerPT(chosen){
+  const q=ptState.questions[ptState.qIndex];
+  const opts=document.getElementById('pt-options').querySelectorAll('.quiz-option');
+  opts.forEach(b=>b.disabled=true);
+  if(chosen===q.answer){
+    ptState.score++;
+    opts[chosen].classList.add('correct');
+  } else {
+    ptState.wrongTopics.push(q.topic);
+    opts[chosen].classList.add('wrong');
+    opts[q.answer].classList.add('show-correct');
+  }
+  setTimeout(()=>{
+    ptState.qIndex++;
+    if(ptState.qIndex>=ptState.questions.length) finishPT();
+    else renderPTQuestion();
+  },700);
+}
+
+function finishPT(){
+  const sc=ptState.score;
+  let level='A1';
+  if(sc<=4)level='A1';else if(sc<=8)level='A2';else if(sc<=13)level='B1';else level='B2';
+  document.getElementById('placement-test-screen').style.display='none';
+  document.getElementById('placement-result-screen').style.display='block';
+  document.getElementById('pr-level').textContent=level;
+  document.getElementById('pr-score').textContent=`${sc}/20 ball`;
+  const wt=[...new Set(ptState.wrongTopics)];
+  const weakBlock=document.getElementById('pr-weak-block');
+  if(wt.length){weakBlock.style.display='block';document.getElementById('pr-weak-topics').innerHTML=wt.map(w=>`<span class="weak-topic-chip">${w}</span>`).join('');}
+  else weakBlock.style.display='none';
+  engProgress.level=level;
+  if(wt.length)engProgress.weakTopics=[...new Set([...engProgress.weakTopics,...wt])];
+  saveEngProgress();
+  currentQuizLevel=level;
+  transState.level=level;
+}
+
+function resetPlacementTest(){
+  document.getElementById('placement-start-screen').style.display='block';
+  document.getElementById('placement-test-screen').style.display='none';
+  document.getElementById('placement-result-screen').style.display='none';
+}
+
+// ===== QUIZ =====
+function getQuizQuestions(level){
+  const pool=ALL_QUESTIONS.filter(q=>q.level===level);
+  return shuffle(pool).slice(0,Math.min(10,pool.length));
+}
+
+function startQuiz(level){
+  currentQuizLevel=level;
+  const questions=getQuizQuestions(level);
+  quizState={active:true,level,qIndex:0,score:0,questions,answered:false};
+  document.getElementById('quiz-level-select').style.display='none';
+  document.getElementById('quiz-active-screen').style.display='block';
+  document.getElementById('quiz-result-screen').style.display='none';
+  renderQuizQuestion();
+}
+
+function startQuizMyLevel(){
+  loadEngProgress();
+  const lv=engProgress.level||'A1';
+  startQuiz(lv);
+}
+
+function renderQuizQuestion(){
+  const q=quizState.questions[quizState.qIndex];
+  const total=quizState.questions.length;
+  document.getElementById('quiz-counter').textContent=`${quizState.qIndex+1}/${total}`;
+  document.getElementById('quiz-progress').style.width=(((quizState.qIndex+1)/total)*100)+'%';
+  const lb=document.getElementById('quiz-level-badge');
+  lb.className='level-badge level-'+quizState.level.toLowerCase();lb.textContent=quizState.level;
+  document.getElementById('quiz-score-live').textContent=`${quizState.score} ✓`;
+  document.getElementById('quiz-topic').textContent=q.topic;
+  document.getElementById('quiz-question').textContent=q.text;
+  document.getElementById('quiz-explanation').style.display='none';
+  document.getElementById('quiz-next-btn').style.display='none';
+  const opts=document.getElementById('quiz-options');
+  opts.innerHTML='';
+  const labels=['A','B','C','D'];
+  q.options.forEach((opt,i)=>{
+    const btn=document.createElement('button');
+    btn.className='quiz-option';
+    btn.innerHTML=`<span class="option-label">${labels[i]}</span>${opt}`;
+    btn.onclick=()=>answerQuiz(i);
+    opts.appendChild(btn);
+  });
+  quizState.answered=false;
+}
+
+function answerQuiz(chosen){
+  if(quizState.answered)return;
+  quizState.answered=true;
+  const q=quizState.questions[quizState.qIndex];
+  const opts=document.getElementById('quiz-options').querySelectorAll('.quiz-option');
+  opts.forEach(b=>b.disabled=true);
+  engProgress.quizTotal++;
+  if(chosen===q.answer){
+    quizState.score++;
+    engProgress.quizCorrect++;
+    opts[chosen].classList.add('correct');
+  } else {
+    if(!engProgress.weakTopics.includes(q.topic))engProgress.weakTopics.push(q.topic);
+    opts[chosen].classList.add('wrong');
+    opts[q.answer].classList.add('show-correct');
+  }
+  document.getElementById('quiz-score-live').textContent=`${quizState.score} ✓`;
+  if(q.explanation){
+    document.getElementById('quiz-explanation').style.display='block';
+    document.getElementById('quiz-explanation').textContent='💡 '+q.explanation;
+  }
+  document.getElementById('quiz-next-btn').style.display='flex';
+  saveEngProgress();
+}
+
+function nextQuizQuestion(){
+  quizState.qIndex++;
+  if(quizState.qIndex>=quizState.questions.length)finishQuiz();
+  else renderQuizQuestion();
+}
+
+function finishQuiz(){
+  document.getElementById('quiz-active-screen').style.display='none';
+  document.getElementById('quiz-result-screen').style.display='block';
+  document.getElementById('qr-score').textContent=`${quizState.score}/${quizState.questions.length}`;
+  const lb=document.getElementById('qr-level-badge');
+  lb.innerHTML=`<span class="level-badge level-${quizState.level.toLowerCase()}">${quizState.level}</span>`;
+}
+
+function backToQuizSelect(){
+  document.getElementById('quiz-level-select').style.display='block';
+  document.getElementById('quiz-active-screen').style.display='none';
+  document.getElementById('quiz-result-screen').style.display='none';
+}
+
+// ===== DIALOG =====
+function initDialog(){
+  dialogHistory=[];
+  const msgs=document.getElementById('dialog-messages');
+  msgs.innerHTML='';
+  const typingEl=document.createElement('div');
+  typingEl.className='msg-bubble msg-bot';
+  typingEl.innerHTML='<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+  msgs.appendChild(typingEl);
+  const topic=DIALOG_TOPICS[dialogTopic];
+  callDialogAPI([{role:'user',content:'Start the conversation based on your role.'}],topic.prompt).then(reply=>{
+    typingEl.remove();
+    addDialogMessage('bot',reply);
+    dialogHistory.push({role:'assistant',content:reply});
+  });
+}
+
+function setDialogTopic(topicKey,btn){
+  document.querySelectorAll('#esv-dialog .curr-filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  dialogTopic=topicKey;
+  document.getElementById('dialog-topic-label').textContent=DIALOG_TOPICS[topicKey].label;
+  clearDialog();
+  initDialog();
+}
+
+function clearDialog(){
+  dialogHistory=[];
+  document.getElementById('dialog-messages').innerHTML='';
+}
+
+function addDialogMessage(who,text){
+  const msgs=document.getElementById('dialog-messages');
+  const el=document.createElement('div');
+  el.className=`msg-bubble msg-${who}`;
+  el.textContent=text;
+  msgs.appendChild(el);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+async function sendDialogMsg(){
+  if(dialogBusy)return;
+  const inp=document.getElementById('dialog-input');
+  const text=inp.value.trim();
+  if(!text)return;
+  inp.value='';
+  addDialogMessage('user',text);
+  dialogHistory.push({role:'user',content:text});
+  dialogBusy=true;
+  document.getElementById('dialog-send-btn').disabled=true;
+  const msgs=document.getElementById('dialog-messages');
+  const typingEl=document.createElement('div');
+  typingEl.className='msg-bubble msg-bot';
+  typingEl.innerHTML='<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+  msgs.appendChild(typingEl);
+  msgs.scrollTop=msgs.scrollHeight;
+  try{
+    const reply=await callDialogAPI(dialogHistory,DIALOG_TOPICS[dialogTopic].prompt);
+    typingEl.remove();
+    addDialogMessage('bot',reply);
+    dialogHistory.push({role:'assistant',content:reply});
+    // Show corrections if any [...]
+    const corrMatch=reply.match(/\[([^\]]+)\]/g);
+    if(corrMatch){
+      const corrEl=document.createElement('div');
+      corrEl.className='msg-bubble msg-feedback';
+      corrEl.textContent='✏️ Corrections: '+corrMatch.join(', ');
+      msgs.appendChild(corrEl);
+    }
+    msgs.scrollTop=msgs.scrollHeight;
+  }catch(e){typingEl.remove();addDialogMessage('bot','Sorry, something went wrong. Try again!');}
+  dialogBusy=false;
+  document.getElementById('dialog-send-btn').disabled=false;
+}
+
+async function callDialogAPI(messages,systemPrompt){
+  const resp=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:1000,
+      system:systemPrompt,
+      messages:messages
+    })
+  });
+  const data=await resp.json();
+  if(data.content&&data.content[0])return data.content[0].text;
+  return "I couldn't respond. Please try again.";
+}
+
+// ===== TRANSLATION =====
+function setTransDir(dir,btn){
+  document.querySelectorAll('#esv-translate .curr-filter-btn').filter?document.querySelectorAll('#esv-translate .curr-filter-btn').forEach(b=>b.classList.remove('active')):null;
+  document.getElementById('trans-dir-btn-uz').classList.remove('active');
+  document.getElementById('trans-dir-btn-en').classList.remove('active');
+  btn.classList.add('active');
+  transState.dir=dir;
+  transState.currentIdx=0;
+  loadTransSentence();
+}
+
+function setTransLevel(level,btn){
+  ['A1','A2','B1','B2'].forEach(l=>document.getElementById('tl-'+l).classList.remove('active'));
+  btn.classList.add('active');
+  transState.level=level;
+  transState.currentIdx=0;
+  loadTransSentence();
+}
+
+function loadTransSentence(){
+  const data=TRANS_DATA[transState.dir]?.[transState.level]||[];
+  if(!data.length){document.getElementById('trans-sentence').textContent='Bu daraja uchun ma\'lumot yo\'q';return;}
+  transState.data=data;
+  const item=data[transState.currentIdx%data.length];
+  const sourceText=transState.dir==='uz2en'?item.uz:item.en;
+  document.getElementById('trans-sentence').textContent=sourceText;
+  document.getElementById('trans-input').value='';
+  const res=document.getElementById('trans-result');
+  res.className='trans-result';res.textContent='';
+  document.getElementById('trans-stats').textContent=`${transState.correct} to'g'ri / ${transState.total} ta`;
+}
+
+function checkTranslation(){
+  const inp=document.getElementById('trans-input').value.trim().toLowerCase();
+  if(!inp){showBanner('Tarjimani kiriting!');return;}
+  const data=transState.data;
+  const item=data[transState.currentIdx%data.length];
+  const correct=(transState.dir==='uz2en'?item.en:item.uz).toLowerCase();
+  const res=document.getElementById('trans-result');
+  transState.total++;
+  const sim=similarity(inp,correct);
+  res.style.display='block';
+  if(sim>0.85){
+    res.className='trans-result show trans-correct';
+    res.textContent='✅ Excellent! '+correct;
+    transState.correct++;engProgress.transCorrect++;saveEngProgress();
+  } else if(sim>0.6){
+    res.className='trans-result show trans-partial';
+    res.textContent=`⚠️ Almost! Correct: ${correct} (Hint: ${item.hint})`;
+  } else {
+    res.className='trans-result show trans-wrong';
+    res.textContent=`❌ Try again. Correct: ${correct}`;
+  }
+  document.getElementById('trans-stats').textContent=`${transState.correct} to'g'ri / ${transState.total} ta`;
+}
+
+function nextTranslation(){
+  transState.currentIdx++;
+  loadTransSentence();
+}
+
+function similarity(a,b){
+  if(a===b)return 1;
+  const longer=a.length>b.length?a:b;
+  const shorter=a.length>b.length?b:a;
+  if(longer.length===0)return 1;
+  return (longer.length-editDistance(longer,shorter))/longer.length;
+}
+
+function editDistance(s1,s2){
+  const costs=[];
+  for(let i=0;i<=s1.length;i++){
+    let lastValue=i;
+    for(let j=0;j<=s2.length;j++){
+      if(i===0)costs[j]=j;
+      else if(j>0){let newValue=costs[j-1];if(s1.charAt(i-1)!==s2.charAt(j-1))newValue=Math.min(Math.min(newValue,lastValue),costs[j])+1;costs[j-1]=lastValue;lastValue=newValue;}
+    }
+    if(i>0)costs[s2.length]=lastValue;
+  }
+  return costs[s2.length];
+}
+
+// ===== TIMETABLE =====
+const GROUPS_LINKS={"FM1":"-1","FM2":"-2","FM3":"-3","FM4":"-4","FM5":"-5","FM6":"-6","FM7":"*7","FIT1":"-7","FIT2":"-8","FIT3":"-9","FIT4":"-10","FIT5":"-11","FIT6":"-12","FAR1":"-13","FAR2":"-14","FAR3":"-15"};
+function initTimetable(){
+  const grid=document.getElementById('tt-grid');
+  grid.innerHTML=Object.entries(GROUPS_LINKS).map(([gname,gid])=>{
+    const isMine=userProfile?.group===gname;
+    return `<button class="tt-btn${isMine?' my-group':''}" onclick="openTimetable('${gid}')">${gname}${isMine?'<span class="star">⭐</span>':''}</button>`;
+  }).join('');
+}
+function openTimetable(gid){
+  const url=`https://npuu.edupage.org/timetable/view.php?num=6&class=${gid}`;
+  if(tg?.openLink)tg.openLink(url);else window.open(url,'_blank');
+}
+function openMyTimetable(e){
+  e.preventDefault();if(!userProfile)return;
+  const gid=GROUPS_LINKS[userProfile.group];if(gid)openTimetable(gid);
+}
+
+// ===== GPA =====
+let gpaScaleVisible=false;
+function toggleGpaScale(){
+  gpaScaleVisible=!gpaScaleVisible;
+  document.getElementById('gpa-scale-panel').style.display=gpaScaleVisible?'block':'none';
+  document.getElementById('gpa-arrow').textContent=gpaScaleVisible?'▲':'▼';
+}
+
+function updateGpaRing(gpa){
+  const circ=251.2,offset=circ-(gpa/5)*circ;
+  const ring=document.getElementById('gpa-ring');
+  ring.style.strokeDashoffset=offset;
+  let color='#ff4d4d';
+  if(gpa>=4.5)color='#00e676';else if(gpa>=4.0)color='#40c4ff';else if(gpa>=3.5)color='#b2ff59';else if(gpa>=3.0)color='#ffcc00';else if(gpa>0)color='#ff9800';
+  ring.style.stroke=color;
+  document.getElementById('gpa-ring-center').textContent=gpa.toFixed(2);
+  document.getElementById('gpa-ring-center').setAttribute('fill',color);
+  document.getElementById('gpa-result').textContent=gpa.toFixed(2);
+  document.getElementById('gpa-result').style.color=color;
+  let letter='—';
+  if(gpa>=4.75)letter='A+';else if(gpa>=4.25)letter='A';else if(gpa>=4.0)letter='B+';else if(gpa>=3.75)letter='B';else if(gpa>=3.5)letter='C+';else if(gpa>=3.25)letter='C';else if(gpa>=3.0)letter='D';else if(gpa>0)letter='F';
+  document.getElementById('gpa-letter').textContent=gpa>0?`${t('gpa_th_letter')}: ${letter}`:'—';
+  document.getElementById('gpa-letter').style.color=color;
+  updateStipendInfo(gpa);
+}
+
+function updateStipendInfo(gpa){
+  const el=document.getElementById('stipend-info');if(!gpa){el.innerHTML='';return;}
+  let html='';
+  if(gpa>=4.5)html=`<div class="stipend-card stipend-ok">${t('stipend_president')}</div>`;
+  else if(gpa>=3.5)html=`<div class="stipend-card stipend-ok">${t('stipend_ok')}</div>`;
+  else if(gpa>=3.0)html=`<div class="stipend-card stipend-warn">${t('stipend_warn')} (+${(3.5-gpa).toFixed(2)} kerak)</div>`;
+  else html=`<div class="stipend-card stipend-fail">${t('stipend_fail')}</div>`;
+  el.innerHTML=html;
+}
+
+function shareGpa(){
+  const gpa=document.getElementById('gpa-result').textContent;
+  const name=userProfile?.name||'—';const grp=userProfile?.group||'';
+  const msg=`🎓 NPUU Smart Bot\n👤 ${name} (${grp})\n📊 GPA: ${gpa} / 5.0`;
+  if(tg?.sendData)tg.sendData(JSON.stringify({type:'share_gpa',text:msg}));
+  else if(navigator.share)navigator.share({text:msg});
+  else navigator.clipboard.writeText(msg).then(()=>showBanner(t('copied')));
+}
+
+function loadGpaHistory(){try{const s=localStorage.getItem(LS_GPA_HIST);return s?JSON.parse(s):[];}catch(e){return[];}}
+function addGpaHistory(gpa){
+  const hist=loadGpaHistory();const d=new Date();const ds=`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
+  const filtered=hist.filter(h=>h.date!==ds);filtered.unshift({date:ds,gpa});
+  const lim=filtered.slice(0,10);localStorage.setItem(LS_GPA_HIST,JSON.stringify(lim));renderGpaHistory(lim);
+}
+function renderGpaHistory(hist){
+  if(!hist||!hist.length){document.getElementById('gpa-history-block').style.display='none';return;}
+  document.getElementById('gpa-history-block').style.display='block';
+  document.getElementById('gpa-history-list').innerHTML=hist.map(h=>`<div class="gpa-history-item"><span style="color:var(--muted)">${h.date}</span><span style="font-weight:700;color:var(--accent2)">${parseFloat(h.gpa).toFixed(2)}</span></div>`).join('');
+}
+
+const SHEET_ID='17Uvp8bhjn5Cf9r4d6GssDHznQPBpS0Lv';
+const SHEET_NAMES={AI:'Artificial Intelligence',IST:'Information Systems',MATH:'Mathematics'};
+let CURRICULUM={AI:null,IST:null,MATH:null};
+
+function parseSheetRows(rows){
+  const subjects=[];if(!rows||rows.length<2)return subjects;
+  for(let i=1;i<rows.length;i++){
+    const r=rows[i].c;if(!r||!r[0]||!r[0].v)continue;
+    const semRaw=r[0]?String(r[0].v).trim():'';const sem=parseInt(semRaw.replace(/[^0-9]/g,''))||0;
+    if(!sem||sem<1||sem>8)continue;
+    const code=r[1]?String(r[1].v||'').trim():'';const nameEn=r[2]?String(r[2].v||'').trim():'';
+    const nameUz=r[3]?String(r[3].v||'').trim():'';const typeRaw=r[4]?String(r[4].v||'').trim():'Core';
+    const type=(typeRaw.toLowerCase().includes('elective'))?'Elective':'Core';
+    const ects=r[7]?(parseFloat(r[7].v)||0):0;
+    if(!nameEn&&!nameUz)continue;
+    subjects.push({sem,code,nameEn,nameUz,type,ects});
   }
   return subjects;
 }
 
-async function fetchCurriculum(majorKey) {
-  if (CURRICULUM[majorKey] !== null) return CURRICULUM[majorKey];
-  const sheetName = SHEET_NAMES[majorKey];
-  if (!sheetName) return [];
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
-  try {
-    const res = await fetch(url);
-    const text = await res.text();
-    const jsonStr = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]+?)\);?\s*$/)[1];
-    const data = JSON.parse(jsonStr);
-    const rows = (data && data.table && data.table.rows) ? data.table.rows : [];
-    CURRICULUM[majorKey] = parseSheetRows(rows);
-    return CURRICULUM[majorKey];
-  } catch(e) {
-    console.error('Sheets fetch error:', e);
-    return [];
-  }
+async function fetchCurriculum(majorKey){
+  if(CURRICULUM[majorKey]!==null)return CURRICULUM[majorKey];
+  const sheetName=SHEET_NAMES[majorKey];if(!sheetName)return[];
+  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
+  try{
+    const res=await fetch(url);const text=await res.text();
+    const jsonStr=text.match(/google\.visualization\.Query\.setResponse\(([\s\S]+?)\);?\s*$/)[1];
+    const data=JSON.parse(jsonStr);
+    const rows=(data&&data.table&&data.table.rows)?data.table.rows:[];
+    CURRICULUM[majorKey]=parseSheetRows(rows);return CURRICULUM[majorKey];
+  }catch(e){console.error('Sheets fetch error:',e);return[];}
+}
+
+let gpaState={selectedSems:[],subjects:{}};
+
+async function initGpa(){
+  const saved=localStorage.getItem(LS_GPA);
+  if(saved){try{const parsed=JSON.parse(saved);if(Array.isArray(parsed)){parsed.forEach((item,idx)=>{gpaState.subjects['legacy_'+idx]=item;});}else{gpaState=parsed;if(!gpaState.selectedSems)gpaState.selectedSems=[];if(!gpaState.subjects)gpaState.subjects={};}}}catch(e){}
+  if(userProfile&&gpaState.selectedSems.length===0)gpaState.selectedSems=[calcCurrentSemester(userProfile.admitYear)];
+  renderGpaHistory(loadGpaHistory());
+  await renderGpaView();
+}
+
+function syncDOMToState(){
+  document.querySelectorAll('#gpa-rows .gpa-row-item').forEach(row=>{
+    const id=row.dataset.id;if(!id)return;
+    gpaState.subjects[id]={name:row.querySelector('.name-input').value,credit:row.querySelector('.credit-input').value,score:row.querySelector('.score-input').value};
+  });
+}
+
+async function toggleGpaSem(sem){
+  syncDOMToState();
+  if(gpaState.selectedSems.includes(sem))gpaState.selectedSems=gpaState.selectedSems.filter(s=>s!==sem);
+  else{gpaState.selectedSems.push(sem);gpaState.selectedSems.sort((a,b)=>a-b);}
+  await renderGpaView();
+}
+
+async function renderGpaView(){
+  const container=document.getElementById('gpa-sem-container');
+  const toggles=document.getElementById('gpa-sem-toggles');
+  if(userProfile){
+    container.style.display='block';
+    toggles.innerHTML=[1,2,3,4,5,6,7,8].map(s=>`<button class="curr-filter-btn ${gpaState.selectedSems.includes(s)?'active':''}" onclick="toggleGpaSem(${s})">${s}-sem</button>`).join('');
+  }else container.style.display='none';
+  const c=document.getElementById('gpa-rows');c.innerHTML='';
+  if(userProfile&&gpaState.selectedSems.length>0){
+    c.innerHTML=`<div style="text-align:center;color:var(--muted);padding:16px 0">⏳</div>`;
+    const sheetSubjects=await fetchCurriculum(userProfile.major);c.innerHTML='';
+    gpaState.selectedSems.forEach(sem=>{
+      const semItems=sheetSubjects.filter(s=>s.sem===sem);
+      if(semItems.length>0&&gpaState.selectedSems.length>1){
+        const divider=document.createElement('div');
+        divider.style.cssText='font-size:10.5px;font-weight:700;color:var(--accent3);text-transform:uppercase;letter-spacing:.6px;padding:6px 2px 4px;margin-top:4px';
+        divider.textContent=`${sem}-semester`;c.appendChild(divider);
+      }
+      semItems.forEach(s=>{const saved=gpaState.subjects[s.code];appendGpaRowDOM(s.code,saved?.name||(currentLang==='uz'?s.nameUz:s.nameEn),saved?.credit!==undefined?saved.credit:s.ects,saved?.score||'');});
+    });
+  }else if(!userProfile)for(let i=0;i<5;i++)appendGpaRowDOM('legacy_'+i,'',3,'');
+  Object.keys(gpaState.subjects).forEach(key=>{if(key.startsWith('custom_')){const s=gpaState.subjects[key];appendGpaRowDOM(key,s.name,s.credit,s.score);}});
+  calculateGpa();
+}
+
+function appendGpaRowDOM(id,name,credit,score){
+  const c=document.getElementById('gpa-rows');const row=document.createElement('div');
+  row.className='card gpa-row-item';row.dataset.id=id;
+  row.style.cssText='padding:7px 10px;display:flex;gap:7px;align-items:center;margin-bottom:7px';
+  const isCustom=id.startsWith('custom_')||id.startsWith('legacy_');
+  row.innerHTML=`<input type="text" class="name-input" value="${(name||'').replace(/"/g,'&quot;').replace(/'/g,"&#39;")}" placeholder="Subject" style="flex:2;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 9px;border-radius:8px;font-size:12.5px;min-width:0;font-family:inherit;outline:none"><input type="number" class="credit-input" placeholder="Cr" min="1" max="100" value="${credit||3}" style="width:38px;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:8px;text-align:center;font-size:12.5px;outline:none"><input type="number" class="score-input" placeholder="0-100" min="0" max="100" value="${score||''}" style="width:52px;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:8px;text-align:center;font-size:12.5px;outline:none"><div class="grade-display" style="width:33px;text-align:center;font-weight:700;font-size:13px;color:var(--muted)">-</div><button onclick="removeGpaRow(this,'${id}')" style="background:none;border:none;font-size:15px;cursor:pointer;padding:0 3px;color:${isCustom?'#ff4d4d':'var(--muted)'};">${isCustom?'✕':'·'}</button>`;
+  c.appendChild(row);
+  row.querySelector('.credit-input').addEventListener('input',calculateGpa);
+  row.querySelector('.score-input').addEventListener('input',calculateGpa);
+}
+
+function removeGpaRow(btn,id){
+  if(id.startsWith('custom_')||id.startsWith('legacy_')){delete gpaState.subjects[id];btn.parentElement.remove();calculateGpa();}
+}
+
+function addCustomGpaRow(){syncDOMToState();const id='custom_'+Date.now();gpaState.subjects[id]={name:'',credit:3,score:''};appendGpaRowDOM(id,'',3,'');calculateGpa();}
+
+function calculateGpa(){
+  let tc=0,tp=0;
+  document.querySelectorAll('#gpa-rows .gpa-row-item').forEach(row=>{
+    const cr=parseFloat(row.querySelector('.credit-input').value)||0;
+    const sv=row.querySelector('.score-input').value;const sc=parseFloat(sv);
+    const gd=row.querySelector('.grade-display');let gp=0,lt='-';
+    if(!isNaN(sc)&&sv!==''){
+      if(sc>=95){gp=5.00;lt='A+';}else if(sc>=90){gp=4.50;lt='A';}else if(sc>=85){gp=4.25;lt='B+';}
+      else if(sc>=80){gp=4.00;lt='B';}else if(sc>=75){gp=3.75;lt='C+';}else if(sc>=70){gp=3.50;lt='C';}
+      else if(sc>=65){gp=3.25;lt='D+';}else if(sc>=60){gp=3.00;lt='D';}else{gp=0;lt='F';}
+      gd.innerText=lt;gd.style.color=gp>=3?'var(--accent3)':'#ff4d4d';tc+=cr;tp+=cr*gp;
+    }else{gd.innerText='-';gd.style.color='var(--muted)';}
+  });
+  updateGpaRing(tc>0?tp/tc:0);
+}
+
+function saveGpaData(){
+  syncDOMToState();
+  document.querySelectorAll('#gpa-rows .gpa-row-item').forEach(row=>{
+    const id=row.dataset.id;if(!id)return;
+    gpaState.subjects[id]={name:row.querySelector('.name-input').value,credit:row.querySelector('.credit-input').value,score:row.querySelector('.score-input').value};
+  });
+  localStorage.setItem(LS_GPA,JSON.stringify(gpaState));
+  const gv=parseFloat(document.getElementById('gpa-result').textContent)||0;
+  if(gv>0)addGpaHistory(gv.toFixed(2));
+  showBanner(t('saved_msg'));
 }
 
 // ===== PROFS =====
@@ -643,512 +1532,6 @@ const PROFS=[
 ];
 const DEPT_CLASS={Mathematics:"dept-math","General English":"dept-eng",IT:"dept-it",Education:"dept-edu"};
 
-// ===== TIMETABLE =====
-const GROUPS_LINKS={"FM1":"-1","FM2":"-2","FM3":"-3","FM4":"-4","FM5":"-5","FM6":"-6","FM7":"*7","FIT1":"-7","FIT2":"-8","FIT3":"-9","FIT4":"-10","FIT5":"-11","FIT6":"-12","FAR1":"-13","FAR2":"-14","FAR3":"-15"};
-
-// ===== STATE =====
-let currentLang='uz', isDark=true, userProfile=null;
-
-// ===== HELPERS =====
-function t(key){return T[currentLang]?.[key]||T.uz[key]||key}
-function showBanner(msg){const b=document.getElementById('save-banner');b.textContent=msg;b.classList.add('show');setTimeout(()=>b.classList.remove('show'),2500)}
-function getInitials(name){return name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}
-
-// ===== CALC SEMESTER =====
-// O'quv yili SENTYABR (9-oy)dan boshlanadi
-// Misol: 2025 avgustda qabul => 2025-2026 o'quv yili
-//   2025 sentyabr - 2026 yanvar => 1-semester
-//   2026 fevral   - 2026 avgust  => 2-semester
-function calcCurrentSemester(admitYear) {
-  const now = new Date();
-  const mo  = now.getMonth() + 1; // 1..12
-  const yr  = now.getFullYear();
-
-  // Joriy o'quv yilining bosh yili:
-  // sentyabr (9) va undan keyin => shu yil; boshqa holda => o'tgan yil
-  const currentAcadStart = (mo >= 9) ? yr : yr - 1;
-
-  // Qabul o'quv yilining bosh yili:
-  // Agar avgust yoki undan oldin qabul => shu yil sentyabrda boshlaydi
-  // Ya'ni admitAcadStart = admitYear (chunki avgust < sentyabr)
-  const admitAcadStart = parseInt(admitYear);
-
-  // Nechta o'quv yili tugagan (0 dan boshlanadi)
-  const acadYearsElapsed = currentAcadStart - admitAcadStart;
-
-  // Joriy semestr o'quv yili ichida:
-  // 9-yanvar => 1-semestr (fall), 2-avgust => 2-semestr (spring)
-  const isFall = (mo >= 9 || mo <= 1);
-  const semInYear = isFall ? 1 : 2;
-
-  const sem = acadYearsElapsed * 2 + semInYear;
-  return Math.min(Math.max(sem, 1), 8);
-}
-
-// ===== LANGUAGE =====
-function setLanguage(lang){
-  currentLang=lang;
-  localStorage.setItem(LS_LANG,lang);
-  const sel=document.getElementById('lang-select');
-  if(sel)sel.value=lang;
-  document.querySelectorAll('[data-i18n]').forEach(el=>{
-    const k=el.getAttribute('data-i18n');
-    if(t(k))el.innerHTML=t(k);
-  });
-  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
-    const k=el.getAttribute('data-i18n-ph');
-    if(t(k))el.placeholder=t(k);
-  });
-  if(userProfile){ applyProfile(); renderGpaView(); }
-}
-
-// ===== THEME =====
-function applyTheme(dark){
-  isDark=dark;
-  document.body.classList.toggle('light',!dark);
-  const tb=document.getElementById('theme-btn');
-  if(tb)tb.textContent=dark?'🌙':'☀️';
-  localStorage.setItem(LS_THEME,dark?'dark':'light');
-  if(tg?.setHeaderColor)tg.setHeaderColor(dark?'#070f1e':'#f0f4ff');
-  if(tg?.setBackgroundColor)tg.setBackgroundColor(dark?'#070f1e':'#f0f4ff');
-}
-function toggleTheme(){applyTheme(!isDark)}
-
-// ===== PROFILE =====
-function loadProfile(){
-  try{const s=localStorage.getItem(LS_PROFILE);if(s)userProfile=JSON.parse(s);}catch(e){userProfile=null;}
-}
-function saveProfileData(p){userProfile=p;localStorage.setItem(LS_PROFILE,JSON.stringify(p));}
-
-function applyProfile(){
-  if(!userProfile)return;
-  document.getElementById('profile-header').style.display='flex';
-  document.getElementById('today-widget').style.display='block';
-  document.getElementById('main-topbar').style.display='flex';
-  document.getElementById('main-tabs').style.display='flex';
-  document.getElementById('main-nav').style.display='flex';
-
-  document.getElementById('profile-avatar').textContent=getInitials(userProfile.name||'U');
-  document.getElementById('profile-name').textContent=userProfile.name||'—';
-
-  const majorNames={AI:'AI',IST:'IST',MATH:'Math'};
-  const curSem=calcCurrentSemester(userProfile.admitYear);
-  const yr=Math.ceil(curSem/2);
-  document.getElementById('profile-meta').textContent=
-    `${userProfile.sid?'ID: '+userProfile.sid+' • ':''}${userProfile.group} • ${majorNames[userProfile.major]||userProfile.major}`;
-  document.getElementById('semester-badge').textContent=`${curSem}-${t('semester_label')} / ${yr}-${t('year_label')}`;
-
-  document.getElementById('today-group-text').textContent=`${t('tab_tt')}: ${userProfile.group}`;
-
-  const days=t('days');
-  document.getElementById('today-day-badge').textContent=days[new Date().getDay()];
-
-  initTimetable();
-  highlightHandbook();
-}
-
-function editProfile(){
-  if(userProfile){
-    document.getElementById('ob-name').value=userProfile.name||'';
-    document.getElementById('ob-sid').value=userProfile.sid||'';
-    document.getElementById('ob-major').value=userProfile.major||'';
-    document.getElementById('ob-admit-year').value=userProfile.admitYear||'';
-    document.getElementById('ob-group').value=userProfile.group||'';
-  }
-  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
-  document.getElementById('step-0').classList.add('active');
-  updateDots(0);
-  document.getElementById('onboarding-overlay').style.display='flex';
-}
-
-function highlightHandbook(){
-  if(!userProfile)return;
-  const map={AI:'hb-ai',IST:'hb-ist',MATH:'hb-math'};
-  document.querySelectorAll('.handbook-btn').forEach(el=>{
-    el.classList.remove('recommended');
-    el.querySelectorAll('.rec-badge').forEach(b=>b.remove());
-  });
-  const tid=map[userProfile.major];
-  if(tid){
-    const el=document.getElementById(tid);
-    if(el){
-      el.classList.add('recommended');
-      const badge=document.createElement('span');
-      badge.className='rec-badge';
-      badge.textContent='✓';
-      el.querySelector('span').appendChild(badge);
-    }
-  }
-}
-
-// ===== ONBOARDING =====
-let obStep=0;
-function updateDots(s){
-  for(let i=0;i<4;i++){
-    const d=document.getElementById('dot-'+i);
-    if(!d)continue;
-    d.classList.remove('active','done');
-    if(i<s)d.classList.add('done');
-    else if(i===s)d.classList.add('active');
-  }
-}
-function obNext(next){
-  if(next===1){
-    const n=document.getElementById('ob-name').value.trim();
-    if(!n){alert(currentLang==='ru'?'Введите имя!':currentLang==='en'?'Enter your name!':'Ismingizni kiriting!');return;}
-  }
-  if(next===2){
-    const m=document.getElementById('ob-major').value, y=document.getElementById('ob-admit-year').value;
-    if(!m||!y){alert(currentLang==='ru'?'Заполните все поля!':currentLang==='en'?'Fill all fields!':'Barcha maydonlarni to\'ldiring!');return;}
-  }
-  if(next===3){
-    const g=document.getElementById('ob-group').value;
-    if(!g){alert(currentLang==='ru'?'Выберите группу!':currentLang==='en'?'Select your group!':'Guruhni tanlang!');return;}
-  }
-  document.getElementById('step-'+obStep).classList.remove('active');
-  obStep=next;
-  document.getElementById('step-'+obStep).classList.add('active');
-  updateDots(obStep);
-}
-function obFinish(lang){
-  setLanguage(lang);
-  const p={
-    name:document.getElementById('ob-name').value.trim(),
-    sid:document.getElementById('ob-sid').value.trim(),
-    major:document.getElementById('ob-major').value,
-    admitYear:document.getElementById('ob-admit-year').value,
-    group:document.getElementById('ob-group').value,
-    lang:lang
-  };
-  saveProfileData(p);
-  document.getElementById('onboarding-overlay').style.display='none';
-  applyProfile();
-  // Reset GPA selected sems to current semester
-  gpaState.selectedSems = [calcCurrentSemester(p.admitYear)];
-  initGpa(); // async, refresh GPA rows with sheets data
-  showBanner(`${t('welcome')}, ${p.name.split(' ')[0]}! 👋`);
-}
-
-// ===== NAVIGATION =====
-function switchView(viewId){
-  document.querySelectorAll('.view-section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  const sec=document.getElementById('view-'+viewId);
-  if(sec)sec.classList.add('active');
-  const tab=document.getElementById('t-'+viewId);
-  if(tab)tab.classList.add('active');
-  const nav=document.getElementById('nav-'+viewId);
-  if(nav)nav.classList.add('active');
-}
-
-// ===== TIMETABLE =====
-function initTimetable(){
-  const grid=document.getElementById('tt-grid');
-  grid.innerHTML=Object.entries(GROUPS_LINKS).map(([gname,gid])=>{
-    const isMine=userProfile?.group===gname;
-    return `<button class="tt-btn${isMine?' my-group':''}" data-group="${gname}" onclick="openTimetable('${gid}')">
-      ${gname}${isMine?'<span class="star">⭐</span>':''}
-    </button>`;
-  }).join('');
-}
-function openTimetable(gid){
-  const url=`https://npuu.edupage.org/timetable/view.php?num=6&class=${gid}`;
-  if(tg?.openLink)tg.openLink(url); else window.open(url,'_blank');
-}
-function openMyTimetable(e){
-  e.preventDefault();
-  if(!userProfile)return;
-  const gid=GROUPS_LINKS[userProfile.group];
-  if(gid)openTimetable(gid);
-}
-
-
-// ===== GPA SCALE TOGGLE =====
-let gpaScaleVisible=false;
-function toggleGpaScale(){
-  gpaScaleVisible=!gpaScaleVisible;
-  document.getElementById('gpa-scale-panel').style.display=gpaScaleVisible?'block':'none';
-  document.getElementById('gpa-arrow').textContent=gpaScaleVisible?'▲':'▼';
-}
-
-// ===== GPA RING =====
-function updateGpaRing(gpa){
-  const circ=251.2;
-  const offset=circ-(gpa/5)*circ;
-  const ring=document.getElementById('gpa-ring');
-  ring.style.strokeDashoffset=offset;
-  let color='#ff4d4d';
-  if(gpa>=4.5)color='#00e676';
-  else if(gpa>=4.0)color='#40c4ff';
-  else if(gpa>=3.5)color='#b2ff59';
-  else if(gpa>=3.0)color='#ffcc00';
-  else if(gpa>0)color='#ff9800';
-  ring.style.stroke=color;
-  document.getElementById('gpa-ring-center').textContent=gpa.toFixed(2);
-  document.getElementById('gpa-ring-center').setAttribute('fill',color);
-  document.getElementById('gpa-result').textContent=gpa.toFixed(2);
-  document.getElementById('gpa-result').style.color=color;
-  let letter='—';
-  if(gpa>=4.75)letter='A+'; else if(gpa>=4.25)letter='A'; else if(gpa>=4.0)letter='B+';
-  else if(gpa>=3.75)letter='B'; else if(gpa>=3.5)letter='C+'; else if(gpa>=3.25)letter='C';
-  else if(gpa>=3.0)letter='D'; else if(gpa>0)letter='F';
-  document.getElementById('gpa-letter').textContent=gpa>0?`${t('gpa_th_letter')}: ${letter}`:'—';
-  document.getElementById('gpa-letter').style.color=color;
-  updateStipendInfo(gpa);
-}
-
-function updateStipendInfo(gpa){
-  const el=document.getElementById('stipend-info');
-  if(!gpa){el.innerHTML='';return;}
-  let html='';
-  if(gpa>=4.5) html=`<div class="stipend-card stipend-ok">${t('stipend_president')}</div>`;
-  else if(gpa>=3.5) html=`<div class="stipend-card stipend-ok">${t('stipend_ok')}</div>`;
-  else if(gpa>=3.0) html=`<div class="stipend-card stipend-warn">${t('stipend_warn')} (+${(3.5-gpa).toFixed(2)} kerak)</div>`;
-  else html=`<div class="stipend-card stipend-fail">${t('stipend_fail')}</div>`;
-  el.innerHTML=html;
-}
-
-// ===== GPA SHARE =====
-function shareGpa(){
-  const gpa=document.getElementById('gpa-result').textContent;
-  const name=userProfile?.name||'—';
-  const grp=userProfile?.group||'';
-  const msg=`🎓 NPUU Smart Bot\n👤 ${name} (${grp})\n📊 GPA: ${gpa} / 5.0`;
-  if(tg?.sendData)tg.sendData(JSON.stringify({type:'share_gpa',text:msg}));
-  else if(navigator.share)navigator.share({text:msg});
-  else navigator.clipboard.writeText(msg).then(()=>showBanner(t('copied')));
-}
-
-// ===== GPA HISTORY =====
-function loadGpaHistory(){try{const s=localStorage.getItem(LS_GPA_HIST);return s?JSON.parse(s):[];}catch(e){return[];}}
-function addGpaHistory(gpa){
-  const hist=loadGpaHistory();
-  const d=new Date();
-  const ds=`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
-  const filtered=hist.filter(h=>h.date!==ds);
-  filtered.unshift({date:ds,gpa});
-  const lim=filtered.slice(0,10);
-  localStorage.setItem(LS_GPA_HIST,JSON.stringify(lim));
-  renderGpaHistory(lim);
-}
-function renderGpaHistory(hist){
-  if(!hist||!hist.length){document.getElementById('gpa-history-block').style.display='none';return;}
-  document.getElementById('gpa-history-block').style.display='block';
-  document.getElementById('gpa-history-list').innerHTML=hist.map(h=>`
-    <div class="gpa-history-item">
-      <span style="color:var(--muted)">${h.date}</span>
-      <span style="font-weight:700;color:var(--accent2)">${parseFloat(h.gpa).toFixed(2)}</span>
-    </div>`).join('');
-}
-
-// ===== GPA STATE =====
-// gpaState.subjects = { 'SUBJ_CODE_or_custom_xxx': { name, credit, score } }
-// gpaState.selectedSems = [1,2,...] — which semesters to show
-let gpaState = { selectedSems: [], subjects: {} };
-
-// ===== GPA CALC =====
-async function initGpa() {
-  // Load saved state
-  const saved = localStorage.getItem(LS_GPA);
-  if (saved) {
-    try {
-      const parsed = JSON.parse(saved);
-      // Migrate old array format
-      if (Array.isArray(parsed)) {
-        parsed.forEach((item, idx) => {
-          gpaState.subjects['legacy_' + idx] = item;
-        });
-      } else {
-        gpaState = parsed;
-        if (!gpaState.selectedSems) gpaState.selectedSems = [];
-        if (!gpaState.subjects) gpaState.subjects = {};
-      }
-    } catch(e) {}
-  }
-
-  // Default selected semester = current semester
-  if (userProfile && gpaState.selectedSems.length === 0) {
-    gpaState.selectedSems = [calcCurrentSemester(userProfile.admitYear)];
-  }
-
-  renderGpaHistory(loadGpaHistory());
-  await renderGpaView();
-}
-
-function syncDOMToState() {
-  document.querySelectorAll('#gpa-rows .gpa-row-item').forEach(row => {
-    const id = row.dataset.id;
-    if (!id) return;
-    gpaState.subjects[id] = {
-      name:   row.querySelector('.name-input').value,
-      credit: row.querySelector('.credit-input').value,
-      score:  row.querySelector('.score-input').value
-    };
-  });
-}
-
-async function toggleGpaSem(sem) {
-  syncDOMToState();
-  if (gpaState.selectedSems.includes(sem)) {
-    gpaState.selectedSems = gpaState.selectedSems.filter(s => s !== sem);
-  } else {
-    gpaState.selectedSems.push(sem);
-    gpaState.selectedSems.sort((a,b) => a-b);
-  }
-  await renderGpaView();
-}
-
-async function renderGpaView() {
-  // Build semester filter buttons
-  const container = document.getElementById('gpa-sem-container');
-  const toggles = document.getElementById('gpa-sem-toggles');
-  if (userProfile) {
-    container.style.display = 'block';
-    toggles.innerHTML = [1,2,3,4,5,6,7,8].map(s => `
-      <button class="curr-filter-btn ${gpaState.selectedSems.includes(s) ? 'active' : ''}"
-        onclick="toggleGpaSem(${s})">${s}-sem</button>`).join('');
-  } else {
-    container.style.display = 'none';
-  }
-
-  const c = document.getElementById('gpa-rows');
-  c.innerHTML = '';
-
-  if (userProfile && gpaState.selectedSems.length > 0) {
-    // Show loading placeholder
-    c.innerHTML = `<div style="text-align:center;color:var(--muted);padding:16px 0">⏳ ${currentLang==='ru'?'Загрузка...':currentLang==='en'?'Loading...':'Yuklanmoqda...'}</div>`;
-
-    // Fetch from Sheets
-    const sheetSubjects = await fetchCurriculum(userProfile.major);
-    c.innerHTML = '';
-
-    gpaState.selectedSems.forEach(sem => {
-      const semItems = sheetSubjects.filter(s => s.sem === sem);
-
-      // Semester divider
-      if (semItems.length > 0 && gpaState.selectedSems.length > 1) {
-        const divider = document.createElement('div');
-        divider.style.cssText = 'font-size:10.5px;font-weight:700;color:var(--accent3);text-transform:uppercase;letter-spacing:.6px;padding:6px 2px 4px;margin-top:4px';
-        divider.textContent = `${sem}-semester`;
-        c.appendChild(divider);
-      }
-
-      semItems.forEach(s => {
-        const saved = gpaState.subjects[s.code];
-        appendGpaRowDOM(
-          s.code,
-          saved?.name || (currentLang === 'uz' ? s.nameUz : s.nameEn),
-          saved?.credit !== undefined ? saved.credit : s.ects,
-          saved?.score || ''
-        );
-      });
-    });
-  } else if (!userProfile) {
-    // No profile: show empty rows
-    for (let i = 0; i < 5; i++) appendGpaRowDOM('legacy_' + i, '', 3, '');
-  }
-
-  // Add custom subjects
-  Object.keys(gpaState.subjects).forEach(key => {
-    if (key.startsWith('custom_')) {
-      const s = gpaState.subjects[key];
-      appendGpaRowDOM(key, s.name, s.credit, s.score);
-    }
-  });
-
-  calculateGpa();
-}
-
-function appendGpaRowDOM(id, name, credit, score) {
-  const c = document.getElementById('gpa-rows');
-  const row = document.createElement('div');
-  row.className = 'card gpa-row-item';
-  row.dataset.id = id;
-  row.style.cssText = 'padding:7px 10px;display:flex;gap:7px;align-items:center;margin-bottom:7px';
-  const isCustom = id.startsWith('custom_') || id.startsWith('legacy_');
-  // All rows: name & credit editable. Score always editable. Custom rows deletable.
-  row.innerHTML = `
-    <input type="text" class="name-input" value="${(name||'').replace(/"/g,'&quot;').replace(/'/g,"&#39;")}" placeholder="Subject"
-      style="flex:2;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 9px;border-radius:8px;font-size:12.5px;min-width:0;font-family:inherit;outline:none">
-    <input type="number" class="credit-input" placeholder="Cr" min="1" max="100" value="${credit||3}"
-      style="width:38px;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:8px;text-align:center;font-size:12.5px;outline:none">
-    <input type="number" class="score-input" placeholder="0-100" min="0" max="100" value="${score||''}"
-      style="width:52px;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:8px;text-align:center;font-size:12.5px;outline:none">
-    <div class="grade-display" style="width:33px;text-align:center;font-weight:700;font-size:13px;color:var(--muted)">-</div>
-    <button onclick="removeGpaRow(this,'${id}')"
-      style="background:none;border:none;font-size:15px;cursor:pointer;padding:0 3px;color:${isCustom?'#ff4d4d':'var(--muted)'};"
-      title="${isCustom?'O\'chirish':'Semestr tanlovi orqali olib tashlang'}">${isCustom?'✕':'·'}</button>`;
-  c.appendChild(row);
-  row.querySelector('.credit-input').addEventListener('input', calculateGpa);
-  row.querySelector('.score-input').addEventListener('input', calculateGpa);
-}
-
-function removeGpaRow(btn, id) {
-  if (id.startsWith('custom_') || id.startsWith('legacy_')) {
-    delete gpaState.subjects[id];
-    btn.parentElement.remove();
-    calculateGpa();
-  }
-  // Curriculum subjects are only hidden by deselecting the semester
-}
-
-function addCustomGpaRow() {
-  syncDOMToState();
-  const id = 'custom_' + Date.now();
-  gpaState.subjects[id] = { name: '', credit: 3, score: '' };
-  appendGpaRowDOM(id, '', 3, '');
-  calculateGpa();
-}
-
-function calculateGpa() {
-  let tc = 0, tp = 0;
-  document.querySelectorAll('#gpa-rows .gpa-row-item').forEach(row => {
-    const cr = parseFloat(row.querySelector('.credit-input').value) || 0;
-    const sv = row.querySelector('.score-input').value;
-    const sc = parseFloat(sv);
-    const gd = row.querySelector('.grade-display');
-    let gp = 0, lt = '-';
-    if (!isNaN(sc) && sv !== '') {
-      if      (sc >= 95) { gp = 5.00; lt = 'A+'; }
-      else if (sc >= 90) { gp = 4.50; lt = 'A';  }
-      else if (sc >= 85) { gp = 4.25; lt = 'B+'; }
-      else if (sc >= 80) { gp = 4.00; lt = 'B';  }
-      else if (sc >= 75) { gp = 3.75; lt = 'C+'; }
-      else if (sc >= 70) { gp = 3.50; lt = 'C';  }
-      else if (sc >= 65) { gp = 3.25; lt = 'D+'; }
-      else if (sc >= 60) { gp = 3.00; lt = 'D';  }
-      else               { gp = 0;    lt = 'F';  }
-      gd.innerText = lt;
-      gd.style.color = gp >= 3 ? 'var(--accent3)' : '#ff4d4d';
-      tc += cr; tp += cr * gp;
-    } else {
-      gd.innerText = '-';
-      gd.style.color = 'var(--muted)';
-    }
-  });
-  updateGpaRing(tc > 0 ? tp / tc : 0);
-}
-
-function saveGpaData() {
-  syncDOMToState();
-  // Also persist curriculum row scores into subjects map
-  document.querySelectorAll('#gpa-rows .gpa-row-item').forEach(row => {
-    const id = row.dataset.id;
-    if (!id) return;
-    gpaState.subjects[id] = {
-      name:   row.querySelector('.name-input').value,
-      credit: row.querySelector('.credit-input').value,
-      score:  row.querySelector('.score-input').value
-    };
-  });
-  localStorage.setItem(LS_GPA, JSON.stringify(gpaState));
-  const gv = parseFloat(document.getElementById('gpa-result').textContent) || 0;
-  if (gv > 0) addGpaHistory(gv.toFixed(2));
-  showBanner(t('saved_msg'));
-}
-
-// ===== PROFS =====
 function renderProfs(data){
   document.getElementById('prof-list').innerHTML=data.map((p,i)=>`
     <div class="card card-anim ${DEPT_CLASS[p.d]||''}" style="margin-bottom:8px;animation-delay:${i*.03}s">
@@ -1162,11 +1545,7 @@ function renderProfs(data){
 }
 
 function copyEmail(email,btn){
-  navigator.clipboard.writeText(email).then(()=>{
-    btn.textContent='✓';
-    btn.classList.add('copied');
-    setTimeout(()=>{btn.textContent='📋';btn.classList.remove('copied');},2000);
-  });
+  navigator.clipboard.writeText(email).then(()=>{btn.textContent='✓';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📋';btn.classList.remove('copied');},2000);});
 }
 
 document.getElementById('search-prof').addEventListener('input',e=>{
@@ -1175,26 +1554,20 @@ document.getElementById('search-prof').addEventListener('input',e=>{
 });
 
 // ===== INIT =====
-window.onload = async () => {
-  const savedTheme = localStorage.getItem(LS_THEME);
-  if (savedTheme === 'light') applyTheme(false);
-  else if (tg?.colorScheme === 'light') applyTheme(false);
-  else applyTheme(true);
-
-  const savedLang = localStorage.getItem(LS_LANG) || 'uz';
-  currentLang = savedLang;
-
-  loadProfile();
-  if (userProfile) {
-    setLanguage(userProfile.lang || savedLang);
-    document.getElementById('onboarding-overlay').style.display = 'none';
+window.onload=async()=>{
+  const savedTheme=localStorage.getItem(LS_THEME);
+  if(savedTheme==='light')applyTheme(false);else if(tg?.colorScheme==='light')applyTheme(false);else applyTheme(true);
+  const savedLang=localStorage.getItem(LS_LANG)||'uz';currentLang=savedLang;
+  loadProfile();loadEngProgress();
+  if(userProfile){
+    setLanguage(userProfile.lang||savedLang);
+    document.getElementById('onboarding-overlay').style.display='none';
     applyProfile();
-  } else {
-    setLanguage(savedLang);
-  }
-
+  }else setLanguage(savedLang);
   await initGpa();
   renderProfs(PROFS);
+  // Init translation data
+  transState.data=TRANS_DATA[transState.dir][transState.level]||[];
 };
 </script>
 </body>
