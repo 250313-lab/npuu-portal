@@ -1558,15 +1558,10 @@ window.onload=async()=>{
   if(savedTheme==='light')applyTheme(false);else if(tg?.colorScheme==='light')applyTheme(false);else applyTheme(true);
   const savedLang=localStorage.getItem(LS_LANG)||'uz';currentLang=savedLang;
   loadProfile();loadEngProgress();
+  
   if(userProfile){
-    setLanguage(userProfile.lang||savedLang);
-    document.getElementById('onboarding-overlay').style.display='none';
-    applyProfile();
-  }else setLanguage(savedLang);
-  await initGpa();
-  renderProfs(PROFS);
-  // Init translation data
-  transState.data=TRANS_DATA[transState.dir][transState.level]||[];
+    setLanguage(currentLang); 
+  }
 };
 </script>
 </body>
