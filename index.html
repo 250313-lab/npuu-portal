@@ -256,7 +256,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
       <input type="text" class="onboard-input" id="ob-name" placeholder="Abdullohxonov Sodiqxon" autocomplete="off">
       <div class="onboard-label">🪪 Student ID</div>
       <input type="text" class="onboard-input" id="ob-sid" placeholder="Masalan: 250313" autocomplete="off">
-      <button class="onboard-btn" onclick="obNext(1)">Davom etish →</button>
+      <button type="button" class="onboard-btn" onclick="obNext(1)">Davom etish →</button>
     </div>
     <div class="step" id="step-1">
       <div class="onboard-label">🎓 Yo'nalish</div>
@@ -273,7 +273,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
         <option value="2023">2023</option><option value="2024">2024</option>
         <option value="2025">2025</option>
       </select>
-      <button class="onboard-btn" onclick="obNext(2)">Davom etish →</button>
+      <button type="button" class="onboard-btn" onclick="obNext(2)">Davom etish →</button>
     </div>
     <div class="step" id="step-2">
       <div class="onboard-label">👥 Guruh</div>
@@ -283,14 +283,14 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
         <optgroup label="FIT"><option value="FIT1">FIT1</option><option value="FIT2">FIT2</option><option value="FIT3">FIT3</option><option value="FIT4">FIT4</option><option value="FIT5">FIT5</option><option value="FIT6">FIT6</option></optgroup>
         <optgroup label="FAR"><option value="FAR1">FAR1</option><option value="FAR2">FAR2</option><option value="FAR3">FAR3</option></optgroup>
       </select>
-      <button class="onboard-btn" onclick="obNext(3)">Davom etish →</button>
+      <button type="button" class="onboard-btn" onclick="obNext(3)">Davom etish →</button>
     </div>
     <div class="step" id="step-3">
       <div class="onboard-label">🌐 Til / Language / Язык</div>
       <div style="display:flex;gap:8px;margin-top:4px;">
-        <button class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('uz')">🇺🇿 O'zbek</button>
-        <button class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('ru')">🇷🇺 Русский</button>
-        <button class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('en')">🇬🇧 English</button>
+        <button type="button" class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('uz')">🇺🇿 O'zbek</button>
+        <button type="button" class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('ru')">🇷🇺 Русский</button>
+        <button type="button" class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('en')">🇬🇧 English</button>
       </div>
     </div>
   </div>
@@ -840,7 +840,7 @@ function toggleTheme(){applyTheme(!isDark)}
 
 // ===== PROFILE =====
 function loadProfile(){try{const s=localStorage.getItem(LS_PROFILE);if(s)userProfile=JSON.parse(s);}catch(e){userProfile=null;}}
-function saveProfileData(p){userProfile=p;localStorage.setItem(LS_PROFILE,JSON.stringify(p));}
+function saveProfileData(p){userProfile=p;localStorage.setItem(LS_PROFILE,JSON.stringify(p));syncToSheets();}
 
 function calcCurrentSemester(admitYear){
   const now=new Date();const mo=now.getMonth()+1;const yr=now.getFullYear();
@@ -943,7 +943,7 @@ function switchEngTab(tab){
 
 // ===== ENG PROGRESS =====
 function loadEngProgress(){try{const s=localStorage.getItem(LS_ENG);if(s)engProgress=JSON.parse(s);}catch(e){}}
-function saveEngProgress(){localStorage.setItem(LS_ENG,JSON.stringify(engProgress));}
+function saveEngProgress(){localStorage.setItem(LS_ENG,JSON.stringify(engProgress));syncToSheets();}
 function renderEngProgress(){
   loadEngProgress();
   document.getElementById('prog-level').textContent=engProgress.level||'—';
@@ -1503,6 +1503,7 @@ function saveGpaData(){
   const gv=parseFloat(document.getElementById('gpa-result').textContent)||0;
   if(gv>0)addGpaHistory(gv.toFixed(2));
   showBanner(t('saved_msg'));
+  syncToSheets();
 }
 
 // ===== PROFS =====
@@ -1553,11 +1554,55 @@ document.getElementById('search-prof').addEventListener('input',e=>{
   renderProfs(PROFS.filter(p=>p.n.toLowerCase().includes(q)||p.d.toLowerCase().includes(q)));
 });
 
+// ===== GOOGLE SHEETS SYNC =====
+// ⚠️ Apps Script Web App URL ni bu yerga qo'ying (Deploy > Web App > URL)
+const SHEETS_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL';
+
+function getTelegramId(){
+  const uid=tg?.initDataUnsafe?.user?.id;
+  if(uid)return String(uid);
+  let lid=localStorage.getItem('npuu_tgid');
+  if(!lid){lid='local_'+Date.now();localStorage.setItem('npuu_tgid',lid);}
+  return lid;
+}
+
+async function syncToSheets(){
+  if(SHEETS_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL')return;
+  try{
+    const payload={
+      profile:userProfile||null,
+      gpa:JSON.parse(localStorage.getItem(LS_GPA)||'{}'),
+      gpaHistory:JSON.parse(localStorage.getItem(LS_GPA_HIST)||'[]'),
+      engProgress:engProgress
+    };
+    await fetch(SHEETS_URL,{method:'POST',body:JSON.stringify({action:'save',telegram_id:getTelegramId(),lang:currentLang,payload:payload})});
+  }catch(e){console.log('Sheets sync error:',e);}
+}
+
+async function loadFromSheets(){
+  if(SHEETS_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL')return false;
+  try{
+    const res=await fetch(SHEETS_URL+'?telegram_id='+getTelegramId());
+    const data=await res.json();
+    if(data.ok&&data.payload){
+      const p=data.payload;
+      if(p.profile){userProfile=p.profile;localStorage.setItem(LS_PROFILE,JSON.stringify(p.profile));}
+      if(p.gpa){localStorage.setItem(LS_GPA,JSON.stringify(p.gpa));}
+      if(p.gpaHistory){localStorage.setItem(LS_GPA_HIST,JSON.stringify(p.gpaHistory));}
+      if(p.engProgress){engProgress=p.engProgress;localStorage.setItem(LS_ENG,JSON.stringify(p.engProgress));}
+      if(data.lang){currentLang=data.lang;localStorage.setItem(LS_LANG,data.lang);}
+      return true;
+    }
+  }catch(e){console.log('Sheets load error:',e);}
+  return false;
+}
+
 // ===== INIT =====
 window.onload=async()=>{
   const savedTheme=localStorage.getItem(LS_THEME);
   if(savedTheme==='light')applyTheme(false);else if(tg?.colorScheme==='light')applyTheme(false);else applyTheme(true);
   const savedLang=localStorage.getItem(LS_LANG)||'uz';currentLang=savedLang;
+  // Avval localStorage dan yukla (tez ishlaydi)
   loadProfile();loadEngProgress();
   if(userProfile){
     setLanguage(userProfile.lang||savedLang);
@@ -1566,8 +1611,19 @@ window.onload=async()=>{
   }else setLanguage(savedLang);
   await initGpa();
   renderProfs(PROFS);
-  // Init translation data
   transState.data=TRANS_DATA[transState.dir][transState.level]||[];
+  // Background da Sheets dan sinxronlash
+  loadFromSheets().then(loaded=>{
+    if(loaded){
+      loadProfile();loadEngProgress();
+      if(userProfile){
+        setLanguage(userProfile.lang||localStorage.getItem(LS_LANG)||'uz');
+        document.getElementById('onboarding-overlay').style.display='none';
+        applyProfile();
+      }
+      initGpa();
+    }
+  });
 };
 </script>
 </body>
