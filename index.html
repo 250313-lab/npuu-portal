@@ -627,6 +627,50 @@ if(tg){tg.ready();tg.expand();}
 const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_GPA='npuu_gpa_data',
       LS_PROFILE='npuu_profile', LS_GPA_HIST='npuu_gpa_history', LS_ENG='npuu_eng_progress';
 
+// ===== GOOGLE SHEETS SYNC =====
+// ⚠️ Apps Script Web App URL ni bu yerga qo'ying (Deploy > Web App > URL)
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyA7xz8MxAxGnvKgi5ARx1BTGaTNftvTi0k47ba8iszmzKiLrj29uitZ3hZXM6OxZYz/exec';
+
+function getTelegramId(){
+  const uid=tg?.initDataUnsafe?.user?.id;
+  if(uid)return String(uid);
+  let lid=localStorage.getItem('npuu_tgid');
+  if(!lid){lid='local_'+Date.now();localStorage.setItem('npuu_tgid',lid);}
+  return lid;
+}
+
+async function syncToSheets(){
+  if(!SHEETS_URL||SHEETS_URL.includes('YOUR_APPS'))return;
+  try{
+    const payload={
+      profile:userProfile||null,
+      gpa:JSON.parse(localStorage.getItem(LS_GPA)||'{}'),
+      gpaHistory:JSON.parse(localStorage.getItem(LS_GPA_HIST)||'[]'),
+      engProgress:engProgress
+    };
+    await fetch(SHEETS_URL,{method:'POST',body:JSON.stringify({action:'save',telegram_id:getTelegramId(),lang:currentLang,payload:payload})});
+  }catch(e){console.log('Sheets sync error:',e);}
+}
+
+async function loadFromSheets(){
+  if(!SHEETS_URL||SHEETS_URL.includes('YOUR_APPS'))return false;
+  try{
+    const res=await fetch(SHEETS_URL+'?telegram_id='+getTelegramId());
+    const data=await res.json();
+    if(data.ok&&data.payload){
+      const p=data.payload;
+      if(p.profile){userProfile=p.profile;localStorage.setItem(LS_PROFILE,JSON.stringify(p.profile));}
+      if(p.gpa){localStorage.setItem(LS_GPA,JSON.stringify(p.gpa));}
+      if(p.gpaHistory){localStorage.setItem(LS_GPA_HIST,JSON.stringify(p.gpaHistory));}
+      if(p.engProgress){engProgress=p.engProgress;localStorage.setItem(LS_ENG,JSON.stringify(p.engProgress));}
+      if(data.lang){currentLang=data.lang;localStorage.setItem(LS_LANG,data.lang);}
+      return true;
+    }
+  }catch(e){console.log('Sheets load error:',e);}
+  return false;
+}
+
+
 // ===== I18N =====
 const T={
   uz:{
@@ -840,7 +884,7 @@ function toggleTheme(){applyTheme(!isDark)}
 
 // ===== PROFILE =====
 function loadProfile(){try{const s=localStorage.getItem(LS_PROFILE);if(s)userProfile=JSON.parse(s);}catch(e){userProfile=null;}}
-function saveProfileData(p){userProfile=p;localStorage.setItem(LS_PROFILE,JSON.stringify(p));syncToSheets();}
+function saveProfileData(p){userProfile=p;localStorage.setItem(LS_PROFILE,JSON.stringify(p));if(typeof syncToSheets==="function")syncToSheets();}
 
 function calcCurrentSemester(admitYear){
   const now=new Date();const mo=now.getMonth()+1;const yr=now.getFullYear();
@@ -943,7 +987,7 @@ function switchEngTab(tab){
 
 // ===== ENG PROGRESS =====
 function loadEngProgress(){try{const s=localStorage.getItem(LS_ENG);if(s)engProgress=JSON.parse(s);}catch(e){}}
-function saveEngProgress(){localStorage.setItem(LS_ENG,JSON.stringify(engProgress));syncToSheets();}
+function saveEngProgress(){localStorage.setItem(LS_ENG,JSON.stringify(engProgress));if(typeof syncToSheets==="function")syncToSheets();}
 function renderEngProgress(){
   loadEngProgress();
   document.getElementById('prog-level').textContent=engProgress.level||'—';
@@ -1503,7 +1547,7 @@ function saveGpaData(){
   const gv=parseFloat(document.getElementById('gpa-result').textContent)||0;
   if(gv>0)addGpaHistory(gv.toFixed(2));
   showBanner(t('saved_msg'));
-  syncToSheets();
+  if(typeof syncToSheets==="function")syncToSheets();
 }
 
 // ===== PROFS =====
@@ -1554,46 +1598,9 @@ document.getElementById('search-prof').addEventListener('input',e=>{
   renderProfs(PROFS.filter(p=>p.n.toLowerCase().includes(q)||p.d.toLowerCase().includes(q)));
 });
 
-// ===== GOOGLE SHEETS SYNC =====
-//  Apps Script Web App URL ni bu yerga qo'ying (Deploy > Web App > URL)
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyA7xz8MxAxGnvKgi5ARx1BTGaTNftvTi0k47ba8iszmzKiLrj29uitZ3hZXM6OxZYz/exec';
 
-function getTelegramId(){
-  const uid=tg?.initDataUnsafe?.user?.id;
-  if(uid)return String(uid);
-  let lid=localStorage.getItem('npuu_tgid');
-  if(!lid){lid='local_'+Date.now();localStorage.setItem('npuu_tgid',lid);}
-  return lid;
 }
 
-async function syncToSheets(){
-  if(SHEETS_URL==='https://script.google.com/macros/s/AKfycbyA7xz8MxAxGnvKgi5ARx1BTGaTNftvTi0k47ba8iszmzKiLrj29uitZ3hZXM6OxZYz/exec')return;
-  try{
-    const payload={
-      profile:userProfile||null,
-      gpa:JSON.parse(localStorage.getItem(LS_GPA)||'{}'),
-      gpaHistory:JSON.parse(localStorage.getItem(LS_GPA_HIST)||'[]'),
-      engProgress:engProgress
-    };
-    await fetch(SHEETS_URL,{method:'POST',body:JSON.stringify({action:'save',telegram_id:getTelegramId(),lang:currentLang,payload:payload})});
-  }catch(e){console.log('Sheets sync error:',e);}
-}
-
-async function loadFromSheets(){
-  if(SHEETS_URL==='https://script.google.com/macros/s/AKfycbyA7xz8MxAxGnvKgi5ARx1BTGaTNftvTi0k47ba8iszmzKiLrj29uitZ3hZXM6OxZYz/exec')return false;
-  try{
-    const res=await fetch(SHEETS_URL+'?telegram_id='+getTelegramId());
-    const data=await res.json();
-    if(data.ok&&data.payload){
-      const p=data.payload;
-      if(p.profile){userProfile=p.profile;localStorage.setItem(LS_PROFILE,JSON.stringify(p.profile));}
-      if(p.gpa){localStorage.setItem(LS_GPA,JSON.stringify(p.gpa));}
-      if(p.gpaHistory){localStorage.setItem(LS_GPA_HIST,JSON.stringify(p.gpaHistory));}
-      if(p.engProgress){engProgress=p.engProgress;localStorage.setItem(LS_ENG,JSON.stringify(p.engProgress));}
-      if(data.lang){currentLang=data.lang;localStorage.setItem(LS_LANG,data.lang);}
-      return true;
-    }
-  }catch(e){console.log('Sheets load error:',e);}
   return false;
 }
 
