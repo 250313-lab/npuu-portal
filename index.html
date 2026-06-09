@@ -881,6 +881,7 @@ function editProfile(){
     document.getElementById('ob-admit-year').value=userProfile.admitYear||'';
     document.getElementById('ob-group').value=userProfile.group||'';
   }
+  obStep=0;
   document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
   document.getElementById('step-0').classList.add('active');
   updateDots(0);
@@ -1558,10 +1559,15 @@ window.onload=async()=>{
   if(savedTheme==='light')applyTheme(false);else if(tg?.colorScheme==='light')applyTheme(false);else applyTheme(true);
   const savedLang=localStorage.getItem(LS_LANG)||'uz';currentLang=savedLang;
   loadProfile();loadEngProgress();
-  
   if(userProfile){
-    setLanguage(currentLang); 
-  }
+    setLanguage(userProfile.lang||savedLang);
+    document.getElementById('onboarding-overlay').style.display='none';
+    applyProfile();
+  }else setLanguage(savedLang);
+  await initGpa();
+  renderProfs(PROFS);
+  // Init translation data
+  transState.data=TRANS_DATA[transState.dir][transState.level]||[];
 };
 </script>
 </body>
