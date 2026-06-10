@@ -158,6 +158,14 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 .eng-sub-view{display:none}
 .eng-sub-view.active{display:block;animation:sectionIn .3s ease both}
 
+/* Duolingo XP / Streak bar */
+.duo-topbar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:10px 14px;margin-bottom:14px;gap:10px}
+.duo-stat{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:700}
+.duo-stat span{font-size:11px;color:var(--muted);font-weight:500}
+.duo-hearts{display:flex;gap:3px}
+.duo-heart{font-size:16px;transition:all .3s}
+.duo-heart.lost{filter:grayscale(1);opacity:.35}
+
 /* Level badge */
 .level-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
 .level-a1{background:rgba(76,201,240,.15);color:#4cc9f0;border:1px solid rgba(76,201,240,.3)}
@@ -170,16 +178,25 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 .progress-bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .6s cubic-bezier(.4,0,.2,1)}
 
 /* Quiz option buttons */
-.quiz-option{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:12px;padding:11px 14px;width:100%;text-align:left;font-size:13.5px;font-weight:500;cursor:pointer;font-family:inherit;margin-bottom:8px;transition:all .2s;display:flex;align-items:center;gap:10px}
+.quiz-option{background:var(--surface2);border:2px solid var(--border);color:var(--text);border-radius:14px;padding:12px 14px;width:100%;text-align:left;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:8px;transition:all .2s;display:flex;align-items:center;gap:10px}
 .quiz-option:active{transform:scale(.98)}
-.quiz-option.correct{background:rgba(0,230,118,.15);border-color:#00e676;color:#00e676}
-.quiz-option.wrong{background:rgba(255,77,77,.12);border-color:#ff4d4d;color:#ff4d4d}
+.quiz-option.correct{background:rgba(0,230,118,.15);border-color:#00e676;color:#00e676;animation:correctPop .3s ease}
+.quiz-option.wrong{background:rgba(255,77,77,.12);border-color:#ff4d4d;color:#ff4d4d;animation:wrongShake .3s ease}
 .quiz-option.show-correct{background:rgba(0,230,118,.1);border-color:rgba(0,230,118,.5)}
 .quiz-option:disabled{cursor:default}
-.option-label{width:26px;height:26px;border-radius:8px;background:var(--surface);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
+.option-label{width:28px;height:28px;border-radius:9px;background:var(--surface);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0}
+.quiz-option.correct .option-label{background:#00e676;border-color:#00e676;color:#000}
+.quiz-option.wrong .option-label{background:#ff4d4d;border-color:#ff4d4d;color:#fff}
+@keyframes correctPop{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
+@keyframes wrongShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* Result overlay */
+.answer-feedback{border-radius:16px;padding:12px 16px;margin-bottom:10px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px;animation:sectionIn .25s ease both}
+.feedback-correct{background:rgba(0,230,118,.12);border:2px solid #00e676;color:#00e676}
+.feedback-wrong{background:rgba(255,77,77,.1);border:2px solid #ff4d4d;color:#ff4d4d}
 
 /* Dialog chat */
-.dialog-messages{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:12px;min-height:180px;max-height:320px;overflow-y:auto;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+.dialog-messages{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:12px;min-height:180px;max-height:300px;overflow-y:auto;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
 .msg-bubble{max-width:82%;padding:9px 13px;border-radius:14px;font-size:13px;line-height:1.5}
 .msg-bot{background:var(--surface2);border:1px solid var(--border);border-radius:14px 14px 14px 4px;align-self:flex-start;color:var(--text)}
 .msg-user{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-radius:14px 14px 4px 14px;align-self:flex-end}
@@ -197,25 +214,41 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 @keyframes typingBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
 
 /* Translation exercise */
-.trans-sentence{background:linear-gradient(135deg,rgba(58,134,255,.1),rgba(0,187,249,.06));border:1px solid rgba(58,134,255,.25);border-radius:14px;padding:14px 16px;font-size:16px;font-weight:600;text-align:center;margin-bottom:12px;line-height:1.5}
-.trans-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:11px 14px;border-radius:12px;font-size:14px;outline:none;font-family:inherit;transition:border .2s;margin-bottom:8px}
+.trans-sentence{background:linear-gradient(135deg,rgba(58,134,255,.1),rgba(0,187,249,.06));border:2px solid rgba(58,134,255,.3);border-radius:16px;padding:16px;font-size:17px;font-weight:700;text-align:center;margin-bottom:14px;line-height:1.5;min-height:70px;display:flex;align-items:center;justify-content:center}
+.trans-input{width:100%;background:var(--surface2);border:2px solid var(--border);color:var(--text);padding:12px 14px;border-radius:14px;font-size:14px;outline:none;font-family:inherit;transition:border .2s;margin-bottom:10px}
 .trans-input:focus{border-color:var(--accent)}
-.trans-result{border-radius:12px;padding:10px 14px;font-size:13px;font-weight:600;margin-bottom:8px;display:none}
+.trans-result{border-radius:14px;padding:11px 14px;font-size:13px;font-weight:600;margin-bottom:8px;display:none}
 .trans-result.show{display:block}
-.trans-correct{background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);color:#00e676}
-.trans-partial{background:rgba(255,152,0,.1);border:1px solid rgba(255,152,0,.3);color:#ff9800}
-.trans-wrong{background:rgba(255,77,77,.1);border:1px solid rgba(255,77,77,.3);color:#ff4d4d}
+.trans-correct{background:rgba(0,230,118,.1);border:2px solid rgba(0,230,118,.4);color:#00e676}
+.trans-partial{background:rgba(255,152,0,.1);border:2px solid rgba(255,152,0,.4);color:#ff9800}
+.trans-wrong{background:rgba(255,77,77,.1);border:2px solid rgba(255,77,77,.4);color:#ff4d4d}
 
 /* Placement result */
-.placement-result-card{border-radius:16px;padding:20px;text-align:center;border:2px solid var(--accent);background:linear-gradient(135deg,rgba(58,134,255,.1),rgba(0,187,249,.05));margin-bottom:12px}
-.placement-big-level{font-family:'Syne',sans-serif;font-size:52px;font-weight:800;color:var(--accent2);line-height:1;margin:8px 0}
+.placement-result-card{border-radius:20px;padding:24px 16px;text-align:center;border:2px solid var(--accent);background:linear-gradient(135deg,rgba(58,134,255,.1),rgba(0,187,249,.05));margin-bottom:14px}
+.placement-big-level{font-family:'Syne',sans-serif;font-size:56px;font-weight:800;color:var(--accent2);line-height:1;margin:8px 0}
 
 /* Progress stats */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px;text-align:center}
 .stat-number{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--accent2)}
 .stat-label{font-size:11px;color:var(--muted);margin-top:3px;font-weight:600}
 .weak-topic-chip{display:inline-block;background:rgba(255,77,77,.12);border:1px solid rgba(255,77,77,.3);color:#ff6b6b;border-radius:8px;padding:4px 10px;font-size:11.5px;font-weight:600;margin:3px}
+
+/* Badge */
+.badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.badge-item{background:var(--surface);border:2px solid var(--border);border-radius:16px;padding:12px 8px;text-align:center;transition:all .3s}
+.badge-item.earned{border-color:var(--accent);background:rgba(58,134,255,.08)}
+.badge-item.earned .badge-icon{filter:none}
+.badge-icon{font-size:28px;display:block;margin-bottom:4px;filter:grayscale(1) opacity(.4)}
+.badge-name{font-size:10.5px;font-weight:700;color:var(--muted)}
+.badge-item.earned .badge-name{color:var(--accent2)}
+
+/* Streak calendar */
+.streak-days{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.streak-day{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
+.streak-day.done{background:linear-gradient(135deg,#ff9800,#ff6b35);border-color:#ff9800;color:#fff}
+.streak-day.today{border-color:var(--accent);color:var(--accent2)}
+
 
 /* NAV BAR */
 .nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--nav-bg);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:100;overflow-x:auto;scrollbar-width:none;transition:background .35s}
@@ -256,7 +289,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
       <input type="text" class="onboard-input" id="ob-name" placeholder="Abdullohxonov Sodiqxon" autocomplete="off">
       <div class="onboard-label">🪪 Student ID</div>
       <input type="text" class="onboard-input" id="ob-sid" placeholder="Masalan: 250313" autocomplete="off">
-      <button type="button" class="onboard-btn" onclick="obNext(1)">Davom etish →</button>
+      <button class="onboard-btn" onclick="obNext(1)">Davom etish →</button>
     </div>
     <div class="step" id="step-1">
       <div class="onboard-label">🎓 Yo'nalish</div>
@@ -273,7 +306,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
         <option value="2023">2023</option><option value="2024">2024</option>
         <option value="2025">2025</option>
       </select>
-      <button type="button" class="onboard-btn" onclick="obNext(2)">Davom etish →</button>
+      <button class="onboard-btn" onclick="obNext(2)">Davom etish →</button>
     </div>
     <div class="step" id="step-2">
       <div class="onboard-label">👥 Guruh</div>
@@ -283,14 +316,14 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
         <optgroup label="FIT"><option value="FIT1">FIT1</option><option value="FIT2">FIT2</option><option value="FIT3">FIT3</option><option value="FIT4">FIT4</option><option value="FIT5">FIT5</option><option value="FIT6">FIT6</option></optgroup>
         <optgroup label="FAR"><option value="FAR1">FAR1</option><option value="FAR2">FAR2</option><option value="FAR3">FAR3</option></optgroup>
       </select>
-      <button type="button" class="onboard-btn" onclick="obNext(3)">Davom etish →</button>
+      <button class="onboard-btn" onclick="obNext(3)">Davom etish →</button>
     </div>
     <div class="step" id="step-3">
       <div class="onboard-label">🌐 Til / Language / Язык</div>
       <div style="display:flex;gap:8px;margin-top:4px;">
-        <button type="button" class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('uz')">🇺🇿 O'zbek</button>
-        <button type="button" class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('ru')">🇷🇺 Русский</button>
-        <button type="button" class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('en')">🇬🇧 English</button>
+        <button class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('uz')">🇺🇿 O'zbek</button>
+        <button class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('ru')">🇷🇺 Русский</button>
+        <button class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('en')">🇬🇧 English</button>
       </div>
     </div>
   </div>
@@ -400,9 +433,23 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 
 <!-- ===== VIEW: ENGLISH ===== -->
 <div id="view-english" class="view-section">
+
+  <!-- Duolingo top bar: Streak, XP, Lives -->
+  <div class="duo-topbar">
+    <div class="duo-stat">🔥<span id="duo-streak">0</span> <span>kun</span></div>
+    <div class="duo-stat">⚡<span id="duo-xp">0</span> <span>XP</span></div>
+    <div class="duo-hearts" id="duo-hearts">
+      <span class="duo-heart" id="h1">❤️</span>
+      <span class="duo-heart" id="h2">❤️</span>
+      <span class="duo-heart" id="h3">❤️</span>
+      <span class="duo-heart" id="h4">❤️</span>
+      <span class="duo-heart" id="h5">❤️</span>
+    </div>
+  </div>
+
   <!-- Sub-tabs -->
   <div class="eng-tab-bar">
-    <button class="eng-tab active" onclick="switchEngTab('placement')" id="etab-placement">🎯 Daraja testi</button>
+    <button class="eng-tab active" onclick="switchEngTab('placement')" id="etab-placement">🎯 Test</button>
     <button class="eng-tab" onclick="switchEngTab('quiz')" id="etab-quiz">📝 Quiz</button>
     <button class="eng-tab" onclick="switchEngTab('dialog')" id="etab-dialog">💬 Dialog</button>
     <button class="eng-tab" onclick="switchEngTab('translate')" id="etab-translate">🔄 Tarjima</button>
@@ -440,6 +487,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
         <div style="font-size:13px;color:var(--muted);margin-bottom:4px">Sizning darajangiz</div>
         <div class="placement-big-level" id="pr-level">B1</div>
         <div style="font-size:13px;color:var(--muted);margin-top:6px" id="pr-score">16/20 ball</div>
+        <div style="margin-top:10px" id="pr-xp-earned"></div>
       </div>
       <div class="card" style="border-left:3px solid #ff4d4d;margin-bottom:10px" id="pr-weak-block">
         <div style="font-size:11.5px;font-weight:700;color:#ff6b6b;margin-bottom:8px">⚠️ Kuchsiz mavzular:</div>
@@ -471,19 +519,21 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
         <span style="font-size:12px;font-weight:700;color:var(--green)" id="quiz-score-live">0 ✓</span>
       </div>
       <div class="progress-bar-wrap"><div class="progress-bar-fill" id="quiz-progress" style="width:10%"></div></div>
-      <div class="card" style="margin:10px 0 8px;border-left:3px solid var(--accent)">
-        <div style="font-size:11px;color:var(--accent3);font-weight:700;margin-bottom:4px" id="quiz-topic">Topic</div>
-        <div style="font-size:15px;font-weight:600;line-height:1.5" id="quiz-question">Question</div>
+      <div class="card" style="margin:10px 0 10px;border-left:3px solid var(--accent);padding:14px">
+        <div style="font-size:11px;color:var(--accent3);font-weight:700;margin-bottom:6px" id="quiz-topic">Topic</div>
+        <div style="font-size:16px;font-weight:700;line-height:1.5" id="quiz-question">Question</div>
       </div>
       <div id="quiz-options"></div>
+      <div id="quiz-feedback" style="display:none" class="answer-feedback"></div>
       <div id="quiz-explanation" style="display:none;background:rgba(0,187,249,.08);border:1px solid rgba(0,187,249,.25);border-radius:12px;padding:10px 13px;font-size:12.5px;color:var(--accent3);margin-bottom:10px"></div>
-      <button class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);display:none" id="quiz-next-btn" onclick="nextQuizQuestion()">Keyingisi →</button>
+      <button class="btn" style="display:none" id="quiz-next-btn" onclick="nextQuizQuestion()">Keyingisi →</button>
     </div>
     <div id="quiz-result-screen" style="display:none">
       <div class="placement-result-card">
         <div style="font-size:13px;color:var(--muted)">Quiz natijasi</div>
         <div class="placement-big-level" id="qr-score">8/10</div>
         <div id="qr-level-badge" style="margin-top:6px"></div>
+        <div style="margin-top:10px;font-size:13px;font-weight:700;color:#ff9800" id="qr-xp-earned"></div>
       </div>
       <button class="btn" style="background:var(--accent);color:#fff;margin-bottom:8px" onclick="startQuiz(currentQuizLevel)">🔄 Qayta o'ynash</button>
       <button class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border)" onclick="backToQuizSelect()">← Daraja tanlash</button>
@@ -495,7 +545,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
     <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
       <button class="curr-filter-btn active" onclick="setDialogTopic('free',this)">💬 Free talk</button>
       <button class="curr-filter-btn" onclick="setDialogTopic('cafe',this)">☕ At a cafe</button>
-      <button class="curr-filter-btn" onclick="setDialogTopic('interview',this)">👔 Job interview</button>
+      <button class="curr-filter-btn" onclick="setDialogTopic('interview',this)">👔 Interview</button>
       <button class="curr-filter-btn" onclick="setDialogTopic('travel',this)">✈️ Travel</button>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
@@ -507,11 +557,12 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
       <input class="dialog-input" id="dialog-input" placeholder="Type your message..." onkeydown="if(event.key==='Enter')sendDialogMsg()">
       <button class="dialog-send-btn" id="dialog-send-btn" onclick="sendDialogMsg()">→</button>
     </div>
+    <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:6px">💡 Xatolar avtomatik tuzatiladi</div>
   </div>
 
   <!-- ── TRANSLATION ── -->
   <div class="eng-sub-view" id="esv-translate">
-    <div style="display:flex;gap:8px;margin-bottom:12px">
+    <div style="display:flex;gap:8px;margin-bottom:10px">
       <button class="curr-filter-btn active" id="trans-dir-btn-uz" onclick="setTransDir('uz2en',this)">🇺🇿→🇬🇧</button>
       <button class="curr-filter-btn" id="trans-dir-btn-en" onclick="setTransDir('en2uz',this)">🇬🇧→🇺🇿</button>
     </div>
@@ -528,30 +579,50 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
       <button class="btn" style="background:var(--accent);color:#fff;flex:1" onclick="checkTranslation()">✓ Tekshirish</button>
       <button class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);flex:1" onclick="nextTranslation()">→ Keyingisi</button>
     </div>
-    <div style="margin-top:12px;font-size:11px;color:var(--muted);text-align:center" id="trans-stats">0 to'g'ri / 0 ta</div>
+    <div style="margin-top:10px;font-size:12px;color:var(--muted);text-align:center;font-weight:600" id="trans-stats">0 to'g'ri / 0 ta</div>
   </div>
 
   <!-- ── PROGRESS ── -->
   <div class="eng-sub-view" id="esv-progress">
-    <div class="stat-grid">
-      <div class="stat-card"><div class="stat-number" id="prog-level">—</div><div class="stat-label">Daraja</div></div>
-      <div class="stat-card"><div class="stat-number" id="prog-quiz-total">0</div><div class="stat-label">Quiz javoblar</div></div>
-      <div class="stat-card"><div class="stat-number" id="prog-quiz-correct">0</div><div class="stat-label">To'g'ri</div></div>
-      <div class="stat-card"><div class="stat-number" id="prog-trans-correct">0</div><div class="stat-label">Tarjima ✓</div></div>
+    <!-- Streak -->
+    <div class="card" style="border-left:4px solid #ff9800;margin-bottom:12px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div style="font-size:13px;font-weight:700">🔥 Streak</div>
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#ff9800" id="prog-streak-big">0 kun</div>
+      </div>
+      <div class="streak-days" id="streak-calendar"></div>
     </div>
-    <div class="card" style="border-left:3px solid var(--accent2);margin-bottom:10px">
-      <div style="font-size:11.5px;font-weight:700;color:var(--accent3);margin-bottom:8px">📈 Umumiy natija</div>
-      <div style="font-size:12.5px;color:var(--muted);margin-bottom:5px">Quiz to'g'riligi:</div>
+
+    <!-- XP -->
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-number" id="prog-xp">0</div><div class="stat-label">⚡ XP</div></div>
+      <div class="stat-card"><div class="stat-number" id="prog-level">—</div><div class="stat-label">🎯 Daraja</div></div>
+      <div class="stat-card"><div class="stat-number" id="prog-quiz-correct">0</div><div class="stat-label">📝 Quiz ✓</div></div>
+      <div class="stat-card"><div class="stat-number" id="prog-trans-correct">0</div><div class="stat-label">🔄 Tarjima ✓</div></div>
+    </div>
+
+    <!-- Accuracy -->
+    <div class="card" style="border-left:3px solid var(--accent2);margin-bottom:12px">
+      <div style="font-size:11.5px;font-weight:700;color:var(--accent3);margin-bottom:8px">📈 Quiz to'g'riligi</div>
       <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-accuracy-bar" style="width:0%"></div></div>
       <div style="font-size:13px;font-weight:700;color:var(--accent2);margin-top:4px" id="prog-accuracy-text">0%</div>
     </div>
-    <div class="card" style="border-left:3px solid #ff4d4d" id="prog-weak-card">
+
+    <!-- Badges -->
+    <div class="card" style="border-left:3px solid #ffcc00;margin-bottom:12px">
+      <div style="font-size:11.5px;font-weight:700;color:#ffcc00;margin-bottom:10px">🎖️ Yutuqlar (Badges)</div>
+      <div class="badge-grid" id="badge-grid"></div>
+    </div>
+
+    <!-- Weak topics -->
+    <div class="card" style="border-left:3px solid #ff4d4d;margin-bottom:12px" id="prog-weak-card">
       <div style="font-size:11.5px;font-weight:700;color:#ff6b6b;margin-bottom:8px">⚠️ Kuchsiz mavzular:</div>
       <div id="prog-weak-chips"><span style="font-size:12px;color:var(--muted)">Hali ma'lumot yo'q</span></div>
     </div>
     <button class="btn" style="background:rgba(255,77,77,.15);color:#ff6b6b;border:1px solid rgba(255,77,77,.3)" onclick="resetEngProgress()">🗑 Progressni tozalash</button>
   </div>
 </div>
+
 
 <!-- ===== VIEW: PROFS ===== -->
 <div id="view-profs" class="view-section">
@@ -627,10 +698,11 @@ if(tg){tg.ready();tg.expand();}
 const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_GPA='npuu_gpa_data',
       LS_PROFILE='npuu_profile', LS_GPA_HIST='npuu_gpa_history', LS_ENG='npuu_eng_progress';
 
-// ===== GOOGLE SHEETS SYNC =====
-// ⚠️ Apps Script Web App URL ni bu yerga qo'ying (Deploy > Web App > URL)
+// ===== API CONFIG =====
+const GROQ_KEY = 'GROQ_API_KEY = os.environ.get("GROQ_API_KEY")'; // <-- console.groq.com dan yangi kalit qo'ying
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyA7xz8MxAxGnvKgi5ARx1BTGaTNftvTi0k47ba8iszmzKiLrj29uitZ3hZXM6OxZYz/exec';
 
+// ===== GOOGLE SHEETS SYNC =====
 function getTelegramId(){
   const uid=tg?.initDataUnsafe?.user?.id;
   if(uid)return String(uid);
@@ -640,20 +712,24 @@ function getTelegramId(){
 }
 
 async function syncToSheets(){
-  if(!SHEETS_URL||SHEETS_URL.includes('YOUR_APPS'))return;
+  if(!SHEETS_URL||SHEETS_URL.includes('YOUR_'))return;
   try{
     const payload={
       profile:userProfile||null,
       gpa:JSON.parse(localStorage.getItem(LS_GPA)||'{}'),
       gpaHistory:JSON.parse(localStorage.getItem(LS_GPA_HIST)||'[]'),
-      engProgress:engProgress
+      engProgress:engProgress,
+      duoState:duoState
     };
-    await fetch(SHEETS_URL,{method:'POST',body:JSON.stringify({action:'save',telegram_id:getTelegramId(),lang:currentLang,payload:payload})});
+    await fetch(SHEETS_URL,{
+      method:'POST',
+      body:JSON.stringify({action:'save',telegram_id:getTelegramId(),lang:currentLang,payload:payload})
+    });
   }catch(e){console.log('Sheets sync error:',e);}
 }
 
 async function loadFromSheets(){
-  if(!SHEETS_URL||SHEETS_URL.includes('YOUR_APPS'))return false;
+  if(!SHEETS_URL||SHEETS_URL.includes('YOUR_'))return false;
   try{
     const res=await fetch(SHEETS_URL+'?telegram_id='+getTelegramId());
     const data=await res.json();
@@ -663,13 +739,13 @@ async function loadFromSheets(){
       if(p.gpa){localStorage.setItem(LS_GPA,JSON.stringify(p.gpa));}
       if(p.gpaHistory){localStorage.setItem(LS_GPA_HIST,JSON.stringify(p.gpaHistory));}
       if(p.engProgress){engProgress=p.engProgress;localStorage.setItem(LS_ENG,JSON.stringify(p.engProgress));}
+      if(p.duoState){duoState={...duoState,...p.duoState};localStorage.setItem(LS_DUO,JSON.stringify(duoState));}
       if(data.lang){currentLang=data.lang;localStorage.setItem(LS_LANG,data.lang);}
       return true;
     }
   }catch(e){console.log('Sheets load error:',e);}
   return false;
 }
-
 
 // ===== I18N =====
 const T={
@@ -684,10 +760,10 @@ const T={
     add_subject:"Fan qo'shish",gpa_save:"Saqlash",
     handbook_desc:"Yo'nalishingizga mos Handbook faylini ko'ring.",
     saved_msg:"✅ Saqlandi!",copied:"📋 Nusxalandi!",
-    stipend_president:"🏆 Grandga da'vo qilasiz!",
-    stipend_ok:"✅ Granga ariza topshirish huquqingiz bor (GPA ≥ 3.5)",
-    stipend_warn:"⚠️ Grandga ariza topshirish chegarasida!",
-    stipend_fail:"🚫 Grandga ariza uchun GPA ≥ 3.5 bo'lishi kerak",
+    stipend_president:"🏆 Prezident stipendiyasiga da'vo qilasiz!",
+    stipend_ok:"✅ Stipendiya olish huquqingiz bor (GPA ≥ 3.5)",
+    stipend_warn:"⚠️ Stipendiya chegarasida!",
+    stipend_fail:"🚫 Stipendiya uchun GPA ≥ 3.5 bo'lishi kerak",
     semester_label:"semestrsiz",year_label:"o'quv yili",
     select_sems:"Semestrlarni tanlang:",welcome:"Xush kelibsiz",
     days:["Yakshanba","Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba"]
@@ -703,10 +779,10 @@ const T={
     add_subject:"Добавить предмет",gpa_save:"Сохранить",
     handbook_desc:"Выберите справочник по вашему направлению.",
     saved_msg:"✅ Сохранено!",copied:"📋 Скопировано!",
-    stipend_president:"🏆 Претендуете на гранд!",
-    stipend_ok:"✅ Имеете право на гранд (GPA ≥ 3.5)",
-    stipend_warn:"⚠️ На грани гранд!",
-    stipend_fail:"🚫 Для гранд нужен GPA ≥ 3.5",
+    stipend_president:"🏆 Претендуете на президентскую стипендию!",
+    stipend_ok:"✅ Имеете право на стипендию (GPA ≥ 3.5)",
+    stipend_warn:"⚠️ На грани стипендии!",
+    stipend_fail:"🚫 Для стипендии нужен GPA ≥ 3.5",
     semester_label:"-й семестр",year_label:"год обучения",
     select_sems:"Выберите семестры:",welcome:"Добро пожаловать",
     days:["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"]
@@ -722,10 +798,10 @@ const T={
     add_subject:"Add subject",gpa_save:"Save",
     handbook_desc:"Choose the Handbook for your major.",
     saved_msg:"✅ Saved!",copied:"📋 Copied!",
-    stipend_president:"🏆 You qualify for grand!",
-    stipend_ok:"✅ You qualify for grand (GPA ≥ 3.5)",
-    stipend_warn:"⚠️ On the grand threshold!",
-    stipend_fail:"🚫 Need GPA ≥ 3.5 for grand",
+    stipend_president:"🏆 You qualify for President's scholarship!",
+    stipend_ok:"✅ You qualify for scholarship (GPA ≥ 3.5)",
+    stipend_warn:"⚠️ On the scholarship threshold!",
+    stipend_fail:"🚫 Need GPA ≥ 3.5 for scholarship",
     semester_label:"th semester",year_label:"study year",
     select_sems:"Select semesters:",welcome:"Welcome",
     days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
@@ -781,22 +857,27 @@ const TRANS_DATA={
       {uz:"U uyda.",en:"She is at home.",hint:"at home"},
       {uz:"Biz do'stmiz.",en:"We are friends.",hint:"We are..."},
       {uz:"Olma qizil.",en:"The apple is red.",hint:"The apple is..."},
+      {uz:"Qo'l sumkam qayerda?",en:"Where is my bag?",hint:"Where is..."},
+      {uz:"U o'qituvchi.",en:"She is a teacher.",hint:"She is..."},
     ],
     A2:[
       {uz:"Kecha men kinoga bordim.",en:"I went to the cinema yesterday.",hint:"went + yesterday"},
       {uz:"U ingliz tilini yaxshi biladi.",en:"She knows English well.",hint:"knows ... well"},
       {uz:"Men kitob o'qishni yaxshi ko'raman.",en:"I like reading books.",hint:"like + -ing"},
       {uz:"Qachon u uyga qaytdi?",en:"When did he come back home?",hint:"did + base form"},
+      {uz:"Har kuni men 7 da turaman.",en:"Every day I wake up at 7.",hint:"Every day..."},
     ],
     B1:[
       {uz:"U bu filmni allaqachon ko'rgan.",en:"She has already seen this film.",hint:"has + past participle"},
       {uz:"Agar ob-havo yaxshi bo'lsa, men sayrga chiqaman.",en:"If the weather is good, I will go for a walk.",hint:"if + present → will"},
       {uz:"Xat Mary tomonidan yozildi.",en:"The letter was written by Mary.",hint:"was + past participle"},
+      {uz:"Men bu shaharda ikki yildan beri yashayman.",en:"I have been living in this city for two years.",hint:"have been + -ing"},
     ],
     B2:[
       {uz:"U kelishidan oldin, men allaqachon ketib bo'lgandim.",en:"By the time he arrived, I had already left.",hint:"Past perfect: had + PP"},
       {uz:"Men undan ertaroq xabar berishini so'radim.",en:"I asked him to notify me earlier.",hint:"asked + to infinitive"},
       {uz:"Shovqinga qaramay, u uxlab qoldi.",en:"Despite the noise, he fell asleep.",hint:"Despite + noun"},
+      {uz:"Agar men sening o'rnigda bo'lganimda, bunday qilmagan bo'lardim.",en:"If I were in your place, I would not have done that.",hint:"3rd conditional"},
     ],
   },
   en2uz:{
@@ -804,14 +885,17 @@ const TRANS_DATA={
       {en:"The cat is under the chair.",uz:"Mushuk stul ostida.",hint:"stul ostida"},
       {en:"I have two brothers.",uz:"Mening ikki aka-ukam bor.",hint:"bor"},
       {en:"She is happy today.",uz:"U bugun xursand.",hint:"xursand"},
+      {en:"This is my pen.",uz:"Bu mening qalam.",hint:"mening"},
     ],
     A2:[
       {en:"He played football yesterday.",uz:"U kecha futbol o'ynadi.",hint:"o'ynadi"},
       {en:"Can you help me, please?",uz:"Menga yordam bera olasizmi?",hint:"bera olasizmi"},
+      {en:"She always drinks coffee in the morning.",uz:"U har doim ertalab qahva ichadi.",hint:"har doim"},
     ],
     B1:[
       {en:"The meeting has been cancelled.",uz:"Yig'ilish bekor qilindi.",hint:"bekor qilindi (passive)"},
       {en:"I wish I had more time.",uz:"Qaniydi vaqtim ko'proq bo'lsa.",hint:"Qaniydi... bo'lsa"},
+      {en:"She suggested going to the park.",uz:"U bog'ga borishni taklif qildi.",hint:"taklif qildi"},
     ],
     B2:[
       {en:"He was said to be a brilliant scientist.",uz:"U ajoyib olim deb aytilgan.",hint:"deb aytilgan"},
@@ -822,11 +906,114 @@ const TRANS_DATA={
 
 // ===== DIALOG TOPICS =====
 const DIALOG_TOPICS={
-  free:{label:"Topic: Free talk",prompt:"You are a friendly English conversation partner for a student at level A1-B2. Chat naturally, correct grammar mistakes gently by showing the correct form in brackets like [correction], keep messages short (1-3 sentences). Start by saying hello and asking what they'd like to talk about."},
-  cafe:{label:"Topic: At a cafe ☕",prompt:"You are a barista at a coffee shop. The student is a customer. Speak naturally, correct their English mistakes gently in brackets. Keep replies short. Start by greeting them and asking for their order."},
-  interview:{label:"Topic: Job interview 👔",prompt:"You are an HR manager conducting a job interview in English. Ask typical interview questions one by one. Correct the student's grammar mistakes gently in brackets. Keep it realistic and encouraging."},
-  travel:{label:"Topic: Travel ✈️",prompt:"You are a traveler chatting with another tourist. Discuss travel experiences, places to visit, tips. Correct grammar mistakes gently in brackets. Keep messages conversational and short."},
+  free:{label:"Topic: Free talk",prompt:"You are a friendly English conversation partner for a university student. Their level is A1-B2. Chat naturally and keep it engaging. Gently correct grammar mistakes by showing the correct form in brackets like [correction: ...]. Keep messages short (2-3 sentences max). Start by saying hello and asking what they want to talk about today."},
+  cafe:{label:"Topic: At a cafe ☕",prompt:"You are a friendly barista at a coffee shop. The student is a customer ordering and chatting. Speak naturally, correct their English mistakes gently in brackets like [correction: ...]. Keep replies short and realistic. Start by greeting them warmly."},
+  interview:{label:"Topic: Job interview 👔",prompt:"You are an HR manager at a tech company conducting a job interview in English. Ask standard interview questions one at a time. Correct the student's grammar gently in brackets. Be encouraging but professional. Start with a warm greeting and your first question."},
+  travel:{label:"Topic: Travel ✈️",prompt:"You are a friendly fellow traveler chatting at an airport. Discuss travel destinations, experiences, and tips. Correct grammar mistakes gently in brackets. Keep it fun and conversational. Start by introducing yourself and asking where they're headed."},
 };
+
+// ===== DUOLINGO STATE =====
+const LS_DUO='npuu_duo_state';
+let duoState={
+  xp:0,
+  streak:0,
+  lastActiveDate:null,
+  streakDays:[],
+  lives:5,
+  maxLives:5,
+  badges:[]
+};
+
+const BADGES=[
+  {id:'first_quiz',icon:'🎯',name:'Birinchi Quiz',desc:'Birinchi quizni tugatdingiz',check:s=>s.quizTotal>=1},
+  {id:'quiz_10',icon:'📝',name:'10 Savol',desc:'10 ta savolga javob berdingiz',check:s=>s.quizTotal>=10},
+  {id:'quiz_50',icon:'🏆',name:'50 Savol',desc:'50 ta savolga javob berdingiz',check:s=>s.quizTotal>=50},
+  {id:'trans_5',icon:'🔄',name:'Tarjimon',desc:"5 ta tarjima to'g'ri",check:s=>s.transCorrect>=5},
+  {id:'streak_3',icon:'🔥',name:'3 Kunlik',desc:'3 kun ketma-ket',check:()=>duoState.streak>=3},
+  {id:'streak_7',icon:'🌟',name:'Haftalik',desc:'7 kun ketma-ket',check:()=>duoState.streak>=7},
+  {id:'xp_100',icon:'⚡',name:'100 XP',desc:'100 XP topladingiz',check:()=>duoState.xp>=100},
+  {id:'xp_500',icon:'💫',name:'500 XP',desc:'500 XP topladingiz',check:()=>duoState.xp>=500},
+  {id:'level_set',icon:'🎓',name:'Daraja Topildi',desc:'Daraja testi topshirdingiz',check:s=>!!s.level},
+];
+
+function loadDuoState(){
+  try{const s=localStorage.getItem(LS_DUO);if(s)duoState={...duoState,...JSON.parse(s)};}catch(e){}
+  updateStreak();
+}
+
+function saveDuoState(){
+  localStorage.setItem(LS_DUO,JSON.stringify(duoState));
+  renderDuoTopbar();
+  syncToSheets();
+}
+
+function updateStreak(){
+  const today=new Date().toISOString().split('T')[0];
+  const last=duoState.lastActiveDate;
+  if(!last){return;}
+  const diff=(new Date(today)-new Date(last))/(1000*60*60*24);
+  if(diff>1){duoState.streak=0;duoState.streakDays=[];}
+}
+
+function markDailyActive(){
+  const today=new Date().toISOString().split('T')[0];
+  if(duoState.lastActiveDate===today)return;
+  const last=duoState.lastActiveDate;
+  if(last){
+    const diff=(new Date(today)-new Date(last))/(1000*60*60*24);
+    if(diff===1){duoState.streak++;} else {duoState.streak=1;}
+  } else {duoState.streak=1;}
+  duoState.lastActiveDate=today;
+  if(!duoState.streakDays.includes(today))duoState.streakDays.push(today);
+  if(duoState.streakDays.length>30)duoState.streakDays=duoState.streakDays.slice(-30);
+  saveDuoState();
+}
+
+function addXP(amount){
+  duoState.xp+=amount;
+  markDailyActive();
+  saveDuoState();
+  showXpPop(amount);
+  checkBadges();
+}
+
+function loseLife(){
+  if(duoState.lives>0){duoState.lives--;saveDuoState();}
+  renderDuoTopbar();
+  if(duoState.lives===0)showBanner('❤️ Jonlaringiz tugadi! Ertaga davom eting.');
+}
+
+function checkBadges(){
+  BADGES.forEach(b=>{
+    if(!duoState.badges.includes(b.id)&&b.check(engProgress)){
+      duoState.badges.push(b.id);
+      saveDuoState();
+      showBanner('🎖️ Yangi badge: '+b.name+'!');
+    }
+  });
+}
+
+function showXpPop(amount){
+  const el=document.createElement('div');
+  el.textContent='+'+amount+' XP ⚡';
+  el.style.cssText='position:fixed;top:30%;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:8px 18px;border-radius:50px;font-weight:800;font-size:15px;z-index:9999;pointer-events:none;animation:xpPop .9s ease forwards';
+  document.body.appendChild(el);
+  if(!document.getElementById('xp-pop-style')){
+    const st=document.createElement('style');st.id='xp-pop-style';
+    st.textContent='@keyframes xpPop{0%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(-60px)}}';
+    document.head.appendChild(st);
+  }
+  setTimeout(()=>el.remove(),900);
+}
+
+function renderDuoTopbar(){
+  document.getElementById('duo-streak').textContent=duoState.streak||0;
+  document.getElementById('duo-xp').textContent=duoState.xp||0;
+  for(let i=1;i<=5;i++){
+    const h=document.getElementById('h'+i);
+    if(h)h.classList.toggle('lost',i>(duoState.lives||5));
+  }
+}
 
 // ===== STATE =====
 let currentLang='uz', isDark=true, userProfile=null;
@@ -850,6 +1037,7 @@ let dialogBusy=false;
 
 // Eng progress
 let engProgress={level:null,quizTotal:0,quizCorrect:0,transCorrect:0,weakTopics:[]};
+
 
 // ===== HELPERS =====
 function t(key){return T[currentLang]?.[key]||T.uz[key]||key}
@@ -884,7 +1072,7 @@ function toggleTheme(){applyTheme(!isDark)}
 
 // ===== PROFILE =====
 function loadProfile(){try{const s=localStorage.getItem(LS_PROFILE);if(s)userProfile=JSON.parse(s);}catch(e){userProfile=null;}}
-function saveProfileData(p){userProfile=p;localStorage.setItem(LS_PROFILE,JSON.stringify(p));if(typeof syncToSheets==="function")syncToSheets();}
+function saveProfileData(p){userProfile=p;localStorage.setItem(LS_PROFILE,JSON.stringify(p));setTimeout(syncToSheets,400);}
 
 function calcCurrentSemester(admitYear){
   const now=new Date();const mo=now.getMonth()+1;const yr=now.getFullYear();
@@ -910,7 +1098,7 @@ function applyProfile(){
   document.getElementById('profile-meta').textContent=
     `${userProfile.sid?'ID: '+userProfile.sid+' • ':''}${userProfile.group} • ${majorNames[userProfile.major]||userProfile.major}`;
   document.getElementById('semester-badge').textContent=`${curSem}-${t('semester_label')} / ${yr}-${t('year_label')}`;
-  document.getElementById('today-group-text').textContent=`${t('Sizning jadvalingiz')||'Jadval'}: ${userProfile.group}`;
+  document.getElementById('today-group-text').textContent=`${t('tab_tt')||'Jadval'}: ${userProfile.group}`;
   const days=t('days');
   document.getElementById('today-day-badge').textContent=days[new Date().getDay()];
   initTimetable();
@@ -925,7 +1113,6 @@ function editProfile(){
     document.getElementById('ob-admit-year').value=userProfile.admitYear||'';
     document.getElementById('ob-group').value=userProfile.group||'';
   }
-  obStep=0;
   document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
   document.getElementById('step-0').classList.add('active');
   updateDots(0);
@@ -983,28 +1170,67 @@ function switchEngTab(tab){
   if(tab==='progress')renderEngProgress();
   if(tab==='dialog'&&dialogHistory.length===0)initDialog();
   if(tab==='translate')loadTransSentence();
+  markDailyActive();
 }
 
 // ===== ENG PROGRESS =====
 function loadEngProgress(){try{const s=localStorage.getItem(LS_ENG);if(s)engProgress=JSON.parse(s);}catch(e){}}
-function saveEngProgress(){localStorage.setItem(LS_ENG,JSON.stringify(engProgress));if(typeof syncToSheets==="function")syncToSheets();}
+function saveEngProgress(){
+  localStorage.setItem(LS_ENG,JSON.stringify(engProgress));
+  syncToSheets();
+}
+
 function renderEngProgress(){
-  loadEngProgress();
+  loadEngProgress();loadDuoState();
   document.getElementById('prog-level').textContent=engProgress.level||'—';
-  document.getElementById('prog-quiz-total').textContent=engProgress.quizTotal||0;
   document.getElementById('prog-quiz-correct').textContent=engProgress.quizCorrect||0;
   document.getElementById('prog-trans-correct').textContent=engProgress.transCorrect||0;
+  document.getElementById('prog-xp').textContent=duoState.xp||0;
+  document.getElementById('prog-streak-big').textContent=(duoState.streak||0)+' kun';
   const acc=engProgress.quizTotal>0?Math.round((engProgress.quizCorrect/engProgress.quizTotal)*100):0;
   document.getElementById('prog-accuracy-bar').style.width=acc+'%';
   document.getElementById('prog-accuracy-text').textContent=acc+'%';
   const chips=document.getElementById('prog-weak-chips');
   const wt=[...new Set(engProgress.weakTopics||[])].slice(0,8);
-  chips.innerHTML=wt.length?wt.map(w=>`<span class="weak-topic-chip">${w}</span>`).join(''):'<span style="font-size:12px;color:var(--muted)">Hali ma\'lumot yo\'q</span>';
+  chips.innerHTML=wt.length?wt.map(w=>`<span class="weak-topic-chip">${w}</span>`).join(''):"<span style=\"font-size:12px;color:var(--muted)\">Hali ma'lumot yo'q</span>";
+  renderStreakCalendar();
+  renderBadges();
 }
+
+function renderStreakCalendar(){
+  const cal=document.getElementById('streak-calendar');if(!cal)return;
+  const days=['Ya','Du','Se','Ch','Pa','Ju','Sh'];
+  const today=new Date();
+  cal.innerHTML='';
+  for(let i=6;i>=0;i--){
+    const d=new Date(today);d.setDate(today.getDate()-i);
+    const ds=d.toISOString().split('T')[0];
+    const dayName=days[d.getDay()];
+    const done=duoState.streakDays&&duoState.streakDays.includes(ds);
+    const isToday=i===0;
+    const el=document.createElement('div');
+    el.className='streak-day'+(done?' done':'')+(isToday&&!done?' today':'');
+    el.textContent=dayName;
+    cal.appendChild(el);
+  }
+}
+
+function renderBadges(){
+  const grid=document.getElementById('badge-grid');if(!grid)return;
+  grid.innerHTML=BADGES.map(b=>{
+    const earned=(duoState.badges||[]).includes(b.id);
+    return `<div class="badge-item${earned?' earned':''}">
+      <span class="badge-icon">${b.icon}</span>
+      <div class="badge-name">${b.name}</div>
+    </div>`;
+  }).join('');
+}
+
 function resetEngProgress(){
   if(!confirm('Progressni tozalashni xohlaysizmi?'))return;
   engProgress={level:null,quizTotal:0,quizCorrect:0,transCorrect:0,weakTopics:[]};
-  saveEngProgress();renderEngProgress();showBanner('🗑 Tozalandi');
+  duoState={xp:0,streak:0,lastActiveDate:null,streakDays:[],lives:5,maxLives:5,badges:[]};
+  saveEngProgress();saveDuoState();renderEngProgress();showBanner('🗑 Tozalandi');
 }
 
 // ===== PLACEMENT TEST =====
@@ -1024,10 +1250,8 @@ function renderPTQuestion(){
   document.getElementById('pt-topic').textContent=`${q.level} · ${q.topic}`;
   document.getElementById('pt-question').textContent=q.text;
   const lvlBadge=document.getElementById('pt-level-badge');
-  lvlBadge.className='level-badge level-'+q.level.toLowerCase();
-  lvlBadge.textContent=q.level;
-  const opts=document.getElementById('pt-options');
-  opts.innerHTML='';
+  lvlBadge.className='level-badge level-'+q.level.toLowerCase();lvlBadge.textContent=q.level;
+  const opts=document.getElementById('pt-options');opts.innerHTML='';
   const labels=['A','B','C','D'];
   q.options.forEach((opt,i)=>{
     const btn=document.createElement('button');
@@ -1042,19 +1266,9 @@ function answerPT(chosen){
   const q=ptState.questions[ptState.qIndex];
   const opts=document.getElementById('pt-options').querySelectorAll('.quiz-option');
   opts.forEach(b=>b.disabled=true);
-  if(chosen===q.answer){
-    ptState.score++;
-    opts[chosen].classList.add('correct');
-  } else {
-    ptState.wrongTopics.push(q.topic);
-    opts[chosen].classList.add('wrong');
-    opts[q.answer].classList.add('show-correct');
-  }
-  setTimeout(()=>{
-    ptState.qIndex++;
-    if(ptState.qIndex>=ptState.questions.length) finishPT();
-    else renderPTQuestion();
-  },700);
+  if(chosen===q.answer){ptState.score++;opts[chosen].classList.add('correct');}
+  else{ptState.wrongTopics.push(q.topic);opts[chosen].classList.add('wrong');opts[q.answer].classList.add('show-correct');}
+  setTimeout(()=>{ptState.qIndex++;if(ptState.qIndex>=ptState.questions.length)finishPT();else renderPTQuestion();},700);
 }
 
 function finishPT(){
@@ -1065,6 +1279,8 @@ function finishPT(){
   document.getElementById('placement-result-screen').style.display='block';
   document.getElementById('pr-level').textContent=level;
   document.getElementById('pr-score').textContent=`${sc}/20 ball`;
+  const xpEarned=sc*5;
+  document.getElementById('pr-xp-earned').innerHTML=`<span style="color:#ff9800;font-weight:700;font-size:14px">+${xpEarned} XP ⚡</span>`;
   const wt=[...new Set(ptState.wrongTopics)];
   const weakBlock=document.getElementById('pr-weak-block');
   if(wt.length){weakBlock.style.display='block';document.getElementById('pr-weak-topics').innerHTML=wt.map(w=>`<span class="weak-topic-chip">${w}</span>`).join('');}
@@ -1072,8 +1288,9 @@ function finishPT(){
   engProgress.level=level;
   if(wt.length)engProgress.weakTopics=[...new Set([...engProgress.weakTopics,...wt])];
   saveEngProgress();
-  currentQuizLevel=level;
-  transState.level=level;
+  addXP(xpEarned);
+  currentQuizLevel=level;transState.level=level;
+  checkBadges();
 }
 
 function resetPlacementTest(){
@@ -1099,9 +1316,7 @@ function startQuiz(level){
 }
 
 function startQuizMyLevel(){
-  loadEngProgress();
-  const lv=engProgress.level||'A1';
-  startQuiz(lv);
+  loadEngProgress();const lv=engProgress.level||'A1';startQuiz(lv);
 }
 
 function renderQuizQuestion(){
@@ -1114,10 +1329,11 @@ function renderQuizQuestion(){
   document.getElementById('quiz-score-live').textContent=`${quizState.score} ✓`;
   document.getElementById('quiz-topic').textContent=q.topic;
   document.getElementById('quiz-question').textContent=q.text;
+  const feedback=document.getElementById('quiz-feedback');
+  feedback.style.display='none';feedback.className='answer-feedback';
   document.getElementById('quiz-explanation').style.display='none';
   document.getElementById('quiz-next-btn').style.display='none';
-  const opts=document.getElementById('quiz-options');
-  opts.innerHTML='';
+  const opts=document.getElementById('quiz-options');opts.innerHTML='';
   const labels=['A','B','C','D'];
   q.options.forEach((opt,i)=>{
     const btn=document.createElement('button');
@@ -1136,14 +1352,21 @@ function answerQuiz(chosen){
   const opts=document.getElementById('quiz-options').querySelectorAll('.quiz-option');
   opts.forEach(b=>b.disabled=true);
   engProgress.quizTotal++;
+  const feedback=document.getElementById('quiz-feedback');
   if(chosen===q.answer){
-    quizState.score++;
-    engProgress.quizCorrect++;
+    quizState.score++;engProgress.quizCorrect++;
     opts[chosen].classList.add('correct');
+    feedback.className='answer-feedback feedback-correct';
+    feedback.innerHTML=`✅ To'g'ri! +10 XP`;
+    feedback.style.display='flex';
+    addXP(10);
   } else {
+    if(duoState.lives>0)loseLife();
     if(!engProgress.weakTopics.includes(q.topic))engProgress.weakTopics.push(q.topic);
-    opts[chosen].classList.add('wrong');
-    opts[q.answer].classList.add('show-correct');
+    opts[chosen].classList.add('wrong');opts[q.answer].classList.add('show-correct');
+    feedback.className='answer-feedback feedback-wrong';
+    feedback.innerHTML=`❌ Noto'g'ri! ❤️ -1 jon`;
+    feedback.style.display='flex';
   }
   document.getElementById('quiz-score-live').textContent=`${quizState.score} ✓`;
   if(q.explanation){
@@ -1151,7 +1374,7 @@ function answerQuiz(chosen){
     document.getElementById('quiz-explanation').textContent='💡 '+q.explanation;
   }
   document.getElementById('quiz-next-btn').style.display='flex';
-  saveEngProgress();
+  saveEngProgress();checkBadges();
 }
 
 function nextQuizQuestion(){
@@ -1166,6 +1389,9 @@ function finishQuiz(){
   document.getElementById('qr-score').textContent=`${quizState.score}/${quizState.questions.length}`;
   const lb=document.getElementById('qr-level-badge');
   lb.innerHTML=`<span class="level-badge level-${quizState.level.toLowerCase()}">${quizState.level}</span>`;
+  const bonusXP=quizState.score>=8?50:quizState.score>=5?25:10;
+  document.getElementById('qr-xp-earned').textContent=`Bonus: +${bonusXP} XP ⚡`;
+  addXP(bonusXP);
 }
 
 function backToQuizSelect(){
@@ -1177,16 +1403,14 @@ function backToQuizSelect(){
 // ===== DIALOG =====
 function initDialog(){
   dialogHistory=[];
-  const msgs=document.getElementById('dialog-messages');
-  msgs.innerHTML='';
+  const msgs=document.getElementById('dialog-messages');msgs.innerHTML='';
   const typingEl=document.createElement('div');
   typingEl.className='msg-bubble msg-bot';
   typingEl.innerHTML='<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
   msgs.appendChild(typingEl);
   const topic=DIALOG_TOPICS[dialogTopic];
   callDialogAPI([{role:'user',content:'Start the conversation based on your role.'}],topic.prompt).then(reply=>{
-    typingEl.remove();
-    addDialogMessage('bot',reply);
+    typingEl.remove();addDialogMessage('bot',reply);
     dialogHistory.push({role:'assistant',content:reply});
   });
 }
@@ -1196,29 +1420,22 @@ function setDialogTopic(topicKey,btn){
   btn.classList.add('active');
   dialogTopic=topicKey;
   document.getElementById('dialog-topic-label').textContent=DIALOG_TOPICS[topicKey].label;
-  clearDialog();
-  initDialog();
+  clearDialog();initDialog();
 }
 
-function clearDialog(){
-  dialogHistory=[];
-  document.getElementById('dialog-messages').innerHTML='';
-}
+function clearDialog(){dialogHistory=[];document.getElementById('dialog-messages').innerHTML='';}
 
 function addDialogMessage(who,text){
   const msgs=document.getElementById('dialog-messages');
   const el=document.createElement('div');
-  el.className=`msg-bubble msg-${who}`;
-  el.textContent=text;
-  msgs.appendChild(el);
-  msgs.scrollTop=msgs.scrollHeight;
+  el.className=`msg-bubble msg-${who}`;el.textContent=text;
+  msgs.appendChild(el);msgs.scrollTop=msgs.scrollHeight;
 }
 
 async function sendDialogMsg(){
   if(dialogBusy)return;
   const inp=document.getElementById('dialog-input');
-  const text=inp.value.trim();
-  if(!text)return;
+  const text=inp.value.trim();if(!text)return;
   inp.value='';
   addDialogMessage('user',text);
   dialogHistory.push({role:'user',content:text});
@@ -1228,65 +1445,65 @@ async function sendDialogMsg(){
   const typingEl=document.createElement('div');
   typingEl.className='msg-bubble msg-bot';
   typingEl.innerHTML='<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
-  msgs.appendChild(typingEl);
-  msgs.scrollTop=msgs.scrollHeight;
+  msgs.appendChild(typingEl);msgs.scrollTop=msgs.scrollHeight;
   try{
     const reply=await callDialogAPI(dialogHistory,DIALOG_TOPICS[dialogTopic].prompt);
-    typingEl.remove();
-    addDialogMessage('bot',reply);
+    typingEl.remove();addDialogMessage('bot',reply);
     dialogHistory.push({role:'assistant',content:reply});
-    // Show corrections if any [...]
-    const corrMatch=reply.match(/\[([^\]]+)\]/g);
+    const corrMatch=reply.match(/\[correction:[^\]]+\]/gi);
     if(corrMatch){
       const corrEl=document.createElement('div');
       corrEl.className='msg-bubble msg-feedback';
-      corrEl.textContent='✏️ Corrections: '+corrMatch.join(', ');
+      corrEl.textContent='✏️ '+corrMatch.join(' | ');
       msgs.appendChild(corrEl);
     }
     msgs.scrollTop=msgs.scrollHeight;
-  }catch(e){typingEl.remove();addDialogMessage('bot','Sorry, something went wrong. Try again!');}
-  dialogBusy=false;
-  document.getElementById('dialog-send-btn').disabled=false;
+    addXP(5);
+  }catch(e){typingEl.remove();addDialogMessage('bot','Sorry, something went wrong. Please try again!');}
+  dialogBusy=false;document.getElementById('dialog-send-btn').disabled=false;
 }
 
 async function callDialogAPI(messages,systemPrompt){
-  const resp=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      model:'claude-sonnet-4-20250514',
-      max_tokens:1000,
-      system:systemPrompt,
-      messages:messages
-    })
-  });
-  const data=await resp.json();
-  if(data.content&&data.content[0])return data.content[0].text;
-  return "I couldn't respond. Please try again.";
+  try{
+    const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer '+GROQ_KEY
+      },
+      body:JSON.stringify({
+        model:'llama-3.1-8b-instant',
+        max_tokens:300,
+        messages:[{role:'system',content:systemPrompt},...messages]
+      })
+    });
+    const data=await resp.json();
+    if(data.choices&&data.choices[0])return data.choices[0].message.content;
+    if(data.error)return "⚠️ Xato: "+data.error.message;
+    return "Javob kelmadi. Qayta urining.";
+  }catch(e){
+    console.log('Dialog API error:',e);
+    return "⚠️ Tarmoq xatosi. Internetni tekshiring.";
+  }
 }
 
 // ===== TRANSLATION =====
 function setTransDir(dir,btn){
-  document.querySelectorAll('#esv-translate .curr-filter-btn').filter?document.querySelectorAll('#esv-translate .curr-filter-btn').forEach(b=>b.classList.remove('active')):null;
   document.getElementById('trans-dir-btn-uz').classList.remove('active');
   document.getElementById('trans-dir-btn-en').classList.remove('active');
   btn.classList.add('active');
-  transState.dir=dir;
-  transState.currentIdx=0;
-  loadTransSentence();
+  transState.dir=dir;transState.currentIdx=0;loadTransSentence();
 }
 
 function setTransLevel(level,btn){
   ['A1','A2','B1','B2'].forEach(l=>document.getElementById('tl-'+l).classList.remove('active'));
   btn.classList.add('active');
-  transState.level=level;
-  transState.currentIdx=0;
-  loadTransSentence();
+  transState.level=level;transState.currentIdx=0;loadTransSentence();
 }
 
 function loadTransSentence(){
   const data=TRANS_DATA[transState.dir]?.[transState.level]||[];
-  if(!data.length){document.getElementById('trans-sentence').textContent='Bu daraja uchun ma\'lumot yo\'q';return;}
+  if(!data.length){document.getElementById('trans-sentence').textContent="Bu daraja uchun malumot yoq";return;}
   transState.data=data;
   const item=data[transState.currentIdx%data.length];
   const sourceText=transState.dir==='uz2en'?item.uz:item.en;
@@ -1310,28 +1527,27 @@ function checkTranslation(){
   if(sim>0.85){
     res.className='trans-result show trans-correct';
     res.textContent='✅ Excellent! '+correct;
-    transState.correct++;engProgress.transCorrect++;saveEngProgress();
+    transState.correct++;engProgress.transCorrect++;
+    saveEngProgress();addXP(15);checkBadges();
   } else if(sim>0.6){
     res.className='trans-result show trans-partial';
-    res.textContent=`⚠️ Almost! Correct: ${correct} (Hint: ${item.hint})`;
+    res.textContent=`⚠️ Yaqin! Togrrisi: ${correct} (Hint: ${item.hint})`;
+    addXP(5);
   } else {
     res.className='trans-result show trans-wrong';
-    res.textContent=`❌ Try again. Correct: ${correct}`;
+    res.textContent=`❌ Notogri. Togrrisi: ${correct}`;
+    if(duoState.lives>0)loseLife();
   }
   document.getElementById('trans-stats').textContent=`${transState.correct} to'g'ri / ${transState.total} ta`;
 }
 
-function nextTranslation(){
-  transState.currentIdx++;
-  loadTransSentence();
-}
+function nextTranslation(){transState.currentIdx++;loadTransSentence();}
 
 function similarity(a,b){
   if(a===b)return 1;
-  const longer=a.length>b.length?a:b;
-  const shorter=a.length>b.length?b:a;
+  const longer=a.length>b.length?a:b,shorter=a.length>b.length?b:a;
   if(longer.length===0)return 1;
-  return (longer.length-editDistance(longer,shorter))/longer.length;
+  return(longer.length-editDistance(longer,shorter))/longer.length;
 }
 
 function editDistance(s1,s2){
@@ -1346,6 +1562,7 @@ function editDistance(s1,s2){
   }
   return costs[s2.length];
 }
+
 
 // ===== TIMETABLE =====
 const GROUPS_LINKS={"FM1":"-1","FM2":"-2","FM3":"-3","FM4":"-4","FM5":"-5","FM6":"-6","FM7":"*7","FIT1":"-7","FIT2":"-8","FIT3":"-9","FIT4":"-10","FIT5":"-11","FIT6":"-12","FAR1":"-13","FAR2":"-14","FAR3":"-15"};
@@ -1547,7 +1764,7 @@ function saveGpaData(){
   const gv=parseFloat(document.getElementById('gpa-result').textContent)||0;
   if(gv>0)addGpaHistory(gv.toFixed(2));
   showBanner(t('saved_msg'));
-  if(typeof syncToSheets==="function")syncToSheets();
+  syncToSheets();
 }
 
 // ===== PROFS =====
@@ -1603,8 +1820,9 @@ window.onload=async()=>{
   const savedTheme=localStorage.getItem(LS_THEME);
   if(savedTheme==='light')applyTheme(false);else if(tg?.colorScheme==='light')applyTheme(false);else applyTheme(true);
   const savedLang=localStorage.getItem(LS_LANG)||'uz';currentLang=savedLang;
-  // Avval localStorage dan yukla (tez ishlaydi)
-  loadProfile();loadEngProgress();
+  // 1. Tez: localStorage dan yukla
+  loadDuoState();loadProfile();loadEngProgress();
+  renderDuoTopbar();
   if(userProfile){
     setLanguage(userProfile.lang||savedLang);
     document.getElementById('onboarding-overlay').style.display='none';
@@ -1613,10 +1831,11 @@ window.onload=async()=>{
   await initGpa();
   renderProfs(PROFS);
   transState.data=TRANS_DATA[transState.dir][transState.level]||[];
-  // Background da Sheets dan sinxronlash
+  // 2. Background: Sheets dan sinxronlash
   loadFromSheets().then(loaded=>{
     if(loaded){
-      loadProfile();loadEngProgress();
+      loadDuoState();loadProfile();loadEngProgress();
+      renderDuoTopbar();
       if(userProfile){
         setLanguage(userProfile.lang||localStorage.getItem(LS_LANG)||'uz');
         document.getElementById('onboarding-overlay').style.display='none';
