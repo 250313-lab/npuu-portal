@@ -195,24 +195,6 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 .feedback-correct{background:rgba(0,230,118,.12);border:2px solid #00e676;color:#00e676}
 .feedback-wrong{background:rgba(255,77,77,.1);border:2px solid #ff4d4d;color:#ff4d4d}
 
-/* Dialog chat */
-.dialog-messages{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:12px;min-height:180px;max-height:300px;overflow-y:auto;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
-.msg-bubble{max-width:82%;padding:9px 13px;border-radius:14px;font-size:13px;line-height:1.5}
-.msg-bot{background:var(--surface2);border:1px solid var(--border);border-radius:14px 14px 14px 4px;align-self:flex-start;color:var(--text)}
-.msg-user{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-radius:14px 14px 4px 14px;align-self:flex-end}
-.msg-feedback{background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.25);color:#00e676;font-size:11.5px;align-self:stretch;border-radius:10px;max-width:100%}
-.dialog-input-row{display:flex;gap:8px}
-.dialog-input{flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:12px;font-size:13.5px;outline:none;font-family:inherit}
-.dialog-input:focus{border-color:var(--accent)}
-.dialog-send-btn{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:10px 16px;font-weight:700;font-size:15px;cursor:pointer;transition:all .2s}
-.dialog-send-btn:active{transform:scale(.95)}
-.dialog-send-btn:disabled{opacity:.5;cursor:default}
-.typing-indicator{display:flex;gap:4px;align-items:center;padding:9px 13px}
-.typing-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:typingBounce 1s ease-in-out infinite}
-.typing-dot:nth-child(2){animation-delay:.15s}
-.typing-dot:nth-child(3){animation-delay:.3s}
-@keyframes typingBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
-
 /* Translation exercise */
 .trans-sentence{background:linear-gradient(135deg,rgba(58,134,255,.1),rgba(0,187,249,.06));border:2px solid rgba(58,134,255,.3);border-radius:16px;padding:16px;font-size:17px;font-weight:700;text-align:center;margin-bottom:14px;line-height:1.5;min-height:70px;display:flex;align-items:center;justify-content:center}
 .trans-input{width:100%;background:var(--surface2);border:2px solid var(--border);color:var(--text);padding:12px 14px;border-radius:14px;font-size:14px;outline:none;font-family:inherit;transition:border .2s;margin-bottom:10px}
@@ -248,7 +230,6 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 .streak-day{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
 .streak-day.done{background:linear-gradient(135deg,#ff9800,#ff6b35);border-color:#ff9800;color:#fff}
 .streak-day.today{border-color:var(--accent);color:var(--accent2)}
-
 
 /* NAV BAR */
 .nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--nav-bg);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:100;overflow-x:auto;scrollbar-width:none;transition:background .35s}
@@ -451,7 +432,6 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   <div class="eng-tab-bar">
     <button class="eng-tab active" onclick="switchEngTab('placement')" id="etab-placement">🎯 Test</button>
     <button class="eng-tab" onclick="switchEngTab('quiz')" id="etab-quiz">📝 Quiz</button>
-    <button class="eng-tab" onclick="switchEngTab('dialog')" id="etab-dialog">💬 Dialog</button>
     <button class="eng-tab" onclick="switchEngTab('translate')" id="etab-translate">🔄 Tarjima</button>
     <button class="eng-tab" onclick="switchEngTab('progress')" id="etab-progress">📊 Progress</button>
   </div>
@@ -538,26 +518,6 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
       <button class="btn" style="background:var(--accent);color:#fff;margin-bottom:8px" onclick="startQuiz(currentQuizLevel)">🔄 Qayta o'ynash</button>
       <button class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border)" onclick="backToQuizSelect()">← Daraja tanlash</button>
     </div>
-  </div>
-
-  <!-- ── DIALOG ── -->
-  <div class="eng-sub-view" id="esv-dialog">
-    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-      <button class="curr-filter-btn active" onclick="setDialogTopic('free',this)">💬 Free talk</button>
-      <button class="curr-filter-btn" onclick="setDialogTopic('cafe',this)">☕ At a cafe</button>
-      <button class="curr-filter-btn" onclick="setDialogTopic('interview',this)">👔 Interview</button>
-      <button class="curr-filter-btn" onclick="setDialogTopic('travel',this)">✈️ Travel</button>
-    </div>
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-      <span style="font-size:11px;color:var(--muted);font-weight:600" id="dialog-topic-label">Topic: Free talk</span>
-      <button style="background:none;border:none;color:var(--accent3);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit" onclick="clearDialog()">🗑 Tozalash</button>
-    </div>
-    <div class="dialog-messages" id="dialog-messages"></div>
-    <div class="dialog-input-row">
-      <input class="dialog-input" id="dialog-input" placeholder="Type your message..." onkeydown="if(event.key==='Enter')sendDialogMsg()">
-      <button class="dialog-send-btn" id="dialog-send-btn" onclick="sendDialogMsg()">→</button>
-    </div>
-    <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:6px">💡 Xatolar avtomatik tuzatiladi</div>
   </div>
 
   <!-- ── TRANSLATION ── -->
@@ -673,7 +633,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
     <span>English</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" onclick="switchView('profs')" id="nav-profs">
-    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
     <span>Profs</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" onclick="switchView('timetable')" id="nav-timetable">
@@ -699,7 +659,6 @@ const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_GPA='npuu_gpa_data',
       LS_PROFILE='npuu_profile', LS_GPA_HIST='npuu_gpa_history', LS_ENG='npuu_eng_progress';
 
 // ===== API CONFIG =====
-const GROQ_KEY = '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'; // <-- console.groq.com dan yangi kalit qo'ying
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyA7xz8MxAxGnvKgi5ARx1BTGaTNftvTi0k47ba8iszmzKiLrj29uitZ3hZXM6OxZYz/exec';
 
 // ===== GOOGLE SHEETS SYNC =====
@@ -904,14 +863,6 @@ const TRANS_DATA={
   }
 };
 
-// ===== DIALOG TOPICS =====
-const DIALOG_TOPICS={
-  free:{label:"Topic: Free talk",prompt:"You are a friendly English conversation partner for a university student. Their level is A1-B2. Chat naturally and keep it engaging. Gently correct grammar mistakes by showing the correct form in brackets like [correction: ...]. Keep messages short (2-3 sentences max). Start by saying hello and asking what they want to talk about today."},
-  cafe:{label:"Topic: At a cafe ☕",prompt:"You are a friendly barista at a coffee shop. The student is a customer ordering and chatting. Speak naturally, correct their English mistakes gently in brackets like [correction: ...]. Keep replies short and realistic. Start by greeting them warmly."},
-  interview:{label:"Topic: Job interview 👔",prompt:"You are an HR manager at a tech company conducting a job interview in English. Ask standard interview questions one at a time. Correct the student's grammar gently in brackets. Be encouraging but professional. Start with a warm greeting and your first question."},
-  travel:{label:"Topic: Travel ✈️",prompt:"You are a friendly fellow traveler chatting at an airport. Discuss travel destinations, experiences, and tips. Correct grammar mistakes gently in brackets. Keep it fun and conversational. Start by introducing yourself and asking where they're headed."},
-};
-
 // ===== DUOLINGO STATE =====
 const LS_DUO='npuu_duo_state';
 let duoState={
@@ -1030,14 +981,8 @@ let currentQuizLevel='A1';
 // Translation
 let transState={dir:'uz2en',level:'A1',currentIdx:0,correct:0,total:0,data:[]};
 
-// Dialog
-let dialogTopic='free';
-let dialogHistory=[];
-let dialogBusy=false;
-
 // Eng progress
 let engProgress={level:null,quizTotal:0,quizCorrect:0,transCorrect:0,weakTopics:[]};
-
 
 // ===== HELPERS =====
 function t(key){return T[currentLang]?.[key]||T.uz[key]||key}
@@ -1168,7 +1113,6 @@ function switchEngTab(tab){
   document.getElementById('esv-'+tab).classList.add('active');
   currentEngTab=tab;
   if(tab==='progress')renderEngProgress();
-  if(tab==='dialog'&&dialogHistory.length===0)initDialog();
   if(tab==='translate')loadTransSentence();
   markDailyActive();
 }
@@ -1316,535 +1260,9 @@ function startQuiz(level){
 }
 
 function startQuizMyLevel(){
-  loadEngProgress();const lv=engProgress.level||'A1';startQuiz(lv);
+  const lvl=engProgress.level||'A1';
+  startQuiz(lvl);
 }
-
-function renderQuizQuestion(){
-  const q=quizState.questions[quizState.qIndex];
-  const total=quizState.questions.length;
-  document.getElementById('quiz-counter').textContent=`${quizState.qIndex+1}/${total}`;
-  document.getElementById('quiz-progress').style.width=(((quizState.qIndex+1)/total)*100)+'%';
-  const lb=document.getElementById('quiz-level-badge');
-  lb.className='level-badge level-'+quizState.level.toLowerCase();lb.textContent=quizState.level;
-  document.getElementById('quiz-score-live').textContent=`${quizState.score} ✓`;
-  document.getElementById('quiz-topic').textContent=q.topic;
-  document.getElementById('quiz-question').textContent=q.text;
-  const feedback=document.getElementById('quiz-feedback');
-  feedback.style.display='none';feedback.className='answer-feedback';
-  document.getElementById('quiz-explanation').style.display='none';
-  document.getElementById('quiz-next-btn').style.display='none';
-  const opts=document.getElementById('quiz-options');opts.innerHTML='';
-  const labels=['A','B','C','D'];
-  q.options.forEach((opt,i)=>{
-    const btn=document.createElement('button');
-    btn.className='quiz-option';
-    btn.innerHTML=`<span class="option-label">${labels[i]}</span>${opt}`;
-    btn.onclick=()=>answerQuiz(i);
-    opts.appendChild(btn);
-  });
-  quizState.answered=false;
-}
-
-function answerQuiz(chosen){
-  if(quizState.answered)return;
-  quizState.answered=true;
-  const q=quizState.questions[quizState.qIndex];
-  const opts=document.getElementById('quiz-options').querySelectorAll('.quiz-option');
-  opts.forEach(b=>b.disabled=true);
-  engProgress.quizTotal++;
-  const feedback=document.getElementById('quiz-feedback');
-  if(chosen===q.answer){
-    quizState.score++;engProgress.quizCorrect++;
-    opts[chosen].classList.add('correct');
-    feedback.className='answer-feedback feedback-correct';
-    feedback.innerHTML=`✅ To'g'ri! +10 XP`;
-    feedback.style.display='flex';
-    addXP(10);
-  } else {
-    if(duoState.lives>0)loseLife();
-    if(!engProgress.weakTopics.includes(q.topic))engProgress.weakTopics.push(q.topic);
-    opts[chosen].classList.add('wrong');opts[q.answer].classList.add('show-correct');
-    feedback.className='answer-feedback feedback-wrong';
-    feedback.innerHTML=`❌ Noto'g'ri! ❤️ -1 jon`;
-    feedback.style.display='flex';
-  }
-  document.getElementById('quiz-score-live').textContent=`${quizState.score} ✓`;
-  if(q.explanation){
-    document.getElementById('quiz-explanation').style.display='block';
-    document.getElementById('quiz-explanation').textContent='💡 '+q.explanation;
-  }
-  document.getElementById('quiz-next-btn').style.display='flex';
-  saveEngProgress();checkBadges();
-}
-
-function nextQuizQuestion(){
-  quizState.qIndex++;
-  if(quizState.qIndex>=quizState.questions.length)finishQuiz();
-  else renderQuizQuestion();
-}
-
-function finishQuiz(){
-  document.getElementById('quiz-active-screen').style.display='none';
-  document.getElementById('quiz-result-screen').style.display='block';
-  document.getElementById('qr-score').textContent=`${quizState.score}/${quizState.questions.length}`;
-  const lb=document.getElementById('qr-level-badge');
-  lb.innerHTML=`<span class="level-badge level-${quizState.level.toLowerCase()}">${quizState.level}</span>`;
-  const bonusXP=quizState.score>=8?50:quizState.score>=5?25:10;
-  document.getElementById('qr-xp-earned').textContent=`Bonus: +${bonusXP} XP ⚡`;
-  addXP(bonusXP);
-}
-
-function backToQuizSelect(){
-  document.getElementById('quiz-level-select').style.display='block';
-  document.getElementById('quiz-active-screen').style.display='none';
-  document.getElementById('quiz-result-screen').style.display='none';
-}
-
-// ===== DIALOG =====
-function initDialog(){
-  dialogHistory=[];
-  const msgs=document.getElementById('dialog-messages');msgs.innerHTML='';
-  const typingEl=document.createElement('div');
-  typingEl.className='msg-bubble msg-bot';
-  typingEl.innerHTML='<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
-  msgs.appendChild(typingEl);
-  const topic=DIALOG_TOPICS[dialogTopic];
-  callDialogAPI([{role:'user',content:'Start the conversation based on your role.'}],topic.prompt).then(reply=>{
-    typingEl.remove();addDialogMessage('bot',reply);
-    dialogHistory.push({role:'assistant',content:reply});
-  });
-}
-
-function setDialogTopic(topicKey,btn){
-  document.querySelectorAll('#esv-dialog .curr-filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  dialogTopic=topicKey;
-  document.getElementById('dialog-topic-label').textContent=DIALOG_TOPICS[topicKey].label;
-  clearDialog();initDialog();
-}
-
-function clearDialog(){dialogHistory=[];document.getElementById('dialog-messages').innerHTML='';}
-
-function addDialogMessage(who,text){
-  const msgs=document.getElementById('dialog-messages');
-  const el=document.createElement('div');
-  el.className=`msg-bubble msg-${who}`;el.textContent=text;
-  msgs.appendChild(el);msgs.scrollTop=msgs.scrollHeight;
-}
-
-async function sendDialogMsg(){
-  if(dialogBusy)return;
-  const inp=document.getElementById('dialog-input');
-  const text=inp.value.trim();if(!text)return;
-  inp.value='';
-  addDialogMessage('user',text);
-  dialogHistory.push({role:'user',content:text});
-  dialogBusy=true;
-  document.getElementById('dialog-send-btn').disabled=true;
-  const msgs=document.getElementById('dialog-messages');
-  const typingEl=document.createElement('div');
-  typingEl.className='msg-bubble msg-bot';
-  typingEl.innerHTML='<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
-  msgs.appendChild(typingEl);msgs.scrollTop=msgs.scrollHeight;
-  try{
-    const reply=await callDialogAPI(dialogHistory,DIALOG_TOPICS[dialogTopic].prompt);
-    typingEl.remove();addDialogMessage('bot',reply);
-    dialogHistory.push({role:'assistant',content:reply});
-    const corrMatch=reply.match(/\[correction:[^\]]+\]/gi);
-    if(corrMatch){
-      const corrEl=document.createElement('div');
-      corrEl.className='msg-bubble msg-feedback';
-      corrEl.textContent='✏️ '+corrMatch.join(' | ');
-      msgs.appendChild(corrEl);
-    }
-    msgs.scrollTop=msgs.scrollHeight;
-    addXP(5);
-  }catch(e){typingEl.remove();addDialogMessage('bot','Sorry, something went wrong. Please try again!');}
-  dialogBusy=false;document.getElementById('dialog-send-btn').disabled=false;
-}
-
-async function callDialogAPI(messages,systemPrompt){
-  try{
-    const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-        'Authorization':'Bearer '+GROQ_KEY
-      },
-      body:JSON.stringify({
-        model:'llama-3.1-8b-instant',
-        max_tokens:300,
-        messages:[{role:'system',content:systemPrompt},...messages]
-      })
-    });
-    const data=await resp.json();
-    if(data.choices&&data.choices[0])return data.choices[0].message.content;
-    if(data.error)return "⚠️ Xato: "+data.error.message;
-    return "Javob kelmadi. Qayta urining.";
-  }catch(e){
-    console.log('Dialog API error:',e);
-    return "⚠️ Tarmoq xatosi. Internetni tekshiring.";
-  }
-}
-
-// ===== TRANSLATION =====
-function setTransDir(dir,btn){
-  document.getElementById('trans-dir-btn-uz').classList.remove('active');
-  document.getElementById('trans-dir-btn-en').classList.remove('active');
-  btn.classList.add('active');
-  transState.dir=dir;transState.currentIdx=0;loadTransSentence();
-}
-
-function setTransLevel(level,btn){
-  ['A1','A2','B1','B2'].forEach(l=>document.getElementById('tl-'+l).classList.remove('active'));
-  btn.classList.add('active');
-  transState.level=level;transState.currentIdx=0;loadTransSentence();
-}
-
-function loadTransSentence(){
-  const data=TRANS_DATA[transState.dir]?.[transState.level]||[];
-  if(!data.length){document.getElementById('trans-sentence').textContent="Bu daraja uchun malumot yoq";return;}
-  transState.data=data;
-  const item=data[transState.currentIdx%data.length];
-  const sourceText=transState.dir==='uz2en'?item.uz:item.en;
-  document.getElementById('trans-sentence').textContent=sourceText;
-  document.getElementById('trans-input').value='';
-  const res=document.getElementById('trans-result');
-  res.className='trans-result';res.textContent='';
-  document.getElementById('trans-stats').textContent=`${transState.correct} to'g'ri / ${transState.total} ta`;
-}
-
-function checkTranslation(){
-  const inp=document.getElementById('trans-input').value.trim().toLowerCase();
-  if(!inp){showBanner('Tarjimani kiriting!');return;}
-  const data=transState.data;
-  const item=data[transState.currentIdx%data.length];
-  const correct=(transState.dir==='uz2en'?item.en:item.uz).toLowerCase();
-  const res=document.getElementById('trans-result');
-  transState.total++;
-  const sim=similarity(inp,correct);
-  res.style.display='block';
-  if(sim>0.85){
-    res.className='trans-result show trans-correct';
-    res.textContent='✅ Excellent! '+correct;
-    transState.correct++;engProgress.transCorrect++;
-    saveEngProgress();addXP(15);checkBadges();
-  } else if(sim>0.6){
-    res.className='trans-result show trans-partial';
-    res.textContent=`⚠️ Yaqin! Togrrisi: ${correct} (Hint: ${item.hint})`;
-    addXP(5);
-  } else {
-    res.className='trans-result show trans-wrong';
-    res.textContent=`❌ Notogri. Togrrisi: ${correct}`;
-    if(duoState.lives>0)loseLife();
-  }
-  document.getElementById('trans-stats').textContent=`${transState.correct} to'g'ri / ${transState.total} ta`;
-}
-
-function nextTranslation(){transState.currentIdx++;loadTransSentence();}
-
-function similarity(a,b){
-  if(a===b)return 1;
-  const longer=a.length>b.length?a:b,shorter=a.length>b.length?b:a;
-  if(longer.length===0)return 1;
-  return(longer.length-editDistance(longer,shorter))/longer.length;
-}
-
-function editDistance(s1,s2){
-  const costs=[];
-  for(let i=0;i<=s1.length;i++){
-    let lastValue=i;
-    for(let j=0;j<=s2.length;j++){
-      if(i===0)costs[j]=j;
-      else if(j>0){let newValue=costs[j-1];if(s1.charAt(i-1)!==s2.charAt(j-1))newValue=Math.min(Math.min(newValue,lastValue),costs[j])+1;costs[j-1]=lastValue;lastValue=newValue;}
-    }
-    if(i>0)costs[s2.length]=lastValue;
-  }
-  return costs[s2.length];
-}
-
-
-// ===== TIMETABLE =====
-const GROUPS_LINKS={"FM1":"-1","FM2":"-2","FM3":"-3","FM4":"-4","FM5":"-5","FM6":"-6","FM7":"*7","FIT1":"-7","FIT2":"-8","FIT3":"-9","FIT4":"-10","FIT5":"-11","FIT6":"-12","FAR1":"-13","FAR2":"-14","FAR3":"-15"};
-function initTimetable(){
-  const grid=document.getElementById('tt-grid');
-  grid.innerHTML=Object.entries(GROUPS_LINKS).map(([gname,gid])=>{
-    const isMine=userProfile?.group===gname;
-    return `<button class="tt-btn${isMine?' my-group':''}" onclick="openTimetable('${gid}')">${gname}${isMine?'<span class="star">⭐</span>':''}</button>`;
-  }).join('');
-}
-function openTimetable(gid){
-  const url=`https://npuu.edupage.org/timetable/view.php?num=6&class=${gid}`;
-  if(tg?.openLink)tg.openLink(url);else window.open(url,'_blank');
-}
-function openMyTimetable(e){
-  e.preventDefault();if(!userProfile)return;
-  const gid=GROUPS_LINKS[userProfile.group];if(gid)openTimetable(gid);
-}
-
-// ===== GPA =====
-let gpaScaleVisible=false;
-function toggleGpaScale(){
-  gpaScaleVisible=!gpaScaleVisible;
-  document.getElementById('gpa-scale-panel').style.display=gpaScaleVisible?'block':'none';
-  document.getElementById('gpa-arrow').textContent=gpaScaleVisible?'▲':'▼';
-}
-
-function updateGpaRing(gpa){
-  const circ=251.2,offset=circ-(gpa/5)*circ;
-  const ring=document.getElementById('gpa-ring');
-  ring.style.strokeDashoffset=offset;
-  let color='#ff4d4d';
-  if(gpa>=4.5)color='#00e676';else if(gpa>=4.0)color='#40c4ff';else if(gpa>=3.5)color='#b2ff59';else if(gpa>=3.0)color='#ffcc00';else if(gpa>0)color='#ff9800';
-  ring.style.stroke=color;
-  document.getElementById('gpa-ring-center').textContent=gpa.toFixed(2);
-  document.getElementById('gpa-ring-center').setAttribute('fill',color);
-  document.getElementById('gpa-result').textContent=gpa.toFixed(2);
-  document.getElementById('gpa-result').style.color=color;
-  let letter='—';
-  if(gpa>=4.75)letter='A+';else if(gpa>=4.25)letter='A';else if(gpa>=4.0)letter='B+';else if(gpa>=3.75)letter='B';else if(gpa>=3.5)letter='C+';else if(gpa>=3.25)letter='C';else if(gpa>=3.0)letter='D';else if(gpa>0)letter='F';
-  document.getElementById('gpa-letter').textContent=gpa>0?`${t('gpa_th_letter')}: ${letter}`:'—';
-  document.getElementById('gpa-letter').style.color=color;
-  updateStipendInfo(gpa);
-}
-
-function updateStipendInfo(gpa){
-  const el=document.getElementById('stipend-info');if(!gpa){el.innerHTML='';return;}
-  let html='';
-  if(gpa>=4.5)html=`<div class="stipend-card stipend-ok">${t('stipend_president')}</div>`;
-  else if(gpa>=3.5)html=`<div class="stipend-card stipend-ok">${t('stipend_ok')}</div>`;
-  else if(gpa>=3.0)html=`<div class="stipend-card stipend-warn">${t('stipend_warn')} (+${(3.5-gpa).toFixed(2)} kerak)</div>`;
-  else html=`<div class="stipend-card stipend-fail">${t('stipend_fail')}</div>`;
-  el.innerHTML=html;
-}
-
-function shareGpa(){
-  const gpa=document.getElementById('gpa-result').textContent;
-  const name=userProfile?.name||'—';const grp=userProfile?.group||'';
-  const msg=`🎓 NPUU Smart Bot\n👤 ${name} (${grp})\n📊 GPA: ${gpa} / 5.0`;
-  if(tg?.sendData)tg.sendData(JSON.stringify({type:'share_gpa',text:msg}));
-  else if(navigator.share)navigator.share({text:msg});
-  else navigator.clipboard.writeText(msg).then(()=>showBanner(t('copied')));
-}
-
-function loadGpaHistory(){try{const s=localStorage.getItem(LS_GPA_HIST);return s?JSON.parse(s):[];}catch(e){return[];}}
-function addGpaHistory(gpa){
-  const hist=loadGpaHistory();const d=new Date();const ds=`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
-  const filtered=hist.filter(h=>h.date!==ds);filtered.unshift({date:ds,gpa});
-  const lim=filtered.slice(0,10);localStorage.setItem(LS_GPA_HIST,JSON.stringify(lim));renderGpaHistory(lim);
-}
-function renderGpaHistory(hist){
-  if(!hist||!hist.length){document.getElementById('gpa-history-block').style.display='none';return;}
-  document.getElementById('gpa-history-block').style.display='block';
-  document.getElementById('gpa-history-list').innerHTML=hist.map(h=>`<div class="gpa-history-item"><span style="color:var(--muted)">${h.date}</span><span style="font-weight:700;color:var(--accent2)">${parseFloat(h.gpa).toFixed(2)}</span></div>`).join('');
-}
-
-const SHEET_ID='17Uvp8bhjn5Cf9r4d6GssDHznQPBpS0Lv';
-const SHEET_NAMES={AI:'Artificial Intelligence',IST:'Information Systems',MATH:'Mathematics'};
-let CURRICULUM={AI:null,IST:null,MATH:null};
-
-function parseSheetRows(rows){
-  const subjects=[];if(!rows||rows.length<2)return subjects;
-  for(let i=1;i<rows.length;i++){
-    const r=rows[i].c;if(!r||!r[0]||!r[0].v)continue;
-    const semRaw=r[0]?String(r[0].v).trim():'';const sem=parseInt(semRaw.replace(/[^0-9]/g,''))||0;
-    if(!sem||sem<1||sem>8)continue;
-    const code=r[1]?String(r[1].v||'').trim():'';const nameEn=r[2]?String(r[2].v||'').trim():'';
-    const nameUz=r[3]?String(r[3].v||'').trim():'';const typeRaw=r[4]?String(r[4].v||'').trim():'Core';
-    const type=(typeRaw.toLowerCase().includes('elective'))?'Elective':'Core';
-    const ects=r[7]?(parseFloat(r[7].v)||0):0;
-    if(!nameEn&&!nameUz)continue;
-    subjects.push({sem,code,nameEn,nameUz,type,ects});
-  }
-  return subjects;
-}
-
-async function fetchCurriculum(majorKey){
-  if(CURRICULUM[majorKey]!==null)return CURRICULUM[majorKey];
-  const sheetName=SHEET_NAMES[majorKey];if(!sheetName)return[];
-  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
-  try{
-    const res=await fetch(url);const text=await res.text();
-    const jsonStr=text.match(/google\.visualization\.Query\.setResponse\(([\s\S]+?)\);?\s*$/)[1];
-    const data=JSON.parse(jsonStr);
-    const rows=(data&&data.table&&data.table.rows)?data.table.rows:[];
-    CURRICULUM[majorKey]=parseSheetRows(rows);return CURRICULUM[majorKey];
-  }catch(e){console.error('Sheets fetch error:',e);return[];}
-}
-
-let gpaState={selectedSems:[],subjects:{}};
-
-async function initGpa(){
-  const saved=localStorage.getItem(LS_GPA);
-  if(saved){try{const parsed=JSON.parse(saved);if(Array.isArray(parsed)){parsed.forEach((item,idx)=>{gpaState.subjects['legacy_'+idx]=item;});}else{gpaState=parsed;if(!gpaState.selectedSems)gpaState.selectedSems=[];if(!gpaState.subjects)gpaState.subjects={};}}catch(e){}}
-  if(userProfile&&gpaState.selectedSems.length===0)gpaState.selectedSems=[calcCurrentSemester(userProfile.admitYear)];
-  renderGpaHistory(loadGpaHistory());
-  await renderGpaView();
-}
-
-function syncDOMToState(){
-  document.querySelectorAll('#gpa-rows .gpa-row-item').forEach(row=>{
-    const id=row.dataset.id;if(!id)return;
-    gpaState.subjects[id]={name:row.querySelector('.name-input').value,credit:row.querySelector('.credit-input').value,score:row.querySelector('.score-input').value};
-  });
-}
-
-async function toggleGpaSem(sem){
-  syncDOMToState();
-  if(gpaState.selectedSems.includes(sem))gpaState.selectedSems=gpaState.selectedSems.filter(s=>s!==sem);
-  else{gpaState.selectedSems.push(sem);gpaState.selectedSems.sort((a,b)=>a-b);}
-  await renderGpaView();
-}
-
-async function renderGpaView(){
-  const container=document.getElementById('gpa-sem-container');
-  const toggles=document.getElementById('gpa-sem-toggles');
-  if(userProfile){
-    container.style.display='block';
-    toggles.innerHTML=[1,2,3,4,5,6,7,8].map(s=>`<button class="curr-filter-btn ${gpaState.selectedSems.includes(s)?'active':''}" onclick="toggleGpaSem(${s})">${s}-sem</button>`).join('');
-  }else container.style.display='none';
-  const c=document.getElementById('gpa-rows');c.innerHTML='';
-  if(userProfile&&gpaState.selectedSems.length>0){
-    c.innerHTML=`<div style="text-align:center;color:var(--muted);padding:16px 0">⏳</div>`;
-    const sheetSubjects=await fetchCurriculum(userProfile.major);c.innerHTML='';
-    gpaState.selectedSems.forEach(sem=>{
-      const semItems=sheetSubjects.filter(s=>s.sem===sem);
-      if(semItems.length>0&&gpaState.selectedSems.length>1){
-        const divider=document.createElement('div');
-        divider.style.cssText='font-size:10.5px;font-weight:700;color:var(--accent3);text-transform:uppercase;letter-spacing:.6px;padding:6px 2px 4px;margin-top:4px';
-        divider.textContent=`${sem}-semester`;c.appendChild(divider);
-      }
-      semItems.forEach(s=>{const saved=gpaState.subjects[s.code];appendGpaRowDOM(s.code,saved?.name||(currentLang==='uz'?s.nameUz:s.nameEn),saved?.credit!==undefined?saved.credit:s.ects,saved?.score||'');});
-    });
-  }else if(!userProfile)for(let i=0;i<5;i++)appendGpaRowDOM('legacy_'+i,'',3,'');
-  Object.keys(gpaState.subjects).forEach(key=>{if(key.startsWith('custom_')){const s=gpaState.subjects[key];appendGpaRowDOM(key,s.name,s.credit,s.score);}});
-  calculateGpa();
-}
-
-function appendGpaRowDOM(id,name,credit,score){
-  const c=document.getElementById('gpa-rows');const row=document.createElement('div');
-  row.className='card gpa-row-item';row.dataset.id=id;
-  row.style.cssText='padding:7px 10px;display:flex;gap:7px;align-items:center;margin-bottom:7px';
-  const isCustom=id.startsWith('custom_')||id.startsWith('legacy_');
-  row.innerHTML=`<input type="text" class="name-input" value="${(name||'').replace(/"/g,'&quot;').replace(/'/g,"&#39;")}" placeholder="Subject" style="flex:2;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px 9px;border-radius:8px;font-size:12.5px;min-width:0;font-family:inherit;outline:none"><input type="number" class="credit-input" placeholder="Cr" min="1" max="100" value="${credit||3}" style="width:38px;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:8px;text-align:center;font-size:12.5px;outline:none"><input type="number" class="score-input" placeholder="0-100" min="0" max="100" value="${score||''}" style="width:52px;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:8px;text-align:center;font-size:12.5px;outline:none"><div class="grade-display" style="width:33px;text-align:center;font-weight:700;font-size:13px;color:var(--muted)">-</div><button onclick="removeGpaRow(this,'${id}')" style="background:none;border:none;font-size:15px;cursor:pointer;padding:0 3px;color:${isCustom?'#ff4d4d':'var(--muted)'};">${isCustom?'✕':'·'}</button>`;
-  c.appendChild(row);
-  row.querySelector('.credit-input').addEventListener('input',calculateGpa);
-  row.querySelector('.score-input').addEventListener('input',calculateGpa);
-}
-
-function removeGpaRow(btn,id){
-  if(id.startsWith('custom_')||id.startsWith('legacy_')){delete gpaState.subjects[id];btn.parentElement.remove();calculateGpa();}
-}
-
-function addCustomGpaRow(){syncDOMToState();const id='custom_'+Date.now();gpaState.subjects[id]={name:'',credit:3,score:''};appendGpaRowDOM(id,'',3,'');calculateGpa();}
-
-function calculateGpa(){
-  let tc=0,tp=0;
-  document.querySelectorAll('#gpa-rows .gpa-row-item').forEach(row=>{
-    const cr=parseFloat(row.querySelector('.credit-input').value)||0;
-    const sv=row.querySelector('.score-input').value;const sc=parseFloat(sv);
-    const gd=row.querySelector('.grade-display');let gp=0,lt='-';
-    if(!isNaN(sc)&&sv!==''){
-      if(sc>=95){gp=5.00;lt='A+';}else if(sc>=90){gp=4.50;lt='A';}else if(sc>=85){gp=4.25;lt='B+';}
-      else if(sc>=80){gp=4.00;lt='B';}else if(sc>=75){gp=3.75;lt='C+';}else if(sc>=70){gp=3.50;lt='C';}
-      else if(sc>=65){gp=3.25;lt='D+';}else if(sc>=60){gp=3.00;lt='D';}else{gp=0;lt='F';}
-      gd.innerText=lt;gd.style.color=gp>=3?'var(--accent3)':'#ff4d4d';tc+=cr;tp+=cr*gp;
-    }else{gd.innerText='-';gd.style.color='var(--muted)';}
-  });
-  updateGpaRing(tc>0?tp/tc:0);
-}
-
-function saveGpaData(){
-  syncDOMToState();
-  document.querySelectorAll('#gpa-rows .gpa-row-item').forEach(row=>{
-    const id=row.dataset.id;if(!id)return;
-    gpaState.subjects[id]={name:row.querySelector('.name-input').value,credit:row.querySelector('.credit-input').value,score:row.querySelector('.score-input').value};
-  });
-  localStorage.setItem(LS_GPA,JSON.stringify(gpaState));
-  const gv=parseFloat(document.getElementById('gpa-result').textContent)||0;
-  if(gv>0)addGpaHistory(gv.toFixed(2));
-  showBanner(t('saved_msg'));
-  syncToSheets();
-}
-
-// ===== PROFS =====
-const PROFS=[
-  {n:"Marks Ruziboev",e:"m.ruziboev@npuu.uz",d:"Mathematics"},
-  {n:"Azamat Xolboyev",e:"a.xolboyev@npuu.uz",d:"Mathematics"},
-  {n:"Allambergen Qudaybergenov",e:"a.qudaybergenov@npuu.uz",d:"Mathematics"},
-  {n:"Bakhtinur Juraev",e:"b.juraev@npuu.uz",d:"Mathematics"},
-  {n:"Farhod Muxamadiyev",e:"f.muxamadiyev@npuu.uz",d:"Mathematics"},
-  {n:"Sa'dullayev Anvar",e:"a.sa'dullayev@npuu.uz",d:"Mathematics"},
-  {n:"Shakhzod Suvanov",e:"sh.suvanov@npuu.uz",d:"Mathematics"},
-  {n:"Zarif Ibragimov",e:"z.ibragimov@npuu.uz",d:"Mathematics"},
-  {n:"Azamat Akhmedjanov",e:"a.akhmedjanov@npuu.uz",d:"General English"},
-  {n:"Azizabonu Ziyodullaeva",e:"a.ziyodullaeva@npuu.uz",d:"General English"},
-  {n:"Dilnoza Boymirzayeva",e:"d.boymirzayeva@npuu.uz",d:"General English"},
-  {n:"Mirjon Khidoyatov",e:"m.khidoyatov@npuu.uz",d:"General English"},
-  {n:"Mirsaid Abdurakhmonov",e:"m.abdurakhmonov@npuu.uz",d:"General English"},
-  {n:"Rano Khikmatova",e:"r.khikmatova@npuu.uz",d:"General English"},
-  {n:"Zukhra Khakimova",e:"z.khakimova@npuu.uz",d:"General English"},
-  {n:"Asadulla Ashurov",e:"a.ashurov@npuu.uz",d:"IT"},
-  {n:"Bakhromjon Tulkinov",e:"b.tulkinov@npuu.uz",d:"IT"},
-  {n:"Mirrakhmon Khaydarov",e:"m.khaydarov@npuu.uz",d:"IT"},
-  {n:"Ulugbek Tursunaliev",e:"u.tursunaliev@npuu.uz",d:"IT"},
-  {n:"Nilufar Tillayeva",e:"n.tillayeva@npuu.uz",d:"Education"},
-  {n:"Ozodakhon Shukurillaeva",e:"o.shukurillaeva@npuu.uz",d:"Education"},
-  {n:"Albina Suleymanova",e:"a.suleymanova@npuu.uz",d:"Education"}
-];
-const DEPT_CLASS={Mathematics:"dept-math","General English":"dept-eng",IT:"dept-it",Education:"dept-edu"};
-
-function renderProfs(data){
-  document.getElementById('prof-list').innerHTML=data.map((p,i)=>`
-    <div class="card card-anim ${DEPT_CLASS[p.d]||''}" style="margin-bottom:8px;animation-delay:${i*.03}s">
-      <div style="font-size:10.5px;color:var(--accent3);font-weight:700;letter-spacing:.4px">${p.d}</div>
-      <div style="font-size:14.5px;font-weight:600;margin:3px 0">${p.n}</div>
-      <div style="font-size:12px;color:var(--muted);display:flex;align-items:center;flex-wrap:wrap;gap:4px">
-        ✉️ <a href="mailto:${p.e}" style="color:var(--accent2);text-decoration:none">${p.e}</a>
-        <button class="copy-email-btn" onclick="copyEmail('${p.e}',this)">📋</button>
-      </div>
-    </div>`).join('');
-}
-
-function copyEmail(email,btn){
-  navigator.clipboard.writeText(email).then(()=>{btn.textContent='✓';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📋';btn.classList.remove('copied');},2000);});
-}
-
-document.getElementById('search-prof').addEventListener('input',e=>{
-  const q=e.target.value.toLowerCase();
-  renderProfs(PROFS.filter(p=>p.n.toLowerCase().includes(q)||p.d.toLowerCase().includes(q)));
-});
-
-// ===== INIT =====
-window.onload=async()=>{
-  const savedTheme=localStorage.getItem(LS_THEME);
-  if(savedTheme==='light')applyTheme(false);else if(tg?.colorScheme==='light')applyTheme(false);else applyTheme(true);
-  const savedLang=localStorage.getItem(LS_LANG)||'uz';currentLang=savedLang;
-  // 1. Tez: localStorage dan yukla
-  loadDuoState();loadProfile();loadEngProgress();
-  renderDuoTopbar();
-  if(userProfile){
-    setLanguage(userProfile.lang||savedLang);
-    document.getElementById('onboarding-overlay').style.display='none';
-    applyProfile();
-  }else setLanguage(savedLang);
-  await initGpa();
-  renderProfs(PROFS);
-  transState.data=TRANS_DATA[transState.dir][transState.level]||[];
-  // 2. Background: Sheets dan sinxronlash
-  loadFromSheets().then(loaded=>{
-    if(loaded){
-      loadDuoState();loadProfile();loadEngProgress();
-      renderDuoTopbar();
-      if(userProfile){
-        setLanguage(userProfile.lang||localStorage.getItem(LS_LANG)||'uz');
-        document.getElementById('onboarding-overlay').style.display='none';
-        applyProfile();
-      }
-      initGpa();
-    }
-  });
-};
 </script>
 </body>
 </html>
