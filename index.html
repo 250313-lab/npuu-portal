@@ -262,11 +262,19 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 <div id="view-handbook" class="view-section">
   <div class="card" style="border-left:4px solid var(--accent2);margin-bottom:14px">
     <div style="font-size:15px;font-weight:700;margin-bottom:4px">📘 Student Handbooks</div>
-    <p style="font-size:12.5px;color:var(--muted);line-height:1.4" data-i18n="handbook_desc">Yo'nalishingizga mos Handbook va yo'riqnomalarni yuklab oling.</p>
+    <p style="font-size:12.5px;color:var(--muted);line-height:1.4" data-i18n="handbook_desc">Oliy maktabingizni va yo'nalishingizni tanlab mos Handbookni yuklab oling.</p>
   </div>
-  <a href="https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link" target="_blank" class="handbook-btn" id="hb-ai"><span>🤖 Sun'iy Intellekt (AI)</span><span style="color:var(--accent2)">➔</span></a>
-  <a href="https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link" target="_blank" class="handbook-btn" id="hb-ist"><span>💻 Axborot Tizimlari (FIT)</span><span style="color:var(--accent2)">➔</span></a>
-  <a href="https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link" target="_blank" class="handbook-btn" id="hb-math"><span>📐 Matematika (FM)</span><span style="color:var(--accent2)">➔</span></a>
+
+  <div class="onboard-label" style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent3);margin-bottom:6px;">🏛️ 1-bosqich: Oliy Maktabni tanlang</div>
+  <select class="onboard-select" id="hb-school-select" onchange="renderHandbookMajors()" style="margin-bottom:14px;">
+    <option value="">Oliy maktabni tanlang...</option>
+    <option value="aniq_fanlar">Aniq fanlar oliy maktabi</option>
+    <option value="maktabgacha_boshlangich">Maktabgacha va boshlang'ich ta'lim oliy maktabi</option>
+    <option value="tabiiy_fanlar">Tabiiy fanlar oliy maktabi</option>
+  </select>
+
+  <div class="onboard-label" style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent3);margin-bottom:8px;">🎓 2-bosqich: Yo'nalishingizga mos Handbook</div>
+  <div id="hb-majors-container"></div>
 </div>
 
 <!-- ===== VIEW: PROFILE ===== -->
@@ -392,6 +400,25 @@ const ACADEMIC_STRUCTURE = {
       }
     }
   }
+};
+
+/* ===== HANDBOOK DATA STRUCTURE ===== */
+const HANDBOOK_DATA = {
+  "aniq_fanlar": [
+    { name: "📐 Matematika (FM)", url: "https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link", id: "hb-math" },
+    { name: "💻 Axborot Tizimlari va Texnologiyalari (FIT)", url: "https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link", id: "hb-ist" },
+    { name: "🤖 Sun'iy Intellekt (AI)", url: "https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link", id: "hb-ai" }
+  ],
+  "maktabgacha_boshlangich": [
+    { name: "✏️ Boshlang'ich Ta'lim", url: "https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link", id: "hb-boshlangich" },
+    { name: "🧸 Maktabgacha Ta'lim", url: "https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link", id: "hb-maktabgacha" }
+  ],
+  "tabiiy_fanlar": [
+    { name: "🧬 Biologiya", url: "https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link", id: "hb-biologiya" },
+    { name: "🧪 Kimyo", url: "https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link", id: "hb-kimyo" },
+    { name: "⚛️ Fizika", url: "https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link", id: "hb-fizika" },
+    { name: "🌍 Geografiya", url: "https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link", id: "hb-geografiya" }
+  ]
 };
 
 let cachedCsvData = null;
@@ -600,6 +627,32 @@ function updateGroups() {
   }
 }
 
+// ===== HANDBOOK RENDER FUNCTION =====
+function renderHandbookMajors() {
+  const schoolSelect = document.getElementById('hb-school-select');
+  const container = document.getElementById('hb-majors-container');
+  if (!container) return;
+  
+  const schoolKey = schoolSelect.value;
+  container.innerHTML = '';
+
+  if (!schoolKey || !HANDBOOK_DATA[schoolKey]) {
+    container.innerHTML = '<div class="card" style="text-align:center;padding:16px;color:var(--muted);font-size:13px;">Oliy maktabni tanlang, unga mos yo\'nalishlar Handbook ro\'yxati ko\'rinadi.</div>';
+    return;
+  }
+
+  const list = HANDBOOK_DATA[schoolKey];
+  list.forEach(item => {
+    const a = document.createElement('a');
+    a.href = item.url;
+    a.target = '_blank';
+    a.className = 'handbook-btn';
+    if (item.id) a.id = item.id;
+    a.innerHTML = `<span>${item.name}</span><span style="color:var(--accent2)">➔</span>`;
+    container.appendChild(a);
+  });
+}
+
 // ===== ONBOARDING FLOW =====
 let obStep = 0;
 function updateDots(s) {
@@ -698,6 +751,16 @@ function loadProfile() {
 function saveProfileData(p) {
   userProfile = p;
   localStorage.setItem(LS_PROFILE, JSON.stringify(p));
+
+  // Render backend ma'lumotlar bazasiga saqlash so'rovi
+  fetch('/api/save-user', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(p)
+  })
+  .then(res => res.json())
+  .then(data => console.log('Baza saqlandi:', data))
+  .catch(err => console.error('Baza saqlash xatosi:', err));
 }
 
 function applyProfile() {
@@ -725,6 +788,13 @@ function applyProfile() {
   document.getElementById('pv-course').textContent = userProfile.course + '-kurs';
   document.getElementById('pv-group').textContent = userProfile.group || '—';
   document.getElementById('pv-year').textContent = userProfile.admitYear || '—';
+
+  // Auto select school in handbook if set
+  const hbSchool = document.getElementById('hb-school-select');
+  if (hbSchool && userProfile.schoolKey) {
+    hbSchool.value = userProfile.schoolKey;
+    renderHandbookMajors();
+  }
 
   initTimetable();
 }
@@ -760,6 +830,14 @@ function switchView(viewId) {
   if (sec) sec.classList.add('active');
   const nav = document.getElementById('nav-' + viewId);
   if (nav) nav.classList.add('active');
+
+  if (viewId === 'handbook') {
+    const hbSchool = document.getElementById('hb-school-select');
+    if (hbSchool && !hbSchool.value && userProfile && userProfile.schoolKey) {
+      hbSchool.value = userProfile.schoolKey;
+    }
+    renderHandbookMajors();
+  }
 }
 
 // ===== TIMETABLE UI =====
@@ -802,7 +880,7 @@ function openMyTimetable(e) {
   switchView('timetable');
 }
 
-// ===== PROFESSORS MODULE (UPDATED WITH IMAGE DATA) =====
+// ===== PROFESSORS MODULE =====
 const PROFS = [
   // Mathematics
   { name: 'Marks Ruziboev', dept: 'dept-math', role: 'Mathematics', email: 'm.ruziboev@npuu.uz' },
@@ -865,6 +943,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   loadProfile();
   renderProfs();
+  renderHandbookMajors();
 
   if (userProfile) {
     applyProfile();
