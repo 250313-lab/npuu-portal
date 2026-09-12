@@ -848,44 +848,10 @@ function switchView(viewId) {
 
 // ===== TIMETABLE MODULE =====
 
-const SAMPLE_TIMETABLES = {
-  "FAR1": {
-    "Dushanba": [
-      { time: "09:00 - 10:20", period: "1-juftlik", subject: "Sun'iy intellekt asoslari", teacher: "Asadulla Ashurov", room: "304-xona", type: "Ma'ruza" },
-      { time: "10:30 - 11:50", period: "2-juftlik", subject: "Oliy matematika II", teacher: "Marks Ruziboev", room: "210-xona", type: "Amaliyot" },
-      { time: "12:30 - 13:50", period: "3-juftlik", subject: "Akademik Ingliz tili", teacher: "Dilnoza Boymirzayeva", room: "105-xona", type: "Amaliyot" }
-    ],
-    "Seshanba": [
-      { time: "09:00 - 10:20", period: "1-juftlik", subject: "Ma'lumotlar tuzilmasi va algoritmlar", teacher: "Bakhromjon Tulkinov", room: "402-lab", type: "Laboratoriya" },
-      { time: "10:30 - 11:50", period: "2-juftlik", subject: "Diskret matematika", teacher: "Azamat Xolboyev", room: "312-xona", type: "Ma'ruza" }
-    ],
-    "Chorshanba": [
-      { time: "09:00 - 10:20", period: "1-juftlik", subject: "Mashinali o'rgatish (Machine Learning)", teacher: "Mirrakhmon Khaydarov", room: "304-xona", type: "Ma'ruza" },
-      { time: "10:30 - 11:50", period: "2-juftlik", subject: "Mashinali o'rgatish (Amaliyot)", teacher: "Mirrakhmon Khaydarov", room: "405-lab", type: "Laboratoriya" },
-      { time: "12:30 - 13:50", period: "3-juftlik", subject: "Pedagogika va Psixologiya", teacher: "Nilufar Tillayeva", room: "201-xona", type: "Ma'ruza" }
-    ],
-    "Payshanba": [
-      { time: "09:00 - 10:20", period: "1-juftlik", subject: "Oliy matematika II", teacher: "Marks Ruziboev", room: "210-xona", type: "Ma'ruza" },
-      { time: "10:30 - 11:50", period: "2-juftlik", subject: "Ma'lumotlar bazasi tizimlari", teacher: "Ulugbek Tursunaliev", room: "308-xona", type: "Amaliyot" }
-    ],
-    "Juma": [
-      { time: "09:00 - 10:20", period: "1-juftlik", subject: "Akademik Ingliz tili", teacher: "Dilnoza Boymirzayeva", room: "105-xona", type: "Amaliyot" },
-      { time: "10:30 - 11:50", period: "2-juftlik", subject: "Sun'iy intellekt (Lab)", teacher: "Asadulla Ashurov", room: "401-lab", type: "Laboratoriya" }
-    ],
-    "Shanba": []
-  }
-};
+const SAMPLE_TIMETABLES = {};
 
 function getScheduleForGroup(groupName, day) {
-  if (SAMPLE_TIMETABLES[groupName] && SAMPLE_TIMETABLES[groupName][day]) {
-    return SAMPLE_TIMETABLES[groupName][day];
-  }
-  if (day === 'Shanba' || day === 'Yakshanba') return [];
-  return [
-    { time: "09:00 - 10:20", period: "1-juftlik", subject: "Mutaxassislikka kirish", teacher: "Azamat Xolboyev", room: "204-xona", type: "Ma'ruza" },
-    { time: "10:30 - 11:50", period: "2-juftlik", subject: "Oliy matematika", teacher: "Marks Ruziboev", room: "310-xona", type: "Amaliyot" },
-    { time: "12:30 - 13:50", period: "3-juftlik", subject: "Chet tili (Ingliz tili)", teacher: "Dilnoza Boymirzayeva", room: "108-xona", type: "Amaliyot" }
-  ];
+  return [];
 }
 
 let currentSelectedDay = "Dushanba";
@@ -978,9 +944,8 @@ function renderLessons(group, day, container) {
   if (!lessons || lessons.length === 0) {
     container.innerHTML = `
       <div class="card" style="text-align:center;padding:32px 16px;color:var(--muted);">
-        <div style="font-size:32px;margin-bottom:8px;">🎉</div>
-        <div style="font-weight:700;font-size:14px;color:var(--text);">${day} kunida darslar yo'q!</div>
-        <div style="font-size:12px;margin-top:4px;color:var(--muted);">Dam olish kunidan unumli foydalaning.</div>
+        <div style="font-size:32px;margin-bottom:8px;">⏳</div>
+        <div style="font-weight:700;font-size:14px;color:var(--text);">hali edupage dan yuklanmadi</div>
       </div>
     `;
     return;
