@@ -549,10 +549,10 @@ function handleIdSearch(val) {
           if (detected) {
             document.getElementById('ob-school').value = detected.schoolKey;
             onSchoolChange();
-            document.getElementById('ob-course').value = detected.courseKey;
-            onCourseChange();
             document.getElementById('ob-major').value = detected.majorKey;
             onMajorChange();
+            document.getElementById('ob-course').value = detected.courseKey;
+            onCourseChange();
             document.getElementById('ob-group').value = detected.groupName;
           }
         }
@@ -644,10 +644,22 @@ function renderHandbookMajors() {
   const list = HANDBOOK_DATA[schoolKey];
   list.forEach(item => {
     const a = document.createElement('a');
-    a.href = item.url;
-    a.target = '_blank';
     a.className = 'handbook-btn';
     if (item.id) a.id = item.id;
+
+    // Havola yuklanmagan bo'lsa "Xali mavjud emas" ko'rsatish
+    const hasUrl = item.url && item.url.trim() !== '' && item.url !== '#';
+    if (hasUrl) {
+      a.href = item.url;
+      a.target = '_blank';
+    } else {
+      a.href = 'javascript:void(0)';
+      a.onclick = (e) => {
+        e.preventDefault();
+        alert("Xali mavjud emas");
+      };
+    }
+
     a.innerHTML = `<span>${item.name}</span><span style="color:var(--accent2)">➔</span>`;
     container.appendChild(a);
   });
@@ -712,27 +724,32 @@ function obFinish(lang) {
   showBanner(`Xush kelibsiz, ${p.name.split(' ')[0]}! 👋`);
 }
 
+function populateOnboardingFields(p) {
+  if (!p) return;
+  if (p.sid) document.getElementById('ob-sid').value = p.sid;
+  if (p.name) document.getElementById('ob-name').value = p.name;
+  if (p.email) document.getElementById('ob-email').value = p.email;
+
+  if (p.schoolKey) {
+    document.getElementById('ob-school').value = p.schoolKey;
+    onSchoolChange();
+  }
+  if (p.majorKey) {
+    document.getElementById('ob-major').value = p.majorKey;
+    onMajorChange();
+  }
+  if (p.course) {
+    document.getElementById('ob-course').value = p.course;
+    onCourseChange();
+  }
+  if (p.group) {
+    document.getElementById('ob-group').value = p.group;
+  }
+}
+
 function editProfile() {
   if (userProfile) {
-    document.getElementById('ob-name').value = userProfile.name || '';
-    document.getElementById('ob-sid').value = userProfile.sid || '';
-    document.getElementById('ob-email').value = userProfile.email || '';
-    
-    if (userProfile.schoolKey) {
-      document.getElementById('ob-school').value = userProfile.schoolKey;
-      onSchoolChange();
-    }
-    if (userProfile.course) {
-      document.getElementById('ob-course').value = userProfile.course;
-      onCourseChange();
-    }
-    if (userProfile.majorKey) {
-      document.getElementById('ob-major').value = userProfile.majorKey;
-      onMajorChange();
-    }
-    if (userProfile.group) {
-      document.getElementById('ob-group').value = userProfile.group;
-    }
+    populateOnboardingFields(userProfile);
   }
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById('step-0').classList.add('active');
