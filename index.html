@@ -150,87 +150,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 
-/* ===== ENGLISH MODULE ===== */
-.eng-tab-bar{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;margin-bottom:14px}
-.eng-tab-bar::-webkit-scrollbar{display:none}
-.eng-tab{background:var(--surface2);border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .22s}
-.eng-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 14px rgba(58,134,255,.35)}
-.eng-sub-view{display:none}
-.eng-sub-view.active{display:block;animation:sectionIn .3s ease both}
-
-/* Duolingo XP / Streak bar */
-.duo-topbar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:10px 14px;margin-bottom:14px;gap:10px}
-.duo-stat{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:700}
-.duo-stat span{font-size:11px;color:var(--muted);font-weight:500}
-.duo-hearts{display:flex;gap:3px}
-.duo-heart{font-size:16px;transition:all .3s}
-.duo-heart.lost{filter:grayscale(1);opacity:.35}
-
-/* Level badge */
-.level-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
-.level-a1{background:rgba(76,201,240,.15);color:#4cc9f0;border:1px solid rgba(76,201,240,.3)}
-.level-a2{background:rgba(0,187,249,.15);color:#00bbf9;border:1px solid rgba(0,187,249,.3)}
-.level-b1{background:rgba(0,230,118,.15);color:#00e676;border:1px solid rgba(0,230,118,.3)}
-.level-b2{background:rgba(58,134,255,.15);color:#3a86ff;border:1px solid rgba(58,134,255,.3)}
-
-/* Progress bar */
-.progress-bar-wrap{background:var(--surface2);border-radius:99px;height:8px;overflow:hidden;margin:6px 0}
-.progress-bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .6s cubic-bezier(.4,0,.2,1)}
-
-/* Quiz option buttons */
-.quiz-option{background:var(--surface2);border:2px solid var(--border);color:var(--text);border-radius:14px;padding:12px 14px;width:100%;text-align:left;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:8px;transition:all .2s;display:flex;align-items:center;gap:10px}
-.quiz-option:active{transform:scale(.98)}
-.quiz-option.correct{background:rgba(0,230,118,.15);border-color:#00e676;color:#00e676;animation:correctPop .3s ease}
-.quiz-option.wrong{background:rgba(255,77,77,.12);border-color:#ff4d4d;color:#ff4d4d;animation:wrongShake .3s ease}
-.quiz-option.show-correct{background:rgba(0,230,118,.1);border-color:rgba(0,230,118,.5)}
-.quiz-option:disabled{cursor:default}
-.option-label{width:28px;height:28px;border-radius:9px;background:var(--surface);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0}
-.quiz-option.correct .option-label{background:#00e676;border-color:#00e676;color:#000}
-.quiz-option.wrong .option-label{background:#ff4d4d;border-color:#ff4d4d;color:#fff}
-@keyframes correctPop{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
-@keyframes wrongShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-
-/* Result overlay */
-.answer-feedback{border-radius:16px;padding:12px 16px;margin-bottom:10px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px;animation:sectionIn .25s ease both}
-.feedback-correct{background:rgba(0,230,118,.12);border:2px solid #00e676;color:#00e676}
-.feedback-wrong{background:rgba(255,77,77,.1);border:2px solid #ff4d4d;color:#ff4d4d}
-
-/* Translation exercise */
-.trans-sentence{background:linear-gradient(135deg,rgba(58,134,255,.1),rgba(0,187,249,.06));border:2px solid rgba(58,134,255,.3);border-radius:16px;padding:16px;font-size:17px;font-weight:700;text-align:center;margin-bottom:14px;line-height:1.5;min-height:70px;display:flex;align-items:center;justify-content:center}
-.trans-input{width:100%;background:var(--surface2);border:2px solid var(--border);color:var(--text);padding:12px 14px;border-radius:14px;font-size:14px;outline:none;font-family:inherit;transition:border .2s;margin-bottom:10px}
-.trans-input:focus{border-color:var(--accent)}
-.trans-result{border-radius:14px;padding:11px 14px;font-size:13px;font-weight:600;margin-bottom:8px;display:none}
-.trans-result.show{display:block}
-.trans-correct{background:rgba(0,230,118,.1);border:2px solid rgba(0,230,118,.4);color:#00e676}
-.trans-partial{background:rgba(255,152,0,.1);border:2px solid rgba(255,152,0,.4);color:#ff9800}
-.trans-wrong{background:rgba(255,77,77,.1);border:2px solid rgba(255,77,77,.4);color:#ff4d4d}
-
-/* Placement result */
-.placement-result-card{border-radius:20px;padding:24px 16px;text-align:center;border:2px solid var(--accent);background:linear-gradient(135deg,rgba(58,134,255,.1),rgba(0,187,249,.05));margin-bottom:14px}
-.placement-big-level{font-family:'Syne',sans-serif;font-size:56px;font-weight:800;color:var(--accent2);line-height:1;margin:8px 0}
-
-/* Progress stats */
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px;text-align:center}
-.stat-number{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--accent2)}
-.stat-label{font-size:11px;color:var(--muted);margin-top:3px;font-weight:600}
-.weak-topic-chip{display:inline-block;background:rgba(255,77,77,.12);border:1px solid rgba(255,77,77,.3);color:#ff6b6b;border-radius:8px;padding:4px 10px;font-size:11.5px;font-weight:600;margin:3px}
-
-/* Badge */
-.badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
-.badge-item{background:var(--surface);border:2px solid var(--border);border-radius:16px;padding:12px 8px;text-align:center;transition:all .3s}
-.badge-item.earned{border-color:var(--accent);background:rgba(58,134,255,.08)}
-.badge-item.earned .badge-icon{filter:none}
-.badge-icon{font-size:28px;display:block;margin-bottom:4px;filter:grayscale(1) opacity(.4)}
-.badge-name{font-size:10.5px;font-weight:700;color:var(--muted)}
-.badge-item.earned .badge-name{color:var(--accent2)}
-
-/* Streak calendar */
-.streak-days{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin:10px 0}
-.streak-day{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
-.streak-day.done{background:linear-gradient(135deg,#ff9800,#ff6b35);border-color:#ff9800;color:#fff}
-.streak-day.today{border-color:var(--accent);color:var(--accent2)}
-
 /* NAV BAR */
 .nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--nav-bg);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:100;overflow-x:auto;scrollbar-width:none;transition:background .35s}
 .nav-bar::-webkit-scrollbar{display:none}
@@ -257,7 +176,7 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 <div id="onboarding-overlay">
   <div class="onboard-logo">🎓</div>
   <div class="onboard-title">NPUU Smart Bot</div>
-  <div class="onboard-sub" id="ob-subtitle">Bir marta ma'lumot kiriting — bot siz uchun moslanadi!</div>
+  <div class="onboard-sub" id="ob-subtitle">ID raqamingizni kiriting — ma'lumotlaringiz avtomatik qidirib to'ldiriladi!</div>
   <div class="onboard-steps-dots">
     <div class="step-dot active" id="dot-0"></div>
     <div class="step-dot" id="dot-1"></div>
@@ -266,20 +185,39 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   </div>
   <div class="onboard-card">
     <div class="step active" id="step-0">
+      <div class="onboard-label">🪪 Student ID</div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <input type="text" class="onboard-input" id="ob-sid" placeholder="Masalan: 250313" autocomplete="off" oninput="handleIdSearch(this.value)">
+        <button type="button" class="ctrl-btn" style="padding:11px 12px;background:var(--accent);color:#fff;border:none;border-radius:12px;cursor:pointer;white-space:nowrap;font-weight:700;" onclick="handleIdSearch(document.getElementById('ob-sid').value)">🔍 Qidirish</button>
+      </div>
+      <div id="id-search-status" style="font-size:11.5px;margin-top:6px;min-height:18px;"></div>
+
       <div class="onboard-label">👤 Ism Familiya</div>
       <input type="text" class="onboard-input" id="ob-name" placeholder="Abdullohxonov Sodiqxon" autocomplete="off">
-      <div class="onboard-label">🪪 Student ID</div>
-      <input type="text" class="onboard-input" id="ob-sid" placeholder="Masalan: 250313" autocomplete="off">
+
+      <div class="onboard-label">📧 Email Pochta</div>
+      <input type="email" class="onboard-input" id="ob-email" placeholder="student@npuu.uz" autocomplete="off">
+
       <button class="onboard-btn" onclick="obNext(1)">Davom etish →</button>
     </div>
     <div class="step" id="step-1">
-      <div class="onboard-label">🎓 Yo'nalish</div>
+      <div class="onboard-label">📚 Kurs (Bosqich)</div>
+      <select class="onboard-select" id="ob-course">
+        <option value="">Tanlang...</option>
+        <option value="1">1-kurs</option>
+        <option value="2">2-kurs</option>
+        <option value="3">3-kurs</option>
+        <option value="4">4-kurs</option>
+      </select>
+
+      <div class="onboard-label">🎓 Yo'nalish (Major)</div>
       <select class="onboard-select" id="ob-major">
         <option value="">Tanlang...</option>
         <option value="AI">🤖 Artificial Intelligence</option>
         <option value="IST">💻 Information Systems & Technologies</option>
         <option value="MATH">📐 Mathematics</option>
       </select>
+
       <div class="onboard-label">📅 O'qishga qabul yili</div>
       <select class="onboard-select" id="ob-admit-year">
         <option value="">Tanlang...</option>
@@ -412,182 +350,10 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   </div>
 </div>
 
-<!-- ===== VIEW: ENGLISH ===== -->
-<div id="view-english" class="view-section">
-
-  <!-- Duolingo top bar: Streak, XP, Lives -->
-  <div class="duo-topbar">
-    <div class="duo-stat">🔥<span id="duo-streak">0</span> <span>kun</span></div>
-    <div class="duo-stat">⚡<span id="duo-xp">0</span> <span>XP</span></div>
-    <div class="duo-hearts" id="duo-hearts">
-      <span class="duo-heart" id="h1">❤️</span>
-      <span class="duo-heart" id="h2">❤️</span>
-      <span class="duo-heart" id="h3">❤️</span>
-      <span class="duo-heart" id="h4">❤️</span>
-      <span class="duo-heart" id="h5">❤️</span>
-    </div>
-  </div>
-
-  <!-- Sub-tabs -->
-  <div class="eng-tab-bar">
-    <button class="eng-tab active" onclick="switchEngTab('placement')" id="etab-placement">🎯 Test</button>
-    <button class="eng-tab" onclick="switchEngTab('quiz')" id="etab-quiz">📝 Quiz</button>
-    <button class="eng-tab" onclick="switchEngTab('translate')" id="etab-translate">🔄 Tarjima</button>
-    <button class="eng-tab" onclick="switchEngTab('progress')" id="etab-progress">📊 Progress</button>
-  </div>
-
-  <!-- ── PLACEMENT TEST ── -->
-  <div class="eng-sub-view active" id="esv-placement">
-    <div id="placement-start-screen">
-      <div class="card" style="text-align:center;padding:24px 16px;border-left:4px solid var(--accent2)">
-        <div style="font-size:44px;margin-bottom:10px">🎯</div>
-        <div style="font-family:'Syne',sans-serif;font-size:17px;font-weight:800;margin-bottom:8px">Daraja aniqlash testi</div>
-        <div style="font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:16px">20 ta savol · A1 → B2<br>Natijaga qarab darajangiz belgilanadi</div>
-        <div style="display:flex;gap:8px;justify-content:center;margin-bottom:16px">
-          <span class="level-badge level-a1">A1</span><span class="level-badge level-a2">A2</span>
-          <span class="level-badge level-b1">B1</span><span class="level-badge level-b2">B2</span>
-        </div>
-        <button class="btn" style="background:var(--accent);color:#fff" onclick="startPlacementTest()">🚀 Testni boshlash</button>
-      </div>
-    </div>
-    <div id="placement-test-screen" style="display:none">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <span style="font-size:11px;color:var(--muted);font-weight:600" id="pt-counter">1/20</span>
-        <span class="level-badge level-a1" id="pt-level-badge">A1</span>
-      </div>
-      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pt-progress" style="width:5%"></div></div>
-      <div class="card" style="margin:12px 0 8px;border-left:3px solid var(--accent2)">
-        <div style="font-size:11px;color:var(--accent3);font-weight:700;margin-bottom:5px" id="pt-topic">Topic</div>
-        <div style="font-size:15px;font-weight:600;line-height:1.5" id="pt-question">Question</div>
-      </div>
-      <div id="pt-options"></div>
-    </div>
-    <div id="placement-result-screen" style="display:none">
-      <div class="placement-result-card">
-        <div style="font-size:13px;color:var(--muted);margin-bottom:4px">Sizning darajangiz</div>
-        <div class="placement-big-level" id="pr-level">B1</div>
-        <div style="font-size:13px;color:var(--muted);margin-top:6px" id="pr-score">16/20 ball</div>
-        <div style="margin-top:10px" id="pr-xp-earned"></div>
-      </div>
-      <div class="card" style="border-left:3px solid #ff4d4d;margin-bottom:10px" id="pr-weak-block">
-        <div style="font-size:11.5px;font-weight:700;color:#ff6b6b;margin-bottom:8px">⚠️ Kuchsiz mavzular:</div>
-        <div id="pr-weak-topics"></div>
-      </div>
-      <button class="btn" style="background:var(--accent);color:#fff" onclick="resetPlacementTest()">🔄 Qayta topshirish</button>
-    </div>
-  </div>
-
-  <!-- ── QUIZ ── -->
-  <div class="eng-sub-view" id="esv-quiz">
-    <div id="quiz-level-select">
-      <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:12px">📝 Daraja tanlang:</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <button class="quiz-option" style="justify-content:center;border-color:rgba(76,201,240,.4)" onclick="startQuiz('A1')"><span class="level-badge level-a1">A1</span></button>
-        <button class="quiz-option" style="justify-content:center;border-color:rgba(0,187,249,.4)" onclick="startQuiz('A2')"><span class="level-badge level-a2">A2</span></button>
-        <button class="quiz-option" style="justify-content:center;border-color:rgba(0,230,118,.4)" onclick="startQuiz('B1')"><span class="level-badge level-b1">B1</span></button>
-        <button class="quiz-option" style="justify-content:center;border-color:rgba(58,134,255,.4)" onclick="startQuiz('B2')"><span class="level-badge level-b2">B2</span></button>
-      </div>
-      <div style="margin-top:12px">
-        <div style="font-size:11.5px;color:var(--muted);font-weight:600;margin-bottom:6px">Yoki darajamga mos:</div>
-        <button class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border)" onclick="startQuizMyLevel()">✨ Mening darajamdan boshlash</button>
-      </div>
-    </div>
-    <div id="quiz-active-screen" style="display:none">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <span style="font-size:11px;color:var(--muted);font-weight:600" id="quiz-counter">1/10</span>
-        <span id="quiz-level-badge" class="level-badge level-a1">A1</span>
-        <span style="font-size:12px;font-weight:700;color:var(--green)" id="quiz-score-live">0 ✓</span>
-      </div>
-      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="quiz-progress" style="width:10%"></div></div>
-      <div class="card" style="margin:10px 0 10px;border-left:3px solid var(--accent);padding:14px">
-        <div style="font-size:11px;color:var(--accent3);font-weight:700;margin-bottom:6px" id="quiz-topic">Topic</div>
-        <div style="font-size:16px;font-weight:700;line-height:1.5" id="quiz-question">Question</div>
-      </div>
-      <div id="quiz-options"></div>
-      <div id="quiz-feedback" style="display:none" class="answer-feedback"></div>
-      <div id="quiz-explanation" style="display:none;background:rgba(0,187,249,.08);border:1px solid rgba(0,187,249,.25);border-radius:12px;padding:10px 13px;font-size:12.5px;color:var(--accent3);margin-bottom:10px"></div>
-      <button class="btn" style="display:none" id="quiz-next-btn" onclick="nextQuizQuestion()">Keyingisi →</button>
-    </div>
-    <div id="quiz-result-screen" style="display:none">
-      <div class="placement-result-card">
-        <div style="font-size:13px;color:var(--muted)">Quiz natijasi</div>
-        <div class="placement-big-level" id="qr-score">8/10</div>
-        <div id="qr-level-badge" style="margin-top:6px"></div>
-        <div style="margin-top:10px;font-size:13px;font-weight:700;color:#ff9800" id="qr-xp-earned"></div>
-      </div>
-      <button class="btn" style="background:var(--accent);color:#fff;margin-bottom:8px" onclick="startQuiz(currentQuizLevel)">🔄 Qayta o'ynash</button>
-      <button class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border)" onclick="backToQuizSelect()">← Daraja tanlash</button>
-    </div>
-  </div>
-
-  <!-- ── TRANSLATION ── -->
-  <div class="eng-sub-view" id="esv-translate">
-    <div style="display:flex;gap:8px;margin-bottom:10px">
-      <button class="curr-filter-btn active" id="trans-dir-btn-uz" onclick="setTransDir('uz2en',this)">🇺🇿→🇬🇧</button>
-      <button class="curr-filter-btn" id="trans-dir-btn-en" onclick="setTransDir('en2uz',this)">🇬🇧→🇺🇿</button>
-    </div>
-    <div style="display:flex;gap:8px;margin-bottom:12px">
-      <button class="curr-filter-btn active" id="tl-a1" onclick="setTransLevel('A1',this)">A1</button>
-      <button class="curr-filter-btn" id="tl-a2" onclick="setTransLevel('A2',this)">A2</button>
-      <button class="curr-filter-btn" id="tl-b1" onclick="setTransLevel('B1',this)">B1</button>
-      <button class="curr-filter-btn" id="tl-b2" onclick="setTransLevel('B2',this)">B2</button>
-    </div>
-    <div class="trans-sentence" id="trans-sentence">Yuklanmoqda...</div>
-    <input class="trans-input" id="trans-input" placeholder="Your translation here..." onkeydown="if(event.key==='Enter')checkTranslation()">
-    <div class="trans-result" id="trans-result"></div>
-    <div style="display:flex;gap:8px">
-      <button class="btn" style="background:var(--accent);color:#fff;flex:1" onclick="checkTranslation()">✓ Tekshirish</button>
-      <button class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);flex:1" onclick="nextTranslation()">→ Keyingisi</button>
-    </div>
-    <div style="margin-top:10px;font-size:12px;color:var(--muted);text-align:center;font-weight:600" id="trans-stats">0 to'g'ri / 0 ta</div>
-  </div>
-
-  <!-- ── PROGRESS ── -->
-  <div class="eng-sub-view" id="esv-progress">
-    <!-- Streak -->
-    <div class="card" style="border-left:4px solid #ff9800;margin-bottom:12px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <div style="font-size:13px;font-weight:700">🔥 Streak</div>
-        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#ff9800" id="prog-streak-big">0 kun</div>
-      </div>
-      <div class="streak-days" id="streak-calendar"></div>
-    </div>
-
-    <!-- XP -->
-    <div class="stat-grid">
-      <div class="stat-card"><div class="stat-number" id="prog-xp">0</div><div class="stat-label">⚡ XP</div></div>
-      <div class="stat-card"><div class="stat-number" id="prog-level">—</div><div class="stat-label">🎯 Daraja</div></div>
-      <div class="stat-card"><div class="stat-number" id="prog-quiz-correct">0</div><div class="stat-label">📝 Quiz ✓</div></div>
-      <div class="stat-card"><div class="stat-number" id="prog-trans-correct">0</div><div class="stat-label">🔄 Tarjima ✓</div></div>
-    </div>
-
-    <!-- Accuracy -->
-    <div class="card" style="border-left:3px solid var(--accent2);margin-bottom:12px">
-      <div style="font-size:11.5px;font-weight:700;color:var(--accent3);margin-bottom:8px">📈 Quiz to'g'riligi</div>
-      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-accuracy-bar" style="width:0%"></div></div>
-      <div style="font-size:13px;font-weight:700;color:var(--accent2);margin-top:4px" id="prog-accuracy-text">0%</div>
-    </div>
-
-    <!-- Badges -->
-    <div class="card" style="border-left:3px solid #ffcc00;margin-bottom:12px">
-      <div style="font-size:11.5px;font-weight:700;color:#ffcc00;margin-bottom:10px">🎖️ Yutuqlar (Badges)</div>
-      <div class="badge-grid" id="badge-grid"></div>
-    </div>
-
-    <!-- Weak topics -->
-    <div class="card" style="border-left:3px solid #ff4d4d;margin-bottom:12px" id="prog-weak-card">
-      <div style="font-size:11.5px;font-weight:700;color:#ff6b6b;margin-bottom:8px">⚠️ Kuchsiz mavzular:</div>
-      <div id="prog-weak-chips"><span style="font-size:12px;color:var(--muted)">Hali ma'lumot yo'q</span></div>
-    </div>
-    <button class="btn" style="background:rgba(255,77,77,.15);color:#ff6b6b;border:1px solid rgba(255,77,77,.3)" onclick="resetEngProgress()">🗑 Progressni tozalash</button>
-  </div>
-</div>
-
-
 <!-- ===== VIEW: PROFS ===== -->
 <div id="view-profs" class="view-section">
   <div class="search-box" style="margin-bottom:14px">
-    <input type="text" id="search-prof" placeholder="🔍 Professor ismi yoki kafedra...">
+    <input type="text" id="search-prof" placeholder="🔍 Professor ismi yoki kafedra..." oninput="renderProfs(this.value)">
   </div>
   <div id="prof-list"></div>
 </div>
@@ -612,25 +378,11 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   <div id="tt-grid" class="grid-container"></div>
 </div>
 
-<!-- ===== VIEW: HERO ===== -->
-<div id="view-hero" class="view-section">
-  <div class="card" style="text-align:center;padding:30px 16px;border-left:4px solid var(--accent)">
-    <div style="font-size:52px;margin-bottom:12px;animation:logoPulse 3s ease-in-out infinite">🎓</div>
-    <h2 style="font-family:'Syne',sans-serif;margin-bottom:10px;font-size:19px">NPUU Hero Study</h2>
-    <p style="color:var(--muted);font-size:13.5px;margin-bottom:22px;line-height:1.5">NPUU Hero Study platformasiga o'tish uchun:</p>
-    <a href="https://npuu.hero.study/" target="_blank" class="btn" style="background:var(--accent);color:#fff;font-size:14.5px;padding:14px">🚀 Hero Study'ga o'tish</a>
-  </div>
-</div>
-
 <!-- ===== BOTTOM NAV ===== -->
 <div class="nav-bar" id="main-nav" style="display:none">
   <button class="nav-item active" onclick="switchView('gpa')" id="nav-gpa">
     <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
     <span>GPA</span><div class="nav-dot"></div>
-  </button>
-  <button class="nav-item" onclick="switchView('english')" id="nav-english">
-    <svg viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
-    <span>English</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" onclick="switchView('profs')" id="nav-profs">
     <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
@@ -644,10 +396,6 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
     <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
     <span>Handbook</span><div class="nav-dot"></div>
   </button>
-  <button class="nav-item" onclick="switchView('hero')" id="nav-hero">
-    <svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
-    <span>Hero</span><div class="nav-dot"></div>
-  </button>
 </div>
 
 <script>
@@ -656,10 +404,178 @@ if(tg){tg.ready();tg.expand();}
 
 // ===== KEYS =====
 const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_GPA='npuu_gpa_data',
-      LS_PROFILE='npuu_profile', LS_GPA_HIST='npuu_gpa_history', LS_ENG='npuu_eng_progress';
+      LS_PROFILE='npuu_profile', LS_GPA_HIST='npuu_gpa_history';
 
-// ===== API CONFIG =====
+// ===== API CONFIG & GOOGLE SHEET URL =====
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyA7xz8MxAxGnvKgi5ARx1BTGaTNftvTi0k47ba8iszmzKiLrj29uitZ3hZXM6OxZYz/exec';
+const STUDENT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT52Sbtp6fOoYOGm47p9hQs70Nw0R3dxfWv7X7jolme27nj8KKLbwgnUk18v87ctIsRwLmKd6g4TJLl/pub?output=csv';
+
+let cachedStudentCsv = null;
+
+// ===== CSV PARSER & SEARCH =====
+function parseCSV(text) {
+  const lines = text.split(/\r?\n/);
+  const result = [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    const row = [];
+    let insideQuote = false;
+    let entry = '';
+    for (let j = 0; j < line.length; j++) {
+      const char = line[j];
+      if (char === '"') {
+        insideQuote = !insideQuote;
+      } else if (char === ',' && !insideQuote) {
+        row.push(entry.trim());
+        entry = '';
+      } else {
+        entry += char;
+      }
+    }
+    row.push(entry.trim());
+    result.push(row);
+  }
+  return result;
+}
+
+async function fetchStudentCsvData() {
+  if (cachedStudentCsv) return cachedStudentCsv;
+  try {
+    const res = await fetch(STUDENT_CSV_URL);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+    cachedStudentCsv = parseCSV(text);
+    return cachedStudentCsv;
+  } catch (e) {
+    console.error('CSV yuklashda xatolik:', e);
+    return null;
+  }
+}
+
+async function searchStudentById(idValue) {
+  if (!idValue) return null;
+  const cleanId = String(idValue).trim().toLowerCase();
+  if (cleanId.length < 2) return null;
+
+  const rows = await fetchStudentCsvData();
+  if (!rows || rows.length === 0) return null;
+
+  const header = rows[0].map(c => c.toLowerCase().trim());
+  let idCol = header.findIndex(c => c.includes('id') || c.includes('kod') || c.includes('№') || c.includes('student'));
+  let nameCol = header.findIndex(c => c.includes('f.i.o') || c.includes('fio') || c.includes('ism') || c.includes('name') || c.includes('familiya') || c.includes('student name'));
+  let emailCol = header.findIndex(c => c.includes('email') || c.includes('mail') || c.includes('pochta'));
+  let majorCol = header.findIndex(c => c.includes('yo\'nalish') || c.includes('yonalish') || c.includes('major') || c.includes('fakultet') || c.includes('direction'));
+  let courseCol = header.findIndex(c => c.includes('kurs') || c.includes('course') || c.includes('bosqich') || c.includes('year'));
+  let groupCol = header.findIndex(c => c.includes('guruh') || c.includes('group'));
+
+  for (let r = 0; r < rows.length; r++) {
+    const row = rows[r];
+    if (!row || row.length === 0) continue;
+
+    let matched = false;
+    if (idCol !== -1 && row[idCol]) {
+      if (row[idCol].toLowerCase().trim() === cleanId) matched = true;
+    } else {
+      for (let c = 0; c < row.length; c++) {
+        if (row[c].toLowerCase().trim() === cleanId) {
+          matched = true;
+          idCol = c;
+          break;
+        }
+      }
+    }
+
+    if (matched) {
+      let foundName = (nameCol !== -1 && row[nameCol]) ? row[nameCol] : '';
+      let foundEmail = (emailCol !== -1 && row[emailCol]) ? row[emailCol] : '';
+      let foundMajor = (majorCol !== -1 && row[majorCol]) ? row[majorCol] : '';
+      let foundCourse = (courseCol !== -1 && row[courseCol]) ? row[courseCol] : '';
+      let foundGroup = (groupCol !== -1 && row[groupCol]) ? row[groupCol] : '';
+
+      for (let c = 0; c < row.length; c++) {
+        if (c === idCol) continue;
+        const val = row[c].trim();
+        if (!foundEmail && val.includes('@')) {
+          foundEmail = val;
+        } else if (!foundName && val.length > 3 && !/\d/.test(val) && val.includes(' ')) {
+          foundName = val;
+        } else if (!foundMajor && (val.toLowerCase().includes('ai') || val.toLowerCase().includes('ist') || val.toLowerCase().includes('math') || val.toLowerCase().includes('intel') || val.toLowerCase().includes('system') || val.toLowerCase().includes('matem'))) {
+          foundMajor = val;
+        }
+      }
+
+      return {
+        id: row[idCol] || idValue,
+        name: foundName,
+        email: foundEmail,
+        major: foundMajor,
+        course: foundCourse,
+        group: foundGroup
+      };
+    }
+  }
+
+  return null;
+}
+
+let searchTimeout = null;
+function handleIdSearch(val) {
+  if (searchTimeout) clearTimeout(searchTimeout);
+  const statusEl = document.getElementById('id-search-status');
+  if (!val || val.trim().length === 0) {
+    if (statusEl) statusEl.textContent = '';
+    return;
+  }
+  if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent2)">🔍 Bazadan qidirilmoqda...</span>';
+
+  searchTimeout = setTimeout(async () => {
+    try {
+      const res = await searchStudentById(val);
+      if (res) {
+        if (res.name) document.getElementById('ob-name').value = res.name;
+        if (res.email) document.getElementById('ob-email').value = res.email;
+
+        if (res.major) {
+          const mUpper = res.major.toUpperCase();
+          const majorSelect = document.getElementById('ob-major');
+          if (mUpper.includes('AI') || mUpper.includes('ARTIFICIAL') || mUpper.includes('SU\'NIY')) {
+            majorSelect.value = 'AI';
+          } else if (mUpper.includes('IST') || mUpper.includes('INFORMATION') || mUpper.includes('AXBOROT')) {
+            majorSelect.value = 'IST';
+          } else if (mUpper.includes('MATH') || mUpper.includes('MATEMATIK')) {
+            majorSelect.value = 'MATH';
+          }
+        }
+
+        if (res.course) {
+          const courseSelect = document.getElementById('ob-course');
+          const digit = res.course.match(/\d/);
+          if (digit) courseSelect.value = digit[0];
+        } else {
+          document.getElementById('ob-course').value = '1';
+        }
+
+        if (res.group) {
+          const groupSelect = document.getElementById('ob-group');
+          for (let opt of groupSelect.options) {
+            if (opt.value.toLowerCase() === res.group.toLowerCase() || opt.text.toLowerCase().includes(res.group.toLowerCase())) {
+              groupSelect.value = opt.value;
+              break;
+            }
+          }
+        }
+
+        if (statusEl) statusEl.innerHTML = '<span style="color:var(--green);font-weight:600">✅ Ma\'lumotlar topildi va to\'ldirildi! Xohlasangiz tahrirlashingiz mumkin.</span>';
+      } else {
+        if (statusEl) statusEl.innerHTML = '<span style="color:var(--orange)">ℹ️ ID topilmadi. Ma\'lumotlarni o\'zingiz kiriting.</span>';
+      }
+    } catch (e) {
+      console.error(e);
+      if (statusEl) statusEl.innerHTML = '<span style="color:var(--orange)">⚠️ Bazadan izlashda xatolik, qo\'lda to\'ldiring.</span>';
+    }
+  }, 350);
+}
 
 // ===== GOOGLE SHEETS SYNC =====
 function getTelegramId(){
@@ -676,9 +592,7 @@ async function syncToSheets(){
     const payload={
       profile:userProfile||null,
       gpa:JSON.parse(localStorage.getItem(LS_GPA)||'{}'),
-      gpaHistory:JSON.parse(localStorage.getItem(LS_GPA_HIST)||'[]'),
-      engProgress:engProgress,
-      duoState:duoState
+      gpaHistory:JSON.parse(localStorage.getItem(LS_GPA_HIST)||'[]')
     };
     await fetch(SHEETS_URL,{
       method:'POST',
@@ -697,8 +611,6 @@ async function loadFromSheets(){
       if(p.profile){userProfile=p.profile;localStorage.setItem(LS_PROFILE,JSON.stringify(p.profile));}
       if(p.gpa){localStorage.setItem(LS_GPA,JSON.stringify(p.gpa));}
       if(p.gpaHistory){localStorage.setItem(LS_GPA_HIST,JSON.stringify(p.gpaHistory));}
-      if(p.engProgress){engProgress=p.engProgress;localStorage.setItem(LS_ENG,JSON.stringify(p.engProgress));}
-      if(p.duoState){duoState={...duoState,...p.duoState};localStorage.setItem(LS_DUO,JSON.stringify(duoState));}
       if(data.lang){currentLang=data.lang;localStorage.setItem(LS_LANG,data.lang);}
       return true;
     }
@@ -723,7 +635,7 @@ const T={
     stipend_ok:"✅ Grandga ariza topshirish huquqingiz bor (GPA ≥ 3.5)",
     stipend_warn:"⚠️ Grandga ariza topshirish chegarasida!",
     stipend_fail:"🚫 Grandga ariza topshirish uchun GPA ≥ 3.5 bo'lishi kerak",
-    semester_label:"semestrsiz",year_label:"o'quv yili",
+    semester_label:"semestr",year_label:"o'quv yili",
     select_sems:"Semestrlarni tanlang:",welcome:"Xush kelibsiz",
     days:["Yakshanba","Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba"]
   },
@@ -767,228 +679,14 @@ const T={
   }
 };
 
-// ===== QUESTION BANK =====
-const ALL_QUESTIONS=[
-  // A1
-  {id:0,level:"A1",topic:"to be",text:"She ___ a teacher.",options:["am","is","are","be"],answer:1,explanation:"3rd person singular → 'is'"},
-  {id:1,level:"A1",topic:"articles",text:"I have ___ apple.",options:["a","an","the","—"],answer:1,explanation:"'apple' starts with vowel → 'an'"},
-  {id:2,level:"A1",topic:"vocabulary",text:"What is the opposite of 'big'?",options:["tall","small","fast","old"],answer:1,explanation:"big ↔ small"},
-  {id:3,level:"A1",topic:"numbers",text:"How do you say 15 in English?",options:["fifty","fifteen","five","fiveteen"],answer:1,explanation:"15 = fifteen"},
-  {id:4,level:"A1",topic:"present simple",text:"They ___ to school every day.",options:["go","goes","going","gone"],answer:0,explanation:"'they' → base form 'go'"},
-  {id:5,level:"A1",topic:"colors",text:"The sky is ___.",options:["red","blue","green","yellow"],answer:1,explanation:"The sky is blue"},
-  {id:6,level:"A1",topic:"greetings",text:"How do you say 'Salom' in English?",options:["Goodbye","Sorry","Hello","Please"],answer:2,explanation:"Salom = Hello"},
-  {id:7,level:"A1",topic:"family",text:"My father's sister is my ___.",options:["cousin","niece","aunt","uncle"],answer:2,explanation:"Father's sister = aunt"},
-  // A2
-  {id:8,level:"A2",topic:"past simple",text:"Yesterday I ___ to the market.",options:["go","goes","went","gone"],answer:2,explanation:"Yesterday → past simple 'went'"},
-  {id:9,level:"A2",topic:"comparatives",text:"My bag is ___ than yours.",options:["heavy","more heavy","heavier","heaviest"],answer:2,explanation:"1-2 syllable adj → -er"},
-  {id:10,level:"A2",topic:"can",text:"He ___ swim very well.",options:["can","cans","is can","does can"],answer:0,explanation:"Modal verb → no conjugation"},
-  {id:11,level:"A2",topic:"prepositions",text:"The book is ___ the table.",options:["in","on","at","to"],answer:1,explanation:"Surface → 'on'"},
-  {id:12,level:"A2",topic:"vocabulary",text:"Which word means 'to fix something'?",options:["break","repair","lose","find"],answer:1,explanation:"repair = fix"},
-  {id:13,level:"A2",topic:"future",text:"I ___ visit London next year.",options:["am","will","going","shall"],answer:1,explanation:"Simple future → will"},
-  {id:14,level:"A2",topic:"frequency",text:"She ___ watches TV at night.",options:["always","never","seldom","hard"],answer:0,explanation:"always = har doim"},
-  {id:15,level:"A2",topic:"plurals",text:"The plural of 'child' is ___.",options:["childs","childes","children","childre"],answer:2,explanation:"Irregular plural: child → children"},
-  // B1
-  {id:16,level:"B1",topic:"present perfect",text:"I ___ this movie before.",options:["see","saw","have seen","am seeing"],answer:2,explanation:"'before' → present perfect"},
-  {id:17,level:"B1",topic:"conditionals",text:"If it rains, we ___ stay home.",options:["will","would","can","shall"],answer:0,explanation:"1st conditional: if + present → will"},
-  {id:18,level:"B1",topic:"passive voice",text:"The letter ___ by Mary.",options:["write","wrote","was written","is write"],answer:2,explanation:"Passive: was + past participle"},
-  {id:19,level:"B1",topic:"vocabulary",text:"Choose the correct meaning of 'reluctant':",options:["excited","unwilling","confused","angry"],answer:1,explanation:"reluctant = ishlamoqchi bo'lmagan"},
-  {id:20,level:"B1",topic:"reported speech",text:'She said she ___ tired.',options:["is","was","were","has been"],answer:1,explanation:"Reported speech: is → was"},
-  {id:21,level:"B1",topic:"gerunds",text:"I enjoy ___ music.",options:["listen","to listen","listened","listening"],answer:3,explanation:"enjoy + gerund (-ing)"},
-  {id:22,level:"B1",topic:"phrasal verbs",text:"Please ___ the lights before leaving.",options:["turn off","turn on","turn up","turn in"],answer:0,explanation:"turn off = o'chirmoq"},
-  {id:23,level:"B1",topic:"modals",text:"You ___ smoke here. It's forbidden.",options:["mustn't","don't have to","shouldn't","needn't"],answer:0,explanation:"Prohibition → mustn't"},
-  // B2
-  {id:24,level:"B2",topic:"conditionals",text:"If I had known, I ___ you.",options:["would tell","would have told","will tell","told"],answer:1,explanation:"3rd conditional: would have + past participle"},
-  {id:25,level:"B2",topic:"vocabulary",text:"The word 'ambiguous' means:",options:["very clear","having two meanings","extremely rare","very long"],answer:1,explanation:"ambiguous = noaniq, ikki ma'noli"},
-  {id:26,level:"B2",topic:"modal verbs",text:"You ___ have told me earlier! I missed the meeting.",options:["should","must","might","can"],answer:0,explanation:"Criticism about past → should have"},
-  {id:27,level:"B2",topic:"collocations",text:"She ___ a decision after a long discussion.",options:["did","made","took","had"],answer:1,explanation:"make a decision (collocation)"},
-  {id:28,level:"B2",topic:"complex sentences",text:"Despite ___ hard, he failed the exam.",options:["study","to study","studied","studying"],answer:3,explanation:"despite + gerund"},
-  {id:29,level:"B2",topic:"vocabulary",text:"A 'paradigm shift' means:",options:["a small change","a fundamental change in approach","a mistake","a new word"],answer:1,explanation:"paradigm shift = fundamental o'zgarish"},
-  {id:30,level:"B2",topic:"inversion",text:"___ had I arrived when it started raining.",options:["Hardly","Hard","Scarce","Rare"],answer:0,explanation:"Formal inversion: Hardly had..."},
-  {id:31,level:"B2",topic:"discourse",text:"___ the bad weather, the event was a success.",options:["Despite","Although","However","Even"],answer:0,explanation:"Despite + noun phrase"},
-];
-
-// ===== TRANSLATION DATA =====
-const TRANS_DATA={
-  uz2en:{
-    A1:[
-      {uz:"Kitob stolda turibdi.",en:"The book is on the table.",hint:"on the table"},
-      {uz:"Men o'quvchiman.",en:"I am a student.",hint:"I am..."},
-      {uz:"U uyda.",en:"She is at home.",hint:"at home"},
-      {uz:"Biz do'stmiz.",en:"We are friends.",hint:"We are..."},
-      {uz:"Olma qizil.",en:"The apple is red.",hint:"The apple is..."},
-      {uz:"Qo'l sumkam qayerda?",en:"Where is my bag?",hint:"Where is..."},
-      {uz:"U o'qituvchi.",en:"She is a teacher.",hint:"She is..."},
-    ],
-    A2:[
-      {uz:"Kecha men kinoga bordim.",en:"I went to the cinema yesterday.",hint:"went + yesterday"},
-      {uz:"U ingliz tilini yaxshi biladi.",en:"She knows English well.",hint:"knows ... well"},
-      {uz:"Men kitob o'qishni yaxshi ko'raman.",en:"I like reading books.",hint:"like + -ing"},
-      {uz:"Qachon u uyga qaytdi?",en:"When did he come back home?",hint:"did + base form"},
-      {uz:"Har kuni men 7 da turaman.",en:"Every day I wake up at 7.",hint:"Every day..."},
-    ],
-    B1:[
-      {uz:"U bu filmni allaqachon ko'rgan.",en:"She has already seen this film.",hint:"has + past participle"},
-      {uz:"Agar ob-havo yaxshi bo'lsa, men sayrga chiqaman.",en:"If the weather is good, I will go for a walk.",hint:"if + present → will"},
-      {uz:"Xat Mary tomonidan yozildi.",en:"The letter was written by Mary.",hint:"was + past participle"},
-      {uz:"Men bu shaharda ikki yildan beri yashayman.",en:"I have been living in this city for two years.",hint:"have been + -ing"},
-    ],
-    B2:[
-      {uz:"U kelishidan oldin, men allaqachon ketib bo'lgandim.",en:"By the time he arrived, I had already left.",hint:"Past perfect: had + PP"},
-      {uz:"Men undan ertaroq xabar berishini so'radim.",en:"I asked him to notify me earlier.",hint:"asked + to infinitive"},
-      {uz:"Shovqinga qaramay, u uxlab qoldi.",en:"Despite the noise, he fell asleep.",hint:"Despite + noun"},
-      {uz:"Agar men sening o'rnigda bo'lganimda, bunday qilmagan bo'lardim.",en:"If I were in your place, I would not have done that.",hint:"3rd conditional"},
-    ],
-  },
-  en2uz:{
-    A1:[
-      {en:"The cat is under the chair.",uz:"Mushuk stul ostida.",hint:"stul ostida"},
-      {en:"I have two brothers.",uz:"Mening ikki aka-ukam bor.",hint:"bor"},
-      {en:"She is happy today.",uz:"U bugun xursand.",hint:"xursand"},
-      {en:"This is my pen.",uz:"Bu mening qalam.",hint:"mening"},
-    ],
-    A2:[
-      {en:"He played football yesterday.",uz:"U kecha futbol o'ynadi.",hint:"o'ynadi"},
-      {en:"Can you help me, please?",uz:"Menga yordam bera olasizmi?",hint:"bera olasizmi"},
-      {en:"She always drinks coffee in the morning.",uz:"U har doim ertalab qahva ichadi.",hint:"har doim"},
-    ],
-    B1:[
-      {en:"The meeting has been cancelled.",uz:"Yig'ilish bekor qilindi.",hint:"bekor qilindi (passive)"},
-      {en:"I wish I had more time.",uz:"Qaniydi vaqtim ko'proq bo'lsa.",hint:"Qaniydi... bo'lsa"},
-      {en:"She suggested going to the park.",uz:"U bog'ga borishni taklif qildi.",hint:"taklif qildi"},
-    ],
-    B2:[
-      {en:"He was said to be a brilliant scientist.",uz:"U ajoyib olim deb aytilgan.",hint:"deb aytilgan"},
-      {en:"Hardly had she left when it started raining.",uz:"U ketishi bilanoq yomg'ir yog'a boshladi.",hint:"bilanoq"},
-    ],
-  }
-};
-
-// ===== DUOLINGO STATE =====
-const LS_DUO='npuu_duo_state';
-let duoState={
-  xp:0,
-  streak:0,
-  lastActiveDate:null,
-  streakDays:[],
-  lives:5,
-  maxLives:5,
-  badges:[]
-};
-
-const BADGES=[
-  {id:'first_quiz',icon:'🎯',name:'Birinchi Quiz',desc:'Birinchi quizni tugatdingiz',check:s=>s.quizTotal>=1},
-  {id:'quiz_10',icon:'📝',name:'10 Savol',desc:'10 ta savolga javob berdingiz',check:s=>s.quizTotal>=10},
-  {id:'quiz_50',icon:'🏆',name:'50 Savol',desc:'50 ta savolga javob berdingiz',check:s=>s.quizTotal>=50},
-  {id:'trans_5',icon:'🔄',name:'Tarjimon',desc:"5 ta tarjima to'g'ri",check:s=>s.transCorrect>=5},
-  {id:'streak_3',icon:'🔥',name:'3 Kunlik',desc:'3 kun ketma-ket',check:()=>duoState.streak>=3},
-  {id:'streak_7',icon:'🌟',name:'Haftalik',desc:'7 kun ketma-ket',check:()=>duoState.streak>=7},
-  {id:'xp_100',icon:'⚡',name:'100 XP',desc:'100 XP topladingiz',check:()=>duoState.xp>=100},
-  {id:'xp_500',icon:'💫',name:'500 XP',desc:'500 XP topladingiz',check:()=>duoState.xp>=500},
-  {id:'level_set',icon:'🎓',name:'Daraja Topildi',desc:'Daraja testi topshirdingiz',check:s=>!!s.level},
-];
-
-function loadDuoState(){
-  try{const s=localStorage.getItem(LS_DUO);if(s)duoState={...duoState,...JSON.parse(s)};}catch(e){}
-  updateStreak();
-}
-
-function saveDuoState(){
-  localStorage.setItem(LS_DUO,JSON.stringify(duoState));
-  renderDuoTopbar();
-  syncToSheets();
-}
-
-function updateStreak(){
-  const today=new Date().toISOString().split('T')[0];
-  const last=duoState.lastActiveDate;
-  if(!last){return;}
-  const diff=(new Date(today)-new Date(last))/(1000*60*60*24);
-  if(diff>1){duoState.streak=0;duoState.streakDays=[];}
-}
-
-function markDailyActive(){
-  const today=new Date().toISOString().split('T')[0];
-  if(duoState.lastActiveDate===today)return;
-  const last=duoState.lastActiveDate;
-  if(last){
-    const diff=(new Date(today)-new Date(last))/(1000*60*60*24);
-    if(diff===1){duoState.streak++;} else {duoState.streak=1;}
-  } else {duoState.streak=1;}
-  duoState.lastActiveDate=today;
-  if(!duoState.streakDays.includes(today))duoState.streakDays.push(today);
-  if(duoState.streakDays.length>30)duoState.streakDays=duoState.streakDays.slice(-30);
-  saveDuoState();
-}
-
-function addXP(amount){
-  duoState.xp+=amount;
-  markDailyActive();
-  saveDuoState();
-  showXpPop(amount);
-  checkBadges();
-}
-
-function loseLife(){
-  if(duoState.lives>0){duoState.lives--;saveDuoState();}
-  renderDuoTopbar();
-  if(duoState.lives===0)showBanner('❤️ Jonlaringiz tugadi! Ertaga davom eting.');
-}
-
-function checkBadges(){
-  BADGES.forEach(b=>{
-    if(!duoState.badges.includes(b.id)&&b.check(engProgress)){
-      duoState.badges.push(b.id);
-      saveDuoState();
-      showBanner('🎖️ Yangi badge: '+b.name+'!');
-    }
-  });
-}
-
-function showXpPop(amount){
-  const el=document.createElement('div');
-  el.textContent='+'+amount+' XP ⚡';
-  el.style.cssText='position:fixed;top:30%;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:8px 18px;border-radius:50px;font-weight:800;font-size:15px;z-index:9999;pointer-events:none;animation:xpPop .9s ease forwards';
-  document.body.appendChild(el);
-  if(!document.getElementById('xp-pop-style')){
-    const st=document.createElement('style');st.id='xp-pop-style';
-    st.textContent='@keyframes xpPop{0%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(-60px)}}';
-    document.head.appendChild(st);
-  }
-  setTimeout(()=>el.remove(),900);
-}
-
-function renderDuoTopbar(){
-  document.getElementById('duo-streak').textContent=duoState.streak||0;
-  document.getElementById('duo-xp').textContent=duoState.xp||0;
-  for(let i=1;i<=5;i++){
-    const h=document.getElementById('h'+i);
-    if(h)h.classList.toggle('lost',i>(duoState.lives||5));
-  }
-}
-
 // ===== STATE =====
 let currentLang='uz', isDark=true, userProfile=null;
 let currentView='gpa';
-let currentEngTab='placement';
-
-// Placement test
-let ptState={active:false,qIndex:0,score:0,wrongTopics:[],questions:[]};
-
-// Quiz
-let quizState={active:false,level:'A1',qIndex:0,score:0,questions:[],answered:false};
-let currentQuizLevel='A1';
-
-// Translation
-let transState={dir:'uz2en',level:'A1',currentIdx:0,correct:0,total:0,data:[]};
-
-// Eng progress
-let engProgress={level:null,quizTotal:0,quizCorrect:0,transCorrect:0,weakTopics:[]};
 
 // ===== HELPERS =====
 function t(key){return T[currentLang]?.[key]||T.uz[key]||key}
 function showBanner(msg){const b=document.getElementById('save-banner');b.textContent=msg;b.classList.add('show');setTimeout(()=>b.classList.remove('show'),2500)}
-function getInitials(name){return name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}
-function shuffle(arr){return [...arr].sort(()=>Math.random()-.5)}
+function getInitials(name){return name?name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase():'U'}
 
 // ===== LANGUAGE =====
 function setLanguage(lang){
@@ -1022,7 +720,7 @@ function saveProfileData(p){userProfile=p;localStorage.setItem(LS_PROFILE,JSON.s
 function calcCurrentSemester(admitYear){
   const now=new Date();const mo=now.getMonth()+1;const yr=now.getFullYear();
   const currentAcadStart=(mo>=9)?yr:yr-1;
-  const admitAcadStart=parseInt(admitYear);
+  const admitAcadStart=parseInt(admitYear)||2025;
   const acadYearsElapsed=currentAcadStart-admitAcadStart;
   const isFall=(mo>=9||mo<=1);const semInYear=isFall?1:2;
   const sem=acadYearsElapsed*2+semInYear;
@@ -1039,11 +737,12 @@ function applyProfile(){
   document.getElementById('profile-name').textContent=userProfile.name||'—';
   const majorNames={AI:'AI',IST:'IST',MATH:'Math'};
   const curSem=calcCurrentSemester(userProfile.admitYear);
-  const yr=Math.ceil(curSem/2);
+  const courseStr = userProfile.course ? userProfile.course + '-kurs' : Math.ceil(curSem/2) + '-kurs';
+  
   document.getElementById('profile-meta').textContent=
-    `${userProfile.sid?'ID: '+userProfile.sid+' • ':''}${userProfile.group} • ${majorNames[userProfile.major]||userProfile.major}`;
-  document.getElementById('semester-badge').textContent=`${curSem}-${t('semester_label')} / ${yr}-${t('year_label')}`;
-  document.getElementById('today-group-text').textContent=`${t('Sizning dars jadvalingiz')||'Jadval'}: ${userProfile.group}`;
+    `${userProfile.sid?'ID: '+userProfile.sid+' • ':''}${userProfile.group} • ${majorNames[userProfile.major]||userProfile.major}${userProfile.email?' • '+userProfile.email:''}`;
+  document.getElementById('semester-badge').textContent=`${curSem}-${t('semester_label')} / ${courseStr}`;
+  document.getElementById('today-group-text').textContent=`Guruhim: ${userProfile.group}`;
   const days=t('days');
   document.getElementById('today-day-badge').textContent=days[new Date().getDay()];
   initTimetable();
@@ -1054,6 +753,8 @@ function editProfile(){
   if(userProfile){
     document.getElementById('ob-name').value=userProfile.name||'';
     document.getElementById('ob-sid').value=userProfile.sid||'';
+    document.getElementById('ob-email').value=userProfile.email||'';
+    document.getElementById('ob-course').value=userProfile.course||'1';
     document.getElementById('ob-major').value=userProfile.major||'';
     document.getElementById('ob-admit-year').value=userProfile.admitYear||'';
     document.getElementById('ob-group').value=userProfile.group||'';
@@ -1075,16 +776,39 @@ function highlightHandbook(){
 // ===== ONBOARDING =====
 let obStep=0;
 function updateDots(s){for(let i=0;i<4;i++){const d=document.getElementById('dot-'+i);if(!d)continue;d.classList.remove('active','done');if(i<s)d.classList.add('done');else if(i===s)d.classList.add('active');}}
+
 function obNext(next){
-  if(next===1){const n=document.getElementById('ob-name').value.trim();if(!n){alert('Ismingizni kiriting!');return;}}
-  if(next===2){const m=document.getElementById('ob-major').value,y=document.getElementById('ob-admit-year').value;if(!m||!y){alert('Barcha maydonlarni to\'ldiring!');return;}}
-  if(next===3){const g=document.getElementById('ob-group').value;if(!g){alert('Guruhni tanlang!');return;}}
+  if(next===1){
+    const n=document.getElementById('ob-name').value.trim();
+    if(!n){alert('Ismingizni kiriting!');return;}
+  }
+  if(next===2){
+    const m=document.getElementById('ob-major').value;
+    const c=document.getElementById('ob-course').value;
+    if(!m || !c){alert('Kurs va yo\'nalishni tanlang!');return;}
+  }
+  if(next===3){
+    const g=document.getElementById('ob-group').value;
+    if(!g){alert('Guruhni tanlang!');return;}
+  }
   document.getElementById('step-'+obStep).classList.remove('active');
-  obStep=next;document.getElementById('step-'+obStep).classList.add('active');updateDots(obStep);
+  obStep=next;
+  document.getElementById('step-'+obStep).classList.add('active');
+  updateDots(obStep);
 }
+
 function obFinish(lang){
   setLanguage(lang);
-  const p={name:document.getElementById('ob-name').value.trim(),sid:document.getElementById('ob-sid').value.trim(),major:document.getElementById('ob-major').value,admitYear:document.getElementById('ob-admit-year').value,group:document.getElementById('ob-group').value,lang:lang};
+  const p={
+    name:document.getElementById('ob-name').value.trim(),
+    sid:document.getElementById('ob-sid').value.trim(),
+    email:document.getElementById('ob-email').value.trim(),
+    course:document.getElementById('ob-course').value || '1',
+    major:document.getElementById('ob-major').value,
+    admitYear:document.getElementById('ob-admit-year').value || (document.getElementById('ob-course').value === '1' ? '2025' : '2024'),
+    group:document.getElementById('ob-group').value,
+    lang:lang
+  };
   saveProfileData(p);
   document.getElementById('onboarding-overlay').style.display='none';
   applyProfile();
@@ -1102,167 +826,187 @@ function switchView(viewId){
   const nav=document.getElementById('nav-'+viewId);
   if(nav)nav.classList.add('active');
   currentView=viewId;
-  if(viewId==='english')renderEngProgress();
 }
 
-// ===== ENGLISH SUB-TABS =====
-function switchEngTab(tab){
-  document.querySelectorAll('.eng-tab').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.eng-sub-view').forEach(v=>v.classList.remove('active'));
-  document.getElementById('etab-'+tab).classList.add('active');
-  document.getElementById('esv-'+tab).classList.add('active');
-  currentEngTab=tab;
-  if(tab==='progress')renderEngProgress();
-  if(tab==='translate')loadTransSentence();
-  markDailyActive();
+// ===== GPA CALCULATOR MODULE =====
+let gpaState = { subjects: [], selectedSems: [1] };
+
+function scoreToGrade(score) {
+  if(score >= 95) return { letter: 'A+', gpa: 5.0, class: 'grade-a-plus' };
+  if(score >= 90) return { letter: 'A', gpa: 4.5, class: 'grade-a' };
+  if(score >= 85) return { letter: 'B+', gpa: 4.25, class: 'grade-b' };
+  if(score >= 80) return { letter: 'B', gpa: 4.0, class: 'grade-b' };
+  if(score >= 75) return { letter: 'C+', gpa: 3.75, class: 'grade-c' };
+  if(score >= 70) return { letter: 'C', gpa: 3.5, class: 'grade-c' };
+  if(score >= 65) return { letter: 'D+', gpa: 3.25, class: 'grade-d' };
+  if(score >= 60) return { letter: 'D', gpa: 3.0, class: 'grade-d' };
+  return { letter: 'F', gpa: 0.0, class: 'grade-f' };
 }
 
-// ===== ENG PROGRESS =====
-function loadEngProgress(){try{const s=localStorage.getItem(LS_ENG);if(s)engProgress=JSON.parse(s);}catch(e){}}
-function saveEngProgress(){
-  localStorage.setItem(LS_ENG,JSON.stringify(engProgress));
-  syncToSheets();
+function initGpa() {
+  const saved = localStorage.getItem(LS_GPA);
+  if (saved) {
+    try { gpaState = JSON.parse(saved); } catch(e) {}
+  }
+  if (!gpaState.subjects || gpaState.subjects.length === 0) {
+    gpaState.subjects = [
+      { name: 'Oliy Matematika', credits: 6, score: 88 },
+      { name: 'Dasturlash (Python)', credits: 6, score: 92 },
+      { name: 'Fizika', credits: 4, score: 78 }
+    ];
+  }
+  renderGpaView();
 }
 
-function renderEngProgress(){
-  loadEngProgress();loadDuoState();
-  document.getElementById('prog-level').textContent=engProgress.level||'—';
-  document.getElementById('prog-quiz-correct').textContent=engProgress.quizCorrect||0;
-  document.getElementById('prog-trans-correct').textContent=engProgress.transCorrect||0;
-  document.getElementById('prog-xp').textContent=duoState.xp||0;
-  document.getElementById('prog-streak-big').textContent=(duoState.streak||0)+' kun';
-  const acc=engProgress.quizTotal>0?Math.round((engProgress.quizCorrect/engProgress.quizTotal)*100):0;
-  document.getElementById('prog-accuracy-bar').style.width=acc+'%';
-  document.getElementById('prog-accuracy-text').textContent=acc+'%';
-  const chips=document.getElementById('prog-weak-chips');
-  const wt=[...new Set(engProgress.weakTopics||[])].slice(0,8);
-  chips.innerHTML=wt.length?wt.map(w=>`<span class="weak-topic-chip">${w}</span>`).join(''):"<span style=\"font-size:12px;color:var(--muted)\">Hali ma'lumot yo'q</span>";
-  renderStreakCalendar();
-  renderBadges();
-}
+function renderGpaView() {
+  const container = document.getElementById('gpa-rows');
+  if (!container) return;
+  container.innerHTML = '';
 
-function renderStreakCalendar(){
-  const cal=document.getElementById('streak-calendar');if(!cal)return;
-  const days=['Ya','Du','Se','Ch','Pa','Ju','Sh'];
-  const today=new Date();
-  cal.innerHTML='';
-  for(let i=6;i>=0;i--){
-    const d=new Date(today);d.setDate(today.getDate()-i);
-    const ds=d.toISOString().split('T')[0];
-    const dayName=days[d.getDay()];
-    const done=duoState.streakDays&&duoState.streakDays.includes(ds);
-    const isToday=i===0;
-    const el=document.createElement('div');
-    el.className='streak-day'+(done?' done':'')+(isToday&&!done?' today':'');
-    el.textContent=dayName;
-    cal.appendChild(el);
+  let totalCredits = 0, weightedGpa = 0;
+
+  gpaState.subjects.forEach((sub, idx) => {
+    const gr = scoreToGrade(sub.score);
+    totalCredits += Number(sub.credits);
+    weightedGpa += Number(sub.credits) * gr.gpa;
+
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;gap:8px;align-items:center;margin-bottom:8px;background:var(--surface);padding:8px;border-radius:12px;border:1px solid var(--border);';
+    row.innerHTML = `
+      <input type="text" value="${sub.name}" style="flex:2;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:8px;font-size:13px;outline:none;" onchange="updateGpaRow(${idx}, 'name', this.value)">
+      <input type="number" value="${sub.credits}" style="width:38px;text-align:center;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 2px;border-radius:8px;font-size:13px;outline:none;" onchange="updateGpaRow(${idx}, 'credits', this.value)">
+      <input type="number" value="${sub.score}" style="width:52px;text-align:center;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 2px;border-radius:8px;font-size:13px;outline:none;" onchange="updateGpaRow(${idx}, 'score', this.value)">
+      <div style="width:33px;text-align:center;" class="${gr.class}">${gr.letter}</div>
+      <button style="width:22px;background:none;border:none;color:var(--red);cursor:pointer;font-weight:700;" onclick="removeGpaRow(${idx})">✕</button>
+    `;
+    container.appendChild(row);
+  });
+
+  const finalGpa = totalCredits > 0 ? (weightedGpa / totalCredits).toFixed(2) : '0.00';
+  document.getElementById('gpa-result').textContent = finalGpa;
+  document.getElementById('gpa-ring-center').textContent = finalGpa;
+
+  const ring = document.getElementById('gpa-ring');
+  if (ring) {
+    const offset = 251.2 - (251.2 * (parseFloat(finalGpa) / 5.0));
+    ring.style.strokeDashoffset = offset;
+  }
+
+  const stInfo = document.getElementById('stipend-info');
+  if (stInfo) {
+    const gVal = parseFloat(finalGpa);
+    if (gVal >= 4.5) {
+      stInfo.innerHTML = `<div class="stipend-card stipend-ok">${t('stipend_president')}</div>`;
+    } else if (gVal >= 3.5) {
+      stInfo.innerHTML = `<div class="stipend-card stipend-ok">${t('stipend_ok')}</div>`;
+    } else if (gVal >= 3.0) {
+      stInfo.innerHTML = `<div class="stipend-card stipend-warn">${t('stipend_warn')}</div>`;
+    } else {
+      stInfo.innerHTML = `<div class="stipend-card stipend-fail">${t('stipend_fail')}</div>`;
+    }
   }
 }
 
-function renderBadges(){
-  const grid=document.getElementById('badge-grid');if(!grid)return;
-  grid.innerHTML=BADGES.map(b=>{
-    const earned=(duoState.badges||[]).includes(b.id);
-    return `<div class="badge-item${earned?' earned':''}">
-      <span class="badge-icon">${b.icon}</span>
-      <div class="badge-name">${b.name}</div>
-    </div>`;
-  }).join('');
+function updateGpaRow(idx, field, val) {
+  gpaState.subjects[idx][field] = field === 'name' ? val : Number(val);
+  renderGpaView();
 }
 
-function resetEngProgress(){
-  if(!confirm('Progressni tozalashni xohlaysizmi?'))return;
-  engProgress={level:null,quizTotal:0,quizCorrect:0,transCorrect:0,weakTopics:[]};
-  duoState={xp:0,streak:0,lastActiveDate:null,streakDays:[],lives:5,maxLives:5,badges:[]};
-  saveEngProgress();saveDuoState();renderEngProgress();showBanner('🗑 Tozalandi');
+function addCustomGpaRow() {
+  gpaState.subjects.push({ name: 'Yangi fan', credits: 3, score: 80 });
+  renderGpaView();
 }
 
-// ===== PLACEMENT TEST =====
-function startPlacementTest(){
-  ptState={active:true,qIndex:0,score:0,wrongTopics:[],questions:ALL_QUESTIONS.slice(0,20)};
-  document.getElementById('placement-start-screen').style.display='none';
-  document.getElementById('placement-test-screen').style.display='block';
-  document.getElementById('placement-result-screen').style.display='none';
-  renderPTQuestion();
+function removeGpaRow(idx) {
+  gpaState.subjects.splice(idx, 1);
+  renderGpaView();
 }
 
-function renderPTQuestion(){
-  const q=ptState.questions[ptState.qIndex];
-  const total=ptState.questions.length;
-  document.getElementById('pt-counter').textContent=`${ptState.qIndex+1}/${total}`;
-  document.getElementById('pt-progress').style.width=((ptState.qIndex/total)*100)+'%';
-  document.getElementById('pt-topic').textContent=`${q.level} · ${q.topic}`;
-  document.getElementById('pt-question').textContent=q.text;
-  const lvlBadge=document.getElementById('pt-level-badge');
-  lvlBadge.className='level-badge level-'+q.level.toLowerCase();lvlBadge.textContent=q.level;
-  const opts=document.getElementById('pt-options');opts.innerHTML='';
-  const labels=['A','B','C','D'];
-  q.options.forEach((opt,i)=>{
-    const btn=document.createElement('button');
-    btn.className='quiz-option';
-    btn.innerHTML=`<span class="option-label">${labels[i]}</span>${opt}`;
-    btn.onclick=()=>answerPT(i);
-    opts.appendChild(btn);
+function saveGpaData() {
+  localStorage.setItem(LS_GPA, JSON.stringify(gpaState));
+  showBanner(t('saved_msg'));
+  syncToSheets();
+}
+
+function toggleGpaScale() {
+  const p = document.getElementById('gpa-scale-panel');
+  const arr = document.getElementById('gpa-arrow');
+  if (p.style.display === 'none') { p.style.display = 'block'; arr.textContent = '▲'; }
+  else { p.style.display = 'none'; arr.textContent = '▼'; }
+}
+
+function shareGpa() {
+  const g = document.getElementById('gpa-result').textContent;
+  if(tg?.sendData){ tg.sendData(`Mening GPAM: ${g}`); }
+  else { alert(`Mening GPA ko'rsatkichim: ${g}`); }
+}
+
+// ===== PROFESSORS LIST =====
+const PROFS = [
+  { name: 'Dr. Alimov Botir', dept: 'dept-math', role: 'Oliy Matematika', email: 'b.alimov@npuu.uz' },
+  { name: 'Prof. Karimov Sardor', dept: 'dept-it', role: 'Sun\'iy Intelekt va AI', email: 's.karimov@npuu.uz' },
+  { name: 'Dr. Umarova Laylo', dept: 'dept-eng', role: 'English for IT', email: 'l.umarova@npuu.uz' },
+  { name: 'Ph.D. Abdullayev Jasur', dept: 'dept-it', role: 'Axborot Tizimlari', email: 'j.abdullayev@npuu.uz' }
+];
+
+function renderProfs(filter='') {
+  const c = document.getElementById('prof-list');
+  if(!c) return;
+  c.innerHTML = '';
+  const q = filter.toLowerCase().trim();
+  PROFS.filter(p => p.name.toLowerCase().includes(q) || p.role.toLowerCase().includes(q)).forEach(p => {
+    const card = document.createElement('div');
+    card.className = `card ${p.dept}`;
+    card.innerHTML = `
+      <div style="font-weight:700;font-size:14px;">${p.name}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:2px;">${p.role}</div>
+      <div style="font-size:12px;color:var(--accent2);margin-top:6px;display:flex;align-items:center;">
+        📧 ${p.email}
+        <button class="copy-email-btn" onclick="navigator.clipboard.writeText('${p.email}');showBanner('${t('copied')}')">Nusxalash</button>
+      </div>
+    `;
+    c.appendChild(card);
   });
 }
 
-function answerPT(chosen){
-  const q=ptState.questions[ptState.qIndex];
-  const opts=document.getElementById('pt-options').querySelectorAll('.quiz-option');
-  opts.forEach(b=>b.disabled=true);
-  if(chosen===q.answer){ptState.score++;opts[chosen].classList.add('correct');}
-  else{ptState.wrongTopics.push(q.topic);opts[chosen].classList.add('wrong');opts[q.answer].classList.add('show-correct');}
-  setTimeout(()=>{ptState.qIndex++;if(ptState.qIndex>=ptState.questions.length)finishPT();else renderPTQuestion();},700);
+// ===== TIMETABLE MODULE =====
+function initTimetable() {
+  const grid = document.getElementById('tt-grid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  const groups = ['FM1','FM2','FM3','FM4','FM5','FM6','FM7','FIT1','FIT2','FIT3','FIT4','FIT5','FIT6','FAR1','FAR2','FAR3'];
+  groups.forEach(g => {
+    const isMine = userProfile && userProfile.group === g;
+    const btn = document.createElement('button');
+    btn.className = `tt-btn ${isMine ? 'my-group' : ''}`;
+    btn.innerHTML = `${g} ${isMine ? '<span class="star">★ Mening guruhim</span>' : ''}`;
+    btn.onclick = () => alert(`${g} guruhi dars jadvali ochilmoqda...`);
+    grid.appendChild(btn);
+  });
 }
 
-function finishPT(){
-  const sc=ptState.score;
-  let level='A1';
-  if(sc<=4)level='A1';else if(sc<=8)level='A2';else if(sc<=13)level='B1';else level='B2';
-  document.getElementById('placement-test-screen').style.display='none';
-  document.getElementById('placement-result-screen').style.display='block';
-  document.getElementById('pr-level').textContent=level;
-  document.getElementById('pr-score').textContent=`${sc}/20 ball`;
-  const xpEarned=sc*5;
-  document.getElementById('pr-xp-earned').innerHTML=`<span style="color:#ff9800;font-weight:700;font-size:14px">+${xpEarned} XP ⚡</span>`;
-  const wt=[...new Set(ptState.wrongTopics)];
-  const weakBlock=document.getElementById('pr-weak-block');
-  if(wt.length){weakBlock.style.display='block';document.getElementById('pr-weak-topics').innerHTML=wt.map(w=>`<span class="weak-topic-chip">${w}</span>`).join('');}
-  else weakBlock.style.display='none';
-  engProgress.level=level;
-  if(wt.length)engProgress.weakTopics=[...new Set([...engProgress.weakTopics,...wt])];
-  saveEngProgress();
-  addXP(xpEarned);
-  currentQuizLevel=level;transState.level=level;
-  checkBadges();
+function openMyTimetable(e) {
+  if(e) e.preventDefault();
+  switchView('timetable');
 }
 
-function resetPlacementTest(){
-  document.getElementById('placement-start-screen').style.display='block';
-  document.getElementById('placement-test-screen').style.display='none';
-  document.getElementById('placement-result-screen').style.display='none';
-}
+// ===== INIT APP =====
+window.addEventListener('DOMContentLoaded', async () => {
+  fetchStudentCsvData(); // Pre-cache CSV database
+  const savedLang = localStorage.getItem(LS_LANG) || 'uz';
+  setLanguage(savedLang);
+  const savedTheme = localStorage.getItem(LS_THEME) !== 'light';
+  applyTheme(savedTheme);
 
-// ===== QUIZ =====
-function getQuizQuestions(level){
-  const pool=ALL_QUESTIONS.filter(q=>q.level===level);
-  return shuffle(pool).slice(0,Math.min(10,pool.length));
-}
-
-function startQuiz(level){
-  currentQuizLevel=level;
-  const questions=getQuizQuestions(level);
-  quizState={active:true,level,qIndex:0,score:0,questions,answered:false};
-  document.getElementById('quiz-level-select').style.display='none';
-  document.getElementById('quiz-active-screen').style.display='block';
-  document.getElementById('quiz-result-screen').style.display='none';
-  renderQuizQuestion();
-}
-
-function startQuizMyLevel(){
-  const lvl=engProgress.level||'A1';
-  startQuiz(lvl);
-}
+  loadProfile();
+  if (userProfile) {
+    applyProfile();
+    initGpa();
+    renderProfs();
+  } else {
+    document.getElementById('onboarding-overlay').style.display = 'flex';
+  }
+});
 </script>
 </body>
 </html>
