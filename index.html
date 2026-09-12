@@ -25,27 +25,27 @@ body.light {
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;padding-bottom:90px;transition:background .35s,color .35s}
 
 /* ===== ONBOARDING ===== */
-#onboarding-overlay{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:32px 20px 24px;overflow-y:auto}
-.onboard-logo{width:80px;height:80px;border-radius:50%;border:2.5px solid var(--accent);box-shadow:0 0 32px rgba(58,134,255,0.5);display:flex;align-items:center;justify-content:center;font-size:38px;background:var(--surface2);margin-bottom:14px;animation:logoPulse 3s ease-in-out infinite;flex-shrink:0}
-.onboard-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text);margin-bottom:4px;text-align:center}
-.onboard-sub{font-size:12.5px;color:var(--muted);text-align:center;margin-bottom:20px;line-height:1.5}
-.onboard-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:18px;width:100%;max-width:380px;box-shadow:var(--card-shadow)}
+#onboarding-overlay{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:24px 16px;overflow-y:auto}
+.onboard-logo{width:72px;height:72px;border-radius:50%;border:2.5px solid var(--accent);box-shadow:0 0 32px rgba(58,134,255,0.5);display:flex;align-items:center;justify-content:center;font-size:34px;background:var(--surface2);margin-bottom:12px;animation:logoPulse 3s ease-in-out infinite;flex-shrink:0}
+.onboard-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px;text-align:center}
+.onboard-sub{font-size:12px;color:var(--muted);text-align:center;margin-bottom:16px;line-height:1.4}
+.onboard-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:18px;width:100%;max-width:400px;box-shadow:var(--card-shadow)}
 .onboard-label{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent3);margin-bottom:6px;margin-top:12px}
 .onboard-label:first-child{margin-top:0}
-.onboard-input,.onboard-select{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:11px 14px;border-radius:12px;font-size:14px;outline:none;font-family:inherit;transition:border .2s;appearance:none}
+.onboard-input,.onboard-select{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:11px 14px;border-radius:12px;font-size:13.5px;outline:none;font-family:inherit;transition:border .2s;appearance:none}
 .onboard-input:focus,.onboard-select:focus{border-color:var(--accent)}
 .onboard-select option{background:var(--surface2);color:var(--text)}
-.onboard-btn{background:var(--accent);color:#fff;font-weight:700;border:none;padding:13px;border-radius:14px;width:100%;cursor:pointer;font-size:15px;font-family:inherit;margin-top:16px;transition:transform .15s,opacity .15s}
+.onboard-btn{background:var(--accent);color:#fff;font-weight:700;border:none;padding:13px;border-radius:14px;width:100%;cursor:pointer;font-size:14.5px;font-family:inherit;margin-top:16px;transition:transform .15s,opacity .15s}
 .onboard-btn:active{transform:scale(.97);opacity:.9}
 .step{display:none}
 .step.active{display:block;animation:sectionIn .3s ease both}
-.onboard-steps-dots{display:flex;gap:6px;margin-bottom:16px}
+.onboard-steps-dots{display:flex;gap:6px;margin-bottom:14px}
 .step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background .3s,width .3s}
 .step-dot.active{background:var(--accent);width:24px;border-radius:4px}
 .step-dot.done{background:var(--accent2)}
 
 /* ===== TOP BAR ===== */
-.top-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:500}
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:500}
 .top-bar-left{display:flex;gap:6px;align-items:center}
 .top-bar-right{display:flex;gap:6px;align-items:center}
 .ctrl-btn{background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:9px;padding:6px 10px;font-size:13px;font-weight:700;outline:none;cursor:pointer;font-family:inherit;line-height:1;transition:all .2s}
@@ -55,73 +55,45 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .edit-profile-btn:active{transform:scale(.94)}
 
 /* ===== PROFILE HEADER ===== */
-.profile-header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--header-grad);border-bottom:1px solid var(--border)}
-.profile-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:#fff;flex-shrink:0;box-shadow:0 0 14px rgba(58,134,255,.4)}
+.profile-header{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--header-grad);border-bottom:1px solid var(--border)}
+.profile-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 0 14px rgba(58,134,255,.4)}
 .profile-info{flex:1;min-width:0}
-.profile-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.profile-meta{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4}
-.semester-badge{background:rgba(58,134,255,.2);border:1px solid var(--accent);color:var(--accent2);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;margin-top:3px}
+.profile-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profile-meta{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+.school-badge{background:rgba(58,134,255,.18);border:1px solid var(--accent);color:var(--accent3);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;display:inline-block;margin-top:4px}
 
 /* ===== TODAY WIDGET ===== */
-.today-widget{background:linear-gradient(135deg,rgba(58,134,255,.12),rgba(0,187,249,.06));border:1px solid rgba(58,134,255,.25);border-radius:var(--radius);padding:12px 14px;margin:10px 16px}
+.today-widget{background:linear-gradient(135deg,rgba(58,134,255,.12),rgba(0,187,249,.06));border:1px solid rgba(58,134,255,.25);border-radius:var(--radius);padding:12px 14px;margin:12px 16px}
 .today-widget-title{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--accent3);margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .today-day-badge{background:var(--accent);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:auto}
 .today-schedule-btn{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 12px;cursor:pointer;font-family:inherit;color:var(--text);width:100%;transition:all .2s;text-decoration:none}
 .today-schedule-btn:active{transform:scale(.98)}
 
 /* ===== SECTIONS ===== */
-.view-section{display:none;padding:12px 16px}
+.view-section{display:none;padding:14px 16px}
 .view-section.active{display:block;animation:sectionIn .3s cubic-bezier(.4,0,.2,1)}
 @keyframes sectionIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes logoPulse{0%,100%{box-shadow:0 0 18px rgba(58,134,255,.4)}50%{box-shadow:0 0 32px rgba(58,134,255,.7)}}
-@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.card-anim{animation:cardIn .35s ease both}
 
 /* ===== CARD ===== */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px;box-shadow:var(--card-shadow);transition:background .3s,border .3s}
 
-/* ===== GPA RING ===== */
-.gpa-ring-wrapper{display:flex;align-items:center;gap:16px;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;box-shadow:var(--card-shadow)}
-.gpa-ring-track{fill:none;stroke:var(--surface2);stroke-width:8}
-.gpa-ring-fill{fill:none;stroke:var(--accent2);stroke-width:8;stroke-linecap:round;stroke-dasharray:251.2;stroke-dashoffset:251.2;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset 1s cubic-bezier(.4,0,.2,1),stroke .5s}
-.gpa-big{font-family:'Syne',sans-serif;font-size:38px;font-weight:800;color:var(--accent2);letter-spacing:-2px;line-height:1}
-.gpa-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.6px}
-.gpa-share-btn{background:var(--surface2);border:1px solid var(--border);color:var(--accent3);border-radius:9px;padding:5px 11px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:7px;transition:all .2s;display:inline-flex;align-items:center;gap:4px}
-
-/* ===== STIPEND ===== */
-.stipend-card{border-radius:12px;padding:10px 14px;margin-bottom:10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
-.stipend-ok{background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);color:#00e676}
-.stipend-warn{background:rgba(255,152,0,.1);border:1px solid rgba(255,152,0,.3);color:#ff9800}
-.stipend-fail{background:rgba(255,77,77,.1);border:1px solid rgba(255,77,77,.3);color:#ff4d4d}
-
 /* ===== SEARCH ===== */
 .search-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px;margin-bottom:14px}
-.search-box input,.search-box select{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:9px 13px;border-radius:11px;font-size:13.5px;outline:none;margin-bottom:8px;font-family:inherit;transition:border .2s}
-.search-box input:focus,.search-box select:focus{border-color:var(--accent)}
-.search-box input:last-child,.search-box select:last-child{margin-bottom:0}
-
-/* ===== BUTTONS ===== */
-.btn{background:var(--accent2);color:#000;font-weight:700;border:none;padding:12px;border-radius:13px;width:100%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;text-decoration:none;font-family:inherit;transition:transform .15s,opacity .15s}
-.btn:active{transform:scale(.97);opacity:.9}
+.search-box input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:11px;font-size:13.5px;outline:none;font-family:inherit;transition:border .2s}
+.search-box input:focus{border-color:var(--accent)}
 
 /* ===== HANDBOOK ===== */
 .handbook-btn{background:var(--surface2);border:1px solid var(--border);border-radius:13px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;color:var(--text);text-decoration:none;margin-bottom:10px;font-weight:600;transition:background .2s,transform .15s;cursor:pointer;font-size:13.5px}
 .handbook-btn:active{transform:scale(.98)}
-.handbook-btn.recommended{border:2px solid var(--accent);background:rgba(58,134,255,.08)}
-.rec-badge{background:var(--accent);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;margin-left:6px;vertical-align:middle}
 
-/* ===== TIMETABLE ===== */
-.grid-container{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.tt-btn{background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:13px 6px;display:flex;align-items:center;justify-content:center;color:var(--text);font-weight:700;cursor:pointer;font-size:13px;font-family:inherit;transition:all .2s;flex-direction:column;gap:2px}
+/* ===== TIMETABLE GRID ===== */
+.school-group-title{font-size:12px;font-weight:800;color:var(--accent3);text-transform:uppercase;letter-spacing:.7px;margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.grid-container{display:grid;grid-template-columns:repeat(1,1fr);gap:8px}
+.tt-btn{background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:11px 5px;display:flex;align-items:center;justify-content:center;color:var(--text);font-weight:700;cursor:pointer;font-size:12px;font-family:inherit;transition:all .2s;flex-direction:column;gap:2px;text-align:center}
 .tt-btn:active{transform:scale(.95)}
-.tt-btn.my-group{background:rgba(58,134,255,.18);border-color:var(--accent);color:var(--accent2)}
-.tt-btn .star{font-size:9px;color:var(--accent2)}
-
-/* ===== CURRICULUM ===== */
-.curr-filter-row{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none}
-.curr-filter-row::-webkit-scrollbar{display:none}
-.curr-filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:7px 13px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .2s}
-.curr-filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tt-btn.my-group{background:rgba(58,134,255,.2);border-color:var(--accent);color:var(--accent2)}
+.tt-btn .star{font-size:11px;color:var(--accent2);font-weight:600}
 
 /* ===== PROF DEPT COLORS ===== */
 .dept-math{border-left:4px solid #3a86ff!important}
@@ -130,30 +102,11 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .dept-edu{border-left:4px solid #ff9800!important}
 .copy-email-btn{background:var(--surface2);border:1px solid var(--border);color:var(--accent3);border-radius:7px;padding:3px 8px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;margin-left:6px;vertical-align:middle}
 .copy-email-btn:active{transform:scale(.93)}
-.copy-email-btn.copied{background:rgba(0,230,118,.15);border-color:#00e676;color:#00e676}
-
-/* ===== GPA TABLE ===== */
-.gpa-scale-table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:4px}
-.gpa-scale-table th{background:var(--surface2);color:var(--accent3);font-weight:700;padding:7px 5px;text-align:center;border:1px solid var(--border);font-size:10.5px}
-.gpa-scale-table td{padding:6px 5px;text-align:center;border:1px solid var(--border);color:var(--text)}
-.gpa-scale-table tr:nth-child(even) td{background:var(--surface2)}
-.grade-a-plus{color:#00e676;font-weight:700}.grade-a{color:#40c4ff;font-weight:700}
-.grade-b{color:#b2ff59;font-weight:700}.grade-c{color:#ffcc00;font-weight:700}
-.grade-d{color:#ff9800;font-weight:700}.grade-f{color:#ff4d4d;font-weight:700}
-.gpa-toggle-btn{background:var(--surface2);border:1px solid var(--border);color:var(--accent3);padding:9px 14px;border-radius:12px;width:100%;font-size:12.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px;font-family:inherit;transition:background .2s}
-
-/* ===== GPA HISTORY ===== */
-.gpa-history-item{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:12.5px}
-.gpa-history-item:last-child{border-bottom:none}
-
-/* ===== NUMBER INPUT ===== */
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 
 /* NAV BAR */
 .nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--nav-bg);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:100;overflow-x:auto;scrollbar-width:none;transition:background .35s}
 .nav-bar::-webkit-scrollbar{display:none}
-.nav-item{display:flex;flex-direction:column;align-items:center;color:var(--muted);font-size:10px;font-weight:500;cursor:pointer;background:none;border:none;gap:3px;min-width:55px;flex:1 0 auto;font-family:inherit;transition:color .2s,transform .2s;padding:2px 0}
+.nav-item{display:flex;flex-direction:column;align-items:center;color:var(--muted);font-size:10px;font-weight:500;cursor:pointer;background:none;border:none;gap:3px;min-width:65px;flex:1;font-family:inherit;transition:color .2s,transform .2s;padding:2px 0}
 .nav-item.active{color:var(--accent3);font-weight:700;transform:translateY(-2px)}
 .nav-item svg{width:21px;height:21px;fill:currentColor}
 .nav-dot{width:4px;height:4px;border-radius:50%;background:var(--accent3);opacity:0;margin-top:-1px;transition:opacity .2s}
@@ -163,9 +116,10 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 .save-banner{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--accent);color:#fff;padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:200;white-space:nowrap}
 .save-banner.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* MISC */
-.section-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.info-card{background:linear-gradient(135deg,rgba(58,134,255,.1),rgba(0,187,249,.06));border:1px solid rgba(58,134,255,.25);border-radius:var(--radius);padding:12px 14px;margin-bottom:12px}
+.info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.info-row:last-child{border-bottom:none}
+.info-label{color:var(--muted);font-weight:500}
+.info-val{font-weight:700;color:var(--text);text-align:right}
 </style>
 </head>
 <body>
@@ -176,14 +130,16 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 <div id="onboarding-overlay">
   <div class="onboard-logo">🎓</div>
   <div class="onboard-title">NPUU Smart Bot</div>
-  <div class="onboard-sub" id="ob-subtitle">ID raqamingizni kiriting — ma'lumotlaringiz avtomatik qidirib to'ldiriladi!</div>
+  <div class="onboard-sub">ID raqamingizni kiriting — ma'lumotlaringiz bazadan avtomatik qidiriladi!</div>
+  
   <div class="onboard-steps-dots">
     <div class="step-dot active" id="dot-0"></div>
     <div class="step-dot" id="dot-1"></div>
     <div class="step-dot" id="dot-2"></div>
-    <div class="step-dot" id="dot-3"></div>
   </div>
+
   <div class="onboard-card">
+    <!-- STEP 0: ID Search & Personal Info -->
     <div class="step active" id="step-0">
       <div class="onboard-label">🪪 Student ID</div>
       <div style="display:flex;gap:6px;align-items:center;">
@@ -193,56 +149,54 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
       <div id="id-search-status" style="font-size:11.5px;margin-top:6px;min-height:18px;"></div>
 
       <div class="onboard-label">👤 Ism Familiya</div>
-      <input type="text" class="onboard-input" id="ob-name" placeholder="Abdullohxonov Sodiqxon" autocomplete="off">
+      <input type="text" class="onboard-input" id="ob-name" placeholder="Ism va familiyangiz" autocomplete="off">
 
       <div class="onboard-label">📧 Email Pochta</div>
       <input type="email" class="onboard-input" id="ob-email" placeholder="student@npuu.uz" autocomplete="off">
 
       <button class="onboard-btn" onclick="obNext(1)">Davom etish →</button>
     </div>
+
+    <!-- STEP 1: Academic Selection (School -> Kurs -> Major -> Group) -->
     <div class="step" id="step-1">
+      <div class="onboard-label">🏛️ Oliy Maktab</div>
+      <select class="onboard-select" id="ob-school" onchange="onSchoolChange()">
+        <option value="">Oliy maktabni tanlang...</option>
+        <option value="aniq_fanlar">Aniq fanlar oliy maktabi</option>
+        <option value="maktabgacha_boshlangich">Maktabgacha va boshlang'ich ta'lim oliy maktabi</option>
+        <option value="tabiiy_fanlar">Tabiiy fanlar oliy maktabi</option>
+      </select>
+
       <div class="onboard-label">📚 Kurs (Bosqich)</div>
-      <select class="onboard-select" id="ob-course">
-        <option value="">Tanlang...</option>
-        <option value="1">1-kurs</option>
-        <option value="2">2-kurs</option>
-        <option value="3">3-kurs</option>
-        <option value="4">4-kurs</option>
+      <select class="onboard-select" id="ob-course" onchange="onCourseChange()">
+        <option value="">Kursni tanlang...</option>
+        <option value="1">1-kurs (2026-yil qabul)</option>
+        <option value="2">2-kurs (2025-yil qabul)</option>
       </select>
 
-      <div class="onboard-label">🎓 Yo'nalish (Major)</div>
-      <select class="onboard-select" id="ob-major">
-        <option value="">Tanlang...</option>
-        <option value="AI">🤖 Artificial Intelligence</option>
-        <option value="IST">💻 Information Systems & Technologies</option>
-        <option value="MATH">📐 Mathematics</option>
+      <div class="onboard-label">🎓 Yo'nalish</div>
+      <select class="onboard-select" id="ob-major" onchange="onMajorChange()">
+        <option value="">Avval oliy maktabni tanlang...</option>
       </select>
 
-      <div class="onboard-label">📅 O'qishga qabul yili</div>
-      <select class="onboard-select" id="ob-admit-year">
-        <option value="">Tanlang...</option>
-        <option value="2021">2021</option><option value="2022">2022</option>
-        <option value="2023">2023</option><option value="2024">2024</option>
-        <option value="2025">2025</option>
-      </select>
-      <button class="onboard-btn" onclick="obNext(2)">Davom etish →</button>
-    </div>
-    <div class="step" id="step-2">
       <div class="onboard-label">👥 Guruh</div>
       <select class="onboard-select" id="ob-group">
-        <option value="">Tanlang...</option>
-        <optgroup label="FM"><option value="FM1">FM1</option><option value="FM2">FM2</option><option value="FM3">FM3</option><option value="FM4">FM4</option><option value="FM5">FM5</option><option value="FM6">FM6</option><option value="FM7">FM7</option></optgroup>
-        <optgroup label="FIT"><option value="FIT1">FIT1</option><option value="FIT2">FIT2</option><option value="FIT3">FIT3</option><option value="FIT4">FIT4</option><option value="FIT5">FIT5</option><option value="FIT6">FIT6</option></optgroup>
-        <optgroup label="FAR"><option value="FAR1">FAR1</option><option value="FAR2">FAR2</option><option value="FAR3">FAR3</option></optgroup>
+        <option value="">Avval yo'nalish va kursni tanlang...</option>
       </select>
-      <button class="onboard-btn" onclick="obNext(3)">Davom etish →</button>
+
+      <div class="onboard-label">📅 Qabul Yili</div>
+      <input type="text" class="onboard-input" id="ob-admit-year" readonly placeholder="Avtomatik aniqlanadi">
+
+      <button class="onboard-btn" onclick="obNext(2)">Davom etish →</button>
     </div>
-    <div class="step" id="step-3">
+
+    <!-- STEP 2: Language Selection & Finish -->
+    <div class="step" id="step-2">
       <div class="onboard-label">🌐 Til / Language / Язык</div>
-      <div style="display:flex;gap:8px;margin-top:4px;">
-        <button class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('uz')">🇺🇿 O'zbek</button>
-        <button class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('ru')">🇷🇺 Русский</button>
-        <button class="onboard-btn" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('en')">🇬🇧 English</button>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;">
+        <button class="onboard-btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('uz')">🇺🇿 O'zbek tili</button>
+        <button class="onboard-btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('ru')">🇷🇺 Русский язык</button>
+        <button class="onboard-btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('en')">🇬🇧 English</button>
       </div>
     </div>
   </div>
@@ -257,17 +211,17 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
     </select>
   </div>
   <div class="top-bar-right">
-    <button class="edit-profile-btn" onclick="editProfile()">✏️ <span data-i18n="edit_profile">Tahrir</span></button>
+    <button class="edit-profile-btn" onclick="editProfile()">✏️ <span data-i18n="edit_profile">Tahrirlash</span></button>
   </div>
 </div>
 
 <!-- ===== PROFILE HEADER ===== -->
 <div class="profile-header" id="profile-header" style="display:none">
-  <div class="profile-avatar" id="profile-avatar">A</div>
+  <div class="profile-avatar" id="profile-avatar">U</div>
   <div class="profile-info">
     <div class="profile-name" id="profile-name">Foydalanuvchi</div>
     <div class="profile-meta" id="profile-meta">—</div>
-    <div class="semester-badge" id="semester-badge">1-semester</div>
+    <div class="school-badge" id="school-badge">—</div>
   </div>
 </div>
 
@@ -287,73 +241,19 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   </a>
 </div>
 
-<!-- ===== VIEW: GPA ===== -->
-<div id="view-gpa" class="view-section active">
-  <div class="gpa-ring-wrapper card-anim">
-    <svg width="88" height="88" viewBox="0 0 90 90" style="flex-shrink:0">
-      <circle class="gpa-ring-track" cx="45" cy="45" r="40"/>
-      <circle class="gpa-ring-fill" id="gpa-ring" cx="45" cy="45" r="40"/>
-      <text x="45" y="49" text-anchor="middle" font-family="Syne,sans-serif" font-size="15" font-weight="800" fill="var(--accent2)" id="gpa-ring-center">0.00</text>
-    </svg>
-    <div>
-      <div class="gpa-label" data-i18n="gpa_overall">Umumiy GPA</div>
-      <div class="gpa-big" id="gpa-result">0.00</div>
-      <div style="font-size:11px;color:var(--muted);margin-top:3px" data-i18n="gpa_max">/ 5.0 maksimal</div>
-      <div style="font-size:12.5px;font-weight:700;margin-top:4px;color:var(--muted)" id="gpa-letter">—</div>
-      <button class="gpa-share-btn" onclick="shareGpa()">📤 <span data-i18n="share">Ulashish</span></button>
-    </div>
+<!-- ===== VIEW: TIMETABLE ===== -->
+<div id="view-timetable" class="view-section active">
+  <div class="card" style="border-left:4px solid var(--accent3);margin-bottom:14px">
+    <div style="font-size:15px;font-weight:700;margin-bottom:4px">📅 Dars Jadvalim</div>
+    <p style="font-size:12.5px;color:var(--muted);line-height:1.4">Sizning guruhingiz uchun dars jadvali:</p>
   </div>
-  <div id="stipend-info"></div>
-  <div id="gpa-history-block" style="display:none">
-    <div class="card" style="margin-bottom:12px;border-left:4px solid var(--accent3);padding:12px 14px">
-      <div style="font-size:11.5px;font-weight:700;color:var(--accent3);margin-bottom:8px">📈 <span data-i18n="gpa_history">GPA tarixi</span></div>
-      <div id="gpa-history-list"></div>
-    </div>
-  </div>
-  <button class="gpa-toggle-btn" onclick="toggleGpaScale()">
-    📊 <span data-i18n="gpa_scale_btn">Baholash shkalasi</span> <span id="gpa-arrow">▼</span>
-  </button>
-  <div id="gpa-scale-panel" style="display:none;margin-bottom:12px">
-    <div class="card" style="padding:10px;border-left:4px solid var(--accent2)">
-      <div style="font-size:11.5px;color:var(--muted);margin-bottom:8px;font-style:italic" data-i18n="gpa_scale_note">GPA maksimal = 5</div>
-      <table class="gpa-scale-table">
-        <thead><tr><th data-i18n="gpa_th_score">Ball%</th><th data-i18n="gpa_th_letter">Harf</th><th>GPA</th><th data-i18n="gpa_th_trad">An'anaviy</th></tr></thead>
-        <tbody>
-          <tr><td>100–95</td><td class="grade-a-plus">A+</td><td>5.00</td><td data-i18n="grade_excellent">A'lo</td></tr>
-          <tr><td>94.9–90</td><td class="grade-a">A</td><td>4.50</td><td data-i18n="grade_excellent">A'lo</td></tr>
-          <tr><td>89.9–85</td><td class="grade-b">B+</td><td>4.25</td><td data-i18n="grade_very_good">Juda yaxshi</td></tr>
-          <tr><td>84.9–80</td><td class="grade-b">B</td><td>4.00</td><td data-i18n="grade_very_good">Juda yaxshi</td></tr>
-          <tr><td>79.9–75</td><td class="grade-c">C+</td><td>3.75</td><td data-i18n="grade_good">Yaxshi</td></tr>
-          <tr><td>74.9–70</td><td class="grade-c">C</td><td>3.50</td><td data-i18n="grade_good">Yaxshi</td></tr>
-          <tr><td>69.9–65</td><td class="grade-d">D+</td><td>3.25</td><td data-i18n="grade_satisf">Qoniqarli</td></tr>
-          <tr><td>64.9–60</td><td class="grade-d">D</td><td>3.00</td><td data-i18n="grade_satisf">Qoniqarli</td></tr>
-          <tr><td>59.9–0</td><td class="grade-f">F</td><td>0</td><td data-i18n="grade_fail">Qoniqarsiz</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div id="gpa-sem-container" style="display:none;margin-bottom:10px">
-    <div style="font-size:10.5px;font-weight:700;color:var(--accent3);letter-spacing:.6px;text-transform:uppercase;margin-bottom:7px" data-i18n="select_sems">Semestrlarni tanlang:</div>
-    <div class="curr-filter-row" id="gpa-sem-toggles" style="flex-wrap:wrap;gap:6px;margin-bottom:0"></div>
-  </div>
-  <div style="display:flex;gap:8px;padding:0 12px 7px;font-size:10.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px">
-    <div style="flex:2" data-i18n="gpa_col_subject">Fan nomi</div>
-    <div style="width:38px;text-align:center" data-i18n="gpa_cr">Kredit</div>
-    <div style="width:52px;text-align:center" data-i18n="gpa_score">Baho</div>
-    <div style="width:33px;text-align:center">Harf</div>
-    <div style="width:22px"></div>
-  </div>
-  <div id="gpa-rows"></div>
-  <div style="display:flex;gap:8px;margin-top:4px">
-    <button class="btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);flex:1" onclick="addCustomGpaRow()">➕ <span data-i18n="add_subject">Fan qo'shish</span></button>
-    <button class="btn" style="background:var(--accent);color:#fff;flex:1" onclick="saveGpaData()">💾 <span data-i18n="gpa_save">Saqlash</span></button>
-  </div>
+  <div id="tt-container"></div>
 </div>
 
 <!-- ===== VIEW: PROFS ===== -->
 <div id="view-profs" class="view-section">
-  <div class="search-box" style="margin-bottom:14px">
-    <input type="text" id="search-prof" placeholder="🔍 Professor ismi yoki kafedra..." oninput="renderProfs(this.value)">
+  <div class="search-box">
+    <input type="text" id="search-prof" placeholder="🔍 Professor ismi yoki kafedra qidirish..." oninput="renderProfs(this.value)">
   </div>
   <div id="prof-list"></div>
 </div>
@@ -361,40 +261,47 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 <!-- ===== VIEW: HANDBOOK ===== -->
 <div id="view-handbook" class="view-section">
   <div class="card" style="border-left:4px solid var(--accent2);margin-bottom:14px">
-    <div style="font-size:15px;font-weight:700;margin-bottom:5px">📘 Student Handbooks</div>
-    <p style="font-size:12.5px;color:var(--muted);line-height:1.5" data-i18n="handbook_desc">Yo'nalishingizga mos Handbook faylini ko'ring.</p>
+    <div style="font-size:15px;font-weight:700;margin-bottom:4px">📘 Student Handbooks</div>
+    <p style="font-size:12.5px;color:var(--muted);line-height:1.4" data-i18n="handbook_desc">Yo'nalishingizga mos Handbook va yo'riqnomalarni yuklab oling.</p>
   </div>
-  <a href="https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link" target="_blank" class="handbook-btn" id="hb-ai"><span>🤖 Artificial Intelligence</span><span style="color:var(--accent2)">➔</span></a>
-  <a href="https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link" target="_blank" class="handbook-btn" id="hb-ist"><span>💻 Information Systems & Technologies</span><span style="color:var(--accent2)">➔</span></a>
-  <a href="https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link" target="_blank" class="handbook-btn" id="hb-math"><span>📐 Mathematics</span><span style="color:var(--accent2)">➔</span></a>
+  <a href="https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link" target="_blank" class="handbook-btn" id="hb-ai"><span>🤖 Sun'iy Intellekt (AI)</span><span style="color:var(--accent2)">➔</span></a>
+  <a href="https://drive.google.com/drive/folders/1d6oE5jHw-1xDoHPrZQxqJxPPH95PXh4q?usp=drive_link" target="_blank" class="handbook-btn" id="hb-ist"><span>💻 Axborot Tizimlari (FIT)</span><span style="color:var(--accent2)">➔</span></a>
+  <a href="https://drive.google.com/drive/folders/1iOLPZd6_SjesAICU_1AM1zM68vUUaNyB?usp=drive_link" target="_blank" class="handbook-btn" id="hb-math"><span>📐 Matematika (FM)</span><span style="color:var(--accent2)">➔</span></a>
 </div>
 
-<!-- ===== VIEW: TIMETABLE ===== -->
-<div id="view-timetable" class="view-section">
-  <div class="card" style="border-left:4px solid var(--accent3);margin-bottom:14px">
-    <div style="font-size:15px;font-weight:700;margin-bottom:5px">📅 Dars Jadvali</div>
-    <p style="font-size:12.5px;color:var(--muted);line-height:1.5">Guruhingizni tanlang:</p>
+<!-- ===== VIEW: PROFILE ===== -->
+<div id="view-profile" class="view-section">
+  <div class="card">
+    <div style="font-size:16px;font-weight:800;margin-bottom:12px;color:var(--accent3);">👤 Talaba Ma'lumotlari</div>
+    <div class="info-row"><span class="info-label">Ism Familiya:</span><span class="info-val" id="pv-name">—</span></div>
+    <div class="info-row"><span class="info-label">Student ID:</span><span class="info-val" id="pv-sid">—</span></div>
+    <div class="info-row"><span class="info-label">Email:</span><span class="info-val" id="pv-email">—</span></div>
+    <div class="info-row"><span class="info-label">Oliy Maktab:</span><span class="info-val" id="pv-school">—</span></div>
+    <div class="info-row"><span class="info-label">Yo'nalish:</span><span class="info-val" id="pv-major">—</span></div>
+    <div class="info-row"><span class="info-label">Kurs:</span><span class="info-val" id="pv-course">—</span></div>
+    <div class="info-row"><span class="info-label">Guruh:</span><span class="info-val" id="pv-group">—</span></div>
+    <div class="info-row"><span class="info-label">Qabul Yili:</span><span class="info-val" id="pv-year">—</span></div>
+    <button class="onboard-btn" style="margin-top:16px;" onclick="editProfile()">✏️ Ma'lumotlarni tahrirlash</button>
   </div>
-  <div id="tt-grid" class="grid-container"></div>
 </div>
 
 <!-- ===== BOTTOM NAV ===== -->
 <div class="nav-bar" id="main-nav" style="display:none">
-  <button class="nav-item active" onclick="switchView('gpa')" id="nav-gpa">
-    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-    <span>GPA</span><div class="nav-dot"></div>
+  <button class="nav-item active" onclick="switchView('timetable')" id="nav-timetable">
+    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+    <span>Jadval</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" onclick="switchView('profs')" id="nav-profs">
     <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-    <span>Profs</span><div class="nav-dot"></div>
-  </button>
-  <button class="nav-item" onclick="switchView('timetable')" id="nav-timetable">
-    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-    <span>Jadval</span><div class="nav-dot"></div>
+    <span>Professors</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" onclick="switchView('handbook')" id="nav-handbook">
     <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
     <span>Handbook</span><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" onclick="switchView('profile')" id="nav-profile">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    <span>Profil</span><div class="nav-dot"></div>
   </button>
 </div>
 
@@ -402,36 +309,108 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 const tg = window.Telegram?.WebApp;
 if(tg){tg.ready();tg.expand();}
 
-// ===== KEYS =====
-const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_GPA='npuu_gpa_data',
-      LS_PROFILE='npuu_profile', LS_GPA_HIST='npuu_gpa_history';
-
-// ===== API CONFIG & GOOGLE SHEET URL =====
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyA7xz8MxAxGnvKgi5ARx1BTGaTNftvTi0k47ba8iszmzKiLrj29uitZ3hZXM6OxZYz/exec';
+const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_PROFILE='npuu_profile';
 const STUDENT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT52Sbtp6fOoYOGm47p9hQs70Nw0R3dxfWv7X7jolme27nj8KKLbwgnUk18v87ctIsRwLmKd6g4TJLl/pub?output=csv';
 
-let cachedStudentCsv = null;
+/* ===== ACADEMIC STRUCTURE DATA ===== */
+const ACADEMIC_STRUCTURE = {
+  "aniq_fanlar": {
+    name: "Aniq fanlar oliy maktabi",
+    majors: {
+      "matematik": {
+        name: "Matematik",
+        courses: {
+          "1": ["FM1-26", "FM2-26", "FM3-26", "FM4-26", "FM5-26", "FM6-26RUS"],
+          "2": ["FM1", "FM2", "FM3", "FM4", "FM5", "FM6", "FM7"]
+        }
+      },
+      "fit": {
+        name: "Axborot tizimlari va texnologiyalari",
+        courses: {
+          "1": ["FIT1-26", "FIT2-26", "FIT3-26", "FIT4-26", "FIT5-26", "FIT6-26RUS"],
+          "2": ["FIT1", "FIT2", "FIT3", "FIT4", "FIT6"]
+        }
+      },
+      "ai": {
+        name: "Sun'iy intellekt",
+        courses: {
+          "1": ["FAR1-26", "FAR2-26", "FAR3-26", "FAR4-26RUS"],
+          "2": ["FAR1", "FAR2", "FAR3"]
+        }
+      }
+    }
+  },
+  "maktabgacha_boshlangich": {
+    name: "Maktabgacha va boshlang'ich ta'lim oliy maktabi",
+    majors: {
+      "boshlangich": {
+        name: "Boshlang'ich ta'lim",
+        courses: {
+          "1": ["FP1-26", "FP2-26", "FP3-26", "FP4-26", "FP5-26", "FP6-26", "FP7-26RUS"],
+          "2": []
+        }
+      },
+      "maktabgacha": {
+        name: "Maktabgacha ta'lim",
+        courses: {
+          "1": ["FPP1-26", "FPP2-26", "FPP3-26", "FPP4-26", "FPP5-26", "FPP6-26RUS"],
+          "2": []
+        }
+      }
+    }
+  },
+  "tabiiy_fanlar": {
+    name: "Tabiiy fanlar oliy maktabi",
+    majors: {
+      "biologiya": {
+        name: "Biologiya",
+        courses: {
+          "1": ["FB1-26", "FB2-26", "FB3-26", "FB4-26rus"],
+          "2": []
+        }
+      },
+      "kimyo": {
+        name: "Kimyo",
+        courses: {
+          "1": ["FCH1-26", "FCH2-26", "FCH3-26", "FCH4-26rus"],
+          "2": []
+        }
+      },
+      "fizika": {
+        name: "Fizika",
+        courses: {
+          "1": ["FPh1-26", "FPh2-26", "FPh3-26", "FPh4-26rus"],
+          "2": []
+        }
+      },
+      "geografiya": {
+        name: "Geografiya",
+        courses: {
+          "1": ["FG1-26", "FG2-26", "FG3-26rus"],
+          "2": []
+        }
+      }
+    }
+  }
+};
+
+let cachedCsvData = null;
+let currentLang = 'uz', isDark = true, userProfile = null;
 
 // ===== CSV PARSER & SEARCH =====
 function parseCSV(text) {
   const lines = text.split(/\r?\n/);
   const result = [];
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
+  for (let line of lines) {
+    line = line.trim();
     if (!line) continue;
     const row = [];
-    let insideQuote = false;
-    let entry = '';
+    let insideQuote = false, entry = '';
     for (let j = 0; j < line.length; j++) {
       const char = line[j];
-      if (char === '"') {
-        insideQuote = !insideQuote;
-      } else if (char === ',' && !insideQuote) {
-        row.push(entry.trim());
-        entry = '';
-      } else {
-        entry += char;
-      }
+      if (char === '"') insideQuote = !insideQuote;
+      else if (char === ',' && !insideQuote) { row.push(entry.trim()); entry = ''; }
+      else entry += char;
     }
     row.push(entry.trim());
     result.push(row);
@@ -440,17 +419,32 @@ function parseCSV(text) {
 }
 
 async function fetchStudentCsvData() {
-  if (cachedStudentCsv) return cachedStudentCsv;
+  if (cachedCsvData) return cachedCsvData;
   try {
     const res = await fetch(STUDENT_CSV_URL);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const text = await res.text();
-    cachedStudentCsv = parseCSV(text);
-    return cachedStudentCsv;
+    cachedCsvData = parseCSV(text);
+    return cachedCsvData;
   } catch (e) {
-    console.error('CSV yuklashda xatolik:', e);
+    console.error('CSV error:', e);
     return null;
   }
+}
+
+function detectStructureFromGroup(groupStr) {
+  if (!groupStr) return null;
+  const clean = groupStr.trim().toUpperCase();
+  for (const [sKey, school] of Object.entries(ACADEMIC_STRUCTURE)) {
+    for (const [mKey, major] of Object.entries(school.majors)) {
+      for (const [cKey, groups] of Object.entries(major.courses)) {
+        if (groups.some(g => g.toUpperCase() === clean)) {
+          return { schoolKey: sKey, majorKey: mKey, courseKey: cKey, groupName: clean };
+        }
+      }
+    }
+  }
+  return null;
 }
 
 async function searchStudentById(idValue) {
@@ -462,11 +456,9 @@ async function searchStudentById(idValue) {
   if (!rows || rows.length === 0) return null;
 
   const header = rows[0].map(c => c.toLowerCase().trim());
-  let idCol = header.findIndex(c => c.includes('id') || c.includes('kod') || c.includes('№') || c.includes('student'));
-  let nameCol = header.findIndex(c => c.includes('f.i.o') || c.includes('fio') || c.includes('ism') || c.includes('name') || c.includes('familiya') || c.includes('student name'));
-  let emailCol = header.findIndex(c => c.includes('email') || c.includes('mail') || c.includes('pochta'));
-  let majorCol = header.findIndex(c => c.includes('yo\'nalish') || c.includes('yonalish') || c.includes('major') || c.includes('fakultet') || c.includes('direction'));
-  let courseCol = header.findIndex(c => c.includes('kurs') || c.includes('course') || c.includes('bosqich') || c.includes('year'));
+  let idCol = header.findIndex(c => c.includes('id') || c.includes('kod') || c.includes('№'));
+  let nameCol = header.findIndex(c => c.includes('f.i.o') || c.includes('fio') || c.includes('ism') || c.includes('name'));
+  let emailCol = header.findIndex(c => c.includes('email') || c.includes('mail'));
   let groupCol = header.findIndex(c => c.includes('guruh') || c.includes('group'));
 
   for (let r = 0; r < rows.length; r++) {
@@ -474,14 +466,12 @@ async function searchStudentById(idValue) {
     if (!row || row.length === 0) continue;
 
     let matched = false;
-    if (idCol !== -1 && row[idCol]) {
-      if (row[idCol].toLowerCase().trim() === cleanId) matched = true;
+    if (idCol !== -1 && row[idCol] && row[idCol].toLowerCase().trim() === cleanId) {
+      matched = true;
     } else {
       for (let c = 0; c < row.length; c++) {
         if (row[c].toLowerCase().trim() === cleanId) {
-          matched = true;
-          idCol = c;
-          break;
+          matched = true; idCol = c; break;
         }
       }
     }
@@ -489,33 +479,24 @@ async function searchStudentById(idValue) {
     if (matched) {
       let foundName = (nameCol !== -1 && row[nameCol]) ? row[nameCol] : '';
       let foundEmail = (emailCol !== -1 && row[emailCol]) ? row[emailCol] : '';
-      let foundMajor = (majorCol !== -1 && row[majorCol]) ? row[majorCol] : '';
-      let foundCourse = (courseCol !== -1 && row[courseCol]) ? row[courseCol] : '';
       let foundGroup = (groupCol !== -1 && row[groupCol]) ? row[groupCol] : '';
 
       for (let c = 0; c < row.length; c++) {
         if (c === idCol) continue;
         const val = row[c].trim();
-        if (!foundEmail && val.includes('@')) {
-          foundEmail = val;
-        } else if (!foundName && val.length > 3 && !/\d/.test(val) && val.includes(' ')) {
-          foundName = val;
-        } else if (!foundMajor && (val.toLowerCase().includes('ai') || val.toLowerCase().includes('ist') || val.toLowerCase().includes('math') || val.toLowerCase().includes('intel') || val.toLowerCase().includes('system') || val.toLowerCase().includes('matem'))) {
-          foundMajor = val;
-        }
+        if (!foundEmail && val.includes('@')) foundEmail = val;
+        else if (!foundName && val.length > 3 && !/\d/.test(val) && val.includes(' ')) foundName = val;
+        else if (!foundGroup && detectStructureFromGroup(val)) foundGroup = val;
       }
 
       return {
         id: row[idCol] || idValue,
         name: foundName,
         email: foundEmail,
-        major: foundMajor,
-        course: foundCourse,
         group: foundGroup
       };
     }
   }
-
   return null;
 }
 
@@ -536,425 +517,330 @@ function handleIdSearch(val) {
         if (res.name) document.getElementById('ob-name').value = res.name;
         if (res.email) document.getElementById('ob-email').value = res.email;
 
-        if (res.major) {
-          const mUpper = res.major.toUpperCase();
-          const majorSelect = document.getElementById('ob-major');
-          if (mUpper.includes('AI') || mUpper.includes('ARTIFICIAL') || mUpper.includes('SU\'NIY')) {
-            majorSelect.value = 'AI';
-          } else if (mUpper.includes('IST') || mUpper.includes('INFORMATION') || mUpper.includes('AXBOROT')) {
-            majorSelect.value = 'IST';
-          } else if (mUpper.includes('MATH') || mUpper.includes('MATEMATIK')) {
-            majorSelect.value = 'MATH';
-          }
-        }
-
-        if (res.course) {
-          const courseSelect = document.getElementById('ob-course');
-          const digit = res.course.match(/\d/);
-          if (digit) courseSelect.value = digit[0];
-        } else {
-          document.getElementById('ob-course').value = '1';
-        }
-
         if (res.group) {
-          const groupSelect = document.getElementById('ob-group');
-          for (let opt of groupSelect.options) {
-            if (opt.value.toLowerCase() === res.group.toLowerCase() || opt.text.toLowerCase().includes(res.group.toLowerCase())) {
-              groupSelect.value = opt.value;
-              break;
-            }
+          const detected = detectStructureFromGroup(res.group);
+          if (detected) {
+            document.getElementById('ob-school').value = detected.schoolKey;
+            onSchoolChange();
+            document.getElementById('ob-course').value = detected.courseKey;
+            onCourseChange();
+            document.getElementById('ob-major').value = detected.majorKey;
+            onMajorChange();
+            document.getElementById('ob-group').value = detected.groupName;
           }
         }
-
-        if (statusEl) statusEl.innerHTML = '<span style="color:var(--green);font-weight:600">✅ Ma\'lumotlar topildi va to\'ldirildi! Xohlasangiz tahrirlashingiz mumkin.</span>';
+        if (statusEl) statusEl.innerHTML = '<span style="color:var(--green);font-weight:600">✅ Topildi va to\'ldirildi! Zarur bo\'lsa tahrirlang.</span>';
       } else {
         if (statusEl) statusEl.innerHTML = '<span style="color:var(--orange)">ℹ️ ID topilmadi. Ma\'lumotlarni o\'zingiz kiriting.</span>';
       }
     } catch (e) {
-      console.error(e);
-      if (statusEl) statusEl.innerHTML = '<span style="color:var(--orange)">⚠️ Bazadan izlashda xatolik, qo\'lda to\'ldiring.</span>';
+      if (statusEl) statusEl.innerHTML = '<span style="color:var(--orange)">⚠️ Izlashda xatolik. Maydonlarni o\'zingiz to\'ldiring.</span>';
     }
   }, 350);
 }
 
-// ===== GOOGLE SHEETS SYNC =====
-function getTelegramId(){
-  const uid=tg?.initDataUnsafe?.user?.id;
-  if(uid)return String(uid);
-  let lid=localStorage.getItem('npuu_tgid');
-  if(!lid){lid='local_'+Date.now();localStorage.setItem('npuu_tgid',lid);}
-  return lid;
-}
-
-async function syncToSheets(){
-  if(!SHEETS_URL||SHEETS_URL.includes('YOUR_'))return;
-  try{
-    const payload={
-      profile:userProfile||null,
-      gpa:JSON.parse(localStorage.getItem(LS_GPA)||'{}'),
-      gpaHistory:JSON.parse(localStorage.getItem(LS_GPA_HIST)||'[]')
-    };
-    await fetch(SHEETS_URL,{
-      method:'POST',
-      body:JSON.stringify({action:'save',telegram_id:getTelegramId(),lang:currentLang,payload:payload})
-    });
-  }catch(e){console.log('Sheets sync error:',e);}
-}
-
-async function loadFromSheets(){
-  if(!SHEETS_URL||SHEETS_URL.includes('YOUR_'))return false;
-  try{
-    const res=await fetch(SHEETS_URL+'?telegram_id='+getTelegramId());
-    const data=await res.json();
-    if(data.ok&&data.payload){
-      const p=data.payload;
-      if(p.profile){userProfile=p.profile;localStorage.setItem(LS_PROFILE,JSON.stringify(p.profile));}
-      if(p.gpa){localStorage.setItem(LS_GPA,JSON.stringify(p.gpa));}
-      if(p.gpaHistory){localStorage.setItem(LS_GPA_HIST,JSON.stringify(p.gpaHistory));}
-      if(data.lang){currentLang=data.lang;localStorage.setItem(LS_LANG,data.lang);}
-      return true;
-    }
-  }catch(e){console.log('Sheets load error:',e);}
-  return false;
-}
-
-// ===== I18N =====
-const T={
-  uz:{
-    edit_profile:"Tahrir",today_schedule:"Bugungi dars jadvalim",click_to_view:"Ko'rish uchun bosing",
-    gpa_overall:"Umumiy GPA",gpa_max:"/ 5.0 maksimal",share:"Ulashish",
-    gpa_history:"GPA tarixi",gpa_scale_btn:"Baholash shkalasi",gpa_scale_note:"GPA maksimal = 5",
-    gpa_th_score:"Ball%",gpa_th_letter:"Harf",gpa_th_trad:"An'anaviy",
-    grade_excellent:"A'lo",grade_very_good:"Juda yaxshi",grade_good:"Yaxshi",
-    grade_satisf:"Qoniqarli",grade_fail:"Qoniqarsiz",
-    gpa_col_subject:"Fan nomi",gpa_cr:"Kredit",gpa_score:"Baho",
-    add_subject:"Fan qo'shish",gpa_save:"Saqlash",
-    handbook_desc:"Yo'nalishingizga mos Handbook faylini ko'ring.",
-    saved_msg:"✅ Saqlandi!",copied:"📋 Nusxalandi!",
-    stipend_president:"🏆 Grandga da'vo qilasiz!",
-    stipend_ok:"✅ Grandga ariza topshirish huquqingiz bor (GPA ≥ 3.5)",
-    stipend_warn:"⚠️ Grandga ariza topshirish chegarasida!",
-    stipend_fail:"🚫 Grandga ariza topshirish uchun GPA ≥ 3.5 bo'lishi kerak",
-    semester_label:"semestr",year_label:"o'quv yili",
-    select_sems:"Semestrlarni tanlang:",welcome:"Xush kelibsiz",
-    days:["Yakshanba","Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba"]
-  },
-  ru:{
-    edit_profile:"Изменить",today_schedule:"Расписание на сегодня",click_to_view:"Нажмите для просмотра",
-    gpa_overall:"Общий GPA",gpa_max:"/ 5.0 максимум",share:"Поделиться",
-    gpa_history:"История GPA",gpa_scale_btn:"Шкала оценок",gpa_scale_note:"Максимальный GPA = 5",
-    gpa_th_score:"Балл%",gpa_th_letter:"Буква",gpa_th_trad:"Традиц.",
-    grade_excellent:"Отлично",grade_very_good:"Очень хорошо",grade_good:"Хорошо",
-    grade_satisf:"Удовл.",grade_fail:"Неудовл.",
-    gpa_col_subject:"Название предмета",gpa_cr:"Кредит",gpa_score:"Балл",
-    add_subject:"Добавить предмет",gpa_save:"Сохранить",
-    handbook_desc:"Выберите справочник по вашему направлению.",
-    saved_msg:"✅ Сохранено!",copied:"📋 Скопировано!",
-    stipend_president:"🏆 Претендуете на гранд!",
-    stipend_ok:"✅ Имеете право на гранд (GPA ≥ 3.5)",
-    stipend_warn:"⚠️ На грани гранд!",
-    stipend_fail:"🚫 Для гранд нужен GPA ≥ 3.5",
-    semester_label:"-й семестр",year_label:"год обучения",
-    select_sems:"Выберите семестры:",welcome:"Добро пожаловать",
-    days:["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"]
-  },
-  en:{
-    edit_profile:"Edit",today_schedule:"Today's schedule",click_to_view:"Tap to view",
-    gpa_overall:"Overall GPA",gpa_max:"/ 5.0 max",share:"Share",
-    gpa_history:"GPA History",gpa_scale_btn:"Grading Scale",gpa_scale_note:"Maximum GPA = 5",
-    gpa_th_score:"Score%",gpa_th_letter:"Letter",gpa_th_trad:"Traditional",
-    grade_excellent:"Excellent",grade_very_good:"Very Good",grade_good:"Good",
-    grade_satisf:"Satisfactory",grade_fail:"Unsatisfactory",
-    gpa_col_subject:"Subject Name",gpa_cr:"Credit",gpa_score:"Score",
-    add_subject:"Add subject",gpa_save:"Save",
-    handbook_desc:"Choose the Handbook for your major.",
-    saved_msg:"✅ Saved!",copied:"📋 Copied!",
-    stipend_president:"🏆 You qualify for grand!",
-    stipend_ok:"✅ You qualify for grand (GPA ≥ 3.5)",
-    stipend_warn:"⚠️ On the grand threshold!",
-    stipend_fail:"🚫 Need GPA ≥ 3.5 for grand",
-    semester_label:"th semester",year_label:"study year",
-    select_sems:"Select semesters:",welcome:"Welcome",
-    days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-  }
-};
-
-// ===== STATE =====
-let currentLang='uz', isDark=true, userProfile=null;
-let currentView='gpa';
-
-// ===== HELPERS =====
-function t(key){return T[currentLang]?.[key]||T.uz[key]||key}
-function showBanner(msg){const b=document.getElementById('save-banner');b.textContent=msg;b.classList.add('show');setTimeout(()=>b.classList.remove('show'),2500)}
-function getInitials(name){return name?name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase():'U'}
-
-// ===== LANGUAGE =====
-function setLanguage(lang){
-  currentLang=lang;
-  localStorage.setItem(LS_LANG,lang);
-  const sel=document.getElementById('lang-select');
-  if(sel)sel.value=lang;
-  document.querySelectorAll('[data-i18n]').forEach(el=>{
-    const k=el.getAttribute('data-i18n');
-    if(t(k))el.innerHTML=t(k);
-  });
-  if(userProfile){applyProfile();renderGpaView();}
-}
-
-// ===== THEME =====
-function applyTheme(dark){
-  isDark=dark;
-  document.body.classList.toggle('light',!dark);
-  const tb=document.getElementById('theme-btn');
-  if(tb)tb.textContent=dark?'🌙':'☀️';
-  localStorage.setItem(LS_THEME,dark?'dark':'light');
-  if(tg?.setHeaderColor)tg.setHeaderColor(dark?'#070f1e':'#f0f4ff');
-  if(tg?.setBackgroundColor)tg.setBackgroundColor(dark?'#070f1e':'#f0f4ff');
-}
-function toggleTheme(){applyTheme(!isDark)}
-
-// ===== PROFILE =====
-function loadProfile(){try{const s=localStorage.getItem(LS_PROFILE);if(s)userProfile=JSON.parse(s);}catch(e){userProfile=null;}}
-function saveProfileData(p){userProfile=p;localStorage.setItem(LS_PROFILE,JSON.stringify(p));setTimeout(syncToSheets,400);}
-
-function calcCurrentSemester(admitYear){
-  const now=new Date();const mo=now.getMonth()+1;const yr=now.getFullYear();
-  const currentAcadStart=(mo>=9)?yr:yr-1;
-  const admitAcadStart=parseInt(admitYear)||2025;
-  const acadYearsElapsed=currentAcadStart-admitAcadStart;
-  const isFall=(mo>=9||mo<=1);const semInYear=isFall?1:2;
-  const sem=acadYearsElapsed*2+semInYear;
-  return Math.min(Math.max(sem,1),8);
-}
-
-function applyProfile(){
-  if(!userProfile)return;
-  document.getElementById('profile-header').style.display='flex';
-  document.getElementById('today-widget').style.display='block';
-  document.getElementById('main-topbar').style.display='flex';
-  document.getElementById('main-nav').style.display='flex';
-  document.getElementById('profile-avatar').textContent=getInitials(userProfile.name||'U');
-  document.getElementById('profile-name').textContent=userProfile.name||'—';
-  const majorNames={AI:'AI',IST:'IST',MATH:'Math'};
-  const curSem=calcCurrentSemester(userProfile.admitYear);
-  const courseStr = userProfile.course ? userProfile.course + '-kurs' : Math.ceil(curSem/2) + '-kurs';
+// ===== DYNAMIC DROPDOWN CASCADING =====
+function onSchoolChange() {
+  const schoolKey = document.getElementById('ob-school').value;
+  const majorSelect = document.getElementById('ob-major');
+  const groupSelect = document.getElementById('ob-group');
   
-  document.getElementById('profile-meta').textContent=
-    `${userProfile.sid?'ID: '+userProfile.sid+' • ':''}${userProfile.group} • ${majorNames[userProfile.major]||userProfile.major}${userProfile.email?' • '+userProfile.email:''}`;
-  document.getElementById('semester-badge').textContent=`${curSem}-${t('semester_label')} / ${courseStr}`;
-  document.getElementById('today-group-text').textContent=`Guruhim: ${userProfile.group}`;
-  const days=t('days');
-  document.getElementById('today-day-badge').textContent=days[new Date().getDay()];
-  initTimetable();
-  highlightHandbook();
+  majorSelect.innerHTML = '<option value="">Yo\'nalishni tanlang...</option>';
+  groupSelect.innerHTML = '<option value="">Avval yo\'nalish va kursni tanlang...</option>';
+
+  if (!schoolKey || !ACADEMIC_STRUCTURE[schoolKey]) return;
+
+  const majors = ACADEMIC_STRUCTURE[schoolKey].majors;
+  for (const [mKey, mData] of Object.entries(majors)) {
+    const opt = document.createElement('option');
+    opt.value = mKey;
+    opt.textContent = mData.name;
+    majorSelect.appendChild(opt);
+  }
+  updateGroups();
 }
 
-function editProfile(){
-  if(userProfile){
-    document.getElementById('ob-name').value=userProfile.name||'';
-    document.getElementById('ob-sid').value=userProfile.sid||'';
-    document.getElementById('ob-email').value=userProfile.email||'';
-    document.getElementById('ob-course').value=userProfile.course||'1';
-    document.getElementById('ob-major').value=userProfile.major||'';
-    document.getElementById('ob-admit-year').value=userProfile.admitYear||'';
-    document.getElementById('ob-group').value=userProfile.group||'';
-  }
-  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
-  document.getElementById('step-0').classList.add('active');
-  updateDots(0);
-  document.getElementById('onboarding-overlay').style.display='flex';
+function onCourseChange() {
+  const courseKey = document.getElementById('ob-course').value;
+  const yearInput = document.getElementById('ob-admit-year');
+  if (courseKey === '1') yearInput.value = '2026';
+  else if (courseKey === '2') yearInput.value = '2025';
+  else yearInput.value = '';
+  updateGroups();
 }
 
-function highlightHandbook(){
-  if(!userProfile)return;
-  const map={AI:'hb-ai',IST:'hb-ist',MATH:'hb-math'};
-  document.querySelectorAll('.handbook-btn').forEach(el=>{el.classList.remove('recommended');el.querySelectorAll('.rec-badge').forEach(b=>b.remove());});
-  const tid=map[userProfile.major];
-  if(tid){const el=document.getElementById(tid);if(el){el.classList.add('recommended');const badge=document.createElement('span');badge.className='rec-badge';badge.textContent='✓';el.querySelector('span').appendChild(badge);}}
+function onMajorChange() {
+  updateGroups();
 }
 
-// ===== ONBOARDING =====
-let obStep=0;
-function updateDots(s){for(let i=0;i<4;i++){const d=document.getElementById('dot-'+i);if(!d)continue;d.classList.remove('active','done');if(i<s)d.classList.add('done');else if(i===s)d.classList.add('active');}}
+function updateGroups() {
+  const schoolKey = document.getElementById('ob-school').value;
+  const courseKey = document.getElementById('ob-course').value;
+  const majorKey = document.getElementById('ob-major').value;
+  const groupSelect = document.getElementById('ob-group');
 
-function obNext(next){
-  if(next===1){
-    const n=document.getElementById('ob-name').value.trim();
-    if(!n){alert('Ismingizni kiriting!');return;}
+  groupSelect.innerHTML = '<option value="">Guruhni tanlang...</option>';
+
+  if (!schoolKey || !courseKey || !majorKey) return;
+
+  try {
+    const groups = ACADEMIC_STRUCTURE[schoolKey].majors[majorKey].courses[courseKey] || [];
+    if (groups.length === 0) {
+      groupSelect.innerHTML = '<option value="">Ushbu kurs uchun guruhlar topilmadi</option>';
+      return;
+    }
+    groups.forEach(g => {
+      const opt = document.createElement('option');
+      opt.value = g;
+      opt.textContent = g;
+      groupSelect.appendChild(opt);
+    });
+  } catch (e) {
+    console.error('Group build error:', e);
   }
-  if(next===2){
-    const m=document.getElementById('ob-major').value;
-    const c=document.getElementById('ob-course').value;
-    if(!m || !c){alert('Kurs va yo\'nalishni tanlang!');return;}
+}
+
+// ===== ONBOARDING FLOW =====
+let obStep = 0;
+function updateDots(s) {
+  for (let i = 0; i < 3; i++) {
+    const d = document.getElementById('dot-' + i);
+    if (!d) continue;
+    d.classList.remove('active', 'done');
+    if (i < s) d.classList.add('done');
+    else if (i === s) d.classList.add('active');
   }
-  if(next===3){
-    const g=document.getElementById('ob-group').value;
-    if(!g){alert('Guruhni tanlang!');return;}
+}
+
+function obNext(next) {
+  if (next === 1) {
+    const n = document.getElementById('ob-name').value.trim();
+    if (!n) { alert('Ism va familiyangizni kiriting!'); return; }
   }
-  document.getElementById('step-'+obStep).classList.remove('active');
-  obStep=next;
-  document.getElementById('step-'+obStep).classList.add('active');
+  if (next === 2) {
+    const s = document.getElementById('ob-school').value;
+    const c = document.getElementById('ob-course').value;
+    const m = document.getElementById('ob-major').value;
+    const g = document.getElementById('ob-group').value;
+    if (!s || !c || !m || !g) { alert('Barcha ta\'lim ma\'lumotlarini va guruhni tanlang!'); return; }
+  }
+  document.getElementById('step-' + obStep).classList.remove('active');
+  obStep = next;
+  document.getElementById('step-' + obStep).classList.add('active');
   updateDots(obStep);
 }
 
-function obFinish(lang){
+function obFinish(lang) {
   setLanguage(lang);
-  const p={
-    name:document.getElementById('ob-name').value.trim(),
-    sid:document.getElementById('ob-sid').value.trim(),
-    email:document.getElementById('ob-email').value.trim(),
-    course:document.getElementById('ob-course').value || '1',
-    major:document.getElementById('ob-major').value,
-    admitYear:document.getElementById('ob-admit-year').value || (document.getElementById('ob-course').value === '1' ? '2025' : '2024'),
-    group:document.getElementById('ob-group').value,
-    lang:lang
+  const schoolKey = document.getElementById('ob-school').value;
+  const majorKey = document.getElementById('ob-major').value;
+  const courseKey = document.getElementById('ob-course').value;
+  
+  const schoolName = ACADEMIC_STRUCTURE[schoolKey]?.name || schoolKey;
+  const majorName = ACADEMIC_STRUCTURE[schoolKey]?.majors[majorKey]?.name || majorKey;
+
+  const p = {
+    name: document.getElementById('ob-name').value.trim(),
+    sid: document.getElementById('ob-sid').value.trim(),
+    email: document.getElementById('ob-email').value.trim(),
+    schoolKey: schoolKey,
+    schoolName: schoolName,
+    majorKey: majorKey,
+    majorName: majorName,
+    course: courseKey,
+    group: document.getElementById('ob-group').value,
+    admitYear: courseKey === '1' ? '2026' : '2025',
+    lang: lang
   };
+
   saveProfileData(p);
-  document.getElementById('onboarding-overlay').style.display='none';
+  document.getElementById('onboarding-overlay').style.display = 'none';
   applyProfile();
-  gpaState.selectedSems=[calcCurrentSemester(p.admitYear)];
-  initGpa();
-  showBanner(`${t('welcome')}, ${p.name.split(' ')[0]}! 👋`);
+  showBanner(`Xush kelibsiz, ${p.name.split(' ')[0]}! 👋`);
+}
+
+function editProfile() {
+  if (userProfile) {
+    document.getElementById('ob-name').value = userProfile.name || '';
+    document.getElementById('ob-sid').value = userProfile.sid || '';
+    document.getElementById('ob-email').value = userProfile.email || '';
+    
+    if (userProfile.schoolKey) {
+      document.getElementById('ob-school').value = userProfile.schoolKey;
+      onSchoolChange();
+    }
+    if (userProfile.course) {
+      document.getElementById('ob-course').value = userProfile.course;
+      onCourseChange();
+    }
+    if (userProfile.majorKey) {
+      document.getElementById('ob-major').value = userProfile.majorKey;
+      onMajorChange();
+    }
+    if (userProfile.group) {
+      document.getElementById('ob-group').value = userProfile.group;
+    }
+  }
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-0').classList.add('active');
+  updateDots(0);
+  document.getElementById('onboarding-overlay').style.display = 'flex';
+}
+
+// ===== PROFILE & THEME STATE =====
+function loadProfile() {
+  try {
+    const s = localStorage.getItem(LS_PROFILE);
+    if (s) userProfile = JSON.parse(s);
+  } catch (e) { userProfile = null; }
+}
+
+function saveProfileData(p) {
+  userProfile = p;
+  localStorage.setItem(LS_PROFILE, JSON.stringify(p));
+}
+
+function applyProfile() {
+  if (!userProfile) return;
+  document.getElementById('profile-header').style.display = 'flex';
+  document.getElementById('today-widget').style.display = 'block';
+  document.getElementById('main-topbar').style.display = 'flex';
+  document.getElementById('main-nav').style.display = 'flex';
+
+  document.getElementById('profile-avatar').textContent = userProfile.name ? userProfile.name.charAt(0).toUpperCase() : 'U';
+  document.getElementById('profile-name').textContent = userProfile.name || '—';
+  
+  document.getElementById('profile-meta').textContent = 
+    `${userProfile.sid ? 'ID: ' + userProfile.sid + ' • ' : ''}${userProfile.group} • ${userProfile.course}-kurs (${userProfile.admitYear})`;
+  document.getElementById('school-badge').textContent = userProfile.schoolName || 'NPUU';
+
+  document.getElementById('today-group-text').textContent = `Guruhim: ${userProfile.group}`;
+  
+  // Update Profile Tab Details
+  document.getElementById('pv-name').textContent = userProfile.name || '—';
+  document.getElementById('pv-sid').textContent = userProfile.sid || '—';
+  document.getElementById('pv-email').textContent = userProfile.email || '—';
+  document.getElementById('pv-school').textContent = userProfile.schoolName || '—';
+  document.getElementById('pv-major').textContent = userProfile.majorName || '—';
+  document.getElementById('pv-course').textContent = userProfile.course + '-kurs';
+  document.getElementById('pv-group').textContent = userProfile.group || '—';
+  document.getElementById('pv-year').textContent = userProfile.admitYear || '—';
+
+  initTimetable();
+}
+
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem(LS_LANG, lang);
+  const sel = document.getElementById('lang-select');
+  if (sel) sel.value = lang;
+}
+
+function applyTheme(dark) {
+  isDark = dark;
+  document.body.classList.toggle('light', !dark);
+  const tb = document.getElementById('theme-btn');
+  if (tb) tb.textContent = dark ? '🌙' : '☀️';
+  localStorage.setItem(LS_THEME, dark ? 'dark' : 'light');
+}
+function toggleTheme() { applyTheme(!isDark); }
+
+function showBanner(msg) {
+  const b = document.getElementById('save-banner');
+  b.textContent = msg;
+  b.classList.add('show');
+  setTimeout(() => b.classList.remove('show'), 2500);
 }
 
 // ===== NAVIGATION =====
-function switchView(viewId){
-  document.querySelectorAll('.view-section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  const sec=document.getElementById('view-'+viewId);
-  if(sec)sec.classList.add('active');
-  const nav=document.getElementById('nav-'+viewId);
-  if(nav)nav.classList.add('active');
-  currentView=viewId;
+function switchView(viewId) {
+  document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const sec = document.getElementById('view-' + viewId);
+  if (sec) sec.classList.add('active');
+  const nav = document.getElementById('nav-' + viewId);
+  if (nav) nav.classList.add('active');
 }
 
-// ===== GPA CALCULATOR MODULE =====
-let gpaState = { subjects: [], selectedSems: [1] };
-
-function scoreToGrade(score) {
-  if(score >= 95) return { letter: 'A+', gpa: 5.0, class: 'grade-a-plus' };
-  if(score >= 90) return { letter: 'A', gpa: 4.5, class: 'grade-a' };
-  if(score >= 85) return { letter: 'B+', gpa: 4.25, class: 'grade-b' };
-  if(score >= 80) return { letter: 'B', gpa: 4.0, class: 'grade-b' };
-  if(score >= 75) return { letter: 'C+', gpa: 3.75, class: 'grade-c' };
-  if(score >= 70) return { letter: 'C', gpa: 3.5, class: 'grade-c' };
-  if(score >= 65) return { letter: 'D+', gpa: 3.25, class: 'grade-d' };
-  if(score >= 60) return { letter: 'D', gpa: 3.0, class: 'grade-d' };
-  return { letter: 'F', gpa: 0.0, class: 'grade-f' };
-}
-
-function initGpa() {
-  const saved = localStorage.getItem(LS_GPA);
-  if (saved) {
-    try { gpaState = JSON.parse(saved); } catch(e) {}
-  }
-  if (!gpaState.subjects || gpaState.subjects.length === 0) {
-    gpaState.subjects = [
-      { name: 'Oliy Matematika', credits: 6, score: 88 },
-      { name: 'Dasturlash (Python)', credits: 6, score: 92 },
-      { name: 'Fizika', credits: 4, score: 78 }
-    ];
-  }
-  renderGpaView();
-}
-
-function renderGpaView() {
-  const container = document.getElementById('gpa-rows');
+// ===== TIMETABLE UI =====
+function initTimetable() {
+  const container = document.getElementById('tt-container');
   if (!container) return;
   container.innerHTML = '';
 
-  let totalCredits = 0, weightedGpa = 0;
-
-  gpaState.subjects.forEach((sub, idx) => {
-    const gr = scoreToGrade(sub.score);
-    totalCredits += Number(sub.credits);
-    weightedGpa += Number(sub.credits) * gr.gpa;
-
-    const row = document.createElement('div');
-    row.style.cssText = 'display:flex;gap:8px;align-items:center;margin-bottom:8px;background:var(--surface);padding:8px;border-radius:12px;border:1px solid var(--border);';
-    row.innerHTML = `
-      <input type="text" value="${sub.name}" style="flex:2;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:8px;font-size:13px;outline:none;" onchange="updateGpaRow(${idx}, 'name', this.value)">
-      <input type="number" value="${sub.credits}" style="width:38px;text-align:center;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 2px;border-radius:8px;font-size:13px;outline:none;" onchange="updateGpaRow(${idx}, 'credits', this.value)">
-      <input type="number" value="${sub.score}" style="width:52px;text-align:center;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 2px;border-radius:8px;font-size:13px;outline:none;" onchange="updateGpaRow(${idx}, 'score', this.value)">
-      <div style="width:33px;text-align:center;" class="${gr.class}">${gr.letter}</div>
-      <button style="width:22px;background:none;border:none;color:var(--red);cursor:pointer;font-weight:700;" onclick="removeGpaRow(${idx})">✕</button>
-    `;
-    container.appendChild(row);
-  });
-
-  const finalGpa = totalCredits > 0 ? (weightedGpa / totalCredits).toFixed(2) : '0.00';
-  document.getElementById('gpa-result').textContent = finalGpa;
-  document.getElementById('gpa-ring-center').textContent = finalGpa;
-
-  const ring = document.getElementById('gpa-ring');
-  if (ring) {
-    const offset = 251.2 - (251.2 * (parseFloat(finalGpa) / 5.0));
-    ring.style.strokeDashoffset = offset;
+  if (!userProfile || !userProfile.group) {
+    container.innerHTML = '<div class="card" style="text-align:center;padding:20px;color:var(--muted)">Guruh ma\'lumotlari topilmadi. Iltimos, profilingizni sozlang.</div>';
+    return;
   }
 
-  const stInfo = document.getElementById('stipend-info');
-  if (stInfo) {
-    const gVal = parseFloat(finalGpa);
-    if (gVal >= 4.5) {
-      stInfo.innerHTML = `<div class="stipend-card stipend-ok">${t('stipend_president')}</div>`;
-    } else if (gVal >= 3.5) {
-      stInfo.innerHTML = `<div class="stipend-card stipend-ok">${t('stipend_ok')}</div>`;
-    } else if (gVal >= 3.0) {
-      stInfo.innerHTML = `<div class="stipend-card stipend-warn">${t('stipend_warn')}</div>`;
-    } else {
-      stInfo.innerHTML = `<div class="stipend-card stipend-fail">${t('stipend_fail')}</div>`;
-    }
-  }
+  const schoolTitle = document.createElement('div');
+  schoolTitle.className = 'school-group-title';
+  schoolTitle.textContent = '🏛️ ' + (userProfile.schoolName || 'Oliy maktab');
+  container.appendChild(schoolTitle);
+
+  const majorSub = document.createElement('div');
+  majorSub.style.cssText = 'font-size:12px;font-weight:700;color:var(--accent2);margin:8px 0 4px;';
+  majorSub.textContent = '📍 ' + (userProfile.majorName || 'Yo\'nalish');
+  container.appendChild(majorSub);
+
+  const grid = document.createElement('div');
+  grid.className = 'grid-container';
+
+  const btn = document.createElement('button');
+  btn.className = 'tt-btn my-group';
+  btn.style.padding = '16px';
+  btn.style.fontSize = '14px';
+  btn.innerHTML = `<span style="font-size:16px;font-weight:800">${userProfile.group}</span><span style="font-size:11px;opacity:0.8">${userProfile.course}-kurs</span><span class="star" style="font-size:12px;margin-top:4px">★ Mening guruhim (Dars jadvalini ko'rish)</span>`;
+  btn.onclick = () => alert(`${userProfile.group} guruhi dars jadvali ochilmoqda...`);
+  grid.appendChild(btn);
+
+  container.appendChild(grid);
 }
 
-function updateGpaRow(idx, field, val) {
-  gpaState.subjects[idx][field] = field === 'name' ? val : Number(val);
-  renderGpaView();
+function openMyTimetable(e) {
+  if (e) e.preventDefault();
+  switchView('timetable');
 }
 
-function addCustomGpaRow() {
-  gpaState.subjects.push({ name: 'Yangi fan', credits: 3, score: 80 });
-  renderGpaView();
-}
-
-function removeGpaRow(idx) {
-  gpaState.subjects.splice(idx, 1);
-  renderGpaView();
-}
-
-function saveGpaData() {
-  localStorage.setItem(LS_GPA, JSON.stringify(gpaState));
-  showBanner(t('saved_msg'));
-  syncToSheets();
-}
-
-function toggleGpaScale() {
-  const p = document.getElementById('gpa-scale-panel');
-  const arr = document.getElementById('gpa-arrow');
-  if (p.style.display === 'none') { p.style.display = 'block'; arr.textContent = '▲'; }
-  else { p.style.display = 'none'; arr.textContent = '▼'; }
-}
-
-function shareGpa() {
-  const g = document.getElementById('gpa-result').textContent;
-  if(tg?.sendData){ tg.sendData(`Mening GPAM: ${g}`); }
-  else { alert(`Mening GPA ko'rsatkichim: ${g}`); }
-}
-
-// ===== PROFESSORS LIST =====
+// ===== PROFESSORS MODULE (UPDATED WITH IMAGE DATA) =====
 const PROFS = [
-  { name: 'Dr. Alimov Botir', dept: 'dept-math', role: 'Oliy Matematika', email: 'b.alimov@npuu.uz' },
-  { name: 'Prof. Karimov Sardor', dept: 'dept-it', role: 'Sun\'iy Intelekt va AI', email: 's.karimov@npuu.uz' },
-  { name: 'Dr. Umarova Laylo', dept: 'dept-eng', role: 'English for IT', email: 'l.umarova@npuu.uz' },
-  { name: 'Ph.D. Abdullayev Jasur', dept: 'dept-it', role: 'Axborot Tizimlari', email: 'j.abdullayev@npuu.uz' }
+  // Mathematics
+  { name: 'Marks Ruziboev', dept: 'dept-math', role: 'Mathematics', email: 'm.ruziboev@npuu.uz' },
+  { name: 'Azamat Xolboyev', dept: 'dept-math', role: 'Mathematics', email: 'a.xolboyev@npuu.uz' },
+  { name: 'Allambergen Qudaybergenov', dept: 'dept-math', role: 'Mathematics', email: 'a.qudaybergenov@npuu.uz' },
+  { name: 'Bakhtinur Juraev', dept: 'dept-math', role: 'Mathematics', email: 'b.juraev@npuu.uz' },
+  { name: 'Farhod Muxamadiyev', dept: 'dept-math', role: 'Mathematics', email: 'f.muxamadiyev@npuu.uz' },
+  { name: 'Sa\'dullayev Anvar', dept: 'dept-math', role: 'Mathematics', email: 'a.sa\'dullayev@npuu.uz' },
+  { name: 'Shakhzod Suvanov', dept: 'dept-math', role: 'Mathematics', email: 'sh.suvanov@npuu.uz' },
+  { name: 'Zarif Ibragimov', dept: 'dept-math', role: 'Mathematics', email: 'z.ibragimov@npuu.uz' },
+
+  // General English
+  { name: 'Azamat Akhmedjanov', dept: 'dept-eng', role: 'General English', email: 'a.akhmedjanov@npuu.uz' },
+  { name: 'Azizabonu Ziyodullaeva', dept: 'dept-eng', role: 'General English', email: 'a.ziyodullaeva@npuu.uz' },
+  { name: 'Dilnoza Boymirzayeva', dept: 'dept-eng', role: 'General English', email: 'd.boymirzayeva@npuu.uz' },
+  { name: 'Mirjon Khidoyatov', dept: 'dept-eng', role: 'General English', email: 'm.khidoyatov@npuu.uz' },
+  { name: 'Mirsaid Abdurakhmonov', dept: 'dept-eng', role: 'General English', email: 'm.abdurakhmonov@npuu.uz' },
+  { name: 'Rano Khikmatova', dept: 'dept-eng', role: 'General English', email: 'r.khikmatova@npuu.uz' },
+  { name: 'Zukhra Khakimova', dept: 'dept-eng', role: 'General English', email: 'z.khakimova@npuu.uz' },
+
+  // IT
+  { name: 'Asadulla Ashurov', dept: 'dept-it', role: 'IT', email: 'a.ashurov@npuu.uz' },
+  { name: 'Bakhromjon Tulkinov', dept: 'dept-it', role: 'IT', email: 'b.tulkinov@npuu.uz' },
+  { name: 'Mirrakhmon Khaydarov', dept: 'dept-it', role: 'IT', email: 'm.khaydarov@npuu.uz' },
+  { name: 'Ulugbek Tursunaliev', dept: 'dept-it', role: 'IT', email: 'u.tursunaliev@npuu.uz' },
+
+  // Education
+  { name: 'Nilufar Tillayeva', dept: 'dept-edu', role: 'Education', email: 'n.tillayeva@npuu.uz' },
+  { name: 'Ozodakhon Shukurillaeva', dept: 'dept-edu', role: 'Education', email: 'o.shukurillaeva@npuu.uz' },
+  { name: 'Albina Suleymanova', dept: 'dept-edu', role: 'Education', email: 'a.suleymanova@npuu.uz' }
 ];
 
-function renderProfs(filter='') {
+function renderProfs(filter = '') {
   const c = document.getElementById('prof-list');
-  if(!c) return;
+  if (!c) return;
   c.innerHTML = '';
   const q = filter.toLowerCase().trim();
-  PROFS.filter(p => p.name.toLowerCase().includes(q) || p.role.toLowerCase().includes(q)).forEach(p => {
+  PROFS.filter(p => p.name.toLowerCase().includes(q) || p.role.toLowerCase().includes(q) || p.email.toLowerCase().includes(q)).forEach(p => {
     const card = document.createElement('div');
     card.className = `card ${p.dept}`;
     card.innerHTML = `
@@ -962,47 +848,26 @@ function renderProfs(filter='') {
       <div style="font-size:12px;color:var(--muted);margin-top:2px;">${p.role}</div>
       <div style="font-size:12px;color:var(--accent2);margin-top:6px;display:flex;align-items:center;">
         📧 ${p.email}
-        <button class="copy-email-btn" onclick="navigator.clipboard.writeText('${p.email}');showBanner('${t('copied')}')">Nusxalash</button>
+        <button class="copy-email-btn" onclick="navigator.clipboard.writeText('${p.email}');showBanner('📋 Pochta nusxalandi!')">Nusxalash</button>
       </div>
     `;
     c.appendChild(card);
   });
 }
 
-// ===== TIMETABLE MODULE =====
-function initTimetable() {
-  const grid = document.getElementById('tt-grid');
-  if(!grid) return;
-  grid.innerHTML = '';
-  const groups = ['FM1','FM2','FM3','FM4','FM5','FM6','FM7','FIT1','FIT2','FIT3','FIT4','FIT5','FIT6','FAR1','FAR2','FAR3'];
-  groups.forEach(g => {
-    const isMine = userProfile && userProfile.group === g;
-    const btn = document.createElement('button');
-    btn.className = `tt-btn ${isMine ? 'my-group' : ''}`;
-    btn.innerHTML = `${g} ${isMine ? '<span class="star">★ Mening guruhim</span>' : ''}`;
-    btn.onclick = () => alert(`${g} guruhi dars jadvali ochilmoqda...`);
-    grid.appendChild(btn);
-  });
-}
-
-function openMyTimetable(e) {
-  if(e) e.preventDefault();
-  switchView('timetable');
-}
-
-// ===== INIT APP =====
+// ===== INITIALIZATION =====
 window.addEventListener('DOMContentLoaded', async () => {
-  fetchStudentCsvData(); // Pre-cache CSV database
+  fetchStudentCsvData();
   const savedLang = localStorage.getItem(LS_LANG) || 'uz';
   setLanguage(savedLang);
   const savedTheme = localStorage.getItem(LS_THEME) !== 'light';
   applyTheme(savedTheme);
 
   loadProfile();
+  renderProfs();
+
   if (userProfile) {
     applyProfile();
-    initGpa();
-    renderProfs();
   } else {
     document.getElementById('onboarding-overlay').style.display = 'flex';
   }
