@@ -87,14 +87,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .handbook-btn{background:var(--surface2);border:1px solid var(--border);border-radius:13px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;color:var(--text);text-decoration:none;margin-bottom:10px;font-weight:600;transition:background .2s,transform .15s;cursor:pointer;font-size:13.5px}
 .handbook-btn:active{transform:scale(.98)}
 
-/* ===== TIMETABLE GRID ===== */
-.school-group-title{font-size:12px;font-weight:800;color:var(--accent3);text-transform:uppercase;letter-spacing:.7px;margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
-.grid-container{display:grid;grid-template-columns:repeat(1,1fr);gap:8px}
-.tt-btn{background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:11px 5px;display:flex;align-items:center;justify-content:center;color:var(--text);font-weight:700;cursor:pointer;font-size:12px;font-family:inherit;transition:all .2s;flex-direction:column;gap:2px;text-align:center}
-.tt-btn:active{transform:scale(.95)}
-.tt-btn.my-group{background:rgba(58,134,255,.2);border-color:var(--accent);color:var(--accent2)}
-.tt-btn .star{font-size:11px;color:var(--accent2);font-weight:600}
-
 /* ===== PROF DEPT COLORS ===== */
 .dept-math{border-left:4px solid #3a86ff!important}
 .dept-eng{border-left:4px solid #00e676!important}
@@ -120,6 +112,26 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .info-row:last-child{border-bottom:none}
 .info-label{color:var(--muted);font-weight:500}
 .info-val{font-weight:700;color:var(--text);text-align:right}
+
+/* ===== DAY SELECTOR & LESSON CARDS ===== */
+.day-selector{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:12px;scrollbar-width:none}
+.day-selector::-webkit-scrollbar{display:none}
+.day-btn{background:var(--surface2);border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:12px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s;font-family:inherit}
+.day-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.lesson-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;box-shadow:var(--card-shadow);transition:transform .2s}
+.lesson-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
+.lesson-card.lecture::before{background:var(--accent)}
+.lesson-card.practice::before{background:var(--green)}
+.lesson-card.lab::before{background:var(--orange)}
+
+.lesson-header{display:flex;justify-content:space-between;align-items:center}
+.lesson-time{font-size:12px;font-weight:700;color:var(--accent3);display:flex;align-items:center;gap:6px}
+.lesson-type{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:rgba(58,134,255,0.15);color:var(--accent2);text-transform:uppercase}
+.lesson-subject{font-size:15px;font-weight:700;color:var(--text)}
+.lesson-details{display:flex;gap:16px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.lesson-detail-item{display:flex;align-items:center;gap:5px}
+.lesson-detail-item strong{color:var(--text)}
 </style>
 </head>
 <body>
@@ -628,7 +640,6 @@ function renderHandbookMajors() {
     return;
   }
 
-  // Faqat Aniq fanlar oliy maktabi havolalari mavjud
   if (schoolKey !== 'aniq_fanlar') {
     container.innerHTML = '<div class="card" style="text-align:center;padding:18px;color:var(--orange);font-size:13.5px;font-weight:600;border-left:4px solid var(--orange);">⚠️ Ushbu oliy maktab uchun handbooklar hali yuklanmagan.</div>';
     return;
@@ -761,7 +772,6 @@ function saveProfileData(p) {
 function applyProfile() {
   if (!userProfile) return;
   
-  // Overlay yopiladi va ma'lumotlar saqlanadi
   document.getElementById('onboarding-overlay').style.display = 'none';
   document.getElementById('profile-header').style.display = 'flex';
   document.getElementById('today-widget').style.display = 'block';
@@ -777,7 +787,6 @@ function applyProfile() {
 
   document.getElementById('today-group-text').textContent = `Guruhim: ${userProfile.group}`;
   
-  // Profile Tab update
   document.getElementById('pv-name').textContent = userProfile.name || '—';
   document.getElementById('pv-sid').textContent = userProfile.sid || '—';
   document.getElementById('pv-email').textContent = userProfile.email || '—';
@@ -837,7 +846,50 @@ function switchView(viewId) {
   }
 }
 
-// ===== TIMETABLE UI (EDUPAGE INTEGRATION & NOTIFICATIONS) =====
+// ===== TIMETABLE MODULE =====
+
+const SAMPLE_TIMETABLES = {
+  "FAR1": {
+    "Dushanba": [
+      { time: "09:00 - 10:20", period: "1-juftlik", subject: "Sun'iy intellekt asoslari", teacher: "Asadulla Ashurov", room: "304-xona", type: "Ma'ruza" },
+      { time: "10:30 - 11:50", period: "2-juftlik", subject: "Oliy matematika II", teacher: "Marks Ruziboev", room: "210-xona", type: "Amaliyot" },
+      { time: "12:30 - 13:50", period: "3-juftlik", subject: "Akademik Ingliz tili", teacher: "Dilnoza Boymirzayeva", room: "105-xona", type: "Amaliyot" }
+    ],
+    "Seshanba": [
+      { time: "09:00 - 10:20", period: "1-juftlik", subject: "Ma'lumotlar tuzilmasi va algoritmlar", teacher: "Bakhromjon Tulkinov", room: "402-lab", type: "Laboratoriya" },
+      { time: "10:30 - 11:50", period: "2-juftlik", subject: "Diskret matematika", teacher: "Azamat Xolboyev", room: "312-xona", type: "Ma'ruza" }
+    ],
+    "Chorshanba": [
+      { time: "09:00 - 10:20", period: "1-juftlik", subject: "Mashinali o'rgatish (Machine Learning)", teacher: "Mirrakhmon Khaydarov", room: "304-xona", type: "Ma'ruza" },
+      { time: "10:30 - 11:50", period: "2-juftlik", subject: "Mashinali o'rgatish (Amaliyot)", teacher: "Mirrakhmon Khaydarov", room: "405-lab", type: "Laboratoriya" },
+      { time: "12:30 - 13:50", period: "3-juftlik", subject: "Pedagogika va Psixologiya", teacher: "Nilufar Tillayeva", room: "201-xona", type: "Ma'ruza" }
+    ],
+    "Payshanba": [
+      { time: "09:00 - 10:20", period: "1-juftlik", subject: "Oliy matematika II", teacher: "Marks Ruziboev", room: "210-xona", type: "Ma'ruza" },
+      { time: "10:30 - 11:50", period: "2-juftlik", subject: "Ma'lumotlar bazasi tizimlari", teacher: "Ulugbek Tursunaliev", room: "308-xona", type: "Amaliyot" }
+    ],
+    "Juma": [
+      { time: "09:00 - 10:20", period: "1-juftlik", subject: "Akademik Ingliz tili", teacher: "Dilnoza Boymirzayeva", room: "105-xona", type: "Amaliyot" },
+      { time: "10:30 - 11:50", period: "2-juftlik", subject: "Sun'iy intellekt (Lab)", teacher: "Asadulla Ashurov", room: "401-lab", type: "Laboratoriya" }
+    ],
+    "Shanba": []
+  }
+};
+
+function getScheduleForGroup(groupName, day) {
+  if (SAMPLE_TIMETABLES[groupName] && SAMPLE_TIMETABLES[groupName][day]) {
+    return SAMPLE_TIMETABLES[groupName][day];
+  }
+  if (day === 'Shanba' || day === 'Yakshanba') return [];
+  return [
+    { time: "09:00 - 10:20", period: "1-juftlik", subject: "Mutaxassislikka kirish", teacher: "Azamat Xolboyev", room: "204-xona", type: "Ma'ruza" },
+    { time: "10:30 - 11:50", period: "2-juftlik", subject: "Oliy matematika", teacher: "Marks Ruziboev", room: "310-xona", type: "Amaliyot" },
+    { time: "12:30 - 13:50", period: "3-juftlik", subject: "Chet tili (Ingliz tili)", teacher: "Dilnoza Boymirzayeva", room: "108-xona", type: "Amaliyot" }
+  ];
+}
+
+let currentSelectedDay = "Dushanba";
+
 function checkTimetableChanges(group) {
   const alertBox = document.getElementById('tt-alert-box');
   const lastCheckKey = 'npuu_tt_check_' + group;
@@ -846,7 +898,7 @@ function checkTimetableChanges(group) {
   
   if (!lastCheck) {
     localStorage.setItem(lastCheckKey, now.toString());
-  } else if (now - parseInt(lastCheck) > 1000 * 60 * 60 * 6) { // Periodic sync notice
+  } else if (now - parseInt(lastCheck) > 1000 * 60 * 60 * 6) {
     localStorage.setItem(lastCheckKey, now.toString());
     if (alertBox) {
       alertBox.innerHTML = `
@@ -858,7 +910,7 @@ function checkTimetableChanges(group) {
   }
 }
 
-function initTimetable() {
+function initTimetable(targetDay) {
   const container = document.getElementById('tt-container');
   if (!container) return;
   container.innerHTML = '';
@@ -867,6 +919,16 @@ function initTimetable() {
     container.innerHTML = '<div class="card" style="text-align:center;padding:20px;color:var(--muted)">Guruh ma\'lumotlari topilmadi. Iltimos, profilingizni sozlang.</div>';
     return;
   }
+
+  const daysOfWeek = ["Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba"];
+  if (!targetDay) {
+    const dIdx = new Date().getDay();
+    targetDay = (dIdx >= 1 && dIdx <= 6) ? daysOfWeek[dIdx - 1] : "Dushanba";
+  }
+  currentSelectedDay = targetDay;
+
+  const dayBadge = document.getElementById('today-day-badge');
+  if (dayBadge) dayBadge.textContent = currentSelectedDay;
 
   const headerCard = document.createElement('div');
   headerCard.className = 'card';
@@ -885,16 +947,75 @@ function initTimetable() {
 
   checkTimetableChanges(userProfile.group);
 
-  const iframeCard = document.createElement('div');
-  iframeCard.className = 'card';
-  iframeCard.style.padding = '0';
-  iframeCard.style.overflow = 'hidden';
-  iframeCard.style.borderRadius = 'var(--radius)';
-  iframeCard.style.height = '520px';
-  iframeCard.innerHTML = `
-    <iframe src="${EDUPAGE_BASE_URL}" style="width:100%;height:100%;border:none;" title="Edupage Timetable"></iframe>
-  `;
-  container.appendChild(iframeCard);
+  const daySelector = document.createElement('div');
+  daySelector.className = 'day-selector';
+  daysOfWeek.forEach(d => {
+    const btn = document.createElement('button');
+    btn.className = `day-btn ${d === currentSelectedDay ? 'active' : ''}`;
+    btn.textContent = d;
+    btn.onclick = () => {
+      currentSelectedDay = d;
+      if (dayBadge) dayBadge.textContent = d;
+      document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderLessons(userProfile.group, d, lessonsListContainer);
+    };
+    daySelector.appendChild(btn);
+  });
+  container.appendChild(daySelector);
+
+  const lessonsListContainer = document.createElement('div');
+  lessonsListContainer.id = 'lessons-list-container';
+  container.appendChild(lessonsListContainer);
+
+  renderLessons(userProfile.group, currentSelectedDay, lessonsListContainer);
+}
+
+function renderLessons(group, day, container) {
+  container.innerHTML = '';
+  const lessons = getScheduleForGroup(group, day);
+
+  if (!lessons || lessons.length === 0) {
+    container.innerHTML = `
+      <div class="card" style="text-align:center;padding:32px 16px;color:var(--muted);">
+        <div style="font-size:32px;margin-bottom:8px;">🎉</div>
+        <div style="font-weight:700;font-size:14px;color:var(--text);">${day} kunida darslar yo'q!</div>
+        <div style="font-size:12px;margin-top:4px;color:var(--muted);">Dam olish kunidan unumli foydalaning.</div>
+      </div>
+    `;
+    return;
+  }
+
+  lessons.forEach(l => {
+    const card = document.createElement('div');
+    let typeClass = 'lecture';
+    if (l.type.toLowerCase().includes('lab')) typeClass = 'lab';
+    else if (l.type.toLowerCase().includes('amaliy')) typeClass = 'practice';
+
+    card.className = `lesson-card ${typeClass}`;
+    card.innerHTML = `
+      <div class="lesson-header">
+        <div class="lesson-time">
+          <span>⏰ ${l.period}</span>
+          <span style="opacity:0.5;">•</span>
+          <span>${l.time}</span>
+        </div>
+        <span class="lesson-type">${l.type}</span>
+      </div>
+      <div class="lesson-subject">📘 ${l.subject}</div>
+      <div class="lesson-details">
+        <div class="lesson-detail-item">
+          <span>🚪 Xona:</span>
+          <strong>${l.room}</strong>
+        </div>
+        <div class="lesson-detail-item">
+          <span>👨‍🏫 Domla:</span>
+          <strong>${l.teacher}</strong>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
 }
 
 function openMyTimetable(e) {
