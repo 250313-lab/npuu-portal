@@ -182,8 +182,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
       <div class="onboard-label" data-i18n="label_course">📚 Kurs (Bosqich)</div>
       <select class="onboard-select" id="ob-course" onchange="onCourseChange()">
         <option value="" data-i18n="opt_select_course">Kursni tanlang...</option>
-        <option value="1">1-kurs (2026-yil qabul)</option>
-        <option value="2">2-kurs (2025-yil qabul)</option>
+        <option value="1" data-i18n="course_1_text">1-kurs (2026-yil qabul)</option>
+        <option value="2" data-i18n="course_2_text">2-kurs (2025-yil qabul)</option>
       </select>
 
       <div class="onboard-label" data-i18n="label_major">🎓 Yo'nalish</div>
@@ -197,7 +197,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
       </select>
 
       <div class="onboard-label" data-i18n="label_admit_year">📅 Qabul Yili</div>
-      <input type="text" class="onboard-input" id="ob-admit-year" readonly placeholder="Avtomatik aniqlanadi">
+      <input type="text" class="onboard-input" id="ob-admit-year" readonly data-i18n-ph="auto_detected" placeholder="Avtomatik aniqlanadi">
 
       <button class="onboard-btn" onclick="obNext(2)" data-i18n="btn_continue">Davom etish →</button>
     </div>
@@ -316,7 +316,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
     <span data-i18n="nav_handbook">Handbook</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" onclick="switchView('profile')" id="nav-profile">
-    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
     <span data-i18n="nav_profile">Profil</span><div class="nav-dot"></div>
   </button>
 </div>
@@ -329,13 +329,11 @@ const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_PROFILE='npuu_profile';
 const EDUPAGE_BASE_URL = 'https://npuu.edupage.org/timetable/';
 const STUDENT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT52Sbtp6fOoYOGm47p9hQs70Nw0R3dxfWv7X7jolme27nj8KKLbwgnUk18v87ctIsRwLmKd6g4TJLl/pub?output=csv';
 
-// Google Sheets User Save Endpoint (Directly integrated via Google Sheets Web App endpoint)
 const GOOGLE_SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbx7fF3f1O0w8jA1z5uK3J4E6M7N8O9P0Q/exec';
 const GOOGLE_SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/1vElmYia3pSX5Qoo_rA3aLR_icej7wYaYE0R2WkD3RMg/edit?usp=sharing';
 
 /* ===== EXACT EDUPAGE MAP FROM IMAGES ===== */
 const GROUP_EDUPAGE_URLS = {
-  // Aniq fanlar oliy maktabi (Image 1)
   "FM1-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*16",
   "FM2-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*17",
   "FM3-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*18",
@@ -370,7 +368,6 @@ const GROUP_EDUPAGE_URLS = {
   "FAR2": "https://npuu.edupage.org/timetable/view.php?num=13&class=-13",
   "FAR3": "https://npuu.edupage.org/timetable/view.php?num=13&class=-14",
 
-  // Maktabgacha va Boshlang'ich ta'lim (Image 2)
   "FP1-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*47",
   "FP2-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*48",
   "FP3-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*49",
@@ -386,7 +383,6 @@ const GROUP_EDUPAGE_URLS = {
   "FPP5-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*57",
   "FPP6-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*58",
 
-  // Tabiiy fanlar oliy maktabi (Image 3)
   "FB1-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*32",
   "FB2-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*33",
   "FB3-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*34",
@@ -417,7 +413,7 @@ function getEdupageUrlForGroup(groupName) {
   return EDUPAGE_BASE_URL;
 }
 
-/* ===== 3 LANGUAGES DICTIONARY ===== */
+/* ===== MULTILINGUAL DICTIONARY ===== */
 const I18N = {
   uz: {
     app_title: "NPUU Smart Bot",
@@ -444,6 +440,11 @@ const I18N = {
     opt_select_course: "Kursni tanlang...",
     opt_first_select_school: "Avval oliy maktabni tanlang...",
     opt_first_select_major: "Avval yo'nalish va kursni tanlang...",
+    opt_select_group: "Guruhni tanlang...",
+    no_groups_found: "Ushbu kurs uchun guruhlar topilmadi",
+    auto_detected: "Avtomatik aniqlanadi",
+    course_1_text: "1-kurs (2026-yil qabul)",
+    course_2_text: "2-kurs (2025-yil qabul)",
     nav_schedule: "Jadval",
     nav_profs: "Professors",
     nav_handbook: "Handbook",
@@ -452,14 +453,30 @@ const I18N = {
     handbook_desc: "Oliy maktabingizni va yo'nalishingizni tanlab mos Handbookni yuklab oling.",
     hb_step1: "🏛️ 1-bosqich: Oliy Maktabni tanlang",
     hb_step2: "🎓 2-bosqich: Yo'nalishingizga mos Handbook",
+    hb_no_school_selected: "Oliy maktabni tanlang, unga mos yo'nalishlar Handbook ro'yxati ko'rinadi.",
+    hb_not_available: "⚠️ Ushbu oliy maktab uchun handbooklar hali yuklanmagan.",
     open_edupage: "🔗 EduPage'da ochish",
     search_prof_ph: "🔍 Professor ismi yoki kafedra qidirish...",
     copy: "Nusxalash",
-    copied: "📋 Pochta nusxalandi!"
+    copied: "📋 Pochta nusxalandi!",
+    my_group: "Guruhim",
+    course_suffix: "-kurs",
+    group_schedule_title: "guruhi dars jadvali",
+    no_profile_group: "Guruh ma'lumotlari topilmadi. Iltimos, profilingizni sozlang.",
+    ready_edupage_msg: "guruhi uchun EduPage havola tayyor!",
+    click_edupage_desc: "Rasmiy dars jadvalingizni ko'rish uchun quyidagi tugmani bosing:",
+    id_searching: "🔍 Bazadan qidirilmoqda...",
+    id_found: "✅ Topildi va to'ldirildi! Zarur bo'lsa tahrirlang.",
+    id_not_found: "ℹ️ ID topilmadi. Ma'lumotlarni o'zingiz kiriting.",
+    id_error: "⚠️ Izlashda xatolik. Maydonlarni o'zingiz to'ldiring.",
+    alert_name: "Ism va familiyangizni kiriting!",
+    alert_fields: "Barcha ta'lim ma'lumotlarini va guruhni tanlang!",
+    welcome_user: "Xush kelibsiz",
+    days: ["Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba"]
   },
   ru: {
     app_title: "NPUU Smart Bot",
-    onboard_sub: "Введите ваш ID — данные автоматический найдутся в базе!",
+    onboard_sub: "Введите ваш ID — данные автоматически найдутся в базе!",
     label_student_id: "🪪 Student ID",
     label_full_name: "👤 Имя и Фамилия",
     label_email: "📧 Электронная почта",
@@ -482,6 +499,11 @@ const I18N = {
     opt_select_course: "Выберите курс...",
     opt_first_select_school: "Сначала выберите высшую школу...",
     opt_first_select_major: "Сначала выберите направление и курс...",
+    opt_select_group: "Выберите группу...",
+    no_groups_found: "Группы для этого курса не найдены",
+    auto_detected: "Определяется автоматически",
+    course_1_text: "1-курс (поступление 2026)",
+    course_2_text: "2-курс (поступление 2025)",
     nav_schedule: "Расписание",
     nav_profs: "Профессора",
     nav_handbook: "Handbook",
@@ -490,10 +512,26 @@ const I18N = {
     handbook_desc: "Выберите высшую школу и направление для скачивания Handbook.",
     hb_step1: "🏛️ Шаг 1: Выберите Высшую школу",
     hb_step2: "🎓 Шаг 2: Выберите свой Handbook",
+    hb_no_school_selected: "Выберите высшую школу, чтобы увидеть список доступных Handbook.",
+    hb_not_available: "⚠️ Для данной высшей школы handbook пока не загружены.",
     open_edupage: "🔗 Открыть в EduPage",
     search_prof_ph: "🔍 Поиск профессора или кафедры...",
     copy: "Копировать",
-    copied: "📋 Почта скопирована!"
+    copied: "📋 Почта скопирована!",
+    my_group: "Моя группа",
+    course_suffix: "-курс",
+    group_schedule_title: "расписание группы",
+    no_profile_group: "Данные группы не найдены. Пожалуйста, настройте профиль.",
+    ready_edupage_msg: "ссылка EduPage готова!",
+    click_edupage_desc: "Нажмите кнопку ниже, чтобы просмотреть официальное расписание:",
+    id_searching: "🔍 Поиск в базе данных...",
+    id_found: "✅ Найдено и заполнено! Отредактируйте при необходимости.",
+    id_not_found: "ℹ️ ID не найден. Введите данные вручную.",
+    id_error: "⚠️ Ошибка поиска. Заполните поля вручную.",
+    alert_name: "Введите ваше имя и фамилию!",
+    alert_fields: "Выберите все учебные данные и группу!",
+    welcome_user: "Добро пожаловать",
+    days: ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
   },
   en: {
     app_title: "NPUU Smart Bot",
@@ -520,6 +558,11 @@ const I18N = {
     opt_select_course: "Select Course...",
     opt_first_select_school: "Select higher school first...",
     opt_first_select_major: "Select major and course first...",
+    opt_select_group: "Select group...",
+    no_groups_found: "No groups found for this course",
+    auto_detected: "Auto-detected",
+    course_1_text: "1st year (2026 intake)",
+    course_2_text: "2nd year (2025 intake)",
     nav_schedule: "Timetable",
     nav_profs: "Professors",
     nav_handbook: "Handbook",
@@ -528,34 +571,50 @@ const I18N = {
     handbook_desc: "Select your higher school and major to download your Handbook.",
     hb_step1: "🏛️ Step 1: Select Higher School",
     hb_step2: "🎓 Step 2: Download Major Handbook",
+    hb_no_school_selected: "Select a higher school to display available Handbooks.",
+    hb_not_available: "⚠️ Handbooks for this higher school have not been uploaded yet.",
     open_edupage: "🔗 Open in EduPage",
     search_prof_ph: "🔍 Search professor name or dept...",
     copy: "Copy",
-    copied: "📋 Email copied!"
+    copied: "📋 Email copied!",
+    my_group: "My group",
+    course_suffix: " year",
+    group_schedule_title: "group timetable",
+    no_profile_group: "Group details not found. Please set up your profile.",
+    ready_edupage_msg: "EduPage link ready!",
+    click_edupage_desc: "Click the button below to view your official schedule:",
+    id_searching: "🔍 Searching database...",
+    id_found: "✅ Found and filled! Edit if necessary.",
+    id_not_found: "ℹ️ ID not found. Please enter details manually.",
+    id_error: "⚠️ Search error. Fill in the fields manually.",
+    alert_name: "Please enter your full name!",
+    alert_fields: "Please select all academic details and group!",
+    welcome_user: "Welcome",
+    days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
   }
 };
 
 /* ===== ACADEMIC STRUCTURE DATA ===== */
 const ACADEMIC_STRUCTURE = {
   "aniq_fanlar": {
-    name: "Aniq fanlar oliy maktabi",
+    names: { uz: "Aniq fanlar oliy maktabi", ru: "Высшая школа точных наук", en: "Higher School of Exact Sciences" },
     majors: {
       "matematik": {
-        name: "Matematik",
+        names: { uz: "Matematika", ru: "Математика", en: "Mathematics" },
         courses: {
           "1": ["FM1-26", "FM2-26", "FM3-26", "FM4-26", "FM5-26", "FM6-26RUS"],
           "2": ["FM1", "FM2", "FM3", "FM4", "FM5", "FM6", "FM7"]
         }
       },
       "fit": {
-        name: "Axborot tizimlari va texnologiyalari",
+        names: { uz: "Axborot tizimlari va texnologiyalari", ru: "Информационные системы и технологии", en: "Information Systems & Technologies" },
         courses: {
           "1": ["FIT1-26", "FIT2-26", "FIT3-26", "FIT4-26", "FIT5-26", "FIT6-26RUS"],
           "2": ["FIT1", "FIT2", "FIT3", "FIT4", "FIT6"]
         }
       },
       "ai": {
-        name: "Sun'iy intellekt",
+        names: { uz: "Sun'iy intellekt", ru: "Искусственный интеллект", en: "Artificial Intelligence" },
         courses: {
           "1": ["FAR1-26", "FAR2-26", "FAR3-26", "FAR4-26RUS"],
           "2": ["FAR1", "FAR2", "FAR3"]
@@ -564,17 +623,17 @@ const ACADEMIC_STRUCTURE = {
     }
   },
   "maktabgacha_boshlangich": {
-    name: "Maktabgacha va boshlang'ich ta'lim oliy maktabi",
+    names: { uz: "Maktabgacha va boshlang'ich ta'lim oliy maktabi", ru: "Высшая школа дошкольного и начального образования", en: "Higher School of Preschool & Primary Education" },
     majors: {
       "boshlangich": {
-        name: "Boshlang'ich ta'lim",
+        names: { uz: "Boshlang'ich ta'lim", ru: "Начальное образование", en: "Primary Education" },
         courses: {
           "1": ["FP1-26", "FP2-26", "FP3-26", "FP4-26", "FP5-26", "FP6-26", "FP7-26RUS"],
           "2": []
         }
       },
       "maktabgacha": {
-        name: "Maktabgacha ta'lim",
+        names: { uz: "Maktabgacha ta'lim", ru: "Дошкольное образование", en: "Preschool Education" },
         courses: {
           "1": ["FPP1-26", "FPP2-26", "FPP3-26", "FPP4-26", "FPP5-26", "FPP6-26"],
           "2": []
@@ -583,31 +642,31 @@ const ACADEMIC_STRUCTURE = {
     }
   },
   "tabiiy_fanlar": {
-    name: "Tabiiy fanlar oliy maktabi",
+    names: { uz: "Tabiiy fanlar oliy maktabi", ru: "Высшая школа естественных наук", en: "Higher School of Natural Sciences" },
     majors: {
       "biologiya": {
-        name: "Biologiya",
+        names: { uz: "Biologiya", ru: "Биология", en: "Biology" },
         courses: {
           "1": ["FB1-26", "FB2-26", "FB3-26", "FB4-26RUS"],
           "2": []
         }
       },
       "kimyo": {
-        name: "Kimyo",
+        names: { uz: "Kimyo", ru: "Химия", en: "Chemistry" },
         courses: {
           "1": ["FCH1-26", "FCH2-26", "FCH3-26", "FCH4-26RUS"],
           "2": []
         }
       },
       "fizika": {
-        name: "Fizika",
+        names: { uz: "Fizika", ru: "Физика", en: "Physics" },
         courses: {
           "1": ["FPh1-26", "FPh2-26", "FPh3-26", "FPh4-26RUS"],
           "2": []
         }
       },
       "geografiya": {
-        name: "Geografiya",
+        names: { uz: "Geografiya", ru: "География", en: "Geography" },
         courses: {
           "1": ["FG1-26", "FG2-26", "FG3-26RUS", "FG4-26RUS"],
           "2": []
@@ -628,6 +687,14 @@ const HANDBOOK_DATA = {
 
 let cachedCsvData = null;
 let currentLang = 'uz', isDark = true, userProfile = null;
+
+function getSchoolName(schoolKey, lang = currentLang) {
+  return ACADEMIC_STRUCTURE[schoolKey]?.names[lang] || ACADEMIC_STRUCTURE[schoolKey]?.names.uz || schoolKey || '';
+}
+
+function getMajorName(schoolKey, majorKey, lang = currentLang) {
+  return ACADEMIC_STRUCTURE[schoolKey]?.majors[majorKey]?.names[lang] || ACADEMIC_STRUCTURE[schoolKey]?.majors[majorKey]?.names.uz || majorKey || '';
+}
 
 // ===== CSV PARSER & SEARCH =====
 function parseCSV(text) {
@@ -736,11 +803,13 @@ let searchTimeout = null;
 function handleIdSearch(val) {
   if (searchTimeout) clearTimeout(searchTimeout);
   const statusEl = document.getElementById('id-search-status');
+  const dict = I18N[currentLang] || I18N.uz;
+
   if (!val || val.trim().length === 0) {
     if (statusEl) statusEl.textContent = '';
     return;
   }
-  if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent2)">🔍 Bazadan qidirilmoqda...</span>';
+  if (statusEl) statusEl.innerHTML = `<span style="color:var(--accent2)">${dict.id_searching}</span>`;
 
   searchTimeout = setTimeout(async () => {
     try {
@@ -761,33 +830,34 @@ function handleIdSearch(val) {
             document.getElementById('ob-group').value = detected.groupName;
           }
         }
-        if (statusEl) statusEl.innerHTML = '<span style="color:var(--green);font-weight:600">✅ Topildi va to\'ldirildi! Zarur bo\'lsa tahrirlang.</span>';
+        if (statusEl) statusEl.innerHTML = `<span style="color:var(--green);font-weight:600">${dict.id_found}</span>`;
       } else {
-        if (statusEl) statusEl.innerHTML = '<span style="color:var(--orange)">ℹ️ ID topilmadi. Ma\'lumotlarni o\'zingiz kiriting.</span>';
+        if (statusEl) statusEl.innerHTML = `<span style="color:var(--orange)">${dict.id_not_found}</span>`;
       }
     } catch (e) {
-      if (statusEl) statusEl.innerHTML = '<span style="color:var(--orange)">⚠️ Izlashda xatolik. Maydonlarni o\'zingiz to\'ldiring.</span>';
+      if (statusEl) statusEl.innerHTML = `<span style="color:var(--orange)">${dict.id_error}</span>`;
     }
   }, 350);
 }
 
 // ===== DYNAMIC DROPDOWN CASCADING =====
 function onSchoolChange() {
+  const dict = I18N[currentLang] || I18N.uz;
   const schoolKey = document.getElementById('ob-school').value;
   const majorSelect = document.getElementById('ob-major');
   const groupSelect = document.getElementById('ob-group');
   
-  majorSelect.innerHTML = `<option value="">${I18N[currentLang].opt_first_select_school}</option>`;
-  groupSelect.innerHTML = `<option value="">${I18N[currentLang].opt_first_select_major}</option>`;
+  majorSelect.innerHTML = `<option value="">${dict.opt_first_select_school}</option>`;
+  groupSelect.innerHTML = `<option value="">${dict.opt_first_select_major}</option>`;
 
   if (!schoolKey || !ACADEMIC_STRUCTURE[schoolKey]) return;
 
   const majors = ACADEMIC_STRUCTURE[schoolKey].majors;
-  majorSelect.innerHTML = `<option value="">${I18N[currentLang].opt_select_school}</option>`;
+  majorSelect.innerHTML = `<option value="">${dict.opt_select_school}</option>`;
   for (const [mKey, mData] of Object.entries(majors)) {
     const opt = document.createElement('option');
     opt.value = mKey;
-    opt.textContent = mData.name;
+    opt.textContent = mData.names[currentLang] || mData.names.uz;
     majorSelect.appendChild(opt);
   }
   updateGroups();
@@ -807,22 +877,23 @@ function onMajorChange() {
 }
 
 function updateGroups() {
+  const dict = I18N[currentLang] || I18N.uz;
   const schoolKey = document.getElementById('ob-school').value;
   const courseKey = document.getElementById('ob-course').value;
   const majorKey = document.getElementById('ob-major').value;
   const groupSelect = document.getElementById('ob-group');
 
-  groupSelect.innerHTML = `<option value="">${I18N[currentLang].opt_first_select_major}</option>`;
+  groupSelect.innerHTML = `<option value="">${dict.opt_first_select_major}</option>`;
 
   if (!schoolKey || !courseKey || !majorKey) return;
 
   try {
     const groups = ACADEMIC_STRUCTURE[schoolKey].majors[majorKey].courses[courseKey] || [];
     if (groups.length === 0) {
-      groupSelect.innerHTML = '<option value="">Ushbu kurs uchun guruhlar topilmadi</option>';
+      groupSelect.innerHTML = `<option value="">${dict.no_groups_found}</option>`;
       return;
     }
-    groupSelect.innerHTML = `<option value="">Guruhni tanlang...</option>`;
+    groupSelect.innerHTML = `<option value="">${dict.opt_select_group}</option>`;
     groups.forEach(g => {
       const opt = document.createElement('option');
       opt.value = g;
@@ -836,6 +907,7 @@ function updateGroups() {
 
 // ===== HANDBOOK RENDER FUNCTION =====
 function renderHandbookMajors() {
+  const dict = I18N[currentLang] || I18N.uz;
   const schoolSelect = document.getElementById('hb-school-select');
   const container = document.getElementById('hb-majors-container');
   if (!container) return;
@@ -844,12 +916,12 @@ function renderHandbookMajors() {
   container.innerHTML = '';
 
   if (!schoolKey) {
-    container.innerHTML = '<div class="card" style="text-align:center;padding:16px;color:var(--muted);font-size:13px;">Oliy maktabni tanlang, unga mos yo\'nalishlar Handbook ro\'yxati ko\'rinadi.</div>';
+    container.innerHTML = `<div class="card" style="text-align:center;padding:16px;color:var(--muted);font-size:13px;">${dict.hb_no_school_selected}</div>`;
     return;
   }
 
   if (schoolKey !== 'aniq_fanlar') {
-    container.innerHTML = '<div class="card" style="text-align:center;padding:18px;color:var(--orange);font-size:13.5px;font-weight:600;border-left:4px solid var(--orange);">⚠️ Ushbu oliy maktab uchun handbooklar hali yuklanmagan.</div>';
+    container.innerHTML = `<div class="card" style="text-align:center;padding:18px;color:var(--orange);font-size:13.5px;font-weight:600;border-left:4px solid var(--orange);">${dict.hb_not_available}</div>`;
     return;
   }
 
@@ -878,16 +950,17 @@ function updateDots(s) {
 }
 
 function obNext(next) {
+  const dict = I18N[currentLang] || I18N.uz;
   if (next === 1) {
     const n = document.getElementById('ob-name').value.trim();
-    if (!n) { alert('Ism va familiyangizni kiriting!'); return; }
+    if (!n) { alert(dict.alert_name); return; }
   }
   if (next === 2) {
     const s = document.getElementById('ob-school').value;
     const c = document.getElementById('ob-course').value;
     const m = document.getElementById('ob-major').value;
     const g = document.getElementById('ob-group').value;
-    if (!s || !c || !m || !g) { alert('Barcha ta\'lim ma\'lumotlarini va guruhni tanlang!'); return; }
+    if (!s || !c || !m || !g) { alert(dict.alert_fields); return; }
   }
   document.getElementById('step-' + obStep).classList.remove('active');
   obStep = next;
@@ -901,17 +974,12 @@ function obFinish(lang) {
   const majorKey = document.getElementById('ob-major').value;
   const courseKey = document.getElementById('ob-course').value;
   
-  const schoolName = ACADEMIC_STRUCTURE[schoolKey]?.name || schoolKey;
-  const majorName = ACADEMIC_STRUCTURE[schoolKey]?.majors[majorKey]?.name || majorKey;
-
   const p = {
     name: document.getElementById('ob-name').value.trim(),
     sid: document.getElementById('ob-sid').value.trim(),
     email: document.getElementById('ob-email').value.trim(),
     schoolKey: schoolKey,
-    schoolName: schoolName,
     majorKey: majorKey,
-    majorName: majorName,
     course: courseKey,
     group: document.getElementById('ob-group').value,
     admitYear: courseKey === '1' ? '2026' : '2025',
@@ -921,7 +989,8 @@ function obFinish(lang) {
 
   saveProfileData(p);
   applyProfile();
-  showBanner(`Xush kelibsiz, ${p.name.split(' ')[0]}! 👋`);
+  const dict = I18N[lang] || I18N.uz;
+  showBanner(`${dict.welcome_user}, ${p.name.split(' ')[0]}! 👋`);
 }
 
 function populateOnboardingFields(p) {
@@ -964,14 +1033,13 @@ function saveProfileData(p) {
     localStorage.setItem(LS_PROFILE, JSON.stringify(p));
   } catch(e) { console.error('LocalStorage error:', e); }
 
-  // Post data to Google Sheets via Fetch
   const payload = {
     timestamp: new Date().toISOString(),
     sid: p.sid || '',
     name: p.name || '',
     email: p.email || '',
-    school: p.schoolName || '',
-    major: p.majorName || '',
+    school: getSchoolName(p.schoolKey, p.lang),
+    major: getMajorName(p.schoolKey, p.majorKey, p.lang),
     course: p.course || '',
     group: p.group || '',
     admitYear: p.admitYear || '',
@@ -996,6 +1064,7 @@ function loadProfile() {
 
 function applyProfile() {
   if (!userProfile) return;
+  const dict = I18N[currentLang] || I18N.uz;
   
   document.getElementById('onboarding-overlay').style.display = 'none';
   document.getElementById('profile-header').style.display = 'flex';
@@ -1003,14 +1072,17 @@ function applyProfile() {
   document.getElementById('main-topbar').style.display = 'flex';
   document.getElementById('main-nav').style.display = 'flex';
 
+  const schoolName = getSchoolName(userProfile.schoolKey);
+  const majorName = getMajorName(userProfile.schoolKey, userProfile.majorKey);
+
   document.getElementById('profile-avatar').textContent = userProfile.name ? userProfile.name.charAt(0).toUpperCase() : 'U';
   document.getElementById('profile-name').textContent = userProfile.name || '—';
   
   document.getElementById('profile-meta').textContent = 
-    `${userProfile.sid ? 'ID: ' + userProfile.sid + ' • ' : ''}${userProfile.group} • ${userProfile.course}-kurs (${userProfile.admitYear})`;
-  document.getElementById('school-badge').textContent = userProfile.schoolName || 'NPUU';
+    `${userProfile.sid ? 'ID: ' + userProfile.sid + ' • ' : ''}${userProfile.group} • ${userProfile.course}${dict.course_suffix} (${userProfile.admitYear})`;
+  document.getElementById('school-badge').textContent = schoolName || 'NPUU';
 
-  document.getElementById('today-group-text').textContent = `Guruhim: ${userProfile.group}`;
+  document.getElementById('today-group-text').textContent = `${dict.my_group}: ${userProfile.group}`;
   
   const linkBtn = document.getElementById('today-schedule-link');
   if (linkBtn) {
@@ -1020,9 +1092,9 @@ function applyProfile() {
   document.getElementById('pv-name').textContent = userProfile.name || '—';
   document.getElementById('pv-sid').textContent = userProfile.sid || '—';
   document.getElementById('pv-email').textContent = userProfile.email || '—';
-  document.getElementById('pv-school').textContent = userProfile.schoolName || '—';
-  document.getElementById('pv-major').textContent = userProfile.majorName || '—';
-  document.getElementById('pv-course').textContent = userProfile.course + '-kurs';
+  document.getElementById('pv-school').textContent = schoolName || '—';
+  document.getElementById('pv-major').textContent = majorName || '—';
+  document.getElementById('pv-course').textContent = userProfile.course + dict.course_suffix;
   document.getElementById('pv-group').textContent = userProfile.group || '—';
   document.getElementById('pv-year').textContent = userProfile.admitYear || '—';
 
@@ -1047,8 +1119,8 @@ function setLanguage(lang) {
   const sel = document.getElementById('lang-select');
   if (sel) sel.value = lang;
 
-  // Translate all dynamic elements using data-i18n
   const dict = I18N[lang] || I18N.uz;
+
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (dict[key]) {
@@ -1060,11 +1132,35 @@ function setLanguage(lang) {
     }
   });
 
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if (dict[key]) el.placeholder = dict[key];
+  });
+
   const searchInput = document.getElementById('search-prof');
   if (searchInput && dict.search_prof_ph) searchInput.placeholder = dict.search_prof_ph;
 
+  const currentSchoolVal = document.getElementById('ob-school').value;
+  const currentMajorVal = document.getElementById('ob-major').value;
+  const currentCourseVal = document.getElementById('ob-course').value;
+  const currentGroupVal = document.getElementById('ob-group').value;
+
+  if (currentSchoolVal) {
+    onSchoolChange();
+    if (currentMajorVal) document.getElementById('ob-major').value = currentMajorVal;
+    if (currentCourseVal) {
+      document.getElementById('ob-course').value = currentCourseVal;
+      onCourseChange();
+    }
+    if (currentGroupVal) document.getElementById('ob-group').value = currentGroupVal;
+  }
+
+  renderProfs();
+  renderHandbookMajors();
+
   if (userProfile) {
-    initTimetable();
+    userProfile.lang = lang;
+    applyProfile();
   }
 }
 
@@ -1107,22 +1203,23 @@ function getScheduleForGroup(groupName, day) {
   return [];
 }
 
-let currentSelectedDay = "Dushanba";
+let currentSelectedDay = "";
 
 function initTimetable(targetDay) {
+  const dict = I18N[currentLang] || I18N.uz;
   const container = document.getElementById('tt-container');
   if (!container) return;
   container.innerHTML = '';
 
   if (!userProfile || !userProfile.group) {
-    container.innerHTML = '<div class="card" style="text-align:center;padding:20px;color:var(--muted)">Guruh ma\'lumotlari topilmadi. Iltimos, profilingizni sozlang.</div>';
+    container.innerHTML = `<div class="card" style="text-align:center;padding:20px;color:var(--muted)">${dict.no_profile_group}</div>`;
     return;
   }
 
-  const daysOfWeek = ["Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba"];
+  const daysOfWeek = dict.days;
   if (!targetDay) {
     const dIdx = new Date().getDay();
-    targetDay = (dIdx >= 1 && dIdx <= 6) ? daysOfWeek[dIdx - 1] : "Dushanba";
+    targetDay = (dIdx >= 1 && dIdx <= 6) ? daysOfWeek[dIdx - 1] : daysOfWeek[0];
   }
   currentSelectedDay = targetDay;
 
@@ -1130,6 +1227,7 @@ function initTimetable(targetDay) {
   if (dayBadge) dayBadge.textContent = currentSelectedDay;
 
   const edupageUrl = getEdupageUrlForGroup(userProfile.group);
+  const schoolName = getSchoolName(userProfile.schoolKey);
 
   const headerCard = document.createElement('div');
   headerCard.className = 'card';
@@ -1137,10 +1235,10 @@ function initTimetable(targetDay) {
   headerCard.innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
       <div>
-        <div style="font-size:15px;font-weight:800;color:var(--text);">${userProfile.group} guruhi dars jadvali</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:2px;">🏛️ ${userProfile.schoolName || ''} • ${userProfile.course}-kurs</div>
+        <div style="font-size:15px;font-weight:800;color:var(--text);">${userProfile.group} ${dict.group_schedule_title}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px;">🏛️ ${schoolName} • ${userProfile.course}${dict.course_suffix}</div>
       </div>
-      <a href="${edupageUrl}" target="_blank" class="ctrl-btn" style="background:var(--accent);color:#fff;border:none;text-decoration:none;padding:8px 12px;display:inline-flex;align-items:center;gap:4px;font-weight:700;">${I18N[currentLang].open_edupage} ➔</a>
+      <a href="${edupageUrl}" target="_blank" class="ctrl-btn" style="background:var(--accent);color:#fff;border:none;text-decoration:none;padding:8px 12px;display:inline-flex;align-items:center;gap:4px;font-weight:700;">${dict.open_edupage} ➔</a>
     </div>
   `;
   container.appendChild(headerCard);
@@ -1170,6 +1268,7 @@ function initTimetable(targetDay) {
 }
 
 function renderLessons(group, day, container) {
+  const dict = I18N[currentLang] || I18N.uz;
   container.innerHTML = '';
   const lessons = getScheduleForGroup(group, day);
   const edupageUrl = getEdupageUrlForGroup(group);
@@ -1178,9 +1277,9 @@ function renderLessons(group, day, container) {
     container.innerHTML = `
       <div class="card" style="text-align:center;padding:32px 16px;color:var(--muted);">
         <div style="font-size:36px;margin-bottom:8px;">📅</div>
-        <div style="font-weight:700;font-size:14.5px;color:var(--text);margin-bottom:8px;">${group} guruhi uchun EduPage havola tayyor!</div>
-        <p style="font-size:12.5px;margin-bottom:14px;color:var(--muted);">Rasmiy dars jadvalingizni ko'rish uchun quyidagi tugmani bosing:</p>
-        <a href="${edupageUrl}" target="_blank" class="onboard-btn" style="display:inline-block;width:auto;padding:10px 20px;text-decoration:none;font-size:13.5px;">${I18N[currentLang].open_edupage} ➔</a>
+        <div style="font-weight:700;font-size:14.5px;color:var(--text);margin-bottom:8px;">${group} ${dict.ready_edupage_msg}</div>
+        <p style="font-size:12.5px;margin-bottom:14px;color:var(--muted);">${dict.click_edupage_desc}</p>
+        <a href="${edupageUrl}" target="_blank" class="onboard-btn" style="display:inline-block;width:auto;padding:10px 20px;text-decoration:none;font-size:13.5px;">${dict.open_edupage} ➔</a>
       </div>
     `;
     return;
@@ -1221,6 +1320,7 @@ const PROFS = [
 ];
 
 function renderProfs(filter = '') {
+  const dict = I18N[currentLang] || I18N.uz;
   const c = document.getElementById('prof-list');
   if (!c) return;
   c.innerHTML = '';
@@ -1233,7 +1333,7 @@ function renderProfs(filter = '') {
       <div style="font-size:12px;color:var(--muted);margin-top:2px;">${p.role}</div>
       <div style="font-size:12px;color:var(--accent2);margin-top:6px;display:flex;align-items:center;">
         📧 ${p.email}
-        <button class="copy-email-btn" onclick="navigator.clipboard.writeText('${p.email}');showBanner(I18N[currentLang].copied)">${I18N[currentLang].copy}</button>
+        <button class="copy-email-btn" onclick="navigator.clipboard.writeText('${p.email}');showBanner(I18N[currentLang].copied)">${dict.copy}</button>
       </div>
     `;
     c.appendChild(card);
@@ -1244,13 +1344,11 @@ function renderProfs(filter = '') {
 window.addEventListener('DOMContentLoaded', async () => {
   fetchStudentCsvData();
   const savedLang = localStorage.getItem(LS_LANG) || 'uz';
-  setLanguage(savedLang);
   const savedTheme = localStorage.getItem(LS_THEME) !== 'light';
   applyTheme(savedTheme);
 
   loadProfile();
-  renderProfs();
-  renderHandbookMajors();
+  setLanguage(savedLang);
 
   if (userProfile && userProfile.name) {
     applyProfile();
