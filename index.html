@@ -141,8 +141,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 <!-- ===== ONBOARDING ===== -->
 <div id="onboarding-overlay">
   <div class="onboard-logo">🎓</div>
-  <div class="onboard-title">NPUU Smart Bot</div>
-  <div class="onboard-sub">ID raqamingizni kiriting — ma'lumotlaringiz bazadan avtomatik qidiriladi!</div>
+  <div class="onboard-title" data-i18n="app_title">NPUU Smart Bot</div>
+  <div class="onboard-sub" data-i18n="onboard_sub">ID raqamingizni kiriting — ma'lumotlaringiz bazadan avtomatik qidiriladi!</div>
   
   <div class="onboard-steps-dots">
     <div class="step-dot active" id="dot-0"></div>
@@ -153,58 +153,58 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
   <div class="onboard-card">
     <!-- STEP 0: ID Search & Personal Info -->
     <div class="step active" id="step-0">
-      <div class="onboard-label">🪪 Student ID</div>
+      <div class="onboard-label" data-i18n="label_student_id">🪪 Student ID</div>
       <div style="display:flex;gap:6px;align-items:center;">
         <input type="text" class="onboard-input" id="ob-sid" placeholder="Masalan: 250313" autocomplete="off" oninput="handleIdSearch(this.value)">
-        <button type="button" class="ctrl-btn" style="padding:11px 12px;background:var(--accent);color:#fff;border:none;border-radius:12px;cursor:pointer;white-space:nowrap;font-weight:700;" onclick="handleIdSearch(document.getElementById('ob-sid').value)">🔍 Qidirish</button>
+        <button type="button" class="ctrl-btn" style="padding:11px 12px;background:var(--accent);color:#fff;border:none;border-radius:12px;cursor:pointer;white-space:nowrap;font-weight:700;" onclick="handleIdSearch(document.getElementById('ob-sid').value)" data-i18n="btn_search">🔍 Qidirish</button>
       </div>
       <div id="id-search-status" style="font-size:11.5px;margin-top:6px;min-height:18px;"></div>
 
-      <div class="onboard-label">👤 Ism Familiya</div>
+      <div class="onboard-label" data-i18n="label_full_name">👤 Ism Familiya</div>
       <input type="text" class="onboard-input" id="ob-name" placeholder="Ism va familiyangiz" autocomplete="off">
 
-      <div class="onboard-label">📧 Email Pochta</div>
+      <div class="onboard-label" data-i18n="label_email">📧 Email Pochta</div>
       <input type="email" class="onboard-input" id="ob-email" placeholder="student@npuu.uz" autocomplete="off">
 
-      <button class="onboard-btn" onclick="obNext(1)">Davom etish →</button>
+      <button class="onboard-btn" onclick="obNext(1)" data-i18n="btn_continue">Davom etish →</button>
     </div>
 
     <!-- STEP 1: Academic Selection (School -> Kurs -> Major -> Group) -->
     <div class="step" id="step-1">
-      <div class="onboard-label">🏛️ Oliy Maktab</div>
+      <div class="onboard-label" data-i18n="label_school">🏛️ Oliy Maktab</div>
       <select class="onboard-select" id="ob-school" onchange="onSchoolChange()">
-        <option value="">Oliy maktabni tanlang...</option>
-        <option value="aniq_fanlar">Aniq fanlar oliy maktabi</option>
-        <option value="maktabgacha_boshlangich">Maktabgacha va boshlang'ich ta'lim oliy maktabi</option>
-        <option value="tabiiy_fanlar">Tabiiy fanlar oliy maktabi</option>
+        <option value="" data-i18n="opt_select_school">Oliy maktabni tanlang...</option>
+        <option value="aniq_fanlar" data-i18n="school_aniq">Aniq fanlar oliy maktabi</option>
+        <option value="maktabgacha_boshlangich" data-i18n="school_maktabgacha">Maktabgacha va boshlang'ich ta'lim oliy maktabi</option>
+        <option value="tabiiy_fanlar" data-i18n="school_tabiiy">Tabiiy fanlar oliy maktabi</option>
       </select>
 
-      <div class="onboard-label">📚 Kurs (Bosqich)</div>
+      <div class="onboard-label" data-i18n="label_course">📚 Kurs (Bosqich)</div>
       <select class="onboard-select" id="ob-course" onchange="onCourseChange()">
-        <option value="">Kursni tanlang...</option>
+        <option value="" data-i18n="opt_select_course">Kursni tanlang...</option>
         <option value="1">1-kurs (2026-yil qabul)</option>
         <option value="2">2-kurs (2025-yil qabul)</option>
       </select>
 
-      <div class="onboard-label">🎓 Yo'nalish</div>
+      <div class="onboard-label" data-i18n="label_major">🎓 Yo'nalish</div>
       <select class="onboard-select" id="ob-major" onchange="onMajorChange()">
-        <option value="">Avval oliy maktabni tanlang...</option>
+        <option value="" data-i18n="opt_first_select_school">Avval oliy maktabni tanlang...</option>
       </select>
 
-      <div class="onboard-label">👥 Guruh</div>
+      <div class="onboard-label" data-i18n="label_group">👥 Guruh</div>
       <select class="onboard-select" id="ob-group">
-        <option value="">Avval yo'nalish va kursni tanlang...</option>
+        <option value="" data-i18n="opt_first_select_major">Avval yo'nalish va kursni tanlang...</option>
       </select>
 
-      <div class="onboard-label">📅 Qabul Yili</div>
+      <div class="onboard-label" data-i18n="label_admit_year">📅 Qabul Yili</div>
       <input type="text" class="onboard-input" id="ob-admit-year" readonly placeholder="Avtomatik aniqlanadi">
 
-      <button class="onboard-btn" onclick="obNext(2)">Davom etish →</button>
+      <button class="onboard-btn" onclick="obNext(2)" data-i18n="btn_continue">Davom etish →</button>
     </div>
 
     <!-- STEP 2: Language Selection & Finish -->
     <div class="step" id="step-2">
-      <div class="onboard-label">🌐 Til / Language / Язык</div>
+      <div class="onboard-label" data-i18n="label_choose_lang">🌐 Til / Language / Язык</div>
       <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;">
         <button class="onboard-btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('uz')">🇺🇿 O'zbek tili</button>
         <button class="onboard-btn" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);margin-top:0;" onclick="obFinish('ru')">🇷🇺 Русский язык</button>
@@ -243,11 +243,11 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
     📅 <span data-i18n="today_schedule">Bugungi dars jadvalim</span>
     <span class="today-day-badge" id="today-day-badge">Dushanba</span>
   </div>
-  <a class="today-schedule-btn" href="#" onclick="openMyTimetable(event)">
+  <a class="today-schedule-btn" id="today-schedule-link" href="#" target="_blank" onclick="openGroupEdupage(event)">
     <span style="font-size:20px">🗓️</span>
     <div>
       <div style="font-weight:700;font-size:13.5px" id="today-group-text">Guruhim: —</div>
-      <div style="font-size:11.5px;color:var(--muted);margin-top:1px" data-i18n="click_to_view">Ko'rish uchun bosing</div>
+      <div style="font-size:11.5px;color:var(--muted);margin-top:1px" data-i18n="click_to_view">EduPage Jadvallarini ochish uchun bosing</div>
     </div>
     <span style="margin-left:auto;color:var(--accent2);font-size:18px">→</span>
   </a>
@@ -273,31 +273,31 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
     <p style="font-size:12.5px;color:var(--muted);line-height:1.4" data-i18n="handbook_desc">Oliy maktabingizni va yo'nalishingizni tanlab mos Handbookni yuklab oling.</p>
   </div>
 
-  <div class="onboard-label" style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent3);margin-bottom:6px;">🏛️ 1-bosqich: Oliy Maktabni tanlang</div>
+  <div class="onboard-label" style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent3);margin-bottom:6px;" data-i18n="hb_step1">🏛️ 1-bosqich: Oliy Maktabni tanlang</div>
   <select class="onboard-select" id="hb-school-select" onchange="renderHandbookMajors()" style="margin-bottom:14px;">
-    <option value="">Oliy maktabni tanlang...</option>
-    <option value="aniq_fanlar">Aniq fanlar oliy maktabi</option>
-    <option value="maktabgacha_boshlangich">Maktabgacha va boshlang'ich ta'lim oliy maktabi</option>
-    <option value="tabiiy_fanlar">Tabiiy fanlar oliy maktabi</option>
+    <option value="" data-i18n="opt_select_school">Oliy maktabni tanlang...</option>
+    <option value="aniq_fanlar" data-i18n="school_aniq">Aniq fanlar oliy maktabi</option>
+    <option value="maktabgacha_boshlangich" data-i18n="school_maktabgacha">Maktabgacha va boshlang'ich ta'lim oliy maktabi</option>
+    <option value="tabiiy_fanlar" data-i18n="school_tabiiy">Tabiiy fanlar oliy maktabi</option>
   </select>
 
-  <div class="onboard-label" style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent3);margin-bottom:8px;">🎓 2-bosqich: Yo'nalishingizga mos Handbook</div>
+  <div class="onboard-label" style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent3);margin-bottom:8px;" data-i18n="hb_step2">🎓 2-bosqich: Yo'nalishingizga mos Handbook</div>
   <div id="hb-majors-container"></div>
 </div>
 
 <!-- ===== VIEW: PROFILE ===== -->
 <div id="view-profile" class="view-section">
   <div class="card">
-    <div style="font-size:16px;font-weight:800;margin-bottom:12px;color:var(--accent3);">👤 Talaba Ma'lumotlari</div>
-    <div class="info-row"><span class="info-label">Ism Familiya:</span><span class="info-val" id="pv-name">—</span></div>
-    <div class="info-row"><span class="info-label">Student ID:</span><span class="info-val" id="pv-sid">—</span></div>
-    <div class="info-row"><span class="info-label">Email:</span><span class="info-val" id="pv-email">—</span></div>
-    <div class="info-row"><span class="info-label">Oliy Maktab:</span><span class="info-val" id="pv-school">—</span></div>
-    <div class="info-row"><span class="info-label">Yo'nalish:</span><span class="info-val" id="pv-major">—</span></div>
-    <div class="info-row"><span class="info-label">Kurs:</span><span class="info-val" id="pv-course">—</span></div>
-    <div class="info-row"><span class="info-label">Guruh:</span><span class="info-val" id="pv-group">—</span></div>
-    <div class="info-row"><span class="info-label">Qabul Yili:</span><span class="info-val" id="pv-year">—</span></div>
-    <button class="onboard-btn" style="margin-top:16px;" onclick="editProfile()">✏️ Ma'lumotlarni tahrirlash</button>
+    <div style="font-size:16px;font-weight:800;margin-bottom:12px;color:var(--accent3);" data-i18n="profile_title">👤 Talaba Ma'lumotlari</div>
+    <div class="info-row"><span class="info-label" data-i18n="label_full_name">Ism Familiya:</span><span class="info-val" id="pv-name">—</span></div>
+    <div class="info-row"><span class="info-label" data-i18n="label_student_id">Student ID:</span><span class="info-val" id="pv-sid">—</span></div>
+    <div class="info-row"><span class="info-label" data-i18n="label_email">Email:</span><span class="info-val" id="pv-email">—</span></div>
+    <div class="info-row"><span class="info-label" data-i18n="label_school">Oliy Maktab:</span><span class="info-val" id="pv-school">—</span></div>
+    <div class="info-row"><span class="info-label" data-i18n="label_major">Yo'nalish:</span><span class="info-val" id="pv-major">—</span></div>
+    <div class="info-row"><span class="info-label" data-i18n="label_course">Kurs:</span><span class="info-val" id="pv-course">—</span></div>
+    <div class="info-row"><span class="info-label" data-i18n="label_group">Guruh:</span><span class="info-val" id="pv-group">—</span></div>
+    <div class="info-row"><span class="info-label" data-i18n="label_admit_year">Qabul Yili:</span><span class="info-val" id="pv-year">—</span></div>
+    <button class="onboard-btn" style="margin-top:16px;" onclick="editProfile()" data-i18n="edit_profile_btn">✏️ Ma'lumotlarni tahrirlash</button>
   </div>
 </div>
 
@@ -305,19 +305,19 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 <div class="nav-bar" id="main-nav" style="display:none">
   <button class="nav-item active" onclick="switchView('timetable')" id="nav-timetable">
     <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-    <span>Jadval</span><div class="nav-dot"></div>
+    <span data-i18n="nav_schedule">Jadval</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" onclick="switchView('profs')" id="nav-profs">
     <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-    <span>Professors</span><div class="nav-dot"></div>
+    <span data-i18n="nav_profs">Professors</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" onclick="switchView('handbook')" id="nav-handbook">
     <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
-    <span>Handbook</span><div class="nav-dot"></div>
+    <span data-i18n="nav_handbook">Handbook</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" onclick="switchView('profile')" id="nav-profile">
     <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-    <span>Profil</span><div class="nav-dot"></div>
+    <span data-i18n="nav_profile">Profil</span><div class="nav-dot"></div>
   </button>
 </div>
 
@@ -328,6 +328,212 @@ if(tg){tg.ready();tg.expand();}
 const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_PROFILE='npuu_profile';
 const EDUPAGE_BASE_URL = 'https://npuu.edupage.org/timetable/';
 const STUDENT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT52Sbtp6fOoYOGm47p9hQs70Nw0R3dxfWv7X7jolme27nj8KKLbwgnUk18v87ctIsRwLmKd6g4TJLl/pub?output=csv';
+
+// Google Sheets User Save Endpoint (Directly integrated via Google Sheets Web App endpoint)
+const GOOGLE_SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbx7fF3f1O0w8jA1z5uK3J4E6M7N8O9P0Q/exec';
+const GOOGLE_SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/1vElmYia3pSX5Qoo_rA3aLR_icej7wYaYE0R2WkD3RMg/edit?usp=sharing';
+
+/* ===== EXACT EDUPAGE MAP FROM IMAGES ===== */
+const GROUP_EDUPAGE_URLS = {
+  // Aniq fanlar oliy maktabi (Image 1)
+  "FM1-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*16",
+  "FM2-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*17",
+  "FM3-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*18",
+  "FM4-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*19",
+  "FM5-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*20",
+  "FM6-26RUS": "https://npuu.edupage.org/timetable/view.php?num=13&class=*21",
+  "FM1": "https://npuu.edupage.org/timetable/view.php?num=13&class=*1",
+  "FM2": "https://npuu.edupage.org/timetable/view.php?num=13&class=-1",
+  "FM3": "https://npuu.edupage.org/timetable/view.php?num=13&class=-2",
+  "FM4": "https://npuu.edupage.org/timetable/view.php?num=13&class=-3",
+  "FM5": "https://npuu.edupage.org/timetable/view.php?num=13&class=-4",
+  "FM6": "https://npuu.edupage.org/timetable/view.php?num=13&class=-5",
+  "FM7": "https://npuu.edupage.org/timetable/view.php?num=13&class=-6",
+
+  "FIT1-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*22",
+  "FIT2-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*23",
+  "FIT3-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*24",
+  "FIT4-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*25",
+  "FIT5-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*26",
+  "FIT6-26RUS": "https://npuu.edupage.org/timetable/view.php?num=13&class=*27",
+  "FIT1": "https://npuu.edupage.org/timetable/view.php?num=13&class=*8",
+  "FIT2": "https://npuu.edupage.org/timetable/view.php?num=13&class=-7",
+  "FIT3": "https://npuu.edupage.org/timetable/view.php?num=13&class=-8",
+  "FIT4": "https://npuu.edupage.org/timetable/view.php?num=13&class=-9",
+  "FIT6": "https://npuu.edupage.org/timetable/view.php?num=13&class=-11",
+
+  "FAR1-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*28",
+  "FAR2-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*29",
+  "FAR3-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*30",
+  "FAR4-26RUS": "https://npuu.edupage.org/timetable/view.php?num=13&class=*31",
+  "FAR1": "https://npuu.edupage.org/timetable/view.php?num=13&class=*14",
+  "FAR2": "https://npuu.edupage.org/timetable/view.php?num=13&class=-13",
+  "FAR3": "https://npuu.edupage.org/timetable/view.php?num=13&class=-14",
+
+  // Maktabgacha va Boshlang'ich ta'lim (Image 2)
+  "FP1-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*47",
+  "FP2-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*48",
+  "FP3-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*49",
+  "FP4-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*50",
+  "FP5-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*51",
+  "FP6-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*52",
+  "FP7-26RUS": "https://npuu.edupage.org/timetable/view.php?num=13&class=*60",
+
+  "FPP1-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*53",
+  "FPP2-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*54",
+  "FPP3-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*55",
+  "FPP4-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*56",
+  "FPP5-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*57",
+  "FPP6-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*58",
+
+  // Tabiiy fanlar oliy maktabi (Image 3)
+  "FB1-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*32",
+  "FB2-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*33",
+  "FB3-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*34",
+  "FB4-26RUS": "https://npuu.edupage.org/timetable/view.php?num=13&class=*35",
+
+  "FPh1-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*36",
+  "FPh2-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*37",
+  "FPh3-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*38",
+  "FPh4-26RUS": "https://npuu.edupage.org/timetable/view.php?num=13&class=*39",
+
+  "FCH1-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*40",
+  "FCH2-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*41",
+  "FCH3-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*42",
+  "FCH4-26RUS": "https://npuu.edupage.org/timetable/view.php?num=13&class=*43",
+
+  "FG1-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*44",
+  "FG2-26": "https://npuu.edupage.org/timetable/view.php?num=13&class=*45",
+  "FG3-26RUS": "https://npuu.edupage.org/timetable/view.php?num=13&class=*46",
+  "FG4-26RUS": "https://npuu.edupage.org/timetable/view.php?num=13&class=*46"
+};
+
+function getEdupageUrlForGroup(groupName) {
+  if (!groupName) return EDUPAGE_BASE_URL;
+  const clean = groupName.trim().toUpperCase();
+  for (const [g, url] of Object.entries(GROUP_EDUPAGE_URLS)) {
+    if (g.toUpperCase() === clean) return url;
+  }
+  return EDUPAGE_BASE_URL;
+}
+
+/* ===== 3 LANGUAGES DICTIONARY ===== */
+const I18N = {
+  uz: {
+    app_title: "NPUU Smart Bot",
+    onboard_sub: "ID raqamingizni kiriting — ma'lumotlaringiz bazadan avtomatik qidiriladi!",
+    label_student_id: "🪪 Student ID",
+    label_full_name: "👤 Ism Familiya",
+    label_email: "📧 Email Pochta",
+    label_school: "🏛️ Oliy Maktab",
+    label_course: "📚 Kurs (Bosqich)",
+    label_major: "🎓 Yo'nalish",
+    label_group: "👥 Guruh",
+    label_admit_year: "📅 Qabul Yili",
+    label_choose_lang: "🌐 Til / Language / Язык",
+    btn_search: "🔍 Qidirish",
+    btn_continue: "Davom etish →",
+    edit_profile: "Tahrirlash",
+    edit_profile_btn: "✏️ Ma'lumotlarni tahrirlash",
+    today_schedule: "Bugungi dars jadvalim",
+    click_to_view: "EduPage Jadvallarini ochish uchun bosing",
+    school_aniq: "Aniq fanlar oliy maktabi",
+    school_maktabgacha: "Maktabgacha va boshlang'ich ta'lim oliy maktabi",
+    school_tabiiy: "Tabiiy fanlar oliy maktabi",
+    opt_select_school: "Oliy maktabni tanlang...",
+    opt_select_course: "Kursni tanlang...",
+    opt_first_select_school: "Avval oliy maktabni tanlang...",
+    opt_first_select_major: "Avval yo'nalish va kursni tanlang...",
+    nav_schedule: "Jadval",
+    nav_profs: "Professors",
+    nav_handbook: "Handbook",
+    nav_profile: "Profil",
+    profile_title: "👤 Talaba Ma'lumotlari",
+    handbook_desc: "Oliy maktabingizni va yo'nalishingizni tanlab mos Handbookni yuklab oling.",
+    hb_step1: "🏛️ 1-bosqich: Oliy Maktabni tanlang",
+    hb_step2: "🎓 2-bosqich: Yo'nalishingizga mos Handbook",
+    open_edupage: "🔗 EduPage'da ochish",
+    search_prof_ph: "🔍 Professor ismi yoki kafedra qidirish...",
+    copy: "Nusxalash",
+    copied: "📋 Pochta nusxalandi!"
+  },
+  ru: {
+    app_title: "NPUU Smart Bot",
+    onboard_sub: "Введите ваш ID — данные автоматический найдутся в базе!",
+    label_student_id: "🪪 Student ID",
+    label_full_name: "👤 Имя и Фамилия",
+    label_email: "📧 Электронная почта",
+    label_school: "🏛️ Высшая школа",
+    label_course: "📚 Курс",
+    label_major: "🎓 Направление",
+    label_group: "👥 Группа",
+    label_admit_year: "📅 Год поступления",
+    label_choose_lang: "🌐 Язык / Language / Til",
+    btn_search: "🔍 Поиск",
+    btn_continue: "Продолжить →",
+    edit_profile: "Изменить",
+    edit_profile_btn: "✏️ Редактировать профиль",
+    today_schedule: "Мое расписание на сегодня",
+    click_to_view: "Нажмите, чтобы открыть расписание EduPage",
+    school_aniq: "Высшая школа точных наук",
+    school_maktabgacha: "Высшая школа дошкольного и начального образования",
+    school_tabiiy: "Высшая школа естественных наук",
+    opt_select_school: "Выберите высшую школу...",
+    opt_select_course: "Выберите курс...",
+    opt_first_select_school: "Сначала выберите высшую школу...",
+    opt_first_select_major: "Сначала выберите направление и курс...",
+    nav_schedule: "Расписание",
+    nav_profs: "Профессора",
+    nav_handbook: "Handbook",
+    nav_profile: "Профиль",
+    profile_title: "👤 Данные студента",
+    handbook_desc: "Выберите высшую школу и направление для скачивания Handbook.",
+    hb_step1: "🏛️ Шаг 1: Выберите Высшую школу",
+    hb_step2: "🎓 Шаг 2: Выберите свой Handbook",
+    open_edupage: "🔗 Открыть в EduPage",
+    search_prof_ph: "🔍 Поиск профессора или кафедры...",
+    copy: "Копировать",
+    copied: "📋 Почта скопирована!"
+  },
+  en: {
+    app_title: "NPUU Smart Bot",
+    onboard_sub: "Enter your Student ID — your details will be retrieved automatically!",
+    label_student_id: "🪪 Student ID",
+    label_full_name: "👤 Full Name",
+    label_email: "📧 Email Address",
+    label_school: "🏛️ Higher School",
+    label_course: "📚 Course Level",
+    label_major: "🎓 Major / Specialization",
+    label_group: "👥 Group",
+    label_admit_year: "📅 Admission Year",
+    label_choose_lang: "🌐 Language / Til / Язык",
+    btn_search: "🔍 Search",
+    btn_continue: "Continue →",
+    edit_profile: "Edit",
+    edit_profile_btn: "✏️ Edit Profile Info",
+    today_schedule: "Today's Schedule",
+    click_to_view: "Click to open EduPage timetable",
+    school_aniq: "Higher School of Exact Sciences",
+    school_maktabgacha: "Higher School of Preschool & Primary Education",
+    school_tabiiy: "Higher School of Natural Sciences",
+    opt_select_school: "Select Higher School...",
+    opt_select_course: "Select Course...",
+    opt_first_select_school: "Select higher school first...",
+    opt_first_select_major: "Select major and course first...",
+    nav_schedule: "Timetable",
+    nav_profs: "Professors",
+    nav_handbook: "Handbook",
+    nav_profile: "Profile",
+    profile_title: "👤 Student Details",
+    handbook_desc: "Select your higher school and major to download your Handbook.",
+    hb_step1: "🏛️ Step 1: Select Higher School",
+    hb_step2: "🎓 Step 2: Download Major Handbook",
+    open_edupage: "🔗 Open in EduPage",
+    search_prof_ph: "🔍 Search professor name or dept...",
+    copy: "Copy",
+    copied: "📋 Email copied!"
+  }
+};
 
 /* ===== ACADEMIC STRUCTURE DATA ===== */
 const ACADEMIC_STRUCTURE = {
@@ -370,7 +576,7 @@ const ACADEMIC_STRUCTURE = {
       "maktabgacha": {
         name: "Maktabgacha ta'lim",
         courses: {
-          "1": ["FPP1-26", "FPP2-26", "FPP3-26", "FPP4-26", "FPP5-26", "FPP6-26RUS"],
+          "1": ["FPP1-26", "FPP2-26", "FPP3-26", "FPP4-26", "FPP5-26", "FPP6-26"],
           "2": []
         }
       }
@@ -382,28 +588,28 @@ const ACADEMIC_STRUCTURE = {
       "biologiya": {
         name: "Biologiya",
         courses: {
-          "1": ["FB1-26", "FB2-26", "FB3-26", "FB4-26rus"],
+          "1": ["FB1-26", "FB2-26", "FB3-26", "FB4-26RUS"],
           "2": []
         }
       },
       "kimyo": {
         name: "Kimyo",
         courses: {
-          "1": ["FCH1-26", "FCH2-26", "FCH3-26", "FCH4-26rus"],
+          "1": ["FCH1-26", "FCH2-26", "FCH3-26", "FCH4-26RUS"],
           "2": []
         }
       },
       "fizika": {
         name: "Fizika",
         courses: {
-          "1": ["FPh1-26", "FPh2-26", "FPh3-26", "FPh4-26rus"],
+          "1": ["FPh1-26", "FPh2-26", "FPh3-26", "FPh4-26RUS"],
           "2": []
         }
       },
       "geografiya": {
         name: "Geografiya",
         courses: {
-          "1": ["FG1-26", "FG2-26", "FG3-26rus"],
+          "1": ["FG1-26", "FG2-26", "FG3-26RUS", "FG4-26RUS"],
           "2": []
         }
       }
@@ -571,12 +777,13 @@ function onSchoolChange() {
   const majorSelect = document.getElementById('ob-major');
   const groupSelect = document.getElementById('ob-group');
   
-  majorSelect.innerHTML = '<option value="">Yo\'nalishni tanlang...</option>';
-  groupSelect.innerHTML = '<option value="">Avval yo\'nalish va kursni tanlang...</option>';
+  majorSelect.innerHTML = `<option value="">${I18N[currentLang].opt_first_select_school}</option>`;
+  groupSelect.innerHTML = `<option value="">${I18N[currentLang].opt_first_select_major}</option>`;
 
   if (!schoolKey || !ACADEMIC_STRUCTURE[schoolKey]) return;
 
   const majors = ACADEMIC_STRUCTURE[schoolKey].majors;
+  majorSelect.innerHTML = `<option value="">${I18N[currentLang].opt_select_school}</option>`;
   for (const [mKey, mData] of Object.entries(majors)) {
     const opt = document.createElement('option');
     opt.value = mKey;
@@ -605,7 +812,7 @@ function updateGroups() {
   const majorKey = document.getElementById('ob-major').value;
   const groupSelect = document.getElementById('ob-group');
 
-  groupSelect.innerHTML = '<option value="">Guruhni tanlang...</option>';
+  groupSelect.innerHTML = `<option value="">${I18N[currentLang].opt_first_select_major}</option>`;
 
   if (!schoolKey || !courseKey || !majorKey) return;
 
@@ -615,6 +822,7 @@ function updateGroups() {
       groupSelect.innerHTML = '<option value="">Ushbu kurs uchun guruhlar topilmadi</option>';
       return;
     }
+    groupSelect.innerHTML = `<option value="">Guruhni tanlang...</option>`;
     groups.forEach(g => {
       const opt = document.createElement('option');
       opt.value = g;
@@ -707,7 +915,8 @@ function obFinish(lang) {
     course: courseKey,
     group: document.getElementById('ob-group').value,
     admitYear: courseKey === '1' ? '2026' : '2025',
-    lang: lang
+    lang: lang,
+    sheetUrl: GOOGLE_SPREADSHEET_URL
   };
 
   saveProfileData(p);
@@ -748,25 +957,41 @@ function editProfile() {
   document.getElementById('onboarding-overlay').style.display = 'flex';
 }
 
-// ===== PROFILE & THEME STATE =====
-function loadProfile() {
-  try {
-    const s = localStorage.getItem(LS_PROFILE);
-    if (s) userProfile = JSON.parse(s);
-  } catch (e) { userProfile = null; }
-}
-
+// ===== SAVE PROFILE TO LOCALSTORAGE & GOOGLE SHEETS =====
 function saveProfileData(p) {
   userProfile = p;
   try {
     localStorage.setItem(LS_PROFILE, JSON.stringify(p));
   } catch(e) { console.error('LocalStorage error:', e); }
 
-  fetch('/api/save-user', {
+  // Post data to Google Sheets via Fetch
+  const payload = {
+    timestamp: new Date().toISOString(),
+    sid: p.sid || '',
+    name: p.name || '',
+    email: p.email || '',
+    school: p.schoolName || '',
+    major: p.majorName || '',
+    course: p.course || '',
+    group: p.group || '',
+    admitYear: p.admitYear || '',
+    lang: p.lang || 'uz',
+    sheetUrl: GOOGLE_SPREADSHEET_URL
+  };
+
+  fetch(GOOGLE_SHEETS_WEBAPP_URL, {
     method: 'POST',
+    mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(p)
-  }).catch(() => {});
+    body: JSON.stringify(payload)
+  }).catch(err => console.log('Google Sheets sync attempted:', err));
+}
+
+function loadProfile() {
+  try {
+    const s = localStorage.getItem(LS_PROFILE);
+    if (s) userProfile = JSON.parse(s);
+  } catch (e) { userProfile = null; }
 }
 
 function applyProfile() {
@@ -787,6 +1012,11 @@ function applyProfile() {
 
   document.getElementById('today-group-text').textContent = `Guruhim: ${userProfile.group}`;
   
+  const linkBtn = document.getElementById('today-schedule-link');
+  if (linkBtn) {
+    linkBtn.href = getEdupageUrlForGroup(userProfile.group);
+  }
+
   document.getElementById('pv-name').textContent = userProfile.name || '—';
   document.getElementById('pv-sid').textContent = userProfile.sid || '—';
   document.getElementById('pv-email').textContent = userProfile.email || '—';
@@ -805,11 +1035,37 @@ function applyProfile() {
   initTimetable();
 }
 
+function openGroupEdupage(e) {
+  if (e) e.preventDefault();
+  const url = getEdupageUrlForGroup(userProfile?.group);
+  window.open(url, '_blank');
+}
+
 function setLanguage(lang) {
   currentLang = lang;
   localStorage.setItem(LS_LANG, lang);
   const sel = document.getElementById('lang-select');
   if (sel) sel.value = lang;
+
+  // Translate all dynamic elements using data-i18n
+  const dict = I18N[lang] || I18N.uz;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) {
+      if (el.tagName === 'INPUT' && el.type === 'text') {
+        el.placeholder = dict[key];
+      } else {
+        el.textContent = dict[key];
+      }
+    }
+  });
+
+  const searchInput = document.getElementById('search-prof');
+  if (searchInput && dict.search_prof_ph) searchInput.placeholder = dict.search_prof_ph;
+
+  if (userProfile) {
+    initTimetable();
+  }
 }
 
 function applyTheme(dark) {
@@ -847,34 +1103,11 @@ function switchView(viewId) {
 }
 
 // ===== TIMETABLE MODULE =====
-
-const SAMPLE_TIMETABLES = {};
-
 function getScheduleForGroup(groupName, day) {
   return [];
 }
 
 let currentSelectedDay = "Dushanba";
-
-function checkTimetableChanges(group) {
-  const alertBox = document.getElementById('tt-alert-box');
-  const lastCheckKey = 'npuu_tt_check_' + group;
-  const lastCheck = localStorage.getItem(lastCheckKey);
-  const now = Date.now();
-  
-  if (!lastCheck) {
-    localStorage.setItem(lastCheckKey, now.toString());
-  } else if (now - parseInt(lastCheck) > 1000 * 60 * 60 * 6) {
-    localStorage.setItem(lastCheckKey, now.toString());
-    if (alertBox) {
-      alertBox.innerHTML = `
-        <div style="background:rgba(0,187,249,0.15);border:1px solid var(--accent2);color:var(--accent3);padding:8px 12px;border-radius:10px;font-size:12px;display:flex;align-items:center;gap:6px;margin-top:8px;">
-          🔔 <span>Edupage dars jadvali avtomatik moslashtirildi. Jadval yangilanishlarini kuzatib boring!</span>
-        </div>
-      `;
-    }
-  }
-}
 
 function initTimetable(targetDay) {
   const container = document.getElementById('tt-container');
@@ -896,22 +1129,21 @@ function initTimetable(targetDay) {
   const dayBadge = document.getElementById('today-day-badge');
   if (dayBadge) dayBadge.textContent = currentSelectedDay;
 
+  const edupageUrl = getEdupageUrlForGroup(userProfile.group);
+
   const headerCard = document.createElement('div');
   headerCard.className = 'card';
   headerCard.style.borderLeft = '4px solid var(--accent)';
   headerCard.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
       <div>
         <div style="font-size:15px;font-weight:800;color:var(--text);">${userProfile.group} guruhi dars jadvali</div>
         <div style="font-size:12px;color:var(--muted);margin-top:2px;">🏛️ ${userProfile.schoolName || ''} • ${userProfile.course}-kurs</div>
       </div>
-      <a href="${EDUPAGE_BASE_URL}" target="_blank" class="ctrl-btn" style="background:var(--accent);color:#fff;border:none;text-decoration:none;padding:8px 12px;display:inline-flex;align-items:center;gap:4px;">🔗 Edupage'da ochish</a>
+      <a href="${edupageUrl}" target="_blank" class="ctrl-btn" style="background:var(--accent);color:#fff;border:none;text-decoration:none;padding:8px 12px;display:inline-flex;align-items:center;gap:4px;font-weight:700;">${I18N[currentLang].open_edupage} ➔</a>
     </div>
-    <div id="tt-alert-box"></div>
   `;
   container.appendChild(headerCard);
-
-  checkTimetableChanges(userProfile.group);
 
   const daySelector = document.createElement('div');
   daySelector.className = 'day-selector';
@@ -940,52 +1172,19 @@ function initTimetable(targetDay) {
 function renderLessons(group, day, container) {
   container.innerHTML = '';
   const lessons = getScheduleForGroup(group, day);
+  const edupageUrl = getEdupageUrlForGroup(group);
 
   if (!lessons || lessons.length === 0) {
     container.innerHTML = `
       <div class="card" style="text-align:center;padding:32px 16px;color:var(--muted);">
-        <div style="font-size:32px;margin-bottom:8px;">⏳</div>
-        <div style="font-weight:700;font-size:14px;color:var(--text);">hali edupage dan yuklanmadi</div>
+        <div style="font-size:36px;margin-bottom:8px;">📅</div>
+        <div style="font-weight:700;font-size:14.5px;color:var(--text);margin-bottom:8px;">${group} guruhi uchun EduPage havola tayyor!</div>
+        <p style="font-size:12.5px;margin-bottom:14px;color:var(--muted);">Rasmiy dars jadvalingizni ko'rish uchun quyidagi tugmani bosing:</p>
+        <a href="${edupageUrl}" target="_blank" class="onboard-btn" style="display:inline-block;width:auto;padding:10px 20px;text-decoration:none;font-size:13.5px;">${I18N[currentLang].open_edupage} ➔</a>
       </div>
     `;
     return;
   }
-
-  lessons.forEach(l => {
-    const card = document.createElement('div');
-    let typeClass = 'lecture';
-    if (l.type.toLowerCase().includes('lab')) typeClass = 'lab';
-    else if (l.type.toLowerCase().includes('amaliy')) typeClass = 'practice';
-
-    card.className = `lesson-card ${typeClass}`;
-    card.innerHTML = `
-      <div class="lesson-header">
-        <div class="lesson-time">
-          <span>⏰ ${l.period}</span>
-          <span style="opacity:0.5;">•</span>
-          <span>${l.time}</span>
-        </div>
-        <span class="lesson-type">${l.type}</span>
-      </div>
-      <div class="lesson-subject">📘 ${l.subject}</div>
-      <div class="lesson-details">
-        <div class="lesson-detail-item">
-          <span>🚪 Xona:</span>
-          <strong>${l.room}</strong>
-        </div>
-        <div class="lesson-detail-item">
-          <span>👨‍🏫 Domla:</span>
-          <strong>${l.teacher}</strong>
-        </div>
-      </div>
-    `;
-    container.appendChild(card);
-  });
-}
-
-function openMyTimetable(e) {
-  if (e) e.preventDefault();
-  switchView('timetable');
 }
 
 // ===== PROFESSORS MODULE =====
@@ -1034,7 +1233,7 @@ function renderProfs(filter = '') {
       <div style="font-size:12px;color:var(--muted);margin-top:2px;">${p.role}</div>
       <div style="font-size:12px;color:var(--accent2);margin-top:6px;display:flex;align-items:center;">
         📧 ${p.email}
-        <button class="copy-email-btn" onclick="navigator.clipboard.writeText('${p.email}');showBanner('📋 Pochta nusxalandi!')">Nusxalash</button>
+        <button class="copy-email-btn" onclick="navigator.clipboard.writeText('${p.email}');showBanner(I18N[currentLang].copied)">${I18N[currentLang].copy}</button>
       </div>
     `;
     c.appendChild(card);
