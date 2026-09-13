@@ -795,6 +795,7 @@ async function searchStudents(query) {
   if (!sheetsData || sheetsData.length === 0) return [];
 
   const results = [];
+  const seenKeys = new Set();
 
   for (const rows of sheetsData) {
     if (!rows || rows.length === 0) continue;
@@ -834,12 +835,16 @@ async function searchStudents(query) {
       const matchAny = row.some(cell => cell.toLowerCase().includes(cleanQ));
 
       if (matchId || matchName || matchAny) {
-        results.push({
-          id: foundId,
-          name: foundName,
-          email: foundEmail,
-          group: foundGroup
-        });
+        const uniqueKey = (foundId || foundEmail || foundName).toLowerCase();
+        if (uniqueKey && !seenKeys.has(uniqueKey)) {
+          seenKeys.add(uniqueKey);
+          results.push({
+            id: foundId,
+            name: foundName,
+            email: foundEmail,
+            group: foundGroup
+          });
+        }
       }
       if (results.length >= 25) break;
     }
