@@ -732,19 +732,37 @@ function parseCSV(text) {
   return result;
 }
 
-// Barcha 4 ta listni parallel yuklab olish funksiyasi
+// Barcha 4 ta listni parallel yuklab olish funksiyasi (gviz/tq orqali har bir varaqni aniq olish)
 async function fetchStudentCsvData() {
   if (cachedCsvData) return cachedCsvData;
   const allSheetsData = [];
   try {
-    const fetchPromises = SPREADSHEET_SHEET_NAMES.map(sheetName =>
-      fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&sheet=${encodeURIComponent(sheetName)}`)
-        .then(res => res.ok ? res.text() : '')
-        .catch(err => {
-          console.error(`Sheet error (${sheetName}):`, err);
-          return '';
-        })
-    );
+    const fetchPromises = SPREADSHEET_SHEET_NAMES.map(async (sheetName) => {
+      // 1-ustuvorlik: Google Visualization Query API (Varaq nomi bo'yicha aniq yuklaydi)
+      const gvizUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
+      try {
+        const res = await fetch(gvizUrl);
+        if (res.ok) {
+          const text = await res.text();
+          if (text && text.trim().length > 0) return text;
+        }
+      } catch (err) {
+        console.warn(`gviz fetch error for sheet ${sheetName}:`, err);
+      }
+
+      // 2-zaxira (fallback): Standart export URL
+      try {
+        const exportUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&sheet=${encodeURIComponent(sheetName)}`;
+        const res2 = await fetch(exportUrl);
+        if (res2.ok) {
+          return await res2.text();
+        }
+      } catch (err) {
+        console.warn(`export fetch error for sheet ${sheetName}:`, err);
+      }
+
+      return '';
+    });
 
     const csvTexts = await Promise.all(fetchPromises);
     csvTexts.forEach(text => {
@@ -800,7 +818,7 @@ async function searchStudents(query) {
   for (const rows of sheetsData) {
     if (!rows || rows.length === 0) continue;
 
-    const header = rows[0].map(c => c.toLowerCase().trim());
+    const header = rows[0].map(c => c.toLowerCase().trim().replace(/^\uFEFF/, ''));
     
     // Student ID ustunini aniq topish ("№" tartib raqami ustunini tashlab o'tish)
     let idCol = header.findIndex(c => c.includes('student id') || c.includes('student_id') || c.includes('talaba id') || (c.includes('id') && !c.includes('№')));
@@ -846,9 +864,9 @@ async function searchStudents(query) {
           });
         }
       }
-      if (results.length >= 25) break;
+      if (results.length >= 30) break;
     }
-    if (results.length >= 25) break;
+    if (results.length >= 30) break;
   }
   return results;
 }
