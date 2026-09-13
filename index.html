@@ -337,8 +337,8 @@ const STUDENT_CSV_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID
 const SPREADSHEET_SHEET_NAMES = [
   'Aniq fanlar oliy maktabi 2025',
   'Aniq fanlar oliy maktabi 2026',
-  'Maktabgacha-Boshlangich',
-  'Tabiiy fanlar'
+  'Maktabgacha-Boshlangich 2026',
+  'Tabiiy fanlar 2026'
 ];
 
 const GOOGLE_SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbx7fF3f1O0w8jA1z5uK3J4E6M7N8O9P0Q/exec';
@@ -732,13 +732,13 @@ function parseCSV(text) {
   return result;
 }
 
-// Barcha 4 ta listni parallel yuklab olish funksiyasi (gviz/tq orqali har bir varaqni aniq olish)
+// Barcha 4 ta listni parallel yuklab olish funksiyasi
 async function fetchStudentCsvData() {
   if (cachedCsvData) return cachedCsvData;
   const allSheetsData = [];
   try {
     const fetchPromises = SPREADSHEET_SHEET_NAMES.map(async (sheetName) => {
-      // 1-ustuvorlik: Google Visualization Query API (Varaq nomi bo'yicha aniq yuklaydi)
+      // 1-ustuvorlik: Google Visualization Query API
       const gvizUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
       try {
         const res = await fetch(gvizUrl);
@@ -813,17 +813,16 @@ async function searchStudents(query) {
   if (!sheetsData || sheetsData.length === 0) return [];
 
   const results = [];
-  const seenKeys = new Set();
+  const seenKeys = new Set(); // Takroriy talabalarni filtrlash uchun global set
 
   for (const rows of sheetsData) {
     if (!rows || rows.length === 0) continue;
 
     const header = rows[0].map(c => c.toLowerCase().trim().replace(/^\uFEFF/, ''));
     
-    // Student ID ustunini aniq topish ("№" tartib raqami ustunini tashlab o'tish)
     let idCol = header.findIndex(c => c.includes('student id') || c.includes('student_id') || c.includes('talaba id') || (c.includes('id') && !c.includes('№')));
-    let nameCol = header.findIndex(c => c.includes('f.i.o') || c.includes('fio') || c.includes('ism') || c.includes('name') || c.includes('familiya'));
-    let emailCol = header.findIndex(c => c.includes('email') || c.includes('mail'));
+    let nameCol = header.findIndex(c => c.includes('f.i.o') || c.includes('fio') || c.includes('ism') || c.includes('familya') || c.includes('name') || c.includes('familiya'));
+    let emailCol = header.findIndex(c => c.includes('email') || c.includes('mail') || c.includes('pochta'));
     let groupCol = header.findIndex(c => c.includes('guruh') || c.includes('group') || c.includes('groups'));
 
     for (let r = 1; r < rows.length; r++) {
@@ -835,33 +834,53 @@ async function searchStudents(query) {
       let foundEmail = (emailCol !== -1 && row[emailCol]) ? row[emailCol].trim() : '';
       let foundGroup = (groupCol !== -1 && row[groupCol]) ? row[groupCol].trim() : '';
 
-      // Agar tartib raqam (masalan 1, 2) tushib qolgan bo'lsa, uni tozalab haqiqiy ID ni qidiramiz
       if (foundId && !/^\d{4,10}$/.test(foundId)) {
-        foundId = '';
+        if (/^\d+$/.test(foundId.replace(/\D/g, ''))) {
+          foundId = foundId.replace(/\D/g, '');
+        } else {
+          foundId = '';
+        }
       }
 
       for (let c = 0; c < row.length; c++) {
-        const val = row[c].trim();
+        const val = row[c] ? row[c].trim() : '';
+        if (!val) continue;
         if (!foundEmail && val.includes('@')) foundEmail = val;
         else if (!foundGroup && detectStructureFromGroup(val)) foundGroup = val;
-        else if (!foundId && /^\d{4,10}$/.test(val)) foundId = val;
-        else if (!foundName && val.length > 3 && !/\d/.test(val) && val.includes(' ')) foundName = val;
+        else if (!foundId && /^\d{5,10}$/.test(val)) foundId = val;
+        else if (!foundName && val.length > 3 && !/\d/.test(val) && val.includes(' ') && c !== 0) foundName = val;
       }
 
-      const matchId = foundId.toLowerCase().includes(cleanQ);
-      const matchName = foundName.toLowerCase().includes(cleanQ);
+      const matchId = foundId && foundId.toLowerCase().includes(cleanQ);
+      const matchName = foundName && foundName.toLowerCase().includes(cleanQ);
+      const matchEmail = foundEmail && foundEmail.toLowerCase().includes(cleanQ);
+      const matchGroup = foundGroup && foundGroup.toLowerCase().includes(cleanQ);
       const matchAny = row.some(cell => cell.toLowerCase().includes(cleanQ));
 
-      if (matchId || matchName || matchAny) {
-        const uniqueKey = (foundId || foundEmail || foundName).toLowerCase();
-        if (uniqueKey && !seenKeys.has(uniqueKey)) {
-          seenKeys.add(uniqueKey);
-          results.push({
-            id: foundId,
-            name: foundName,
-            email: foundEmail,
-            group: foundGroup
-          });
+      if (matchId || matchName || matchEmail || matchGroup || matchAny) {
+        const primaryId = foundId.toLowerCase().trim();
+        const primaryEmail = foundEmail.toLowerCase().trim();
+        const primaryName = foundName.toLowerCase().trim();
+
+        if (primaryId || primaryEmail || primaryName) {
+          // Duplikatsiyani 3 xil mezon bo'yicha tekshirib 4 marta chiqish xatosini yo'qotish
+          let isDuplicate = false;
+          if (primaryId && seenKeys.has('id:' + primaryId)) isDuplicate = true;
+          if (primaryEmail && seenKeys.has('email:' + primaryEmail)) isDuplicate = true;
+          if (primaryName && seenKeys.has('name:' + primaryName)) isDuplicate = true;
+
+          if (!isDuplicate) {
+            if (primaryId) seenKeys.add('id:' + primaryId);
+            if (primaryEmail) seenKeys.add('email:' + primaryEmail);
+            if (primaryName) seenKeys.add('name:' + primaryName);
+
+            results.push({
+              id: foundId,
+              name: foundName,
+              email: foundEmail,
+              group: foundGroup
+            });
+          }
         }
       }
       if (results.length >= 30) break;
