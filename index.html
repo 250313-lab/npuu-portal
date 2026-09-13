@@ -56,7 +56,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 
 /* ===== PROFILE HEADER ===== */
 .profile-header{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--header-grad);border-bottom:1px solid var(--border)}
-.profile-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 0 14px rgba(58,134,255,.4)}
+.profile-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff;flex-shrink:0;box-shadow:0 0 14px rgba(58,134,255,.4);overflow:hidden;}
+.profile-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
 .profile-info{flex:1;min-width:0}
 .profile-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .profile-meta{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.4}
@@ -142,7 +143,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 <div id="onboarding-overlay">
   <div class="onboard-logo">🎓</div>
   <div class="onboard-title" data-i18n="app_title">NPUU Smart Bot</div>
-  <div class="onboard-sub" data-i18n="onboard_sub">ID raqamingizni kiriting — ma'lumotlaringiz bazadan avtomatik qidiriladi!</div>
+  <div class="onboard-sub" data-i18n="onboard_sub">ID yoki Ism-familiyangizni kiriting — natijalardan o'zingizni tanlang!</div>
   
   <div class="onboard-steps-dots">
     <div class="step-dot active" id="dot-0"></div>
@@ -153,11 +154,12 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
   <div class="onboard-card">
     <!-- STEP 0: ID Search & Personal Info -->
     <div class="step active" id="step-0">
-      <div class="onboard-label" data-i18n="label_student_id">🪪 Student ID</div>
-      <div style="display:flex;gap:6px;align-items:center;">
-        <input type="text" class="onboard-input" id="ob-sid" placeholder="Masalan: 250313" autocomplete="off" oninput="handleIdSearch(this.value)">
+      <div class="onboard-label" data-i18n="label_student_id">🪪 Student ID yoki Ism Familiya</div>
+      <div style="display:flex;gap:6px;align-items:center;position:relative;">
+        <input type="text" class="onboard-input" id="ob-sid" placeholder="Masalan: 250313 yoki Sodiqxon" autocomplete="off" oninput="handleIdSearch(this.value)">
         <button type="button" class="ctrl-btn" style="padding:11px 12px;background:var(--accent);color:#fff;border:none;border-radius:12px;cursor:pointer;white-space:nowrap;font-weight:700;" onclick="handleIdSearch(document.getElementById('ob-sid').value)" data-i18n="btn_search">🔍 Qidirish</button>
       </div>
+      <div id="search-results-dropdown" style="display:none;margin-top:8px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;max-height:180px;overflow-y:auto;padding:6px;box-shadow:0 4px 12px rgba(0,0,0,0.3);"></div>
       <div id="id-search-status" style="font-size:11.5px;margin-top:6px;min-height:18px;"></div>
 
       <div class="onboard-label" data-i18n="label_full_name">👤 Ism Familiya</div>
@@ -327,10 +329,10 @@ if(tg){tg.ready();tg.expand();}
 
 const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_PROFILE='npuu_profile';
 const EDUPAGE_BASE_URL = 'https://npuu.edupage.org/timetable/';
-const STUDENT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT52Sbtp6fOoYOGm47p9hQs70Nw0R3dxfWv7X7jolme27nj8KKLbwgnUk18v87ctIsRwLmKd6g4TJLl/pub?output=csv';
+const STUDENT_CSV_URL = 'https://docs.google.com/spreadsheets/d/1qL8UgUDThQKGVSvUbTMxj28AvFQi0vQ0_h0HdGwFWpc/export?format=csv';
 
 const GOOGLE_SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbx7fF3f1O0w8jA1z5uK3J4E6M7N8O9P0Q/exec';
-const GOOGLE_SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/1vElmYia3pSX5Qoo_rA3aLR_icej7wYaYE0R2WkD3RMg/edit?usp=sharing';
+const GOOGLE_SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/1qL8UgUDThQKGVSvUbTMxj28AvFQi0vQ0_h0HdGwFWpc/edit?usp=sharing';
 
 /* ===== EXACT EDUPAGE MAP FROM IMAGES ===== */
 const GROUP_EDUPAGE_URLS = {
@@ -417,8 +419,8 @@ function getEdupageUrlForGroup(groupName) {
 const I18N = {
   uz: {
     app_title: "NPUU Smart Bot",
-    onboard_sub: "ID raqamingizni kiriting — ma'lumotlaringiz bazadan avtomatik qidiriladi!",
-    label_student_id: "🪪 Student ID",
+    onboard_sub: "ID yoki Ism-familiyangizni kiriting — natijalardan o'zingizni tanlang!",
+    label_student_id: "🪪 Student ID yoki Ism Familiya",
     label_full_name: "👤 Ism Familiya",
     label_email: "📧 Email Pochta",
     label_school: "🏛️ Oliy Maktab",
@@ -466,8 +468,9 @@ const I18N = {
     ready_edupage_msg: "guruhi uchun EduPage havola tayyor!",
     click_edupage_desc: "Rasmiy dars jadvalingizni ko'rish uchun quyidagi tugmani bosing:",
     id_searching: "🔍 Bazadan qidirilmoqda...",
-    id_found: "✅ Topildi va to'ldirildi! Zarur bo'lsa tahrirlang.",
-    id_not_found: "ℹ️ ID topilmadi. Ma'lumotlarni o'zingiz kiriting.",
+    id_found: "✅ Talaba tanlandi va ma'lumotlar to'ldirildi!",
+    id_select_prompt: "👇 Ro'yxatdan o'zingizni tanlang:",
+    id_not_found: "ℹ️ Talaba topilmadi. Ma'lumotlarni o'zingiz kiriting.",
     id_error: "⚠️ Izlashda xatolik. Maydonlarni o'zingiz to'ldiring.",
     alert_name: "Ism va familiyangizni kiriting!",
     alert_fields: "Barcha ta'lim ma'lumotlarini va guruhni tanlang!",
@@ -476,8 +479,8 @@ const I18N = {
   },
   ru: {
     app_title: "NPUU Smart Bot",
-    onboard_sub: "Введите ваш ID — данные автоматически найдутся в базе!",
-    label_student_id: "🪪 Student ID",
+    onboard_sub: "Введите ID или имя — выберите себя из списка!",
+    label_student_id: "🪪 Student ID или Имя",
     label_full_name: "👤 Имя и Фамилия",
     label_email: "📧 Электронная почта",
     label_school: "🏛️ Высшая школа",
@@ -525,8 +528,9 @@ const I18N = {
     ready_edupage_msg: "ссылка EduPage готова!",
     click_edupage_desc: "Нажмите кнопку ниже, чтобы просмотреть официальное расписание:",
     id_searching: "🔍 Поиск в базе данных...",
-    id_found: "✅ Найдено и заполнено! Отредактируйте при необходимости.",
-    id_not_found: "ℹ️ ID не найден. Введите данные вручную.",
+    id_found: "✅ Студент выбран, данные заполнены!",
+    id_select_prompt: "👇 Выберите себя из списка:",
+    id_not_found: "ℹ️ Студент не найден. Введите данные вручную.",
     id_error: "⚠️ Ошибка поиска. Заполните поля вручную.",
     alert_name: "Введите ваше имя и фамилию!",
     alert_fields: "Выберите все учебные данные и группу!",
@@ -535,8 +539,8 @@ const I18N = {
   },
   en: {
     app_title: "NPUU Smart Bot",
-    onboard_sub: "Enter your Student ID — your details will be retrieved automatically!",
-    label_student_id: "🪪 Student ID",
+    onboard_sub: "Enter ID or Name — select yourself from the list!",
+    label_student_id: "🪪 Student ID or Name",
     label_full_name: "👤 Full Name",
     label_email: "📧 Email Address",
     label_school: "🏛️ Higher School",
@@ -584,8 +588,9 @@ const I18N = {
     ready_edupage_msg: "EduPage link ready!",
     click_edupage_desc: "Click the button below to view your official schedule:",
     id_searching: "🔍 Searching database...",
-    id_found: "✅ Found and filled! Edit if necessary.",
-    id_not_found: "ℹ️ ID not found. Please enter details manually.",
+    id_found: "✅ Student selected and fields filled!",
+    id_select_prompt: "👇 Select yourself from the list below:",
+    id_not_found: "ℹ️ Student not found. Please enter details manually.",
     id_error: "⚠️ Search error. Fill in the fields manually.",
     alert_name: "Please enter your full name!",
     alert_fields: "Please select all academic details and group!",
@@ -746,98 +751,132 @@ function detectStructureFromGroup(groupStr) {
   return null;
 }
 
-async function searchStudentById(idValue) {
-  if (!idValue) return null;
-  const cleanId = String(idValue).trim().toLowerCase();
-  if (cleanId.length < 2) return null;
+async function searchStudents(query) {
+  if (!query || query.trim().length < 2) return [];
+  const cleanQ = query.trim().toLowerCase();
 
   const rows = await fetchStudentCsvData();
-  if (!rows || rows.length === 0) return null;
+  if (!rows || rows.length === 0) return [];
 
   const header = rows[0].map(c => c.toLowerCase().trim());
   let idCol = header.findIndex(c => c.includes('id') || c.includes('kod') || c.includes('№'));
-  let nameCol = header.findIndex(c => c.includes('f.i.o') || c.includes('fio') || c.includes('ism') || c.includes('name'));
+  let nameCol = header.findIndex(c => c.includes('f.i.o') || c.includes('fio') || c.includes('ism') || c.includes('name') || c.includes('familiya'));
   let emailCol = header.findIndex(c => c.includes('email') || c.includes('mail'));
   let groupCol = header.findIndex(c => c.includes('guruh') || c.includes('group'));
 
-  for (let r = 0; r < rows.length; r++) {
+  const results = [];
+
+  for (let r = 1; r < rows.length; r++) {
     const row = rows[r];
     if (!row || row.length === 0) continue;
 
-    let matched = false;
-    if (idCol !== -1 && row[idCol] && row[idCol].toLowerCase().trim() === cleanId) {
-      matched = true;
-    } else {
-      for (let c = 0; c < row.length; c++) {
-        if (row[c].toLowerCase().trim() === cleanId) {
-          matched = true; idCol = c; break;
-        }
-      }
+    let foundId = (idCol !== -1 && row[idCol]) ? row[idCol].trim() : '';
+    let foundName = (nameCol !== -1 && row[nameCol]) ? row[nameCol].trim() : '';
+    let foundEmail = (emailCol !== -1 && row[emailCol]) ? row[emailCol].trim() : '';
+    let foundGroup = (groupCol !== -1 && row[groupCol]) ? row[groupCol].trim() : '';
+
+    for (let c = 0; c < row.length; c++) {
+      const val = row[c].trim();
+      if (!foundEmail && val.includes('@')) foundEmail = val;
+      else if (!foundGroup && detectStructureFromGroup(val)) foundGroup = val;
+      else if (!foundId && /^\d{4,10}$/.test(val)) foundId = val;
+      else if (!foundName && val.length > 3 && !/\d/.test(val) && val.includes(' ')) foundName = val;
     }
 
-    if (matched) {
-      let foundName = (nameCol !== -1 && row[nameCol]) ? row[nameCol] : '';
-      let foundEmail = (emailCol !== -1 && row[emailCol]) ? row[emailCol] : '';
-      let foundGroup = (groupCol !== -1 && row[groupCol]) ? row[groupCol] : '';
+    const matchId = foundId.toLowerCase().includes(cleanQ);
+    const matchName = foundName.toLowerCase().includes(cleanQ);
+    const matchAny = row.some(cell => cell.toLowerCase().includes(cleanQ));
 
-      for (let c = 0; c < row.length; c++) {
-        if (c === idCol) continue;
-        const val = row[c].trim();
-        if (!foundEmail && val.includes('@')) foundEmail = val;
-        else if (!foundName && val.length > 3 && !/\d/.test(val) && val.includes(' ')) foundName = val;
-        else if (!foundGroup && detectStructureFromGroup(val)) foundGroup = val;
-      }
-
-      return {
-        id: row[idCol] || idValue,
+    if (matchId || matchName || matchAny) {
+      results.push({
+        id: foundId,
         name: foundName,
         email: foundEmail,
         group: foundGroup
-      };
+      });
     }
+    if (results.length >= 15) break;
   }
-  return null;
+  return results;
 }
 
 let searchTimeout = null;
 function handleIdSearch(val) {
   if (searchTimeout) clearTimeout(searchTimeout);
   const statusEl = document.getElementById('id-search-status');
+  const dropdownEl = document.getElementById('search-results-dropdown');
   const dict = I18N[currentLang] || I18N.uz;
 
-  if (!val || val.trim().length === 0) {
+  if (!val || val.trim().length < 2) {
     if (statusEl) statusEl.textContent = '';
+    if (dropdownEl) { dropdownEl.style.display = 'none'; dropdownEl.innerHTML = ''; }
     return;
   }
   if (statusEl) statusEl.innerHTML = `<span style="color:var(--accent2)">${dict.id_searching}</span>`;
 
   searchTimeout = setTimeout(async () => {
     try {
-      const res = await searchStudentById(val);
-      if (res) {
-        if (res.name) document.getElementById('ob-name').value = res.name;
-        if (res.email) document.getElementById('ob-email').value = res.email;
+      const results = await searchStudents(val);
+      if (results && results.length > 0) {
+        if (statusEl) statusEl.innerHTML = `<span style="color:var(--accent3);font-weight:600">${dict.id_select_prompt}</span>`;
+        dropdownEl.innerHTML = '';
+        results.forEach(res => {
+          const item = document.createElement('div');
+          item.style.padding = '8px 10px';
+          item.style.borderBottom = '1px solid var(--border)';
+          item.style.cursor = 'pointer';
+          item.style.fontSize = '12.5px';
+          item.style.borderRadius = '8px';
+          item.style.transition = 'background 0.2s';
+          item.onmouseover = () => item.style.background = 'var(--surface)';
+          item.onmouseout = () => item.style.background = 'transparent';
 
-        if (res.group) {
-          const detected = detectStructureFromGroup(res.group);
-          if (detected) {
-            document.getElementById('ob-school').value = detected.schoolKey;
-            onSchoolChange();
-            document.getElementById('ob-major').value = detected.majorKey;
-            onMajorChange();
-            document.getElementById('ob-course').value = detected.courseKey;
-            onCourseChange();
-            document.getElementById('ob-group').value = detected.groupName;
-          }
-        }
-        if (statusEl) statusEl.innerHTML = `<span style="color:var(--green);font-weight:600">${dict.id_found}</span>`;
+          const nameText = res.name || 'Noma\'lum';
+          const idText = res.id ? ` (ID: ${res.id})` : '';
+          const groupText = res.group ? ` • ${res.group}` : '';
+
+          item.innerHTML = `<div style="font-weight:700;color:var(--text);">${nameText}${idText}</div><div style="font-size:11px;color:var(--muted);">${res.email || ''}${groupText}</div>`;
+
+          item.onclick = () => selectStudent(res);
+          dropdownEl.appendChild(item);
+        });
+        dropdownEl.style.display = 'block';
       } else {
+        if (dropdownEl) { dropdownEl.style.display = 'none'; dropdownEl.innerHTML = ''; }
         if (statusEl) statusEl.innerHTML = `<span style="color:var(--orange)">${dict.id_not_found}</span>`;
       }
     } catch (e) {
+      if (dropdownEl) { dropdownEl.style.display = 'none'; dropdownEl.innerHTML = ''; }
       if (statusEl) statusEl.innerHTML = `<span style="color:var(--orange)">${dict.id_error}</span>`;
     }
-  }, 350);
+  }, 300);
+}
+
+function selectStudent(res) {
+  const dropdownEl = document.getElementById('search-results-dropdown');
+  const statusEl = document.getElementById('id-search-status');
+  const dict = I18N[currentLang] || I18N.uz;
+
+  if (dropdownEl) dropdownEl.style.display = 'none';
+
+  if (res.id) document.getElementById('ob-sid').value = res.id;
+  if (res.name) document.getElementById('ob-name').value = res.name;
+  if (res.email) document.getElementById('ob-email').value = res.email;
+
+  if (res.group) {
+    const detected = detectStructureFromGroup(res.group);
+    if (detected) {
+      document.getElementById('ob-school').value = detected.schoolKey;
+      onSchoolChange();
+      document.getElementById('ob-major').value = detected.majorKey;
+      onMajorChange();
+      document.getElementById('ob-course').value = detected.courseKey;
+      onCourseChange();
+      document.getElementById('ob-group').value = detected.groupName;
+    }
+  }
+
+  if (statusEl) statusEl.innerHTML = `<span style="color:var(--green);font-weight:600">${dict.id_found}</span>`;
 }
 
 // ===== DYNAMIC DROPDOWN CASCADING =====
@@ -1075,7 +1114,16 @@ function applyProfile() {
   const schoolName = getSchoolName(userProfile.schoolKey);
   const majorName = getMajorName(userProfile.schoolKey, userProfile.majorKey);
 
-  document.getElementById('profile-avatar').textContent = userProfile.name ? userProfile.name.charAt(0).toUpperCase() : 'U';
+  const avatarEl = document.getElementById('profile-avatar');
+  const tgPhoto = window.Telegram?.WebApp?.initDataUnsafe?.user?.photo_url;
+  if (tgPhoto) {
+    avatarEl.innerHTML = `<img src="${tgPhoto}" alt="Avatar">`;
+    avatarEl.style.background = 'transparent';
+  } else {
+    avatarEl.textContent = userProfile.name ? userProfile.name.charAt(0).toUpperCase() : 'U';
+    avatarEl.style.background = 'linear-gradient(135deg,var(--accent),var(--accent2))';
+  }
+
   document.getElementById('profile-name').textContent = userProfile.name || '—';
   
   document.getElementById('profile-meta').textContent = 
