@@ -329,10 +329,20 @@ if(tg){tg.ready();tg.expand();}
 
 const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_PROFILE='npuu_profile';
 const EDUPAGE_BASE_URL = 'https://npuu.edupage.org/timetable/';
-const STUDENT_CSV_URL = 'https://docs.google.com/spreadsheets/d/1qL8UgUDThQKGVSvUbTMxj28AvFQi0vQ0_h0HdGwFWpc/export?format=csv';
+
+const SPREADSHEET_ID = '1qL8UgUDThQKGVSvUbTMxj28AvFQi0vQ0_h0HdGwFWpc';
+const STUDENT_CSV_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv`;
+
+// Google Sheets'dagi barcha 4 ta varaq (list) nomlari
+const SPREADSHEET_SHEET_NAMES = [
+  'Aniq fanlar oliy maktabi 2025',
+  'Aniq fanlar oliy maktabi 2026',
+  'Maktabgacha-Boshlangich',
+  'Tabiiy fanlar'
+];
 
 const GOOGLE_SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbx7fF3f1O0w8jA1z5uK3J4E6M7N8O9P0Q/exec';
-const GOOGLE_SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/1qL8UgUDThQKGVSvUbTMxj28AvFQi0vQ0_h0HdGwFWpc/edit?usp=sharing';
+const GOOGLE_SPREADSHEET_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/edit?usp=sharing`;
 
 /* ===== EXACT EDUPAGE MAP FROM IMAGES ===== */
 const GROUP_EDUPAGE_URLS = {
@@ -722,16 +732,42 @@ function parseCSV(text) {
   return result;
 }
 
+// Barcha 4 ta listni parallel yuklab olish funksiyasi
 async function fetchStudentCsvData() {
   if (cachedCsvData) return cachedCsvData;
+  const allSheetsData = [];
   try {
-    const res = await fetch(STUDENT_CSV_URL);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const text = await res.text();
-    cachedCsvData = parseCSV(text);
+    const fetchPromises = SPREADSHEET_SHEET_NAMES.map(sheetName =>
+      fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&sheet=${encodeURIComponent(sheetName)}`)
+        .then(res => res.ok ? res.text() : '')
+        .catch(err => {
+          console.error(`Sheet error (${sheetName}):`, err);
+          return '';
+        })
+    );
+
+    const csvTexts = await Promise.all(fetchPromises);
+    csvTexts.forEach(text => {
+      if (text) {
+        const parsed = parseCSV(text);
+        if (parsed && parsed.length > 0) {
+          allSheetsData.push(parsed);
+        }
+      }
+    });
+
+    if (allSheetsData.length === 0) {
+      const res = await fetch(STUDENT_CSV_URL);
+      if (res.ok) {
+        const text = await res.text();
+        allSheetsData.push(parseCSV(text));
+      }
+    }
+
+    cachedCsvData = allSheetsData;
     return cachedCsvData;
   } catch (e) {
-    console.error('CSV error:', e);
+    console.error('CSV fetch error:', e);
     return null;
   }
 }
@@ -755,47 +791,59 @@ async function searchStudents(query) {
   if (!query || query.trim().length < 2) return [];
   const cleanQ = query.trim().toLowerCase();
 
-  const rows = await fetchStudentCsvData();
-  if (!rows || rows.length === 0) return [];
-
-  const header = rows[0].map(c => c.toLowerCase().trim());
-  let idCol = header.findIndex(c => c.includes('id') || c.includes('kod') || c.includes('№'));
-  let nameCol = header.findIndex(c => c.includes('f.i.o') || c.includes('fio') || c.includes('ism') || c.includes('name') || c.includes('familiya'));
-  let emailCol = header.findIndex(c => c.includes('email') || c.includes('mail'));
-  let groupCol = header.findIndex(c => c.includes('guruh') || c.includes('group'));
+  const sheetsData = await fetchStudentCsvData();
+  if (!sheetsData || sheetsData.length === 0) return [];
 
   const results = [];
 
-  for (let r = 1; r < rows.length; r++) {
-    const row = rows[r];
-    if (!row || row.length === 0) continue;
+  for (const rows of sheetsData) {
+    if (!rows || rows.length === 0) continue;
 
-    let foundId = (idCol !== -1 && row[idCol]) ? row[idCol].trim() : '';
-    let foundName = (nameCol !== -1 && row[nameCol]) ? row[nameCol].trim() : '';
-    let foundEmail = (emailCol !== -1 && row[emailCol]) ? row[emailCol].trim() : '';
-    let foundGroup = (groupCol !== -1 && row[groupCol]) ? row[groupCol].trim() : '';
+    const header = rows[0].map(c => c.toLowerCase().trim());
+    
+    // Student ID ustunini aniq topish ("№" tartib raqami ustunini tashlab o'tish)
+    let idCol = header.findIndex(c => c.includes('student id') || c.includes('student_id') || c.includes('talaba id') || (c.includes('id') && !c.includes('№')));
+    let nameCol = header.findIndex(c => c.includes('f.i.o') || c.includes('fio') || c.includes('ism') || c.includes('name') || c.includes('familiya'));
+    let emailCol = header.findIndex(c => c.includes('email') || c.includes('mail'));
+    let groupCol = header.findIndex(c => c.includes('guruh') || c.includes('group') || c.includes('groups'));
 
-    for (let c = 0; c < row.length; c++) {
-      const val = row[c].trim();
-      if (!foundEmail && val.includes('@')) foundEmail = val;
-      else if (!foundGroup && detectStructureFromGroup(val)) foundGroup = val;
-      else if (!foundId && /^\d{4,10}$/.test(val)) foundId = val;
-      else if (!foundName && val.length > 3 && !/\d/.test(val) && val.includes(' ')) foundName = val;
+    for (let r = 1; r < rows.length; r++) {
+      const row = rows[r];
+      if (!row || row.length === 0) continue;
+
+      let foundId = (idCol !== -1 && row[idCol]) ? row[idCol].trim() : '';
+      let foundName = (nameCol !== -1 && row[nameCol]) ? row[nameCol].trim() : '';
+      let foundEmail = (emailCol !== -1 && row[emailCol]) ? row[emailCol].trim() : '';
+      let foundGroup = (groupCol !== -1 && row[groupCol]) ? row[groupCol].trim() : '';
+
+      // Agar tartib raqam (masalan 1, 2) tushib qolgan bo'lsa, uni tozalab haqiqiy ID ni qidiramiz
+      if (foundId && !/^\d{4,10}$/.test(foundId)) {
+        foundId = '';
+      }
+
+      for (let c = 0; c < row.length; c++) {
+        const val = row[c].trim();
+        if (!foundEmail && val.includes('@')) foundEmail = val;
+        else if (!foundGroup && detectStructureFromGroup(val)) foundGroup = val;
+        else if (!foundId && /^\d{4,10}$/.test(val)) foundId = val;
+        else if (!foundName && val.length > 3 && !/\d/.test(val) && val.includes(' ')) foundName = val;
+      }
+
+      const matchId = foundId.toLowerCase().includes(cleanQ);
+      const matchName = foundName.toLowerCase().includes(cleanQ);
+      const matchAny = row.some(cell => cell.toLowerCase().includes(cleanQ));
+
+      if (matchId || matchName || matchAny) {
+        results.push({
+          id: foundId,
+          name: foundName,
+          email: foundEmail,
+          group: foundGroup
+        });
+      }
+      if (results.length >= 25) break;
     }
-
-    const matchId = foundId.toLowerCase().includes(cleanQ);
-    const matchName = foundName.toLowerCase().includes(cleanQ);
-    const matchAny = row.some(cell => cell.toLowerCase().includes(cleanQ));
-
-    if (matchId || matchName || matchAny) {
-      results.push({
-        id: foundId,
-        name: foundName,
-        email: foundEmail,
-        group: foundGroup
-      });
-    }
-    if (results.length >= 15) break;
+    if (results.length >= 25) break;
   }
   return results;
 }
@@ -1281,7 +1329,7 @@ function initTimetable(targetDay) {
   headerCard.className = 'card';
   headerCard.style.borderLeft = '4px solid var(--accent)';
   headerCard.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+    <div style="display:flex;justify-space-between;align-items:center;flex-wrap:wrap;gap:8px;">
       <div>
         <div style="font-size:15px;font-weight:800;color:var(--text);">${userProfile.group} ${dict.group_schedule_title}</div>
         <div style="font-size:12px;color:var(--muted);margin-top:2px;">🏛️ ${schoolName} • ${userProfile.course}${dict.course_suffix}</div>
