@@ -1426,35 +1426,75 @@ function renderLessons(group, day, container) {
 
 // ===== PROFESSORS MODULE =====
 const PROFS = [
-  // Mathematics
-  { name: 'Marks Ruziboev', dept: 'dept-math', role: 'Mathematics', email: 'm.ruziboev@npuu.uz' },
-  { name: 'Azamat Xolboyev', dept: 'dept-math', role: 'Mathematics', email: 'a.xolboyev@npuu.uz' },
-  { name: 'Allambergen Qudaybergenov', dept: 'dept-math', role: 'Mathematics', email: 'a.qudaybergenov@npuu.uz' },
-  { name: 'Bakhtinur Juraev', dept: 'dept-math', role: 'Mathematics', email: 'b.juraev@npuu.uz' },
-  { name: 'Farhod Muxamadiyev', dept: 'dept-math', role: 'Mathematics', email: 'f.muxamadiyev@npuu.uz' },
-  { name: 'Sa\'dullayev Anvar', dept: 'dept-math', role: 'Mathematics', email: 'a.sa\'dullayev@npuu.uz' },
-  { name: 'Shakhzod Suvanov', dept: 'dept-math', role: 'Mathematics', email: 'sh.suvanov@npuu.uz' },
-  { name: 'Zarif Ibragimov', dept: 'dept-math', role: 'Mathematics', email: 'z.ibragimov@npuu.uz' },
-
-  // General English
   { name: 'Azamat Akhmedjanov', dept: 'dept-eng', role: 'General English', email: 'a.akhmedjanov@npuu.uz' },
-  { name: 'Azizabonu Ziyodullaeva', dept: 'dept-eng', role: 'General English', email: 'a.ziyodullaeva@npuu.uz' },
-  { name: 'Dilnoza Boymirzayeva', dept: 'dept-eng', role: 'General English', email: 'd.boymirzayeva@npuu.uz' },
-  { name: 'Mirjon Khidoyatov', dept: 'dept-eng', role: 'General English', email: 'm.khidoyatov@npuu.uz' },
-  { name: 'Mirsaid Abdurakhmonov', dept: 'dept-eng', role: 'General English', email: 'm.abdurakhmonov@npuu.uz' },
-  { name: 'Rano Khikmatova', dept: 'dept-eng', role: 'General English', email: 'r.khikmatova@npuu.uz' },
-  { name: 'Zukhra Khakimova', dept: 'dept-eng', role: 'General English', email: 'z.khakimova@npuu.uz' },
-
-  // IT
   { name: 'Asadulla Ashurov', dept: 'dept-it', role: 'IT', email: 'a.ashurov@npuu.uz' },
+  { name: 'Allambergen Qudaybergenov', dept: 'dept-math', role: 'Mathematics', email: 'a.qudaybergenov@npuu.uz' },
+  { name: 'Sa\'dullayev Anvar', dept: 'dept-math', role: 'Mathematics', email: 'a.sadullayev@npuu.uz' },
+  { name: 'Albina Suleymanova', dept: 'dept-edu', role: 'Education', email: 'a.suleymanova@npuu.uz' },
+  { name: 'Aygerim Urazmetova', email: 'a.urazmetova@npuu.uz' },
+  { name: 'Azizabonu Ziyodullaeva', dept: 'dept-eng', role: 'General English', email: 'a.ziyodullaeva@npuu.uz' },
+  { name: 'Barno Ergasheva', email: 'b.ergasheva@npuu.uz' },
+  { name: 'Boburjon Toxirov', email: 'b.toxirov@npuu.uz' },
   { name: 'Bakhromjon Tulkinov', dept: 'dept-it', role: 'IT', email: 'b.tulkinov@npuu.uz' },
+  { name: 'Dilsora Abduvalieva', email: 'd.abduvalieva@npuu.uz' },
+  { name: 'Dildora Akramova', email: 'd.akramova@npuu.uz' },
+  { name: 'Dilnoza Boymirzayeva', dept: 'dept-eng', role: 'General English', email: 'd.boymirzayeva@npuu.uz' },
+  { name: 'Dinora Jumaniyazova', email: 'd.jumaniyazova@npuu.uz' },
+  { name: 'Doniyor Keldiyorov', email: 'd.keldiyorov@npuu.uz' },
+  { name: 'Dilnoza Khalilova', email: 'd.khalilova@npuu.uz' },
+  { name: 'Davron Khayrullaev', email: 'd.khayrullaev@npuu.uz' },
+  { name: 'Dilmurod Usmonov', email: 'd.usmonov@npuu.uz' },
+  { name: 'Dilfuza Yunusova', email: 'dil.yunusova@npuu.uz' },
+  { name: 'Erkin Xujanov', email: 'e.xujanov@npuu.uz' },
+  { name: 'Farhod Muxamadiyev', dept: 'dept-math', role: 'Mathematics', email: 'f.muxamadiyev@npuu.uz' },
+  { name: 'Gulbakhor Mamadiyeva', email: 'g.mamadiyeva@npuu.uz' },
+  { name: 'Iftikhor Khajiboev', email: 'i.khajiboev@npuu.uz' },
+  { name: 'Iroda Tursunova', email: 'i.tursunova@npuu.uz' },
+  { name: 'Jamshidbek Otojonov', email: 'j.otojonov@npuu.uz' },
+  { name: 'Shin Ji Kang', email: 'j.shin@npuu.uz' },
+  { name: 'Khurshida Xalilova', email: 'kh.xalilova@npuu.uz' },
+  { name: 'Mirsaid Abdurakhmonov', dept: 'dept-eng', role: 'General English', email: 'm.abdurakhmonov@npuu.uz' },
+  { name: 'Hotamova Mohina', email: 'm.hotamova@npuu.uz' },
+  { name: 'Murodjon Jabbarov', email: 'm.jabbarov@npuu.uz' },
+  { name: 'Mokhinur Jakhhanbaeva', email: 'm.jakhhanbaeva@npuu.uz' },
   { name: 'Mirrakhmon Khaydarov', dept: 'dept-it', role: 'IT', email: 'm.khaydarov@npuu.uz' },
-  { name: 'Ulugbek Tursunaliev', dept: 'dept-it', role: 'IT', email: 'u.tursunaliev@npuu.uz' },
-
-  // Education
+  { name: 'Mirjon Khidoyatov', dept: 'dept-eng', role: 'General English', email: 'm.khidoyatov@npuu.uz' },
+  { name: 'Marks Ruziboev', dept: 'dept-math', role: 'Mathematics', email: 'm.ruziboev@npuu.uz' },
+  { name: 'Marjona Shodieva', email: 'm.shodieva@npuu.uz' },
+  { name: 'Mohinur Suyunova', email: 'm.suyunova@npuu.uz' },
+  { name: 'Mamura Toshpulatova', email: 'm.toshpulatova@npuu.uz' },
+  { name: 'TUXTAYEVA MEHRIYO', email: 'm.tuxtayeva@npuu.uz' },
+  { name: 'Matkhiya Usmonova', email: 'm.usmonova@npuu.uz' },
+  { name: 'Malika Xamdamova', email: 'm.xamdamova@npuu.uz' },
+  { name: 'YUSUPOVA MIRIMGUL', email: 'm.yusupova@npuu.uz' },
+  { name: 'Nasiba Isamukhamedova', email: 'n.isamukhamedova@npuu.uz' },
+  { name: 'Nigora Jurayeva', email: 'n.jurayeva@npuu.uz' },
+  { name: 'Nurbol Karakulov', email: 'n.karakulov@npuu.uz' },
   { name: 'Nilufar Tillayeva', dept: 'dept-edu', role: 'Education', email: 'n.tillayeva@npuu.uz' },
+  { name: 'Nilufar Xushboqova', email: 'n.xushboqova@npuu.uz' },
+  { name: 'Olim Omonov', email: 'o.omonov@npuu.uz' },
+  { name: 'Ozoda Sharipova', email: 'o.sharipova@npuu.uz' },
   { name: 'Ozodakhon Shukurillaeva', dept: 'dept-edu', role: 'Education', email: 'o.shukurillaeva@npuu.uz' },
-  { name: 'Albina Suleymanova', dept: 'dept-edu', role: 'Education', email: 'a.suleymanova@npuu.uz' }
+  { name: 'Pulatbek Sagdullaev', email: 'p.sagdullaev@npuu.uz' },
+  { name: 'Rakhmonjon Akhmadjonov', email: 'r.akhmadjonov@npuu.uz' },
+  { name: 'Ravshan Amanov', email: 'r.amanov@npuu.uz' },
+  { name: 'Rano Khikmatova', dept: 'dept-eng', role: 'General English', email: 'r.khikmatova@npuu.uz' },
+  { name: 'Saidakhon Azimjonova', email: 's.azimjonova@npuu.uz' },
+  { name: 'Saidakhon Muminova', email: 's.muminova@npuu.uz' },
+  { name: 'SES Admin', email: 'ses.admin@npuu.uz' },
+  { name: 'Shakhzod Suvanov', dept: 'dept-math', role: 'Mathematics', email: 'sh.suvanov@npuu.uz' },
+  { name: 'Ummatjon Asrorov', email: 'u.asrorov@npuu.uz' },
+  { name: 'Uktam Khujanazarov', email: 'u.khujanazarov@npuu.uz' },
+  { name: 'Ulugbek Tursunaliev', dept: 'dept-it', role: 'IT', email: 'u.tursunaliev@npuu.uz' },
+  { name: 'Zarif Ibragimov', dept: 'dept-math', role: 'Mathematics', email: 'z.ibragimov@npuu.uz' },
+  { name: 'Zukhriddin Jabborov', email: 'z.jabborov@npuu.uz' },
+  { name: 'Zulkhumor Karimova', email: 'z.karimova@npuu.uz' },
+  { name: 'Zukhra Khakimova', dept: 'dept-eng', role: 'General English', email: 'z.khakimova@npuu.uz' },
+  { name: 'Zahriddin Muminov', email: 'z.muminov@npuu.uz' },
+  { name: 'Zarinabonu Mustafoyeva', email: 'z.mustafoyeva@npuu.uz' },
+  { name: 'Zilola Palvannazirova', email: 'z.palvannazirova@npuu.uz' },
+  { name: 'Zulfiya Rustamova', email: 'z.rustamova@npuu.uz' },
+
 ];
 
 function renderProfs(filter = '') {
@@ -1463,12 +1503,12 @@ function renderProfs(filter = '') {
   if (!c) return;
   c.innerHTML = '';
   const q = filter.toLowerCase().trim();
-  PROFS.filter(p => p.name.toLowerCase().includes(q) || p.role.toLowerCase().includes(q) || p.email.toLowerCase().includes(q)).forEach(p => {
+  PROFS.filter(p => p.name.toLowerCase().includes(q) || (p.role || '').toLowerCase().includes(q) || p.email.toLowerCase().includes(q)).forEach(p => {
     const card = document.createElement('div');
-    card.className = `card ${p.dept}`;
+    card.className = `card ${p.dept || ''}`;
     card.innerHTML = `
       <div style="font-weight:700;font-size:14px;">${p.name}</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:2px;">${p.role}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:2px;">${p.role || ""}</div>
       <div style="font-size:12px;color:var(--accent2);margin-top:6px;display:flex;align-items:center;">
         📧 ${p.email}
         <button class="copy-email-btn" onclick="navigator.clipboard.writeText('${p.email}');showBanner(I18N[currentLang].copied)">${dict.copy}</button>
