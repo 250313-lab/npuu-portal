@@ -160,7 +160,11 @@ body.chess-on .profile-header,body.chess-on .today-widget{display:none!important
 .cx-pc.w{color:#fff;text-shadow:0 0 2px #000,0 0 2px #000,0 0 3px #000}
 .cx-pc.b{color:#111;text-shadow:0 0 1px #fff,0 0 1px #fff}
 .cx-bar{display:flex;justify-content:space-between;align-items:center;width:var(--cx-bw);margin:8px auto}
-.cx-bar .cx-nm{font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:62%}
+.cx-bar .cx-nm{font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.cx-user-wrap{display:flex;align-items:center;gap:8px;min-width:0;max-width:68%}
+.cx-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12.5px;color:#fff;flex-shrink:0;overflow:hidden;border:1px solid var(--border)}
+.cx-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.cx-lb-left{display:flex;align-items:center;gap:8px;min-width:0;flex:1}
 .cx-clock{font:700 19px ui-monospace,Menlo,monospace;background:var(--surface2);border:1px solid var(--border);padding:4px 10px;border-radius:9px;min-width:78px;text-align:center}
 .cx-clock.run{background:var(--accent);color:#fff;border-color:var(--accent)}.cx-clock.low{background:#d33;color:#fff;border-color:#d33}
 #cx-status{text-align:center;margin:8px 0;min-height:22px;color:var(--muted);font-size:13.5px}
@@ -171,7 +175,7 @@ body.chess-on .profile-header,body.chess-on .today-widget{display:none!important
 .cx-box h2{font-family:'Syne',sans-serif;font-size:18px;margin-bottom:6px}
 .cx-box p{white-space:pre-line;color:var(--muted);font-size:13.5px;margin-bottom:6px}
 #cx-toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:10px 16px;border-radius:12px;display:none;z-index:801;max-width:90vw;text-align:center;font-size:13px}
-.cx-lb{display:flex;justify-content:space-between;gap:8px;padding:10px 12px;margin:6px 0;background:var(--surface);border:1px solid var(--border);border-radius:12px;font-size:13.5px}
+.cx-lb{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px;margin:6px 0;background:var(--surface);border:1px solid var(--border);border-radius:12px;font-size:13.5px}
 .cx-lb b{font-weight:700;white-space:nowrap;color:var(--accent3)}
 .cx-link{word-break:break-all;background:var(--surface2);border:1px solid var(--border);padding:10px;border-radius:12px;font-size:13px;user-select:text;-webkit-user-select:text;margin-bottom:8px}
 </style>
@@ -378,9 +382,21 @@ body.chess-on .profile-header,body.chess-on .today-widget{display:none!important
   </section>
 
   <section id="cx-game" class="cx-screen">
-    <div class="cx-bar"><span class="cx-nm" id="cx-topName"></span><span class="cx-clock" id="cx-topClock">--:--</span></div>
+    <div class="cx-bar">
+      <div class="cx-user-wrap">
+        <div class="cx-avatar" id="cx-topAvatar">U</div>
+        <span class="cx-nm" id="cx-topName"></span>
+      </div>
+      <span class="cx-clock" id="cx-topClock">--:--</span>
+    </div>
     <div id="cx-board"></div>
-    <div class="cx-bar"><span class="cx-nm" id="cx-botName"></span><span class="cx-clock" id="cx-botClock">--:--</span></div>
+    <div class="cx-bar">
+      <div class="cx-user-wrap">
+        <div class="cx-avatar" id="cx-botAvatar">U</div>
+        <span class="cx-nm" id="cx-botName"></span>
+      </div>
+      <span class="cx-clock" id="cx-botClock">--:--</span>
+    </div>
     <div id="cx-status"></div>
     <div class="cx-row">
       <button class="cx-big cx-alt" id="cx-bDraw" data-i18n="cx_draw">🤝 Durang</button>
@@ -2122,9 +2138,38 @@ function cxBind() {
       if (!rows.length) { box.textContent = cxT('cx_no_games'); return; }
       rows.forEach((r, i) => {
         const d = document.createElement('div'); d.className = 'cx-lb';
-        const a = document.createElement('span'); a.textContent = `${i + 1}. ${r.name}`;
-        const b = document.createElement('b'); b.textContent = `${Math.round(r.rating)}  (${r.wins}/${r.draws}/${r.losses})`;
-        d.append(a, b); box.append(d);
+        
+        const left = document.createElement('div'); left.className = 'cx-lb-left';
+        
+        const rank = document.createElement('span');
+        rank.style.fontWeight = '700';
+        rank.style.color = 'var(--accent3)';
+        rank.textContent = `${i + 1}.`;
+
+        const av = document.createElement('div'); av.className = 'cx-avatar';
+        av.style.width = '28px';
+        av.style.height = '28px';
+        av.style.fontSize = '12px';
+        
+        let photo = r.photo || r.photo_url || r.avatar || r.avatar_url || '';
+        if (!photo && userProfile && userProfile.name && r.name === userProfile.name) {
+          photo = window.Telegram?.WebApp?.initDataUnsafe?.user?.photo_url || '';
+        }
+        cxSetAvatar(av, r.name, photo);
+
+        const a = document.createElement('span');
+        a.style.fontWeight = '600';
+        a.style.whiteSpace = 'nowrap';
+        a.style.overflow = 'hidden';
+        a.style.textOverflow = 'ellipsis';
+        a.textContent = r.name;
+
+        left.append(rank, av, a);
+
+        const b = document.createElement('b');
+        b.textContent = `${Math.round(r.rating)}  (${r.wins}/${r.draws}/${r.losses})`;
+        
+        d.append(left, b); box.append(d);
       });
     } catch (e) { box.textContent = cxT('cx_load_fail'); }
   };
@@ -2233,7 +2278,48 @@ function cxOnOver(o) {
   cxOpenModal(title, text, [{label: cxT('cx_menu'), fn: cxToMenu}]);
 }
 
-/* ---------- Taxta ---------- */
+/* ---------- Taxta va Avatarlar ---------- */
+function cxGetPlayerInfo(c) {
+  let name = '', photo = '', rating = '';
+  if (CX.mode === 'online') {
+    const p = CX.names[c];
+    if (typeof p === 'object' && p !== null) {
+      name = p.name || '';
+      rating = p.rating !== undefined ? ` (${p.rating})` : '';
+      photo = p.photo || p.photo_url || p.avatar || p.avatar_url || '';
+    } else if (typeof p === 'string') {
+      name = p;
+    }
+    if (c === CX.color && !photo) {
+      photo = window.Telegram?.WebApp?.initDataUnsafe?.user?.photo_url || '';
+    }
+  } else {
+    if (c === CX.color) {
+      name = (CX.me && CX.me.name) || (userProfile && userProfile.name) || cxT('cx_you');
+      photo = window.Telegram?.WebApp?.initDataUnsafe?.user?.photo_url || '';
+    } else {
+      name = '🤖 ' + cxT('cx_lv' + CX.cpu.level);
+      photo = 'robot';
+    }
+  }
+  return { name, rating, photo };
+}
+
+function cxSetAvatar(el, name, photo) {
+  if (!el) return;
+  if (photo === 'robot') {
+    el.innerHTML = '🤖';
+    el.style.background = 'var(--surface2)';
+  } else if (photo) {
+    el.innerHTML = `<img src="${photo}" alt="Avatar" onerror="this.onerror=null;this.parentElement.textContent='${(name || 'U').replace(/^🤖\s*/, '').charAt(0).toUpperCase() || 'U'}';">`;
+    el.style.background = 'transparent';
+  } else {
+    const firstChar = (name || 'U').replace(/^🤖\s*/, '').charAt(0).toUpperCase() || 'U';
+    el.textContent = firstChar;
+    el.style.background = 'linear-gradient(135deg,var(--accent),var(--accent2))';
+  }
+}
+
 function cxRender() {
   if (!CX.chess) return;
   const b = cxEl('board'); b.innerHTML = '';
@@ -2259,7 +2345,15 @@ function cxRender() {
     b.append(d);
   }
   const opp = CX.color === 'w' ? 'b' : 'w';
-  cxEl('topName').textContent = cxNameOf(opp); cxEl('botName').textContent = cxNameOf(CX.color);
+  const topInfo = cxGetPlayerInfo(opp);
+  const botInfo = cxGetPlayerInfo(CX.color);
+
+  cxEl('topName').textContent = topInfo.name + topInfo.rating;
+  cxEl('botName').textContent = botInfo.name + botInfo.rating;
+
+  cxSetAvatar(cxEl('topAvatar'), topInfo.name, topInfo.photo);
+  cxSetAvatar(cxEl('botAvatar'), botInfo.name, botInfo.photo);
+
   const online = CX.mode === 'online';
   cxEl('topClock').style.visibility = cxEl('botClock').style.visibility = online ? 'visible' : 'hidden';
   cxEl('bLeave').style.display = (online && !CX.over) ? 'none' : '';
@@ -2270,11 +2364,12 @@ function cxRender() {
   else st = cxT('cx_opp_turn');
   cxEl('status').textContent = st;
 }
+
 function cxNameOf(c) {
-  if (CX.mode === 'online') { const p = CX.names[c]; return p ? `${p.name} (${p.rating})` : ''; }
-  const mine = (CX.me && CX.me.name) || (userProfile && userProfile.name) || cxT('cx_you');
-  return c === CX.color ? mine : '🤖 ' + cxT('cx_lv' + CX.cpu.level);
+  const info = cxGetPlayerInfo(c);
+  return info.name + info.rating;
 }
+
 function cxOnSquare(sq) {
   if (CX.over || CX.thinking || CX.chess.turn() !== CX.color) return;
   if (CX.sel) {
