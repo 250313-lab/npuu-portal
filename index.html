@@ -133,6 +133,46 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .lesson-details{display:flex;gap:16px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
 .lesson-detail-item{display:flex;align-items:center;gap:5px}
 .lesson-detail-item strong{color:var(--text)}
+
+/* ===== CHESS MODULE (♟ Shaxmat) ===== */
+#view-chess{--cx-light:#eeeed2;--cx-dark:#769656;--cx-bw:min(100vw - 32px,488px);user-select:none;-webkit-user-select:none}
+body.chess-on .profile-header,body.chess-on .today-widget{display:none!important}
+.cx-screen{display:none;max-width:520px;margin:0 auto}
+.cx-screen.on{display:block}
+.cx-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--text)}
+.cx-hint{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.4}
+.cx-h{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;margin:4px 0 10px;color:var(--text)}
+.cx-big{display:block;width:100%;padding:14px;margin:8px 0;border:0;border-radius:14px;background:var(--accent);color:#fff;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:transform .15s,opacity .15s}
+.cx-big:active{transform:scale(.97);opacity:.9}
+.cx-big.cx-alt{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.cx-seg{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}
+.cx-seg button{flex:1;min-width:64px;padding:10px 6px;border:1px solid var(--border);border-radius:11px;background:var(--surface2);color:var(--text);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.cx-seg button.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
+#cx-board{display:grid;grid-template-columns:repeat(8,1fr);width:var(--cx-bw);aspect-ratio:1;margin:0 auto;border-radius:8px;overflow:hidden;touch-action:manipulation;box-shadow:var(--card-shadow)}
+.cx-sq{position:relative;display:flex;align-items:center;justify-content:center;font-size:calc(var(--cx-bw) / 8 * .82);line-height:1}
+.cx-sq.l{background-color:var(--cx-light)}.cx-sq.d{background-color:var(--cx-dark)}
+.cx-sq.last{box-shadow:inset 0 0 0 100px rgba(255,235,59,.45)}
+.cx-sq.sel{box-shadow:inset 0 0 0 100px rgba(60,150,255,.55)}
+.cx-sq.chk{background-image:radial-gradient(circle,rgba(255,0,0,.95),rgba(255,0,0,0) 72%)}
+.cx-sq.mv::after{content:"";position:absolute;width:30%;height:30%;border-radius:50%;background:rgba(0,0,0,.28)}
+.cx-sq.cap::after{width:92%;height:92%;background:none;border:4px solid rgba(0,0,0,.3)}
+.cx-pc.w{color:#fff;text-shadow:0 0 2px #000,0 0 2px #000,0 0 3px #000}
+.cx-pc.b{color:#111;text-shadow:0 0 1px #fff,0 0 1px #fff}
+.cx-bar{display:flex;justify-content:space-between;align-items:center;width:var(--cx-bw);margin:8px auto}
+.cx-bar .cx-nm{font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:62%}
+.cx-clock{font:700 19px ui-monospace,Menlo,monospace;background:var(--surface2);border:1px solid var(--border);padding:4px 10px;border-radius:9px;min-width:78px;text-align:center}
+.cx-clock.run{background:var(--accent);color:#fff;border-color:var(--accent)}.cx-clock.low{background:#d33;color:#fff;border-color:#d33}
+#cx-status{text-align:center;margin:8px 0;min-height:22px;color:var(--muted);font-size:13.5px}
+.cx-row{display:flex;gap:8px;width:var(--cx-bw);margin:0 auto}.cx-row button{flex:1}
+#cx-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:800}
+#cx-modal.on{display:flex}
+.cx-box{background:var(--surface);color:var(--text);border:1px solid var(--border);padding:20px;border-radius:18px;width:min(86vw,340px);text-align:center;box-shadow:var(--card-shadow)}
+.cx-box h2{font-family:'Syne',sans-serif;font-size:18px;margin-bottom:6px}
+.cx-box p{white-space:pre-line;color:var(--muted);font-size:13.5px;margin-bottom:6px}
+#cx-toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:10px 16px;border-radius:12px;display:none;z-index:801;max-width:90vw;text-align:center;font-size:13px}
+.cx-lb{display:flex;justify-content:space-between;gap:8px;padding:10px 12px;margin:6px 0;background:var(--surface);border:1px solid var(--border);border-radius:12px;font-size:13.5px}
+.cx-lb b{font-weight:700;white-space:nowrap;color:var(--accent3)}
+.cx-link{word-break:break-all;background:var(--surface2);border:1px solid var(--border);padding:10px;border-radius:12px;font-size:13px;user-select:text;-webkit-user-select:text;margin-bottom:8px}
 </style>
 </head>
 <body>
@@ -303,6 +343,62 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
   </div>
 </div>
 
+<!-- ===== VIEW: CHESS ===== -->
+<div id="view-chess" class="view-section">
+
+  <section id="cx-menu" class="cx-screen on">
+    <div class="card" style="border-left:4px solid var(--accent2);">
+      <div class="cx-title">♞ <span data-i18n="cx_title">Shaxmat</span></div>
+      <div id="cx-me" class="cx-hint"></div>
+    </div>
+    <div class="onboard-label" data-i18n="cx_tc_title">Vaqt nazorati (daqiqa + soniya)</div>
+    <div class="cx-seg" id="cx-tcSeg"></div>
+    <button class="cx-big" id="cx-bRandom" data-i18n="cx_random">🌍 Tasodifiy raqib</button>
+    <button class="cx-big cx-alt" id="cx-bInvite" data-i18n="cx_invite">🔗 Do'stni taklif qilish</button>
+    <button class="cx-big cx-alt" id="cx-bCpu" data-i18n="cx_cpu">🤖 Kompyuter bilan o'ynash</button>
+    <button class="cx-big cx-alt" id="cx-bTop" data-i18n="cx_top">🏆 Reyting</button>
+  </section>
+
+  <section id="cx-cpu" class="cx-screen">
+    <div class="cx-h" data-i18n="cx_cpu_title">🤖 Kompyuter bilan</div>
+    <div class="onboard-label" data-i18n="cx_level">Qiyinlik</div>
+    <div class="cx-seg" id="cx-lvSeg"></div>
+    <div class="onboard-label" data-i18n="cx_color">Rang</div>
+    <div class="cx-seg" id="cx-clSeg"></div>
+    <button class="cx-big" id="cx-bCpuStart" data-i18n="cx_start">O'yinni boshlash</button>
+    <button class="cx-big cx-alt" id="cx-bCpuBack" data-i18n="cx_menu">Menyu</button>
+  </section>
+
+  <section id="cx-wait" class="cx-screen">
+    <div class="cx-h" id="cx-waitTitle"></div>
+    <div id="cx-waitBody"></div>
+    <button class="cx-big cx-alt" id="cx-bCancel" data-i18n="cx_cancel">Bekor qilish</button>
+  </section>
+
+  <section id="cx-game" class="cx-screen">
+    <div class="cx-bar"><span class="cx-nm" id="cx-topName"></span><span class="cx-clock" id="cx-topClock">--:--</span></div>
+    <div id="cx-board"></div>
+    <div class="cx-bar"><span class="cx-nm" id="cx-botName"></span><span class="cx-clock" id="cx-botClock">--:--</span></div>
+    <div id="cx-status"></div>
+    <div class="cx-row">
+      <button class="cx-big cx-alt" id="cx-bDraw" data-i18n="cx_draw">🤝 Durang</button>
+      <button class="cx-big cx-alt" id="cx-bResign" data-i18n="cx_resign">🏳️ Taslim</button>
+    </div>
+    <div class="cx-row">
+      <button class="cx-big cx-alt" id="cx-bLeave" data-i18n="cx_menu">Menyu</button>
+    </div>
+  </section>
+
+  <section id="cx-top" class="cx-screen">
+    <div class="cx-h" data-i18n="cx_top_title">🏆 Reyting</div>
+    <div id="cx-topList" class="cx-hint"></div>
+    <button class="cx-big cx-alt" id="cx-bTopBack" data-i18n="cx_menu">Menyu</button>
+  </section>
+</div>
+
+<div id="cx-modal"><div class="cx-box" id="cx-modalBox"></div></div>
+<div id="cx-toast"></div>
+
 <!-- ===== BOTTOM NAV ===== -->
 <div class="nav-bar" id="main-nav" style="display:none">
   <button class="nav-item active" onclick="switchView('timetable')" id="nav-timetable">
@@ -316,6 +412,10 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
   <button class="nav-item" onclick="switchView('handbook')" id="nav-handbook">
     <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
     <span data-i18n="nav_handbook">Handbook</span><div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" onclick="switchView('chess')" id="nav-chess">
+    <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-1.5 5.6C9.2 8.4 8 9.8 8 11.5c0 .9.3 1.7.8 2.3L7 20h10l-1.8-6.2c.5-.6.8-1.4.8-2.3 0-1.7-1.2-3.1-2.5-3.9A3 3 0 0 0 12 2zM6 21h12v2H6z"/></svg>
+    <span data-i18n="nav_chess">Shaxmat</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" onclick="switchView('profile')" id="nav-profile">
     <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
@@ -461,6 +561,80 @@ const I18N = {
     nav_profs: "Professors",
     nav_handbook: "Handbook",
     nav_profile: "Profil",
+    nav_chess: "Shaxmat",
+    cx_title: "Shaxmat",
+    cx_tc_title: "Vaqt nazorati (daqiqa + soniya)",
+    cx_random: "🌍 Tasodifiy raqib",
+    cx_invite: "🔗 Do'stni taklif qilish",
+    cx_cpu: "🤖 Kompyuter bilan o'ynash",
+    cx_top: "🏆 Reyting",
+    cx_cpu_title: "🤖 Kompyuter bilan",
+    cx_level: "Qiyinlik",
+    cx_color: "Rang",
+    cx_start: "O'yinni boshlash",
+    cx_menu: "Menyu",
+    cx_cancel: "Bekor qilish",
+    cx_draw: "🤝 Durang",
+    cx_resign: "🏳️ Taslim",
+    cx_top_title: "🏆 Reyting",
+    cx_connecting: "Ulanmoqda…",
+    cx_me: "{name} · reyting {rating}",
+    cx_conn_fail: "Ulanib bo'lmadi: {err}",
+    cx_no_server: "Onlayn o'yin serveri sozlanmagan. Kompyuter bilan o'ynash mavjud.",
+    cx_not_connected: "Serverga ulanmagan",
+    cx_searching: "Raqib qidirilmoqda…",
+    cx_searching_hint: "Raqib topilishi bilan o'yin avtomatik boshlanadi.",
+    cx_wait_friend: "Do'stingizni kuting…",
+    cx_share: "📤 Telegramda ulashish",
+    cx_share_text: "Men bilan shaxmat o'ynaymizmi? ♟",
+    cx_copy: "📋 Nusxalash",
+    cx_copied: "Nusxalandi",
+    cx_loading: "Yuklanmoqda…",
+    cx_no_games: "Hali o'yinlar yo'q",
+    cx_load_fail: "Yuklab bo'lmadi",
+    cx_your_turn: "Sizning yurishingiz",
+    cx_check: " — shoh!",
+    cx_opp_turn: "Raqib yurishi kutilmoqda…",
+    cx_thinking: "Kompyuter o'ylamoqda…",
+    cx_over: "O'yin tugadi",
+    cx_leave_q: "O'yinni tark etasizmi?",
+    cx_resign_q: "Taslim bo'lasizmi?",
+    cx_draw_title: "Durang taklifi",
+    cx_draw_text: "Raqib durang taklif qilmoqda",
+    cx_accept: "Qabul qilish",
+    cx_decline: "Rad etish",
+    cx_draw_sent: "Durang taklif qilindi",
+    cx_draw_declined: "Durang rad etildi",
+    cx_promo: "Piyoda almashtirish",
+    cx_q: "Farzin",
+    cx_r: "Rux",
+    cx_b: "Fil",
+    cx_n: "Ot",
+    cx_win: "🎉 Siz yutdingiz!",
+    cx_lose: "😔 Siz yutqazdingiz",
+    cx_drawn: "🤝 Durang",
+    cx_rating: "Reyting",
+    cx_replay: "Qayta o'ynash",
+    cx_you: "Siz",
+    cx_resigned: "Taslim bo'ldingiz",
+    cx_lv0: "Boshlovchi",
+    cx_lv1: "O'rta",
+    cx_lv2: "Kuchli",
+    cx_lv3: "Usta",
+    cx_white: "⚪ Oq",
+    cx_black: "⚫ Qora",
+    cx_rand: "🎲 Tasodifiy",
+    cx_r_checkmate: "Mat",
+    cx_r_stalemate: "Pat",
+    cx_r_timeout: "Vaqt tugadi",
+    cx_r_resign: "Taslim bo'ldi",
+    cx_r_agreement: "Kelishuv asosida",
+    cx_r_insufficient_material: "Material yetarli emas",
+    cx_r_fifty_moves: "50 yurish qoidasi",
+    cx_r_seventyfive_moves: "75 yurish qoidasi",
+    cx_r_threefold_repetition: "Uch marta takrorlanish",
+    cx_r_fivefold_repetition: "Besh marta takrorlanish",
+    cx_no_invite_link: "Taklif havolasi sozlanmagan (BOT_LINK)",
     profile_title: "👤 Talaba Ma'lumotlari",
     handbook_desc: "Oliy maktabingizni va yo'nalishingizni tanlab mos Handbookni yuklab oling.",
     hb_step1: "🏛️ 1-bosqich: Oliy Maktabni tanlang",
@@ -521,6 +695,80 @@ const I18N = {
     nav_profs: "Профессора",
     nav_handbook: "Handbook",
     nav_profile: "Профиль",
+    nav_chess: "Шахматы",
+    cx_title: "Шахматы",
+    cx_tc_title: "Контроль времени (минуты + секунды)",
+    cx_random: "🌍 Случайный соперник",
+    cx_invite: "🔗 Пригласить друга",
+    cx_cpu: "🤖 Играть с компьютером",
+    cx_top: "🏆 Рейтинг",
+    cx_cpu_title: "🤖 С компьютером",
+    cx_level: "Сложность",
+    cx_color: "Цвет",
+    cx_start: "Начать игру",
+    cx_menu: "Меню",
+    cx_cancel: "Отмена",
+    cx_draw: "🤝 Ничья",
+    cx_resign: "🏳️ Сдаться",
+    cx_top_title: "🏆 Рейтинг",
+    cx_connecting: "Подключение…",
+    cx_me: "{name} · рейтинг {rating}",
+    cx_conn_fail: "Не удалось подключиться: {err}",
+    cx_no_server: "Сервер онлайн-игры не настроен. Игра с компьютером доступна.",
+    cx_not_connected: "Нет подключения к серверу",
+    cx_searching: "Поиск соперника…",
+    cx_searching_hint: "Игра начнётся автоматически, как только соперник найдётся.",
+    cx_wait_friend: "Ожидаем друга…",
+    cx_share: "📤 Поделиться в Telegram",
+    cx_share_text: "Сыграем в шахматы? ♟",
+    cx_copy: "📋 Копировать",
+    cx_copied: "Скопировано",
+    cx_loading: "Загрузка…",
+    cx_no_games: "Пока нет игр",
+    cx_load_fail: "Не удалось загрузить",
+    cx_your_turn: "Ваш ход",
+    cx_check: " — шах!",
+    cx_opp_turn: "Ожидание хода соперника…",
+    cx_thinking: "Компьютер думает…",
+    cx_over: "Игра окончена",
+    cx_leave_q: "Покинуть игру?",
+    cx_resign_q: "Сдаться?",
+    cx_draw_title: "Предложение ничьи",
+    cx_draw_text: "Соперник предлагает ничью",
+    cx_accept: "Принять",
+    cx_decline: "Отклонить",
+    cx_draw_sent: "Ничья предложена",
+    cx_draw_declined: "Ничья отклонена",
+    cx_promo: "Превращение пешки",
+    cx_q: "Ферзь",
+    cx_r: "Ладья",
+    cx_b: "Слон",
+    cx_n: "Конь",
+    cx_win: "🎉 Вы победили!",
+    cx_lose: "😔 Вы проиграли",
+    cx_drawn: "🤝 Ничья",
+    cx_rating: "Рейтинг",
+    cx_replay: "Играть снова",
+    cx_you: "Вы",
+    cx_resigned: "Вы сдались",
+    cx_lv0: "Новичок",
+    cx_lv1: "Средний",
+    cx_lv2: "Сильный",
+    cx_lv3: "Мастер",
+    cx_white: "⚪ Белые",
+    cx_black: "⚫ Чёрные",
+    cx_rand: "🎲 Случайно",
+    cx_r_checkmate: "Мат",
+    cx_r_stalemate: "Пат",
+    cx_r_timeout: "Время вышло",
+    cx_r_resign: "Сдался",
+    cx_r_agreement: "По соглашению",
+    cx_r_insufficient_material: "Недостаточно материала",
+    cx_r_fifty_moves: "Правило 50 ходов",
+    cx_r_seventyfive_moves: "Правило 75 ходов",
+    cx_r_threefold_repetition: "Троекратное повторение",
+    cx_r_fivefold_repetition: "Пятикратное повторение",
+    cx_no_invite_link: "Ссылка-приглашение не настроена (BOT_LINK)",
     profile_title: "👤 Данные студента",
     handbook_desc: "Выберите высшую школу и направление для скачивания Handbook.",
     hb_step1: "🏛️ Шаг 1: Выберите Высшую школу",
@@ -581,6 +829,80 @@ const I18N = {
     nav_profs: "Professors",
     nav_handbook: "Handbook",
     nav_profile: "Profile",
+    nav_chess: "Chess",
+    cx_title: "Chess",
+    cx_tc_title: "Time control (minutes + seconds)",
+    cx_random: "🌍 Random opponent",
+    cx_invite: "🔗 Invite a friend",
+    cx_cpu: "🤖 Play vs computer",
+    cx_top: "🏆 Leaderboard",
+    cx_cpu_title: "🤖 Vs computer",
+    cx_level: "Difficulty",
+    cx_color: "Color",
+    cx_start: "Start game",
+    cx_menu: "Menu",
+    cx_cancel: "Cancel",
+    cx_draw: "🤝 Draw",
+    cx_resign: "🏳️ Resign",
+    cx_top_title: "🏆 Leaderboard",
+    cx_connecting: "Connecting…",
+    cx_me: "{name} · rating {rating}",
+    cx_conn_fail: "Could not connect: {err}",
+    cx_no_server: "The online game server is not configured. Playing vs computer is available.",
+    cx_not_connected: "Not connected to the server",
+    cx_searching: "Looking for an opponent…",
+    cx_searching_hint: "The game starts automatically once an opponent is found.",
+    cx_wait_friend: "Waiting for your friend…",
+    cx_share: "📤 Share on Telegram",
+    cx_share_text: "Fancy a game of chess? ♟",
+    cx_copy: "📋 Copy",
+    cx_copied: "Copied",
+    cx_loading: "Loading…",
+    cx_no_games: "No games yet",
+    cx_load_fail: "Failed to load",
+    cx_your_turn: "Your move",
+    cx_check: " — check!",
+    cx_opp_turn: "Waiting for opponent's move…",
+    cx_thinking: "Computer is thinking…",
+    cx_over: "Game over",
+    cx_leave_q: "Leave the game?",
+    cx_resign_q: "Resign?",
+    cx_draw_title: "Draw offer",
+    cx_draw_text: "Your opponent offers a draw",
+    cx_accept: "Accept",
+    cx_decline: "Decline",
+    cx_draw_sent: "Draw offered",
+    cx_draw_declined: "Draw declined",
+    cx_promo: "Pawn promotion",
+    cx_q: "Queen",
+    cx_r: "Rook",
+    cx_b: "Bishop",
+    cx_n: "Knight",
+    cx_win: "🎉 You won!",
+    cx_lose: "😔 You lost",
+    cx_drawn: "🤝 Draw",
+    cx_rating: "Rating",
+    cx_replay: "Play again",
+    cx_you: "You",
+    cx_resigned: "You resigned",
+    cx_lv0: "Beginner",
+    cx_lv1: "Intermediate",
+    cx_lv2: "Strong",
+    cx_lv3: "Master",
+    cx_white: "⚪ White",
+    cx_black: "⚫ Black",
+    cx_rand: "🎲 Random",
+    cx_r_checkmate: "Checkmate",
+    cx_r_stalemate: "Stalemate",
+    cx_r_timeout: "Time out",
+    cx_r_resign: "Resigned",
+    cx_r_agreement: "By agreement",
+    cx_r_insufficient_material: "Insufficient material",
+    cx_r_fifty_moves: "Fifty-move rule",
+    cx_r_seventyfive_moves: "Seventy-five-move rule",
+    cx_r_threefold_repetition: "Threefold repetition",
+    cx_r_fivefold_repetition: "Fivefold repetition",
+    cx_no_invite_link: "Invite link is not configured (BOT_LINK)",
     profile_title: "👤 Student Details",
     handbook_desc: "Select your higher school and major to download your Handbook.",
     hb_step1: "🏛️ Step 1: Select Higher School",
@@ -1118,6 +1440,7 @@ function obFinish(lang) {
 
   saveProfileData(p);
   applyProfile();
+  cxLaunch();
   const dict = I18N[lang] || I18N.uz;
   showBanner(`${dict.welcome_user}, ${p.name.split(' ')[0]}! 👋`);
 }
@@ -1295,6 +1618,7 @@ function setLanguage(lang) {
 
   renderProfs();
   renderHandbookMajors();
+  cxLangChanged();
 
   if (userProfile) {
     userProfile.lang = lang;
@@ -1334,6 +1658,9 @@ function switchView(viewId) {
     }
     renderHandbookMajors();
   }
+
+  document.body.classList.toggle('chess-on', viewId === 'chess');
+  if (viewId === 'chess') cxOpen(); else cxLeave();
 }
 
 // ===== TIMETABLE MODULE =====
@@ -1518,6 +1845,440 @@ function renderProfs(filter = '') {
   });
 }
 
+// ==========================================
+// ♟ SHAXMAT MODULI (onlayn: Socket.IO serveri, kompyuter: Stockfish)
+// ==========================================
+// Onlayn o'yin serveri (server/main.py joylangan manzil), masalan: 'https://npuu-chess.onrender.com'
+// Bo'sh qoldirilsa faqat "Kompyuter bilan o'ynash" ishlaydi.
+const CHESS_SERVER_URL = '';
+
+const CX_STOCKFISH_URL = 'https://cdnjs.cloudflare.com/ajax/libs/stockfish.js/10.0.2/stockfish.js';
+const CX_SOCKETIO_URL = 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js';
+const CX_CHESSJS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js';
+const CX_LEVELS = [
+  {skill:0, depth:4, ms:400, thr:150, pv:5},
+  {skill:6, depth:8, ms:800, thr:80, pv:4},
+  {skill:13, depth:12, ms:1500, thr:40, pv:3},
+  {skill:20, depth:16, ms:2500, thr:15, pv:3}];
+const CX_TCS = [[180,0],[180,2],[300,0],[600,0],[900,10]];
+const CX_GL = {p:'\u265F', n:'\u265E', b:'\u265D', r:'\u265C', q:'\u265B', k:'\u265A'};
+const CX_FILES = 'abcdefgh';
+// Kichik debyut kitobi: har safar turlicha ochilish
+const CX_BOOK = {'':['e2e4','d2d4','g1f3','c2c4'],'e2e4':['e7e5','c7c5','e7e6','c7c6'],'d2d4':['d7d5','g8f6','e7e6'],
+  'g1f3':['d7d5','g8f6','c7c5'],'c2c4':['e7e5','g8f6','c7c5']};
+
+const CX = {mode:null, screen:'menu', chess:null, me:null, color:'w', over:false, sel:null, last:null, gid:null,
+  clocks:{w:0,b:0}, turn:'w', sync:0, names:{}, cpu:{level:1,color:'w'}, tc:CX_TCS[2], tcIdx:2, clIdx:0,
+  thinking:false, active:false, meState:'connecting', err:''};
+let cxSocket = null, cxCfg = {bot_link:''}, cxHandled = false, cxSf = null, cxLines = [];
+let cxInit = false, cxLaunched = false, cxLibsP = null, cxBound = false;
+
+const cxEl = id => document.getElementById('cx-' + id);
+function cxT(k, vars) {
+  let s = (I18N[currentLang] && I18N[currentLang][k]) || I18N.uz[k] || k;
+  if (vars) for (const n in vars) s = s.replace('{' + n + '}', vars[n]);
+  return s;
+}
+function cxReason(r) {
+  const k = 'cx_r_' + r;
+  return (I18N[currentLang] && I18N[currentLang][k]) || I18N.uz[k] || r;
+}
+function cxLoadScript(src) {
+  return new Promise((res, rej) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = res; s.onerror = () => rej(new Error('load ' + src));
+    document.head.appendChild(s);
+  });
+}
+function cxLibs() {
+  if (!cxLibsP) {
+    cxLibsP = Promise.all([cxLoadScript(CX_CHESSJS_URL), CHESS_SERVER_URL ? cxLoadScript(CX_SOCKETIO_URL) : Promise.resolve()])
+      .catch(e => { cxLibsP = null; throw e; });
+  }
+  return cxLibsP;
+}
+
+/* ---------- Bo'limga kirish / chiqish ---------- */
+async function cxOpen() {
+  CX.active = true; cxUpdateBack();
+  if (cxInit) return;
+  cxInit = true;
+  CX.meState = 'connecting'; cxRenderMe();
+  try { await cxLibs(); }
+  catch (e) { cxInit = false; CX.meState = 'fail'; cxRenderMe(); return; }
+  CX.chess = new Chess();
+  cxBind(); cxBuildSegs();
+  if (!CHESS_SERVER_URL) { CX.meState = 'noserver'; cxRenderMe(); return; }
+  try { cxCfg = await (await fetch(CHESS_SERVER_URL + '/api/config')).json(); } catch (e) {}
+  cxConnect();
+}
+function cxLeave() { CX.active = false; cxUpdateBack(); }
+function cxLangChanged() {
+  if (!cxInit || !cxBound) return;
+  cxBuildSegs(); cxRenderMe();
+  if (CX.screen === 'game') cxRender();
+}
+// Havola orqali (startapp=game_xxx, ?tab=chess, ?join=xxx) ochilganda to'g'ridan-to'g'ri shaxmat bo'limiga o'tadi
+function cxLaunch() {
+  if (cxLaunched) return;
+  const sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || '';
+  const qs = new URLSearchParams(location.search);
+  if (sp.startsWith('game_') || qs.get('tab') === 'chess' || qs.get('join')) {
+    cxLaunched = true;
+    switchView('chess');
+  }
+}
+
+/* ---------- UI yordamchilar ---------- */
+function cxShow(id) {
+  document.querySelectorAll('#view-chess .cx-screen').forEach(e => e.classList.toggle('on', e.id === 'cx-' + id));
+  CX.screen = id; cxUpdateBack();
+}
+function cxUpdateBack() {
+  const bb = tg && tg.BackButton;
+  if (!bb) return;
+  const hide = !CX.active || CX.screen === 'menu' || (CX.screen === 'game' && CX.mode === 'online' && !CX.over);
+  hide ? bb.hide() : bb.show();
+}
+function cxBack() {
+  if (!CX.active) return;
+  if (CX.screen === 'game' && CX.mode === 'cpu' && !CX.over) cxConfirm(cxT('cx_leave_q'), cxToMenu);
+  else if (CX.screen === 'wait') cxCancelWait();
+  else cxToMenu();
+}
+function cxToast(t) {
+  const e = cxEl('toast'); e.textContent = t; e.style.display = 'block';
+  clearTimeout(cxToast.t); cxToast.t = setTimeout(() => e.style.display = 'none', 2600);
+}
+function cxConfirm(t, yes) {
+  if (tg && tg.showConfirm) tg.showConfirm(t, ok => ok && yes());
+  else if (confirm(t)) yes();
+}
+function cxOpenModal(title, text, btns) {
+  const box = cxEl('modalBox'); box.innerHTML = '';
+  const h = document.createElement('h2'); h.textContent = title; box.append(h);
+  if (text) { const p = document.createElement('p'); p.textContent = text; box.append(p); }
+  btns.forEach(b => {
+    const e = document.createElement('button');
+    e.className = 'cx-big' + (b.alt ? ' cx-alt' : ''); e.textContent = b.label;
+    e.onclick = () => { cxCloseModal(); b.fn && b.fn(); };
+    box.append(e);
+  });
+  cxEl('modal').classList.add('on');
+}
+function cxCloseModal() { cxEl('modal').classList.remove('on'); }
+function cxSeg(el, items, sel, pick) {
+  el.innerHTML = '';
+  items.forEach((t, i) => {
+    const b = document.createElement('button'); b.textContent = t; b.className = i === sel ? 'sel' : '';
+    b.onclick = () => { [...el.children].forEach(c => c.classList.remove('sel')); b.classList.add('sel'); pick(i); };
+    el.append(b);
+  });
+}
+const cxBuzz = () => { try { tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred('light'); } catch (e) {} };
+function cxFmt(t) { t = Math.max(0, Math.ceil(t)); return String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0'); }
+function cxToMenu() { cxStopCpu(); CX.mode = null; CX.gid = null; CX.over = false; cxCloseModal(); cxShow('menu'); }
+function cxRenderMe() {
+  const s = CX.meState, e = cxEl('me');
+  e.textContent = s === 'me' && CX.me ? cxT('cx_me', {name: CX.me.name, rating: CX.me.rating})
+    : s === 'err' ? cxT('cx_conn_fail', {err: CX.err})
+    : s === 'noserver' ? cxT('cx_no_server')
+    : s === 'fail' ? cxT('cx_load_fail')
+    : cxT('cx_connecting');
+}
+function cxBuildSegs() {
+  cxSeg(cxEl('tcSeg'), CX_TCS.map(([t, i]) => `${t / 60}+${i}`), CX.tcIdx, i => { CX.tcIdx = i; CX.tc = CX_TCS[i]; });
+  cxSeg(cxEl('lvSeg'), [0, 1, 2, 3].map(i => cxT('cx_lv' + i)), CX.cpu.level, i => CX.cpu.level = i);
+  cxSeg(cxEl('clSeg'), [cxT('cx_white'), cxT('cx_black'), cxT('cx_rand')], CX.clIdx, i => { CX.clIdx = i; CX.cpu.color = ['w', 'b', 'r'][i]; });
+}
+
+/* ---------- Menyu tugmalari ---------- */
+function cxBind() {
+  if (cxBound) return;
+  cxBound = true;
+  if (tg && tg.BackButton) tg.BackButton.onClick(cxBack);
+  if (tg && tg.disableVerticalSwipes) { try { tg.disableVerticalSwipes(); } catch (e) {} }
+  cxEl('bCpu').onclick = () => cxShow('cpu');
+  cxEl('bCpuStart').onclick = cxStartCpu;
+  cxEl('bCpuBack').onclick = cxToMenu;
+  cxEl('bTopBack').onclick = cxToMenu;
+  cxEl('bLeave').onclick = cxBack;
+  cxEl('bCancel').onclick = cxCancelWait;
+  cxEl('bTop').onclick = async () => {
+    cxShow('top'); const box = cxEl('topList'); box.textContent = cxT('cx_loading');
+    if (!CHESS_SERVER_URL) { box.textContent = cxT('cx_no_server'); return; }
+    try {
+      const rows = await (await fetch(CHESS_SERVER_URL + '/api/leaderboard')).json();
+      box.innerHTML = '';
+      if (!rows.length) { box.textContent = cxT('cx_no_games'); return; }
+      rows.forEach((r, i) => {
+        const d = document.createElement('div'); d.className = 'cx-lb';
+        const a = document.createElement('span'); a.textContent = `${i + 1}. ${r.name}`;
+        const b = document.createElement('b'); b.textContent = `${Math.round(r.rating)}  (${r.wins}/${r.draws}/${r.losses})`;
+        d.append(a, b); box.append(d);
+      });
+    } catch (e) { box.textContent = cxT('cx_load_fail'); }
+  };
+  cxEl('bRandom').onclick = () => {
+    if (!cxSocket || !cxSocket.connected) return cxToast(cxT('cx_not_connected'));
+    cxSocket.emit('find', {time: CX.tc[0], inc: CX.tc[1]}, r => {
+      if (r && r.error) return cxToast(r.error);
+      cxEl('waitTitle').textContent = cxT('cx_searching');
+      cxEl('waitBody').innerHTML = '';
+      const p = document.createElement('p'); p.className = 'cx-hint'; p.textContent = cxT('cx_searching_hint');
+      cxEl('waitBody').append(p);
+      cxShow('wait');
+    });
+  };
+  cxEl('bInvite').onclick = () => {
+    if (!cxSocket || !cxSocket.connected) return cxToast(cxT('cx_not_connected'));
+    if (!cxCfg.bot_link && tg && tg.initData) return cxToast(cxT('cx_no_invite_link'));
+    cxSocket.emit('create', {time: CX.tc[0], inc: CX.tc[1]}, r => {
+      if (r && r.error) return cxToast(r.error);
+      const link = cxCfg.bot_link ? `${cxCfg.bot_link}?startapp=game_${r.gid}`
+        : `${location.origin}${location.pathname}?join=${r.gid}`;
+      cxEl('waitTitle').textContent = cxT('cx_wait_friend');
+      const body = cxEl('waitBody'); body.innerHTML = '';
+      const l = document.createElement('div'); l.className = 'cx-link'; l.textContent = link;
+      const share = document.createElement('button'); share.className = 'cx-big'; share.textContent = cxT('cx_share');
+      share.onclick = () => {
+        const u = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(cxT('cx_share_text'))}`;
+        tg && tg.openTelegramLink ? tg.openTelegramLink(u) : window.open(u, '_blank');
+      };
+      const copy = document.createElement('button'); copy.className = 'cx-big cx-alt'; copy.textContent = cxT('cx_copy');
+      copy.onclick = () => { navigator.clipboard && navigator.clipboard.writeText(link); cxToast(cxT('cx_copied')); };
+      body.append(l, share, copy); cxShow('wait');
+    });
+  };
+  cxEl('board').onclick = e => { const s = e.target.closest('.cx-sq'); if (s) cxOnSquare(s.dataset.sq); };
+  cxEl('bResign').onclick = () => cxConfirm(cxT('cx_resign_q'), () => {
+    if (CX.over) return;
+    if (CX.mode === 'online') cxSocket.emit('resign', CX.gid);
+    else { CX.over = true; cxStopCpu(); cxRender(); cxUpdateBack(); cxShowEndCpu(cxT('cx_lose'), cxT('cx_resigned')); }
+  });
+  cxEl('bDraw').onclick = () => {
+    if (CX.mode === 'online' && !CX.over) { cxSocket.emit('draw_offer', CX.gid); cxToast(cxT('cx_draw_sent')); }
+  };
+}
+function cxCancelWait() { if (cxSocket) cxSocket.emit('cancel'); cxShow('menu'); }
+
+/* ---------- Socket ---------- */
+function cxDevInit() {
+  let id = sessionStorage.getItem('cx_dev');
+  if (!id) { id = 'dev:' + (Math.floor(Math.random() * 9e6) + 1e6) + ':Mehmon'; sessionStorage.setItem('cx_dev', id); }
+  return id;
+}
+function cxDrawModal() {
+  cxOpenModal(cxT('cx_draw_title'), cxT('cx_draw_text'), [
+    {label: cxT('cx_accept'), fn: () => cxSocket.emit('draw_accept', CX.gid)},
+    {label: cxT('cx_decline'), alt: true, fn: () => cxSocket.emit('draw_decline', CX.gid)}]);
+}
+function cxConnect() {
+  cxSocket = io(CHESS_SERVER_URL, {auth: {initData: (tg && tg.initData) || cxDevInit()}});
+  cxSocket.on('connect', () => cxSocket.emit('hello', cxOnHello));
+  cxSocket.on('connect_error', e => { CX.meState = 'err'; CX.err = e.message; cxRenderMe(); });
+  cxSocket.on('start', cxStartOnline);
+  cxSocket.on('moved', cxOnMoved);
+  cxSocket.on('over', cxOnOver);
+  cxSocket.on('draw_offered', o => { if (o.gid !== CX.gid || CX.over) return; cxDrawModal(); });
+  cxSocket.on('draw_declined', () => cxToast(cxT('cx_draw_declined')));
+}
+function cxOnHello(res) {
+  if (!res || res.error) return;
+  CX.me = res.me; CX.meState = 'me'; cxRenderMe();
+  if (res.game) { cxStartOnline(res.game); return; }
+  if (cxHandled) return; cxHandled = true;
+  const sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || new URLSearchParams(location.search).get('join') || '';
+  const gid = sp.startsWith('game_') ? sp.slice(5) : (sp.startsWith('tab') ? '' : sp);
+  if (gid) cxSocket.emit('join', gid, r => { if (r && r.error) cxToast(r.error); });
+}
+function cxStartOnline(st) {
+  if (!CX.active) switchView('chess');
+  cxStopCpu(); cxCloseModal();
+  CX.mode = 'online'; CX.gid = st.gid; CX.over = false; CX.color = st.color || 'w';
+  CX.chess = new Chess(st.fen); CX.last = st.last ? [st.last.slice(0, 2), st.last.slice(2, 4)] : null; CX.sel = null;
+  CX.names = {w: st.white, b: st.black}; CX.clocks = st.clocks; CX.turn = st.turn; CX.sync = Date.now();
+  cxEl('bDraw').style.display = '';
+  cxShow('game'); cxRender();
+  if (st.draw_from && st.draw_from !== CX.color) cxDrawModal();
+}
+function cxOnMoved(m) {
+  if (m.gid !== CX.gid) return;
+  const mv = CX.chess.move({from: m.uci.slice(0, 2), to: m.uci.slice(2, 4), promotion: m.uci[4]});
+  if (!mv) CX.chess = new Chess(m.fen);
+  CX.last = [m.uci.slice(0, 2), m.uci.slice(2, 4)]; CX.clocks = m.clocks; CX.turn = m.turn; CX.sync = Date.now(); CX.sel = null;
+  cxCloseModal(); cxBuzz(); cxRender();
+}
+function cxOnOver(o) {
+  if (o.gid !== CX.gid) return;
+  CX.over = true;
+  const w = o.result === '1-0' ? 'w' : o.result === '0-1' ? 'b' : null;
+  const title = !w ? cxT('cx_drawn') : w === CX.color ? cxT('cx_win') : cxT('cx_lose');
+  let text = cxReason(o.reason);
+  if (o.rating) {
+    const r = o.rating[CX.color], d = r.new - r.old;
+    text += `\n${cxT('cx_rating')}: ${r.old} → ${r.new} (${d >= 0 ? '+' : ''}${d})`;
+  }
+  cxRender(); cxUpdateBack();
+  cxOpenModal(title, text, [{label: cxT('cx_menu'), fn: cxToMenu}]);
+}
+
+/* ---------- Taxta ---------- */
+function cxRender() {
+  if (!CX.chess) return;
+  const b = cxEl('board'); b.innerHTML = '';
+  const flip = CX.color === 'b';
+  const targets = new Map();
+  if (CX.sel) CX.chess.moves({square: CX.sel, verbose: true}).forEach(m => targets.set(m.to, m));
+  let kingSq = null;
+  if (CX.chess.in_check()) {
+    const t = CX.chess.turn(), bd = CX.chess.board();
+    for (let r = 0; r < 8; r++) for (let f = 0; f < 8; f++) {
+      const c = bd[r][f]; if (c && c.type === 'k' && c.color === t) kingSq = CX_FILES[f] + (8 - r);
+    }
+  }
+  for (let r = 0; r < 8; r++) for (let f = 0; f < 8; f++) {
+    const rank = flip ? r + 1 : 8 - r, file = flip ? 7 - f : f, sq = CX_FILES[file] + rank, p = CX.chess.get(sq);
+    const d = document.createElement('div');
+    d.className = 'cx-sq ' + ((file + rank) % 2 ? 'd' : 'l'); d.dataset.sq = sq;
+    if (CX.last && (CX.last[0] === sq || CX.last[1] === sq)) d.classList.add('last');
+    if (CX.sel === sq) d.classList.add('sel');
+    if (kingSq === sq) d.classList.add('chk');
+    if (targets.has(sq)) d.classList.add(/[ce]/.test(targets.get(sq).flags) ? 'cap' : 'mv');
+    if (p) { const s = document.createElement('span'); s.className = 'cx-pc ' + p.color; s.textContent = CX_GL[p.type] + '\uFE0E'; d.append(s); }
+    b.append(d);
+  }
+  const opp = CX.color === 'w' ? 'b' : 'w';
+  cxEl('topName').textContent = cxNameOf(opp); cxEl('botName').textContent = cxNameOf(CX.color);
+  const online = CX.mode === 'online';
+  cxEl('topClock').style.visibility = cxEl('botClock').style.visibility = online ? 'visible' : 'hidden';
+  cxEl('bLeave').style.display = (online && !CX.over) ? 'none' : '';
+  let st = '';
+  if (CX.over) st = cxT('cx_over');
+  else if (CX.thinking) st = cxT('cx_thinking');
+  else if (CX.chess.turn() === CX.color) st = cxT('cx_your_turn') + (CX.chess.in_check() ? cxT('cx_check') : '');
+  else st = cxT('cx_opp_turn');
+  cxEl('status').textContent = st;
+}
+function cxNameOf(c) {
+  if (CX.mode === 'online') { const p = CX.names[c]; return p ? `${p.name} (${p.rating})` : ''; }
+  const mine = (CX.me && CX.me.name) || (userProfile && userProfile.name) || cxT('cx_you');
+  return c === CX.color ? mine : '🤖 ' + cxT('cx_lv' + CX.cpu.level);
+}
+function cxOnSquare(sq) {
+  if (CX.over || CX.thinking || CX.chess.turn() !== CX.color) return;
+  if (CX.sel) {
+    const mv = CX.chess.moves({square: CX.sel, verbose: true}).filter(m => m.to === sq);
+    if (mv.length) {
+      const from = CX.sel;
+      if (mv[0].flags.includes('p')) cxAskPromotion(c => cxDoMove(from, sq, c)); else cxDoMove(from, sq);
+      return;
+    }
+  }
+  const p = CX.chess.get(sq);
+  CX.sel = p && p.color === CX.color ? sq : null;
+  cxRender();
+}
+function cxAskPromotion(cb) {
+  cxOpenModal(cxT('cx_promo'), '', ['q', 'r', 'b', 'n'].map(t => ({label: CX_GL[t] + '\uFE0E  ' + cxT('cx_' + t), fn: () => cb(t)})));
+}
+function cxDoMove(from, to, promo) {
+  CX.sel = null;
+  if (CX.mode === 'online') {
+    cxSocket.emit('move', {gid: CX.gid, uci: from + to + (promo || '')}, r => { if (r && r.error) cxToast(r.error); });
+    cxRender(); return;
+  }
+  CX.chess.move({from, to, promotion: promo}); CX.last = [from, to]; cxBuzz(); cxRender(); cxAfterCpuPly();
+}
+
+/* ---------- Soat ---------- */
+function cxPaint(id, t, run) {
+  const e = cxEl(id); e.textContent = cxFmt(t);
+  e.classList.toggle('run', run); e.classList.toggle('low', t < 20 && run);
+}
+setInterval(() => {
+  if (CX.mode !== 'online' || CX.screen !== 'game' || !CX.gid || !CX.active) return;
+  const t = {...CX.clocks};
+  if (!CX.over) t[CX.turn] = Math.max(0, t[CX.turn] - (Date.now() - CX.sync) / 1000);
+  const opp = CX.color === 'w' ? 'b' : 'w';
+  cxPaint('topClock', t[opp], !CX.over && CX.turn === opp); cxPaint('botClock', t[CX.color], !CX.over && CX.turn === CX.color);
+}, 250);
+
+/* ---------- Kompyuter (Stockfish) ---------- */
+function cxInitSF() {
+  if (cxSf) return;
+  const url = new URL(CX_STOCKFISH_URL, location.href).href;
+  const blob = new Blob([`importScripts('${url}');`], {type: 'application/javascript'});
+  cxSf = new Worker(URL.createObjectURL(blob));
+  cxSf.onmessage = e => cxOnSF(String(e.data));
+  cxSf.postMessage('uci'); cxSf.postMessage('isready');
+}
+function cxStopCpu() { CX.thinking = false; if (cxSf) { cxSf.terminate(); cxSf = null; } }
+function cxStartCpu() {
+  cxStopCpu(); cxCloseModal();
+  CX.mode = 'cpu'; CX.gid = null; CX.chess = new Chess(); CX.over = false; CX.sel = null; CX.last = null;
+  CX.color = CX.cpu.color === 'r' ? (Math.random() < .5 ? 'w' : 'b') : CX.cpu.color;
+  cxEl('bDraw').style.display = 'none';
+  cxShow('game'); cxRender();
+  if (CX.color === 'b') cxCpuMove(); else cxInitSF();
+}
+function cxBookMove() {
+  const key = CX.chess.history({verbose: true}).map(m => m.from + m.to).join(' ');
+  const c = CX_BOOK[key]; return c ? c[Math.floor(Math.random() * c.length)] : null;
+}
+function cxCpuMove() {
+  CX.thinking = true; cxRender();
+  const bm = cxBookMove();
+  if (bm) { setTimeout(() => cxApplyCpu(bm), 500 + Math.random() * 700); return; }
+  const L = CX_LEVELS[CX.cpu.level]; cxInitSF(); cxLines = [];
+  cxSf.postMessage('setoption name Skill Level value ' + L.skill);
+  cxSf.postMessage('setoption name MultiPV value ' + L.pv);
+  cxSf.postMessage('position fen ' + CX.chess.fen());
+  cxSf.postMessage(`go depth ${L.depth} movetime ${L.ms}`);
+}
+function cxOnSF(msg) {
+  if (msg.startsWith('info') && msg.includes(' multipv ') && / pv /.test(msg)) {
+    const i = +msg.match(/multipv (\d+)/)[1];
+    const cp = msg.match(/score cp (-?\d+)/), mt = msg.match(/score mate (-?\d+)/);
+    const sc = cp ? +cp[1] : mt ? (+mt[1] > 0 ? 100000 - mt[1] : -100000 - mt[1]) : 0;
+    cxLines[i - 1] = {move: msg.match(/ pv (\S+)/)[1], score: sc};
+  } else if (msg.startsWith('bestmove') && CX.thinking) {
+    const L = CX_LEVELS[CX.cpu.level], valid = cxLines.filter(Boolean);
+    let mv = msg.split(' ')[1];
+    if (valid.length) {
+      // Eng yaxshi yurishga yaqin variantlardan tasodifiy tanlanadi -> har safar boshqacha o'ynaydi
+      const best = Math.max(...valid.map(l => l.score));
+      const pool = valid.filter(l => best - l.score <= L.thr);
+      mv = pool[Math.floor(Math.random() * pool.length)].move;
+    }
+    cxApplyCpu(mv);
+  }
+}
+function cxApplyCpu(uci) {
+  if (!CX.thinking || CX.over) return;
+  let mv = CX.chess.move({from: uci.slice(0, 2), to: uci.slice(2, 4), promotion: uci[4]});
+  if (!mv) { const all = CX.chess.moves({verbose: true}); const m = all[Math.floor(Math.random() * all.length)]; mv = CX.chess.move(m); uci = m.from + m.to; }
+  CX.thinking = false; CX.last = [mv.from, mv.to]; cxBuzz(); cxRender(); cxAfterCpuPly();
+}
+function cxAfterCpuPly() {
+  if (CX.chess.game_over()) { cxEndCpu(); return; }
+  if (CX.chess.turn() !== CX.color) cxCpuMove();
+}
+function cxEndCpu() {
+  CX.over = true; cxStopCpu(); cxRender(); cxUpdateBack();
+  if (CX.chess.in_checkmate()) {
+    const winner = CX.chess.turn() === 'w' ? 'b' : 'w';
+    cxShowEndCpu(winner === CX.color ? cxT('cx_win') : cxT('cx_lose'), cxReason('checkmate'));
+  } else {
+    const why = CX.chess.in_stalemate() ? 'stalemate' : CX.chess.insufficient_material() ? 'insufficient_material' :
+      CX.chess.in_threefold_repetition() ? 'threefold_repetition' : 'fifty_moves';
+    cxShowEndCpu(cxT('cx_drawn'), cxReason(why));
+  }
+}
+function cxShowEndCpu(t, x) {
+  cxOpenModal(t, x, [{label: cxT('cx_replay'), fn: cxStartCpu}, {label: cxT('cx_menu'), alt: true, fn: cxToMenu}]);
+}
+
 // ===== INITIALIZATION =====
 window.addEventListener('DOMContentLoaded', async () => {
   fetchStudentCsvData();
@@ -1530,6 +2291,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   if (userProfile && userProfile.name) {
     applyProfile();
+    cxLaunch();
   } else {
     document.getElementById('onboarding-overlay').style.display = 'flex';
   }
