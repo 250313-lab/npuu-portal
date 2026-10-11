@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -2112,7 +2111,7 @@ function cxLaunch() {
   if (cxLaunched) return;
   const sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || '';
   const qs = new URLSearchParams(location.search);
-  if (sp.startsWith('game_') || qs.get('tab') === 'chess' || qs.get('join')) {
+  if (sp === 'chess' || sp.startsWith('game_') || qs.get('tab') === 'chess' || qs.get('join')) {
     cxLaunched = true;
     switchView('chess');
   }
@@ -2484,8 +2483,8 @@ function cxOnHello(res) {
     }
   }
   if (cxHandled) return; cxHandled = true;
-  const sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || new URLSearchParams(location.search).get('join') || '';
-  const gid = sp.startsWith('game_') ? sp.slice(5) : (sp.startsWith('tab') ? '' : sp);
+  const sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || '';
+  const gid = sp.startsWith('game_') ? sp.slice(5) : (new URLSearchParams(location.search).get('join') || '');
   if (gid) cxSocket.emit('join', gid, r => { if (r && r.error) cxToast(r.error); });
 }
 
