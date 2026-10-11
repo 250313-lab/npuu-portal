@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -480,6 +479,16 @@ function cxGetAudioCtx() {
   document.addEventListener(ev, () => cxGetAudioCtx(), { passive: true })
 );
 
+let CX_MASTER = null;
+function cxMaster(ctx) {
+  if (!CX_MASTER || CX_MASTER.ctx !== ctx) {
+    const comp = ctx.createDynamicsCompressor();
+    const gain = ctx.createGain(); gain.gain.value = 0.6;
+    comp.connect(gain); gain.connect(ctx.destination);
+    CX_MASTER = comp; CX_MASTER.ctx = ctx;
+  }
+  return CX_MASTER;
+}
 function cxTone(ctx, t, freq, dur, vol, type, freqEnd) {
   const o = ctx.createOscillator(), g = ctx.createGain();
   o.type = type || 'sine';
@@ -488,7 +497,7 @@ function cxTone(ctx, t, freq, dur, vol, type, freqEnd) {
   g.gain.setValueAtTime(0.0001, t);
   g.gain.exponentialRampToValueAtTime(vol, t + 0.005);
   g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-  o.connect(g); g.connect(ctx.destination);
+  o.connect(g); g.connect(cxMaster(ctx));
   o.start(t); o.stop(t + dur + 0.02);
 }
 function cxClick(ctx, t, dur, vol, cutoff) {
@@ -499,7 +508,7 @@ function cxClick(ctx, t, dur, vol, cutoff) {
   const s = ctx.createBufferSource(); s.buffer = buf;
   const f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = cutoff;
   const g = ctx.createGain(); g.gain.value = vol;
-  s.connect(f); f.connect(g); g.connect(ctx.destination);
+  s.connect(f); f.connect(g); g.connect(cxMaster(ctx));
   s.start(t);
 }
 
@@ -514,11 +523,11 @@ function playChessSound(type) {
       cxClick(ctx, t, 0.04, 0.5, 2500);
     } else if (type === 'capture') {
       cxTone(ctx, t, 180, 0.14, 0.7, 'triangle', 80);
-      cxClick(ctx, t, 0.08, 0.9, 4500);
+      cxClick(ctx, t, 0.08, 0.6, 3500);
     } else if (type === 'check') {
       cxTone(ctx, t, 220, 0.08, 0.4, 'triangle', 110);
-      cxTone(ctx, t + 0.09, 880, 0.18, 0.35, 'square');
-      cxTone(ctx, t + 0.09, 1175, 0.18, 0.2, 'sine');
+      cxTone(ctx, t + 0.09, 880, 0.18, 0.25, 'triangle');
+      cxTone(ctx, t + 0.09, 1175, 0.18, 0.12, 'sine');
     } else if (type === 'over') {
       cxTone(ctx, t, 659, 0.22, 0.4, 'sine');
       cxTone(ctx, t + 0.2, 523, 0.22, 0.4, 'sine');
@@ -2333,7 +2342,7 @@ function cxBookMove() {
   const c = CX_BOOK[key]; return c ? c[Math.floor(Math.random() * c.length)] : null;
 }
 function cxCpuMove() {
-  CX.thinking = true; cxRender();
+  CX.thinking = true; CX.cpuT0 = Date.now(); CX.cpuMinMs = 1000 + Math.random() * 900; cxRender();
   const bm = cxBookMove();
   if (bm) { setTimeout(() => cxApplyCpu(bm), 500 + Math.random() * 700); return; }
   const L = CX_LEVELS[CX.cpu.level]; cxInitSF(); cxLines = [];
@@ -2357,7 +2366,11 @@ function cxOnSF(msg) {
       const pool = valid.filter(l => best - l.score <= L.thr);
       mv = pool[Math.floor(Math.random() * pool.length)].move;
     }
-    cxApplyCpu(mv);
+    // Kompyuter juda tez yurmasligi uchun minimal "o'ylash" vaqti
+    const wait = Math.max(0, (CX.cpuT0 || 0) + (CX.cpuMinMs || 0) - Date.now());
+    const game = CX.chess;
+    if (wait > 0) setTimeout(() => { if (CX.chess === game) cxApplyCpu(mv); }, wait);
+    else cxApplyCpu(mv);
   }
 }
 function cxApplyCpu(uci) {
