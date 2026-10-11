@@ -436,7 +436,7 @@ body.chess-on .profile-header,body.chess-on .today-widget{display:none!important
     <span data-i18n="nav_chess">Shaxmat</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" onclick="switchView('profile')" id="nav-profile">
-    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
     <span data-i18n="nav_profile">Profil</span><div class="nav-dot"></div>
   </button>
 </div>
@@ -476,8 +476,6 @@ const GOOGLE_SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbx7fF3
 const GOOGLE_SPREADSHEET_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/edit?usp=sharing`;
 
 /* ===== AUDIO EFFEKTLAR (SHAXMAT VA OVOZLAR) ===== */
-/* Tashqi mp3 havolalari (hotlink/CORS/internet sabab) ishlamagani uchun,
-   ovozlar Web Audio API orqali brauzerning o'zida hosil qilinadi. */
 let CX_AUDIO_CTX = null;
 function cxGetAudioCtx() {
   try {
@@ -490,7 +488,6 @@ function cxGetAudioCtx() {
     return CX_AUDIO_CTX;
   } catch (e) { return null; }
 }
-/* Brauzer birinchi bosishdan keyingina ovozga ruxsat beradi */
 ['pointerdown','touchstart','click','keydown'].forEach(ev =>
   document.addEventListener(ev, () => cxGetAudioCtx(), { passive: true })
 );
@@ -701,7 +698,7 @@ const I18N = {
     cx_no_server: "Onlayn o'yin serveri sozlanmagan. Kompyuter bilan o'ynash mavjud.",
     cx_not_connected: "Serverga ulanmagan",
     cx_searching: "Raqib qidirilmoqda…",
-    cx_searching_hint: "Raqib topilishi bilan o'yin avtomatik boshlanadi.",
+    cx_searching_hint: "Raqib topilishi bilan o'yinni tasdiqlash bildirishnomasi chiqadi.",
     cx_wait_friend: "Do'stingizni kuting…",
     cx_share: "📤 Telegramda ulashish",
     cx_share_text: "Men bilan shaxmat o'ynaymizmi? ♟",
@@ -777,7 +774,13 @@ const I18N = {
     alert_name: "Ism va familiyangizni kiriting!",
     alert_fields: "Barcha ta'lim ma'lumotlarini va guruhni tanlang!",
     welcome_user: "Xush kelibsiz",
-    days: ["Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba"]
+    days: ["Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba"],
+    cx_opp_found: "🎉 Raqib topildi!",
+    cx_opp_found_desc_short: "Ushbu raqib bilan o'ynaysizmi?",
+    cx_accept_match: "✅ Qabul qilish",
+    cx_decline_match: "❌ Rad etish",
+    cx_waiting_opp_accept: "⏳ Raqib qabul qilishini kutilmoqda...",
+    cx_match_declined: "⚠️ O'yin rad etildi yoki vaqt tugadi"
   },
   ru: {
     app_title: "NPUU Smart Bot",
@@ -835,7 +838,7 @@ const I18N = {
     cx_no_server: "Сервер онлайн-игры не настроен. Игра с компьютером доступна.",
     cx_not_connected: "Нет подключения к серверу",
     cx_searching: "Поиск соперника…",
-    cx_searching_hint: "Игра начнётся автоматически, как только соперник найдётся.",
+    cx_searching_hint: "Как только соперник найдётся, появиться окно подтверждения.",
     cx_wait_friend: "Ожидаем друга…",
     cx_share: "📤 Поделиться в Telegram",
     cx_share_text: "Сыграем в шахматы? ♟",
@@ -911,7 +914,13 @@ const I18N = {
     alert_name: "Введите ваше имя и фамилию!",
     alert_fields: "Выберите все учебные данные и группу!",
     welcome_user: "Добро пожаловать",
-    days: ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
+    days: ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
+    cx_opp_found: "🎉 Соперник найден!",
+    cx_opp_found_desc_short: "Будете играть с ним?",
+    cx_accept_match: "✅ Принять",
+    cx_decline_match: "❌ Отклонить",
+    cx_waiting_opp_accept: "⏳ Ожидание подтверждения соперника…",
+    cx_match_declined: "⚠️ Игра отклонена или время истекло"
   },
   en: {
     app_title: "NPUU Smart Bot",
@@ -969,7 +978,7 @@ const I18N = {
     cx_no_server: "The online game server is not configured. Playing vs computer is available.",
     cx_not_connected: "Not connected to the server",
     cx_searching: "Looking for an opponent…",
-    cx_searching_hint: "The game starts automatically once an opponent is found.",
+    cx_searching_hint: "Once an opponent is found, a confirmation modal will pop up.",
     cx_wait_friend: "Waiting for your friend…",
     cx_share: "📤 Share on Telegram",
     cx_share_text: "Fancy a game of chess? ♟",
@@ -1045,7 +1054,13 @@ const I18N = {
     alert_name: "Please enter your full name!",
     alert_fields: "Please select all academic details and group!",
     welcome_user: "Welcome",
-    days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    cx_opp_found: "🎉 Opponent Found!",
+    cx_opp_found_desc_short: "Do you want to play with them?",
+    cx_accept_match: "✅ Accept",
+    cx_decline_match: "❌ Decline",
+    cx_waiting_opp_accept: "⏳ Waiting for opponent to accept…",
+    cx_match_declined: "⚠️ Match declined or timed out"
   }
 };
 
@@ -1178,7 +1193,6 @@ async function fetchStudentCsvData() {
   const allSheetsData = [];
   try {
     const fetchPromises = SPREADSHEET_SHEET_NAMES.map(async (sheetName) => {
-      // 1-ustuvorlik: Google Visualization Query API
       const gvizUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
       try {
         const res = await fetch(gvizUrl);
@@ -1190,7 +1204,6 @@ async function fetchStudentCsvData() {
         console.warn(`gviz fetch error for sheet ${sheetName}:`, err);
       }
 
-      // 2-zaxira (fallback): Standart export URL
       try {
         const exportUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&sheet=${encodeURIComponent(sheetName)}`;
         const res2 = await fetch(exportUrl);
@@ -1253,7 +1266,7 @@ async function searchStudents(query) {
   if (!sheetsData || sheetsData.length === 0) return [];
 
   const results = [];
-  const seenKeys = new Set(); // Takroriy talabalarni filtrlash uchun global set
+  const seenKeys = new Set();
 
   for (const rows of sheetsData) {
     if (!rows || rows.length === 0) continue;
@@ -1303,7 +1316,6 @@ async function searchStudents(query) {
         const primaryName = foundName.toLowerCase().trim();
 
         if (primaryId || primaryEmail || primaryName) {
-          // Duplikatsiyani 3 xil mezon bo'yicha tekshirib 4 marta chiqish xatosini yo'qotish
           let isDuplicate = false;
           if (primaryId && seenKeys.has('id:' + primaryId)) isDuplicate = true;
           if (primaryEmail && seenKeys.has('email:' + primaryEmail)) isDuplicate = true;
@@ -1649,8 +1661,8 @@ function applyProfile() {
   document.getElementById('main-topbar').style.display = 'flex';
   document.getElementById('main-nav').style.display = 'flex';
 
-  const schoolName = getSchoolName(userProfile.schoolKey);
-  const majorName = getMajorName(userProfile.schoolKey, userProfile.majorKey);
+  const schoolName = getSchoolName(userProfile.schoolKey, currentLang);
+  const majorName = getMajorName(userProfile.schoolKey, userProfile.majorKey, currentLang);
 
   const avatarEl = document.getElementById('profile-avatar');
   const tgPhoto = window.Telegram?.WebApp?.initDataUnsafe?.user?.photo_url;
@@ -1817,13 +1829,13 @@ function initTimetable(targetDay) {
   if (dayBadge) dayBadge.textContent = currentSelectedDay;
 
   const edupageUrl = getEdupageUrlForGroup(userProfile.group);
-  const schoolName = getSchoolName(userProfile.schoolKey);
+  const schoolName = getSchoolName(userProfile.schoolKey, currentLang);
 
   const headerCard = document.createElement('div');
   headerCard.className = 'card';
   headerCard.style.borderLeft = '4px solid var(--accent)';
   headerCard.innerHTML = `
-    <div style="display:flex;justify-space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
       <div>
         <div style="font-size:15px;font-weight:800;color:var(--text);">${userProfile.group} ${dict.group_schedule_title}</div>
         <div style="font-size:12px;color:var(--muted);margin-top:2px;">🏛️ ${schoolName} • ${userProfile.course}${dict.course_suffix}</div>
@@ -1971,10 +1983,8 @@ function renderProfs(filter = '') {
 }
 
 // ==========================================
-// ♟ SHAXMAT MODULI (onlayn: Socket.IO serveri, kompyuter: Stockfish)
+// ♟ SHAXMAT MODULI
 // ==========================================
-// Onlayn o'yin serveri (server/main.py joylangan manzil), masalan: 'https://npuu-chess.onrender.com'
-// Bo'sh qoldirilsa faqat "Kompyuter bilan o'ynash" ishlaydi.
 const CHESS_SERVER_URL = 'https://chess-server-iin8.onrender.com';
 
 const CX_STOCKFISH_URL = 'https://cdnjs.cloudflare.com/ajax/libs/stockfish.js/10.0.2/stockfish.js';
@@ -1988,15 +1998,16 @@ const CX_LEVELS = [
 const CX_TCS = [[180,0],[180,2],[300,0],[600,0],[900,10]];
 const CX_GL = {p:'\u265F', n:'\u265E', b:'\u265D', r:'\u265C', q:'\u265B', k:'\u265A'};
 const CX_FILES = 'abcdefgh';
-// Kichik debyut kitobi: har safar turlicha ochilish
+
 const CX_BOOK = {'':['e2e4','d2d4','g1f3','c2c4'],'e2e4':['e7e5','c7c5','e7e6','c7c6'],'d2d4':['d7d5','g8f6','e7e6'],
   'g1f3':['d7d5','g8f6','c7c5'],'c2c4':['e7e5','g8f6','c7c5']};
 
 const CX = {mode:null, screen:'menu', chess:null, me:null, color:'w', over:false, sel:null, last:null, gid:null,
   clocks:{w:0,b:0}, turn:'w', sync:0, names:{}, cpu:{level:1,color:'w'}, tc:CX_TCS[2], tcIdx:2, clIdx:0,
-  thinking:false, active:false, meState:'connecting', err:''};
+  thinking:false, active:false, meState:'connecting', err:'', matchConfirmed: false};
 let cxSocket = null, cxCfg = {bot_link:''}, cxHandled = false, cxSf = null, cxLines = [];
 let cxInit = false, cxLaunched = false, cxLibsP = null, cxBound = false;
+let cxPendingMatchData = null, cxMatchTimerInterval = null;
 
 const cxEl = id => document.getElementById('cx-' + id);
 function cxT(k, vars) {
@@ -2043,7 +2054,7 @@ function cxLangChanged() {
   cxBuildSegs(); cxRenderMe();
   if (CX.screen === 'game') cxRender();
 }
-// Havola orqali (startapp=game_xxx, ?tab=chess, ?join=xxx) ochilganda to'g'ridan-to'g'ri shaxmat bo'limiga o'tadi
+
 function cxLaunch() {
   if (cxLaunched) return;
   const sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || '';
@@ -2216,7 +2227,7 @@ function cxBind() {
 }
 function cxCancelWait() { if (cxSocket) cxSocket.emit('cancel'); cxShow('menu'); }
 
-/* ---------- Socket ---------- */
+/* ---------- Socket & Match Confirmation ---------- */
 function cxDevInit() {
   let id = sessionStorage.getItem('cx_dev');
   if (!id) { id = 'dev:' + (Math.floor(Math.random() * 9e6) + 1e6) + ':Mehmon'; sessionStorage.setItem('cx_dev', id); }
@@ -2227,16 +2238,146 @@ function cxDrawModal() {
     {label: cxT('cx_accept'), fn: () => cxSocket.emit('draw_accept', CX.gid)},
     {label: cxT('cx_decline'), alt: true, fn: () => cxSocket.emit('draw_decline', CX.gid)}]);
 }
+
+function cxExtractOpponentInfo(st, oppColor) {
+  if (st.opponent) return st.opponent;
+  if (st.names && st.names[oppColor]) {
+    const p = st.names[oppColor];
+    if (typeof p === 'object' && p !== null) return { name: p.name || 'Raqib', rating: p.rating || '', photo: p.photo || p.photo_url || '' };
+    return { name: String(p), rating: '', photo: '' };
+  }
+  const oppVal = st[oppColor === 'w' ? 'white' : 'black'];
+  if (typeof oppVal === 'object' && oppVal !== null) return { name: oppVal.name || 'Raqib', rating: oppVal.rating || '', photo: oppVal.photo || '' };
+  return { name: String(oppVal || 'Raqib'), rating: '', photo: '' };
+}
+
+function cxShowMatchConfirmation(st) {
+  cxPendingMatchData = st;
+  const oppColor = st.color === 'w' ? 'b' : 'w';
+  const oppInfo = cxExtractOpponentInfo(st, oppColor);
+
+  const box = cxEl('modalBox');
+  box.innerHTML = '';
+
+  const h2 = document.createElement('h2');
+  h2.textContent = cxT('cx_opp_found');
+
+  const card = document.createElement('div');
+  card.style.cssText = 'background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:12px;margin:12px 0;display:flex;align-items:center;gap:10px;text-align:left;';
+
+  const av = document.createElement('div');
+  av.className = 'cx-avatar';
+  av.style.cssText = 'width:42px;height:42px;font-size:18px;flex-shrink:0;';
+  cxSetAvatar(av, oppInfo.name, oppInfo.photo);
+
+  const details = document.createElement('div');
+  details.style.cssText = 'min-width:0;flex:1;';
+
+  const nameEl = document.createElement('div');
+  nameEl.style.cssText = 'font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);';
+  nameEl.textContent = oppInfo.name;
+
+  const subEl = document.createElement('div');
+  subEl.style.cssText = 'font-size:12px;color:var(--muted);margin-top:2px;';
+  subEl.textContent = oppInfo.rating ? `${cxT('cx_rating')}: ${oppInfo.rating}` : 'NPUU Player';
+
+  details.append(nameEl, subEl);
+  card.append(av, details);
+
+  const promptP = document.createElement('p');
+  promptP.style.cssText = 'font-size:13.5px;margin-bottom:10px;color:var(--text);font-weight:600;';
+  promptP.textContent = cxT('cx_opp_found_desc_short');
+
+  const timerEl = document.createElement('div');
+  timerEl.style.cssText = 'font-size:12.5px;color:var(--orange);font-weight:700;margin-bottom:12px;';
+
+  let timeLeft = 12;
+  timerEl.textContent = `⏱️ ${timeLeft}s`;
+
+  if (cxMatchTimerInterval) clearInterval(cxMatchTimerInterval);
+  cxMatchTimerInterval = setInterval(() => {
+    timeLeft--;
+    if (timeLeft <= 0) {
+      clearInterval(cxMatchTimerInterval);
+      cxDeclineMatch();
+    } else {
+      timerEl.textContent = `⏱️ ${timeLeft}s`;
+    }
+  }, 1000);
+
+  const btnAccept = document.createElement('button');
+  btnAccept.className = 'cx-big';
+  btnAccept.style.cssText = 'background:var(--green);color:#000;font-weight:800;margin-bottom:8px;';
+  btnAccept.textContent = cxT('cx_accept_match');
+
+  const btnDecline = document.createElement('button');
+  btnDecline.className = 'cx-big cx-alt';
+  btnDecline.style.margin = '0';
+  btnDecline.textContent = cxT('cx_decline_match');
+
+  btnAccept.onclick = () => {
+    if (cxMatchTimerInterval) clearInterval(cxMatchTimerInterval);
+    btnAccept.disabled = true;
+    btnAccept.style.opacity = '0.6';
+    btnDecline.style.display = 'none';
+    timerEl.textContent = cxT('cx_waiting_opp_accept');
+
+    if (cxSocket) {
+      cxSocket.emit('accept_match', { gid: st.gid });
+      cxSocket.emit('match_accept', { gid: st.gid });
+    }
+
+    if (st.isDirectStart) {
+      CX.matchConfirmed = true;
+      cxCloseModal();
+      cxStartOnlineGameActual(st);
+    }
+  };
+
+  btnDecline.onclick = () => {
+    if (cxMatchTimerInterval) clearInterval(cxMatchTimerInterval);
+    cxDeclineMatch();
+  };
+
+  box.append(h2, card, promptP, timerEl, btnAccept, btnDecline);
+  cxEl('modal').classList.add('on');
+  playChessSound('check');
+}
+
+function cxDeclineMatch() {
+  if (cxMatchTimerInterval) clearInterval(cxMatchTimerInterval);
+  if (cxPendingMatchData && cxSocket) {
+    cxSocket.emit('decline_match', { gid: cxPendingMatchData.gid });
+    cxSocket.emit('match_decline', { gid: cxPendingMatchData.gid });
+    cxSocket.emit('cancel');
+  }
+  cxPendingMatchData = null;
+  CX.matchConfirmed = false;
+  cxCloseModal();
+  cxToast(cxT('cx_match_declined'));
+  cxShow('menu');
+}
+
 function cxConnect() {
   cxSocket = io(CHESS_SERVER_URL, {auth: {initData: (tg && tg.initData) || cxDevInit()}});
   cxSocket.on('connect', () => cxSocket.emit('hello', cxOnHello));
   cxSocket.on('connect_error', e => { CX.meState = 'err'; CX.err = e.message; cxRenderMe(); });
+  cxSocket.on('match_found', st => { CX.matchConfirmed = false; cxShowMatchConfirmation(st); });
+  cxSocket.on('match_declined', () => {
+    if (cxMatchTimerInterval) clearInterval(cxMatchTimerInterval);
+    cxPendingMatchData = null;
+    CX.matchConfirmed = false;
+    cxCloseModal();
+    cxToast(cxT('cx_match_declined'));
+    cxShow('menu');
+  });
   cxSocket.on('start', cxStartOnline);
   cxSocket.on('moved', cxOnMoved);
   cxSocket.on('over', cxOnOver);
   cxSocket.on('draw_offered', o => { if (o.gid !== CX.gid || CX.over) return; cxDrawModal(); });
   cxSocket.on('draw_declined', () => cxToast(cxT('cx_draw_declined')));
 }
+
 function cxOnHello(res) {
   if (!res || res.error) return;
   CX.me = res.me; CX.meState = 'me'; cxRenderMe();
@@ -2246,16 +2387,29 @@ function cxOnHello(res) {
   const gid = sp.startsWith('game_') ? sp.slice(5) : (sp.startsWith('tab') ? '' : sp);
   if (gid) cxSocket.emit('join', gid, r => { if (r && r.error) cxToast(r.error); });
 }
+
 function cxStartOnline(st) {
+  if (!st) return;
+  if (CX.screen === 'wait' && !CX.matchConfirmed) {
+    st.isDirectStart = true;
+    cxShowMatchConfirmation(st);
+    return;
+  }
+  cxStartOnlineGameActual(st);
+}
+
+function cxStartOnlineGameActual(st) {
   if (!CX.active) switchView('chess');
   cxStopCpu(); cxCloseModal();
   CX.mode = 'online'; CX.gid = st.gid; CX.over = false; CX.color = st.color || 'w';
   CX.chess = new Chess(st.fen); CX.last = st.last ? [st.last.slice(0, 2), st.last.slice(2, 4)] : null; CX.sel = null;
   CX.names = {w: st.white, b: st.black}; CX.clocks = st.clocks; CX.turn = st.turn; CX.sync = Date.now();
+  CX.matchConfirmed = false;
   cxEl('bDraw').style.display = '';
   cxShow('game'); cxRender();
   if (st.draw_from && st.draw_from !== CX.color) cxDrawModal();
 }
+
 function cxOnMoved(m) {
   if (m.gid !== CX.gid) return;
   const mv = CX.chess.move({from: m.uci.slice(0, 2), to: m.uci.slice(2, 4), promotion: m.uci[4]});
@@ -2456,12 +2610,10 @@ function cxOnSF(msg) {
     const L = CX_LEVELS[CX.cpu.level], valid = cxLines.filter(Boolean);
     let mv = msg.split(' ')[1];
     if (valid.length) {
-      // Eng yaxshi yurishga yaqin variantlardan tasodifiy tanlanadi -> har safar boshqacha o'ynaydi
       const best = Math.max(...valid.map(l => l.score));
       const pool = valid.filter(l => best - l.score <= L.thr);
       mv = pool[Math.floor(Math.random() * pool.length)].move;
     }
-    // Kompyuter juda tez yurmasligi uchun minimal "o'ylash" vaqti
     const wait = Math.max(0, (CX.cpuT0 || 0) + (CX.cpuMinMs || 0) - Date.now());
     const game = CX.chess;
     if (wait > 0) setTimeout(() => { if (CX.chess === game) cxApplyCpu(mv); }, wait);
