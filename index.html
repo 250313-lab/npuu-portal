@@ -51,6 +51,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .ctrl-btn{background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:9px;padding:6px 10px;font-size:13px;font-weight:700;outline:none;cursor:pointer;font-family:inherit;line-height:1;transition:all .2s}
 .ctrl-btn:active{transform:scale(.94)}
 #theme-btn{font-size:15px;padding:6px 9px}
+#sound-btn{font-size:15px;padding:6px 9px}
 .edit-profile-btn{background:var(--surface2);border:1px solid var(--accent);color:var(--accent);border-radius:9px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;display:flex;align-items:center;gap:4px}
 .edit-profile-btn:active{transform:scale(.94)}
 
@@ -260,6 +261,7 @@ body.chess-on .profile-header,body.chess-on .today-widget{display:none!important
 <div class="top-bar" id="main-topbar" style="display:none">
   <div class="top-bar-left">
     <button id="theme-btn" class="ctrl-btn" onclick="toggleTheme()">🌙</button>
+    <button id="sound-btn" class="ctrl-btn" onclick="toggleSound()">🔊</button>
     <select id="lang-select" class="ctrl-btn" onchange="setLanguage(this.value)">
       <option value="uz">UZ</option><option value="ru">RU</option><option value="en">EN</option>
     </select>
@@ -427,7 +429,20 @@ body.chess-on .profile-header,body.chess-on .today-widget{display:none!important
 const tg = window.Telegram?.WebApp;
 if(tg){tg.ready();tg.expand();}
 
-const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_PROFILE='npuu_profile';
+const LS_LANG='npuu_lang', LS_THEME='npuu_theme', LS_PROFILE='npuu_profile', LS_SOUND='npuu_sound';
+let isSoundOn = localStorage.getItem(LS_SOUND) !== 'off';
+
+function applySoundState(soundOn) {
+  isSoundOn = soundOn;
+  localStorage.setItem(LS_SOUND, soundOn ? 'on' : 'off');
+  const sb = document.getElementById('sound-btn');
+  if (sb) sb.textContent = soundOn ? '🔊' : '🔇';
+}
+
+function toggleSound() {
+  applySoundState(!isSoundOn);
+}
+
 const EDUPAGE_BASE_URL = 'https://npuu.edupage.org/timetable/';
 
 const SPREADSHEET_ID = '1qL8UgUDThQKGVSvUbTMxj28AvFQi0vQ0_h0HdGwFWpc';
@@ -443,6 +458,34 @@ const SPREADSHEET_SHEET_NAMES = [
 
 const GOOGLE_SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbx7fF3f1O0w8jA1z5uK3J4E6M7N8O9P0Q/exec';
 const GOOGLE_SPREADSHEET_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/edit?usp=sharing`;
+
+/* ===== AUDIO EFFEKTLAR (SHAXMAT VA OVOZLAR) ===== */
+const CX_SOUNDS = {
+  move: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/standard/move-self.mp3'),
+  capture: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/standard/capture.mp3'),
+  check: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/standard/move-check.mp3'),
+  over: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/standard/game-end.mp3')
+};
+
+function playChessSound(type) {
+  if (!isSoundOn) return;
+  try {
+    if (CX_SOUNDS[type]) {
+      CX_SOUNDS[type].currentTime = 0;
+      CX_SOUNDS[type].play().catch(() => {});
+    }
+  } catch (e) {}
+}
+
+function cxPlayMoveSound(moveObj) {
+  if (CX.chess.in_check()) {
+    playChessSound('check');
+  } else if (moveObj && (moveObj.captured || (moveObj.flags && moveObj.flags.includes('c')))) {
+    playChessSound('capture');
+  } else {
+    playChessSound('move');
+  }
+}
 
 /* ===== EXACT EDUPAGE MAP FROM IMAGES ===== */
 const GROUP_EDUPAGE_URLS = {
@@ -1243,11 +1286,18 @@ function handleIdSearch(val) {
           item.onmouseover = () => item.style.background = 'var(--surface)';
           item.onmouseout = () => item.style.background = 'transparent';
 
-          const nameText = res.name || 'Noma\'lum';
-          const idText = res.id ? ` (ID: ${res.id})` : '';
-          const groupText = res.group ? ` • ${res.group}` : '';
+          const titleDiv = document.createElement('div');
+          titleDiv.style.fontWeight = '700';
+          titleDiv.style.color = 'var(--text)';
+          titleDiv.textContent = (res.name || "Noma'lum") + (res.id ? ` (ID: ${res.id})` : '');
 
-          item.innerHTML = `<div style="font-weight:700;color:var(--text);">${nameText}${idText}</div><div style="font-size:11px;color:var(--muted);">${res.email || ''}${groupText}</div>`;
+          const subDiv = document.createElement('div');
+          subDiv.style.fontSize = '11px';
+          subDiv.style.color = 'var(--muted)';
+          subDiv.textContent = (res.email || '') + (res.group ? ` • ${res.group}` : '');
+
+          item.appendChild(titleDiv);
+          item.appendChild(subDiv);
 
           item.onclick = () => selectStudent(res);
           dropdownEl.appendChild(item);
@@ -2054,7 +2104,7 @@ function cxBind() {
   cxEl('bResign').onclick = () => cxConfirm(cxT('cx_resign_q'), () => {
     if (CX.over) return;
     if (CX.mode === 'online') cxSocket.emit('resign', CX.gid);
-    else { CX.over = true; cxStopCpu(); cxRender(); cxUpdateBack(); cxShowEndCpu(cxT('cx_lose'), cxT('cx_resigned')); }
+    else { CX.over = true; cxStopCpu(); playChessSound('over'); cxRender(); cxUpdateBack(); cxShowEndCpu(cxT('cx_lose'), cxT('cx_resigned')); }
   });
   cxEl('bDraw').onclick = () => {
     if (CX.mode === 'online' && !CX.over) { cxSocket.emit('draw_offer', CX.gid); cxToast(cxT('cx_draw_sent')); }
@@ -2107,11 +2157,12 @@ function cxOnMoved(m) {
   const mv = CX.chess.move({from: m.uci.slice(0, 2), to: m.uci.slice(2, 4), promotion: m.uci[4]});
   if (!mv) CX.chess = new Chess(m.fen);
   CX.last = [m.uci.slice(0, 2), m.uci.slice(2, 4)]; CX.clocks = m.clocks; CX.turn = m.turn; CX.sync = Date.now(); CX.sel = null;
-  cxCloseModal(); cxBuzz(); cxRender();
+  cxCloseModal(); cxBuzz(); if (mv) cxPlayMoveSound(mv); cxRender();
 }
 function cxOnOver(o) {
   if (o.gid !== CX.gid) return;
   CX.over = true;
+  playChessSound('over');
   const w = o.result === '1-0' ? 'w' : o.result === '0-1' ? 'b' : null;
   const title = !w ? cxT('cx_drawn') : w === CX.color ? cxT('cx_win') : cxT('cx_lose');
   let text = cxReason(o.reason);
@@ -2188,7 +2239,12 @@ function cxDoMove(from, to, promo) {
     cxSocket.emit('move', {gid: CX.gid, uci: from + to + (promo || '')}, r => { if (r && r.error) cxToast(r.error); });
     cxRender(); return;
   }
-  CX.chess.move({from, to, promotion: promo}); CX.last = [from, to]; cxBuzz(); cxRender(); cxAfterCpuPly();
+  const mv = CX.chess.move({from, to, promotion: promo});
+  CX.last = [from, to];
+  cxBuzz();
+  if (mv) cxPlayMoveSound(mv);
+  cxRender();
+  cxAfterCpuPly();
 }
 
 /* ---------- Soat ---------- */
@@ -2258,14 +2314,23 @@ function cxApplyCpu(uci) {
   if (!CX.thinking || CX.over) return;
   let mv = CX.chess.move({from: uci.slice(0, 2), to: uci.slice(2, 4), promotion: uci[4]});
   if (!mv) { const all = CX.chess.moves({verbose: true}); const m = all[Math.floor(Math.random() * all.length)]; mv = CX.chess.move(m); uci = m.from + m.to; }
-  CX.thinking = false; CX.last = [mv.from, mv.to]; cxBuzz(); cxRender(); cxAfterCpuPly();
+  CX.thinking = false;
+  CX.last = [mv.from, mv.to];
+  cxBuzz();
+  if (mv) cxPlayMoveSound(mv);
+  cxRender();
+  cxAfterCpuPly();
 }
 function cxAfterCpuPly() {
   if (CX.chess.game_over()) { cxEndCpu(); return; }
   if (CX.chess.turn() !== CX.color) cxCpuMove();
 }
 function cxEndCpu() {
-  CX.over = true; cxStopCpu(); cxRender(); cxUpdateBack();
+  CX.over = true;
+  cxStopCpu();
+  playChessSound('over');
+  cxRender();
+  cxUpdateBack();
   if (CX.chess.in_checkmate()) {
     const winner = CX.chess.turn() === 'w' ? 'b' : 'w';
     cxShowEndCpu(winner === CX.color ? cxT('cx_win') : cxT('cx_lose'), cxReason('checkmate'));
@@ -2285,6 +2350,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   const savedLang = localStorage.getItem(LS_LANG) || 'uz';
   const savedTheme = localStorage.getItem(LS_THEME) !== 'light';
   applyTheme(savedTheme);
+  applySoundState(isSoundOn);
 
   loadProfile();
   setLanguage(savedLang);
