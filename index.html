@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -460,19 +461,68 @@ const GOOGLE_SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbx7fF3
 const GOOGLE_SPREADSHEET_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/edit?usp=sharing`;
 
 /* ===== AUDIO EFFEKTLAR (SHAXMAT VA OVOZLAR) ===== */
-const CX_SOUNDS = {
-  move: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/standard/move-self.mp3'),
-  capture: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/standard/capture.mp3'),
-  check: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/standard/move-check.mp3'),
-  over: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/standard/game-end.mp3')
-};
+/* Tashqi mp3 havolalari (hotlink/CORS/internet sabab) ishlamagani uchun,
+   ovozlar Web Audio API orqali brauzerning o'zida hosil qilinadi. */
+let CX_AUDIO_CTX = null;
+function cxGetAudioCtx() {
+  try {
+    if (!CX_AUDIO_CTX) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      CX_AUDIO_CTX = new AC();
+    }
+    if (CX_AUDIO_CTX.state === 'suspended') CX_AUDIO_CTX.resume();
+    return CX_AUDIO_CTX;
+  } catch (e) { return null; }
+}
+/* Brauzer birinchi bosishdan keyingina ovozga ruxsat beradi */
+['pointerdown','touchstart','click','keydown'].forEach(ev =>
+  document.addEventListener(ev, () => cxGetAudioCtx(), { passive: true })
+);
+
+function cxTone(ctx, t, freq, dur, vol, type, freqEnd) {
+  const o = ctx.createOscillator(), g = ctx.createGain();
+  o.type = type || 'sine';
+  o.frequency.setValueAtTime(freq, t);
+  if (freqEnd) o.frequency.exponentialRampToValueAtTime(freqEnd, t + dur);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(vol, t + 0.005);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.connect(g); g.connect(ctx.destination);
+  o.start(t); o.stop(t + dur + 0.02);
+}
+function cxClick(ctx, t, dur, vol, cutoff) {
+  const len = Math.max(1, Math.floor(ctx.sampleRate * dur));
+  const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len);
+  const s = ctx.createBufferSource(); s.buffer = buf;
+  const f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = cutoff;
+  const g = ctx.createGain(); g.gain.value = vol;
+  s.connect(f); f.connect(g); g.connect(ctx.destination);
+  s.start(t);
+}
 
 function playChessSound(type) {
   if (!isSoundOn) return;
   try {
-    if (CX_SOUNDS[type]) {
-      CX_SOUNDS[type].currentTime = 0;
-      CX_SOUNDS[type].play().catch(() => {});
+    const ctx = cxGetAudioCtx();
+    if (!ctx) return;
+    const t = ctx.currentTime + 0.01;
+    if (type === 'move') {
+      cxTone(ctx, t, 220, 0.09, 0.5, 'triangle', 110);
+      cxClick(ctx, t, 0.04, 0.5, 2500);
+    } else if (type === 'capture') {
+      cxTone(ctx, t, 180, 0.14, 0.7, 'triangle', 80);
+      cxClick(ctx, t, 0.08, 0.9, 4500);
+    } else if (type === 'check') {
+      cxTone(ctx, t, 220, 0.08, 0.4, 'triangle', 110);
+      cxTone(ctx, t + 0.09, 880, 0.18, 0.35, 'square');
+      cxTone(ctx, t + 0.09, 1175, 0.18, 0.2, 'sine');
+    } else if (type === 'over') {
+      cxTone(ctx, t, 659, 0.22, 0.4, 'sine');
+      cxTone(ctx, t + 0.2, 523, 0.22, 0.4, 'sine');
+      cxTone(ctx, t + 0.4, 392, 0.5, 0.45, 'sine');
     }
   } catch (e) {}
 }
