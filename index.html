@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -698,7 +699,7 @@ const I18N = {
     cx_no_server: "Onlayn o'yin serveri sozlanmagan. Kompyuter bilan o'ynash mavjud.",
     cx_not_connected: "Serverga ulanmagan",
     cx_searching: "Raqib qidirilmoqda…",
-    cx_searching_hint: "Raqib topilishi bilan o'yinni tasdiqlash bildirishnomasi chiqadi.",
+    cx_searching_hint: "Raqib topilishi bilan tasdiqlash bildirishnomasi chiqadi. O'yin ikkala o'yinchi qabul qilgandan keyin boshlanadi.",
     cx_wait_friend: "Do'stingizni kuting…",
     cx_share: "📤 Telegramda ulashish",
     cx_share_text: "Men bilan shaxmat o'ynaymizmi? ♟",
@@ -779,8 +780,11 @@ const I18N = {
     cx_opp_found_desc_short: "Ushbu raqib bilan o'ynaysizmi?",
     cx_accept_match: "✅ Qabul qilish",
     cx_decline_match: "❌ Rad etish",
-    cx_waiting_opp_accept: "⏳ Raqib qabul qilishini kutilmoqda...",
-    cx_match_declined: "⚠️ O'yin rad etildi yoki vaqt tugadi"
+    cx_waiting_opp_accept: "⏳ Raqib tasdiqlashi kutilmoqda...",
+    cx_match_declined: "⚠️ O'yin rad etildi yoki vaqt tugadi",
+    cx_opponent: "Raqib",
+    cx_player: "NPUU o'yinchisi",
+    cx_conn_lost: "⚠️ Aloqa uzildi, qayta ulanmoqda…"
   },
   ru: {
     app_title: "NPUU Smart Bot",
@@ -838,7 +842,7 @@ const I18N = {
     cx_no_server: "Сервер онлайн-игры не настроен. Игра с компьютером доступна.",
     cx_not_connected: "Нет подключения к серверу",
     cx_searching: "Поиск соперника…",
-    cx_searching_hint: "Как только соперник найдётся, появиться окно подтверждения.",
+    cx_searching_hint: "Как только соперник найдётся, появится окно подтверждения. Игра начнётся, когда оба игрока примут матч.",
     cx_wait_friend: "Ожидаем друга…",
     cx_share: "📤 Поделиться в Telegram",
     cx_share_text: "Сыграем в шахматы? ♟",
@@ -916,11 +920,14 @@ const I18N = {
     welcome_user: "Добро пожаловать",
     days: ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
     cx_opp_found: "🎉 Соперник найден!",
-    cx_opp_found_desc_short: "Будете играть с ним?",
+    cx_opp_found_desc_short: "Играть с этим соперником?",
     cx_accept_match: "✅ Принять",
     cx_decline_match: "❌ Отклонить",
     cx_waiting_opp_accept: "⏳ Ожидание подтверждения соперника…",
-    cx_match_declined: "⚠️ Игра отклонена или время истекло"
+    cx_match_declined: "⚠️ Игра отклонена или время истекло",
+    cx_opponent: "Соперник",
+    cx_player: "Игрок NPUU",
+    cx_conn_lost: "⚠️ Соединение потеряно, переподключение…"
   },
   en: {
     app_title: "NPUU Smart Bot",
@@ -978,7 +985,7 @@ const I18N = {
     cx_no_server: "The online game server is not configured. Playing vs computer is available.",
     cx_not_connected: "Not connected to the server",
     cx_searching: "Looking for an opponent…",
-    cx_searching_hint: "Once an opponent is found, a confirmation modal will pop up.",
+    cx_searching_hint: "Once an opponent is found, a confirmation prompt will appear. The game starts after both players accept.",
     cx_wait_friend: "Waiting for your friend…",
     cx_share: "📤 Share on Telegram",
     cx_share_text: "Fancy a game of chess? ♟",
@@ -1056,11 +1063,14 @@ const I18N = {
     welcome_user: "Welcome",
     days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
     cx_opp_found: "🎉 Opponent Found!",
-    cx_opp_found_desc_short: "Do you want to play with them?",
+    cx_opp_found_desc_short: "Play against this opponent?",
     cx_accept_match: "✅ Accept",
     cx_decline_match: "❌ Decline",
     cx_waiting_opp_accept: "⏳ Waiting for opponent to accept…",
-    cx_match_declined: "⚠️ Match declined or timed out"
+    cx_match_declined: "⚠️ Match declined or timed out",
+    cx_opponent: "Opponent",
+    cx_player: "NPUU player",
+    cx_conn_lost: "⚠️ Connection lost, reconnecting…"
   }
 };
 
@@ -1154,6 +1164,21 @@ const HANDBOOK_DATA = {
     { name: "🤖 Sun'iy Intellekt (AI)", url: "https://drive.google.com/drive/folders/1FvHySsIkrH8mL-a3Perx4Ozd_6y6B4FR?usp=drive_link", id: "hb-ai" }
   ]
 };
+
+const HB_NAME_I18N = {
+  'hb-math': { uz: "📐 Matematika (FM)", ru: "📐 Математика (FM)", en: "📐 Mathematics (FM)" },
+  'hb-ist': { uz: "💻 Axborot Tizimlari va Texnologiyalari (FIT)", ru: "💻 Информационные системы и технологии (FIT)", en: "💻 Information Systems & Technologies (FIT)" },
+  'hb-ai': { uz: "🤖 Sun'iy Intellekt (AI)", ru: "🤖 Искусственный интеллект (AI)", en: "🤖 Artificial Intelligence (AI)" }
+};
+const PROF_ROLE_I18N = {
+  'General English': { uz: "Umumiy ingliz tili", ru: "Общий английский язык", en: "General English" },
+  'IT': { uz: "IT", ru: "ИТ", en: "IT" },
+  'Mathematics': { uz: "Matematika", ru: "Математика", en: "Mathematics" },
+  'Education': { uz: "Ta'lim", ru: "Образование", en: "Education" }
+};
+function profRoleLabel(role) {
+  return (role && PROF_ROLE_I18N[role] && PROF_ROLE_I18N[role][currentLang]) || role || '';
+}
 
 let cachedCsvData = null;
 let currentLang = 'uz', isDark = true, userProfile = null;
@@ -1520,7 +1545,7 @@ function renderHandbookMajors() {
     if (item.id) a.id = item.id;
     a.href = item.url;
     a.target = '_blank';
-    a.innerHTML = `<span>${item.name}</span><span style="color:var(--accent2)">➔</span>`;
+    a.innerHTML = `<span>${(item.id && HB_NAME_I18N[item.id] && HB_NAME_I18N[item.id][currentLang]) || item.name}</span><span style="color:var(--accent2)">➔</span>`;
     container.appendChild(a);
   });
 }
@@ -1651,6 +1676,17 @@ function loadProfile() {
   } catch (e) { userProfile = null; }
 }
 
+function courseLabel(course) {
+  const dict = I18N[currentLang] || I18N.uz;
+  if (currentLang === 'en') {
+    const n = parseInt(course, 10);
+    if (isNaN(n)) return `${course} year`;
+    const suf = (n % 100 >= 11 && n % 100 <= 13) ? 'th' : ({1: 'st', 2: 'nd', 3: 'rd'}[n % 10] || 'th');
+    return `${n}${suf} year`;
+  }
+  return `${course}${dict.course_suffix}`;
+}
+
 function applyProfile() {
   if (!userProfile) return;
   const dict = I18N[currentLang] || I18N.uz;
@@ -1677,7 +1713,7 @@ function applyProfile() {
   document.getElementById('profile-name').textContent = userProfile.name || '—';
   
   document.getElementById('profile-meta').textContent = 
-    `${userProfile.sid ? 'ID: ' + userProfile.sid + ' • ' : ''}${userProfile.group} • ${userProfile.course}${dict.course_suffix} (${userProfile.admitYear})`;
+    `${userProfile.sid ? 'ID: ' + userProfile.sid + ' • ' : ''}${userProfile.group} • ${courseLabel(userProfile.course)} (${userProfile.admitYear})`;
   document.getElementById('school-badge').textContent = schoolName || 'NPUU';
 
   document.getElementById('today-group-text').textContent = `${dict.my_group}: ${userProfile.group}`;
@@ -1692,7 +1728,7 @@ function applyProfile() {
   document.getElementById('pv-email').textContent = userProfile.email || '—';
   document.getElementById('pv-school').textContent = schoolName || '—';
   document.getElementById('pv-major').textContent = majorName || '—';
-  document.getElementById('pv-course').textContent = userProfile.course + dict.course_suffix;
+  document.getElementById('pv-course').textContent = courseLabel(userProfile.course);
   document.getElementById('pv-group').textContent = userProfile.group || '—';
   document.getElementById('pv-year').textContent = userProfile.admitYear || '—';
 
@@ -1838,7 +1874,7 @@ function initTimetable(targetDay) {
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
       <div>
         <div style="font-size:15px;font-weight:800;color:var(--text);">${userProfile.group} ${dict.group_schedule_title}</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:2px;">🏛️ ${schoolName} • ${userProfile.course}${dict.course_suffix}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px;">🏛️ ${schoolName} • ${courseLabel(userProfile.course)}</div>
       </div>
       <a href="${edupageUrl}" target="_blank" class="ctrl-btn" style="background:var(--accent);color:#fff;border:none;text-decoration:none;padding:8px 12px;display:inline-flex;align-items:center;gap:4px;font-weight:700;">${dict.open_edupage} ➔</a>
     </div>
@@ -1967,12 +2003,12 @@ function renderProfs(filter = '') {
   if (!c) return;
   c.innerHTML = '';
   const q = filter.toLowerCase().trim();
-  PROFS.filter(p => p.name.toLowerCase().includes(q) || (p.role || '').toLowerCase().includes(q) || p.email.toLowerCase().includes(q)).forEach(p => {
+  PROFS.filter(p => p.name.toLowerCase().includes(q) || (p.role || '').toLowerCase().includes(q) || profRoleLabel(p.role).toLowerCase().includes(q) || p.email.toLowerCase().includes(q)).forEach(p => {
     const card = document.createElement('div');
     card.className = `card ${p.dept || ''}`;
     card.innerHTML = `
       <div style="font-weight:700;font-size:14px;">${p.name}</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:2px;">${p.role || ""}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:2px;">${profRoleLabel(p.role)}</div>
       <div style="font-size:12px;color:var(--accent2);margin-top:6px;display:flex;align-items:center;">
         📧 ${p.email}
         <button class="copy-email-btn" onclick="navigator.clipboard.writeText('${p.email}');showBanner(I18N[currentLang].copied)">${dict.copy}</button>
@@ -2008,11 +2044,13 @@ const CX = {mode:null, screen:'menu', chess:null, me:null, color:'w', over:false
 let cxSocket = null, cxCfg = {bot_link:''}, cxHandled = false, cxSf = null, cxLines = [];
 let cxInit = false, cxLaunched = false, cxLibsP = null, cxBound = false;
 let cxPendingMatchData = null, cxMatchTimerInterval = null;
+let cxMatchTimeLeft = 0, cxMatchAccepted = false, cxWaitKind = null, cxEndRender = null, cxWasDisconnected = false;
+const CX_MATCH_SECONDS = 15;
 
 const cxEl = id => document.getElementById('cx-' + id);
 function cxT(k, vars) {
   let s = (I18N[currentLang] && I18N[currentLang][k]) || I18N.uz[k] || k;
-  if (vars) for (const n in vars) s = s.replace('{' + n + '}', vars[n]);
+  if (vars) for (const n in vars) s = s.split('{' + n + '}').join(vars[n]);
   return s;
 }
 function cxReason(r) {
@@ -2053,6 +2091,21 @@ function cxLangChanged() {
   if (!cxInit || !cxBound) return;
   cxBuildSegs(); cxRenderMe();
   if (CX.screen === 'game') cxRender();
+  cxRenderWaitTexts();
+  const modalOn = cxEl('modal').classList.contains('on');
+  if (modalOn && cxPendingMatchData) cxShowMatchConfirmation(cxPendingMatchData, true);
+  else if (modalOn && cxEndRender) cxEndRender();
+}
+function cxRenderWaitTexts() {
+  if (CX.screen !== 'wait') return;
+  if (cxWaitKind === 'random') {
+    cxEl('waitTitle').textContent = cxT('cx_searching');
+    const p = cxEl('waitBody').querySelector('p.cx-hint');
+    if (p) p.textContent = cxT('cx_searching_hint');
+  } else if (cxWaitKind === 'invite') {
+    cxEl('waitTitle').textContent = cxT('cx_wait_friend');
+    cxEl('waitBody').querySelectorAll('[data-k]').forEach(b => b.textContent = cxT(b.dataset.k));
+  }
 }
 
 function cxLaunch() {
@@ -2102,7 +2155,7 @@ function cxOpenModal(title, text, btns) {
   });
   cxEl('modal').classList.add('on');
 }
-function cxCloseModal() { cxEl('modal').classList.remove('on'); }
+function cxCloseModal() { cxEl('modal').classList.remove('on'); cxEndRender = null; }
 function cxSeg(el, items, sel, pick) {
   el.innerHTML = '';
   items.forEach((t, i) => {
@@ -2113,7 +2166,7 @@ function cxSeg(el, items, sel, pick) {
 }
 const cxBuzz = () => { try { tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred('light'); } catch (e) {} };
 function cxFmt(t) { t = Math.max(0, Math.ceil(t)); return String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0'); }
-function cxToMenu() { cxStopCpu(); CX.mode = null; CX.gid = null; CX.over = false; cxCloseModal(); cxShow('menu'); }
+function cxToMenu() { cxStopCpu(); CX.mode = null; CX.gid = null; CX.over = false; cxWaitKind = null; cxCloseModal(); cxShow('menu'); }
 function cxRenderMe() {
   const s = CX.meState, e = cxEl('me');
   e.textContent = s === 'me' && CX.me ? cxT('cx_me', {name: CX.me.name, rating: CX.me.rating})
@@ -2186,8 +2239,10 @@ function cxBind() {
   };
   cxEl('bRandom').onclick = () => {
     if (!cxSocket || !cxSocket.connected) return cxToast(cxT('cx_not_connected'));
+    cxWaitKind = 'random';
     cxSocket.emit('find', {time: CX.tc[0], inc: CX.tc[1]}, r => {
-      if (r && r.error) return cxToast(r.error);
+      if (r && r.error) { cxWaitKind = null; return cxToast(r.error); }
+      if (cxPendingMatchData || (CX.mode === 'online' && CX.gid && !CX.over)) return;
       cxEl('waitTitle').textContent = cxT('cx_searching');
       cxEl('waitBody').innerHTML = '';
       const p = document.createElement('p'); p.className = 'cx-hint'; p.textContent = cxT('cx_searching_hint');
@@ -2202,15 +2257,16 @@ function cxBind() {
       if (r && r.error) return cxToast(r.error);
       const link = cxCfg.bot_link ? `${cxCfg.bot_link}?startapp=game_${r.gid}`
         : `${location.origin}${location.pathname}?join=${r.gid}`;
+      cxWaitKind = 'invite';
       cxEl('waitTitle').textContent = cxT('cx_wait_friend');
       const body = cxEl('waitBody'); body.innerHTML = '';
       const l = document.createElement('div'); l.className = 'cx-link'; l.textContent = link;
-      const share = document.createElement('button'); share.className = 'cx-big'; share.textContent = cxT('cx_share');
+      const share = document.createElement('button'); share.className = 'cx-big'; share.textContent = cxT('cx_share'); share.dataset.k = 'cx_share';
       share.onclick = () => {
         const u = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(cxT('cx_share_text'))}`;
         tg && tg.openTelegramLink ? tg.openTelegramLink(u) : window.open(u, '_blank');
       };
-      const copy = document.createElement('button'); copy.className = 'cx-big cx-alt'; copy.textContent = cxT('cx_copy');
+      const copy = document.createElement('button'); copy.className = 'cx-big cx-alt'; copy.textContent = cxT('cx_copy'); copy.dataset.k = 'cx_copy';
       copy.onclick = () => { navigator.clipboard && navigator.clipboard.writeText(link); cxToast(cxT('cx_copied')); };
       body.append(l, share, copy); cxShow('wait');
     });
@@ -2219,13 +2275,13 @@ function cxBind() {
   cxEl('bResign').onclick = () => cxConfirm(cxT('cx_resign_q'), () => {
     if (CX.over) return;
     if (CX.mode === 'online') cxSocket.emit('resign', CX.gid);
-    else { CX.over = true; cxStopCpu(); playChessSound('over'); cxRender(); cxUpdateBack(); cxShowEndCpu(cxT('cx_lose'), cxT('cx_resigned')); }
+    else { CX.over = true; cxStopCpu(); playChessSound('over'); cxRender(); cxUpdateBack(); cxEndRender = () => cxShowEndCpu(cxT('cx_lose'), cxT('cx_resigned')); cxEndRender(); }
   });
   cxEl('bDraw').onclick = () => {
     if (CX.mode === 'online' && !CX.over) { cxSocket.emit('draw_offer', CX.gid); cxToast(cxT('cx_draw_sent')); }
   };
 }
-function cxCancelWait() { if (cxSocket) cxSocket.emit('cancel'); cxShow('menu'); }
+function cxCancelWait() { cxWaitKind = null; if (cxSocket) cxSocket.emit('cancel'); cxShow('menu'); }
 
 /* ---------- Socket & Match Confirmation ---------- */
 function cxDevInit() {
@@ -2243,16 +2299,17 @@ function cxExtractOpponentInfo(st, oppColor) {
   if (st.opponent) return st.opponent;
   if (st.names && st.names[oppColor]) {
     const p = st.names[oppColor];
-    if (typeof p === 'object' && p !== null) return { name: p.name || 'Raqib', rating: p.rating || '', photo: p.photo || p.photo_url || '' };
-    return { name: String(p), rating: '', photo: '' };
+    if (typeof p === 'object' && p !== null) return { name: p.name || cxT('cx_opponent'), rating: p.rating || '', photo: p.photo || p.photo_url || '' };
+    return { name: String(p || cxT('cx_opponent')), rating: '', photo: '' };
   }
   const oppVal = st[oppColor === 'w' ? 'white' : 'black'];
-  if (typeof oppVal === 'object' && oppVal !== null) return { name: oppVal.name || 'Raqib', rating: oppVal.rating || '', photo: oppVal.photo || '' };
-  return { name: String(oppVal || 'Raqib'), rating: '', photo: '' };
+  if (typeof oppVal === 'object' && oppVal !== null) return { name: oppVal.name || cxT('cx_opponent'), rating: oppVal.rating || '', photo: oppVal.photo || '' };
+  return { name: String(oppVal || cxT('cx_opponent')), rating: '', photo: '' };
 }
 
-function cxShowMatchConfirmation(st) {
+function cxShowMatchConfirmation(st, keepState) {
   cxPendingMatchData = st;
+  if (!keepState) { cxMatchAccepted = false; cxMatchTimeLeft = CX_MATCH_SECONDS; }
   const oppColor = st.color === 'w' ? 'b' : 'w';
   const oppInfo = cxExtractOpponentInfo(st, oppColor);
 
@@ -2279,7 +2336,7 @@ function cxShowMatchConfirmation(st) {
 
   const subEl = document.createElement('div');
   subEl.style.cssText = 'font-size:12px;color:var(--muted);margin-top:2px;';
-  subEl.textContent = oppInfo.rating ? `${cxT('cx_rating')}: ${oppInfo.rating}` : 'NPUU Player';
+  subEl.textContent = oppInfo.rating ? `${cxT('cx_rating')}: ${oppInfo.rating}` : cxT('cx_player');
 
   details.append(nameEl, subEl);
   card.append(av, details);
@@ -2291,17 +2348,21 @@ function cxShowMatchConfirmation(st) {
   const timerEl = document.createElement('div');
   timerEl.style.cssText = 'font-size:12.5px;color:var(--orange);font-weight:700;margin-bottom:12px;';
 
-  let timeLeft = 12;
-  timerEl.textContent = `⏱️ ${timeLeft}s`;
+  const paintTimer = () => {
+    timerEl.textContent = cxMatchAccepted
+      ? `${cxT('cx_waiting_opp_accept')} ${cxMatchTimeLeft}s`
+      : `⏱️ ${cxMatchTimeLeft}s`;
+  };
+  paintTimer();
 
   if (cxMatchTimerInterval) clearInterval(cxMatchTimerInterval);
   cxMatchTimerInterval = setInterval(() => {
-    timeLeft--;
-    if (timeLeft <= 0) {
+    cxMatchTimeLeft--;
+    if (cxMatchTimeLeft <= 0) {
       clearInterval(cxMatchTimerInterval);
       cxDeclineMatch();
     } else {
-      timerEl.textContent = `⏱️ ${timeLeft}s`;
+      paintTimer();
     }
   }, 1000);
 
@@ -2315,12 +2376,17 @@ function cxShowMatchConfirmation(st) {
   btnDecline.style.margin = '0';
   btnDecline.textContent = cxT('cx_decline_match');
 
-  btnAccept.onclick = () => {
-    if (cxMatchTimerInterval) clearInterval(cxMatchTimerInterval);
+  const lockAccepted = () => {
     btnAccept.disabled = true;
     btnAccept.style.opacity = '0.6';
     btnDecline.style.display = 'none';
-    timerEl.textContent = cxT('cx_waiting_opp_accept');
+  };
+  if (cxMatchAccepted) lockAccepted();
+
+  btnAccept.onclick = () => {
+    if (cxMatchAccepted) return;
+    cxMatchAccepted = true;
+    lockAccepted();
 
     if (cxSocket) {
       cxSocket.emit('accept_match', { gid: st.gid });
@@ -2328,9 +2394,16 @@ function cxShowMatchConfirmation(st) {
     }
 
     if (st.isDirectStart) {
+      // Eski server: o'yin serverda allaqachon yaratilgan, kutish shart emas
+      if (cxMatchTimerInterval) clearInterval(cxMatchTimerInterval);
       CX.matchConfirmed = true;
+      cxPendingMatchData = null;
+      cxMatchAccepted = false;
       cxCloseModal();
       cxStartOnlineGameActual(st);
+    } else {
+      // Yangi oqim: ikkala o'yinchi qabul qilguncha kutamiz (server 'start' yuboradi)
+      paintTimer();
     }
   };
 
@@ -2341,7 +2414,7 @@ function cxShowMatchConfirmation(st) {
 
   box.append(h2, card, promptP, timerEl, btnAccept, btnDecline);
   cxEl('modal').classList.add('on');
-  playChessSound('check');
+  if (!keepState) playChessSound('check');
 }
 
 function cxDeclineMatch() {
@@ -2352,6 +2425,8 @@ function cxDeclineMatch() {
     cxSocket.emit('cancel');
   }
   cxPendingMatchData = null;
+  cxMatchAccepted = false;
+  cxWaitKind = null;
   CX.matchConfirmed = false;
   cxCloseModal();
   cxToast(cxT('cx_match_declined'));
@@ -2362,10 +2437,27 @@ function cxConnect() {
   cxSocket = io(CHESS_SERVER_URL, {auth: {initData: (tg && tg.initData) || cxDevInit()}});
   cxSocket.on('connect', () => cxSocket.emit('hello', cxOnHello));
   cxSocket.on('connect_error', e => { CX.meState = 'err'; CX.err = e.message; cxRenderMe(); });
-  cxSocket.on('match_found', st => { CX.matchConfirmed = false; cxShowMatchConfirmation(st); });
+  cxSocket.on('disconnect', () => {
+    cxWasDisconnected = true;
+    if (cxPendingMatchData) {
+      if (cxMatchTimerInterval) clearInterval(cxMatchTimerInterval);
+      cxPendingMatchData = null; cxMatchAccepted = false; CX.matchConfirmed = false;
+      cxCloseModal();
+    }
+    if (cxWaitKind || CX.screen === 'game') cxToast(cxT('cx_conn_lost'));
+  });
+  cxSocket.on('match_found', st => {
+    if (!st) return;
+    if (CX.mode === 'online' && CX.gid && !CX.over) return; // allaqachon o'yinda
+    CX.matchConfirmed = false;
+    st.isDirectStart = false;
+    cxShowMatchConfirmation(st);
+  });
   cxSocket.on('match_declined', () => {
     if (cxMatchTimerInterval) clearInterval(cxMatchTimerInterval);
     cxPendingMatchData = null;
+    cxMatchAccepted = false;
+    cxWaitKind = null;
     CX.matchConfirmed = false;
     cxCloseModal();
     cxToast(cxT('cx_match_declined'));
@@ -2381,7 +2473,16 @@ function cxConnect() {
 function cxOnHello(res) {
   if (!res || res.error) return;
   CX.me = res.me; CX.meState = 'me'; cxRenderMe();
-  if (res.game) { cxStartOnline(res.game); return; }
+  if (res.game) { res.game.resume = true; cxWasDisconnected = false; cxStartOnline(res.game); return; }
+  if (cxWasDisconnected) {
+    cxWasDisconnected = false;
+    // Aloqa uzilgan paytda tasodifiy raqib qidirayotgan bo'lsa, navbatga qayta qo'shamiz
+    if (CX.screen === 'wait' && cxWaitKind === 'random') {
+      cxSocket.emit('find', {time: CX.tc[0], inc: CX.tc[1]}, r => {
+        if (r && r.error) { cxWaitKind = null; cxToast(r.error); cxShow('menu'); }
+      });
+    }
+  }
   if (cxHandled) return; cxHandled = true;
   const sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || new URLSearchParams(location.search).get('join') || '';
   const gid = sp.startsWith('game_') ? sp.slice(5) : (sp.startsWith('tab') ? '' : sp);
@@ -2390,7 +2491,16 @@ function cxOnHello(res) {
 
 function cxStartOnline(st) {
   if (!st) return;
-  if (CX.screen === 'wait' && !CX.matchConfirmed) {
+  // 1) Yangi oqim: match_found -> ikkala o'yinchi qabul qildi -> server 'start' yubordi
+  if (cxPendingMatchData && cxPendingMatchData.gid === st.gid) {
+    if (cxPendingMatchData.isDirectStart) return; // takroriy 'start'
+    if (cxMatchTimerInterval) clearInterval(cxMatchTimerInterval);
+    cxPendingMatchData = null; cxMatchAccepted = false; CX.matchConfirmed = true;
+    cxStartOnlineGameActual(st);
+    return;
+  }
+  // 2) Eski server: tasodifiy qidiruvda 'start' bevosita keldi -> avval tasdiqlash so'raymiz
+  if (cxWaitKind === 'random' && !CX.matchConfirmed && !st.resume) {
     st.isDirectStart = true;
     cxShowMatchConfirmation(st);
     return;
@@ -2400,6 +2510,8 @@ function cxStartOnline(st) {
 
 function cxStartOnlineGameActual(st) {
   if (!CX.active) switchView('chess');
+  if (cxMatchTimerInterval) clearInterval(cxMatchTimerInterval);
+  cxPendingMatchData = null; cxMatchAccepted = false; cxWaitKind = null;
   cxStopCpu(); cxCloseModal();
   CX.mode = 'online'; CX.gid = st.gid; CX.over = false; CX.color = st.color || 'w';
   CX.chess = new Chess(st.fen); CX.last = st.last ? [st.last.slice(0, 2), st.last.slice(2, 4)] : null; CX.sel = null;
@@ -2421,6 +2533,11 @@ function cxOnOver(o) {
   if (o.gid !== CX.gid) return;
   CX.over = true;
   playChessSound('over');
+  cxRender(); cxUpdateBack();
+  cxEndRender = () => cxShowOverModal(o);
+  cxEndRender();
+}
+function cxShowOverModal(o) {
   const w = o.result === '1-0' ? 'w' : o.result === '0-1' ? 'b' : null;
   const title = !w ? cxT('cx_drawn') : w === CX.color ? cxT('cx_win') : cxT('cx_lose');
   let text = cxReason(o.reason);
@@ -2428,7 +2545,6 @@ function cxOnOver(o) {
     const r = o.rating[CX.color], d = r.new - r.old;
     text += `\n${cxT('cx_rating')}: ${r.old} → ${r.new} (${d >= 0 ? '+' : ''}${d})`;
   }
-  cxRender(); cxUpdateBack();
   cxOpenModal(title, text, [{label: cxT('cx_menu'), fn: cxToMenu}]);
 }
 
@@ -2643,12 +2759,13 @@ function cxEndCpu() {
   cxUpdateBack();
   if (CX.chess.in_checkmate()) {
     const winner = CX.chess.turn() === 'w' ? 'b' : 'w';
-    cxShowEndCpu(winner === CX.color ? cxT('cx_win') : cxT('cx_lose'), cxReason('checkmate'));
+    cxEndRender = () => cxShowEndCpu(winner === CX.color ? cxT('cx_win') : cxT('cx_lose'), cxReason('checkmate'));
   } else {
     const why = CX.chess.in_stalemate() ? 'stalemate' : CX.chess.insufficient_material() ? 'insufficient_material' :
       CX.chess.in_threefold_repetition() ? 'threefold_repetition' : 'fifty_moves';
-    cxShowEndCpu(cxT('cx_drawn'), cxReason(why));
+    cxEndRender = () => cxShowEndCpu(cxT('cx_drawn'), cxReason(why));
   }
+  cxEndRender();
 }
 function cxShowEndCpu(t, x) {
   cxOpenModal(t, x, [{label: cxT('cx_replay'), fn: cxStartCpu}, {label: cxT('cx_menu'), alt: true, fn: cxToMenu}]);
