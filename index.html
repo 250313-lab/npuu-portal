@@ -2772,6 +2772,8 @@ function cxShowEndCpu(t, x) {
 
 // ===== INITIALIZATION =====
 window.addEventListener('DOMContentLoaded', async () => {
+  // Shaxmat serveri (Render bepul tarifi) uxlab qolgan bo'lsa, foydalanuvchi portalda yurgan paytda uyg'otib qo'yamiz
+  try { if (typeof CHESS_SERVER_URL === 'string' && CHESS_SERVER_URL) fetch(CHESS_SERVER_URL + '/health', {mode: 'no-cors'}).catch(() => {}); } catch (e) {}
   fetchStudentCsvData();
   const savedLang = localStorage.getItem(LS_LANG) || 'uz';
   const savedTheme = localStorage.getItem(LS_THEME) !== 'light';
